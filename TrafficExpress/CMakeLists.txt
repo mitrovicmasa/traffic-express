@@ -14,17 +14,71 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
 
+include_directories(src/)
+include_directories(headers/)
+#[[
 set(PROJECT_SOURCES
         main.cpp
         mainwindow.cpp
         mainwindow.h
         mainwindow.ui
+        src/treasure.cpp
+        headers/treasure.h
+        src/wagon.cpp
+        headers/wagon.h
+        src/roundcards.cpp
+        headers/roundcards.h
+        src/game.cpp
+        headers/game.h
+        src/player.cpp
+        headers/player.h
+        src/card.cpp
+        headers/card.h
+        src/banditcard.cpp
+        headers/banditcard.h
+        src/neutralbullet.cpp
+        headers/neutralbullet.h
+        src/actioncard.cpp
+        headers/actioncard.h
+        src/bulletcard.cpp
+        headers/bulletcard.h
+)
+]]
+set(PROJECT_SOURCES
+        main.cpp
+        mainwindow.cpp
+        mainwindow.ui
+        src/treasure.cpp
+        src/wagon.cpp
+        src/roundcards.cpp
+        src/game.cpp
+        src/player.cpp
+        src/card.cpp
+        src/banditcard.cpp
+        src/neutralbullet.cpp
+        src/actioncard.cpp
+        src/bulletcard.cpp
+        )
+
+set(PROJECT_HEADERS
+        mainwindow.h
+        headers/treasure.h
+        headers/wagon.h
+        headers/roundcards.h
+        headers/game.h
+        headers/player.h
+        headers/card.h
+        headers/banditcard.h
+        headers/neutralbullet.h
+        headers/actioncard.h
+        headers/bulletcard.h
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     qt_add_executable(TrafficExpress
         MANUAL_FINALIZATION
         ${PROJECT_SOURCES}
+        ${PROJECT_HEADERS}
     )
 # Define target properties for Android with Qt 6 as:
 #    set_property(TARGET TrafficExpress APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR
@@ -34,12 +88,14 @@ else()
     if(ANDROID)
         add_library(TrafficExpress SHARED
             ${PROJECT_SOURCES}
+            ${PROJECT_HEADERS}
         )
 # Define properties for Android with Qt 5 after find_package() calls as:
 #    set(ANDROID_PACKAGE_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/android")
     else()
         add_executable(TrafficExpress
             ${PROJECT_SOURCES}
+            ${PROJECT_HEADERS}
         )
     endif()
 endif()
