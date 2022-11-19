@@ -2,7 +2,17 @@
 #define BANDITCARD_H
 
 #include <card.h>
-#include <player.h>
+
+enum class BanditType {
+    PICKPOCKET,
+    SEDUCTRESS,
+    STUDENT,
+    RETIREE,
+    HOMELESS_MAN,
+    BUSINESS_WOMAN
+};
+
+std::string toString(BanditType bandit);
 
 class BanditCard : public Card {
 
