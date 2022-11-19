@@ -14,6 +14,41 @@ Player::Player(BanditType id, const std::vector<Card*> &hand, const std::vector<
       m_treasure(treasure)
 {}
 
+Player::Player(BanditType id, int positionInTrain)
+    :m_id(id),m_positionInTrain(positionInTrain)
+{
+
+    m_hand=std::vector<Card*>();
+    m_deck=std::vector<Card*>();
+    m_deck.push_back(new ActionCard(ActionType::MOVE,id));
+    m_deck.push_back(new ActionCard(ActionType::MOVE,id));
+
+    m_deck.push_back(new ActionCard(ActionType::FIRE,id));
+    m_deck.push_back(new ActionCard(ActionType::FIRE,id));
+
+    m_deck.push_back(new ActionCard(ActionType::FLOOR_CHANGE,id));
+    m_deck.push_back(new ActionCard(ActionType::FLOOR_CHANGE,id));
+
+    m_deck.push_back(new ActionCard(ActionType::MARSHAL,id));
+    m_deck.push_back(new ActionCard(ActionType::PUNCH,id));
+
+    m_deck.push_back(new ActionCard(ActionType::TAKETREASURE,id));
+    m_deck.push_back(new ActionCard(ActionType::TAKETREASURE,id));
+
+
+    m_bulletDeck=std::vector<BulletCard*>();
+
+    for(unsigned i=1;i<=6;i++){
+        m_bulletDeck.push_back(new BulletCard(id,i));
+
+
+    }
+
+    m_roof=false;
+    m_treasure=std::vector<Treasure>();
+    m_treasure.push_back(Treasure());
+}
+
 Player::Player(const Player &player)
     : m_id(player.m_id),
       m_hand(player.m_hand),
@@ -124,10 +159,15 @@ std::string Player::toString() const
     std::string positionInWagon = m_roof ? "Bandit is on the roof" : "Bandit is in the wagon";
     int currentAmountOfTreasure = countAmountOfTreasure();
 
+    std::string cardsInDeck="";
+    for(auto x:m_deck)
+        cardsInDeck+=x->toString()+"\n";
+
+
     return "Bandit: "  + ::toString(m_id) + "\n"
          + "Position in train: " + std::to_string(m_positionInTrain) + "\n"
          + "Current amount of treasure: " + std::to_string(currentAmountOfTreasure) + "\n"
          + "Current number of cards in deck: " + std::to_string(m_deck.size()) + "\n"
          + "Current number of bullets in bullet deck: " + std::to_string(m_bulletDeck.size()) + "\n"
-         + positionInWagon + "\n";
+         + positionInWagon +"\ncards In deck:\n"+cardsInDeck+ "\n";
 }

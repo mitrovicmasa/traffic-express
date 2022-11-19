@@ -10,17 +10,19 @@ std::string ActionCard::toString() const
     std::string actionName = "";
     switch (m_action) {
         case ActionType::MOVE:
-            actionName = "move";
+            actionName = "move";break;
         case ActionType::FLOOR_CHANGE:
-            actionName = "floor change";
+            actionName = "floor change";break;
         case ActionType::FIRE:
-            actionName = "fire";
+            actionName = "fire";break;
         case ActionType::PUNCH:
-            actionName = "punch";
+            actionName = "punch";break;
         case ActionType::MARSHAL:
-            actionName = "move marshal";
+            actionName = "move marshal";break;
         case ActionType::ROBBERY:
-            actionName = "robbery";
+            actionName = "robbery";break;
+        case ActionType::TAKETREASURE:
+            actionName="take treasure";break;
         default:
             break;
     }

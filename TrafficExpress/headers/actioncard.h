@@ -9,7 +9,8 @@ enum class ActionType {
     MARSHAL,
     FIRE,
     PUNCH,
-    ROBBERY
+    ROBBERY,
+    TAKETREASURE
 };
 
 class ActionCard : public BanditCard {

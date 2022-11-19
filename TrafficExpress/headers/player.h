@@ -19,6 +19,7 @@ public:
     Player();
     Player(BanditType id, const std::vector<Card*> &hand, const std::vector<Card*> &deck,
            const std::vector<BulletCard*> &bulletDeck, int positionInTrain, bool roof, const std::vector<Treasure> treasure);
+    Player(BanditType id, int positionInTrain);
     Player(const Player &player);
 
     Player &operator=(const Player &player);
