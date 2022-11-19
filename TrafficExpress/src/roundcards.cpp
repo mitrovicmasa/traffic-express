@@ -47,7 +47,7 @@ std::string toStringRoundCardType(const RoundCardType &card)
         case RoundCardType::TRAIN_STATION:
             return "Train station";
         default:
-            break;
+            return "";
     }
 
 }
@@ -73,7 +73,7 @@ std::string toStringEventType(const EventType &event)
     case EventType::HOSTAGE_TACKING_OF_THE_CONDUCTOR:
         return "Hostage-Taking of the Conductor";   
     default:
-        break;
+        return "";
     }
 
 }
@@ -89,10 +89,9 @@ std::string toStringMiniRoundType(const MiniRoundType &miniRound)
     case MiniRoundType::OPPOSITE_DIRECTION:
         return "Opposite direction!";
     case MiniRoundType::FACE_UP:
-        "Face up - default!";
-    
+        return "Face up - default!";
     default:
-        break;
+        return "";
     }
 
 }

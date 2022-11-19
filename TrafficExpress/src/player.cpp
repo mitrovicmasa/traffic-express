@@ -3,8 +3,8 @@
 Player::Player()
 {}
 
-Player::Player(BanditType id, const std::vector<Card> &hand, const std::vector<Card> &deck,
-               const std::vector<BulletCard> &bulletDeck, int positionInTrain, bool roof, const std::vector<Treasure> treasure)
+Player::Player(BanditType id, const std::vector<Card*> &hand, const std::vector<Card*> &deck,
+               const std::vector<BulletCard*> &bulletDeck, int positionInTrain, bool roof, const std::vector<Treasure> treasure)
     : m_id(id),
       m_hand(hand),
       m_deck(deck),
@@ -44,17 +44,17 @@ BanditType Player::id() const
     return m_id;
 }
 
-const std::vector<Card> &Player::hand() const
+const std::vector<Card*> &Player::hand() const
 {
     return m_hand;
 }
 
-const std::vector<Card> &Player::deck() const
+const std::vector<Card*> &Player::deck() const
 {
     return m_deck;
 }
 
-const std::vector<BulletCard> &Player::bulletCard() const
+const std::vector<BulletCard*> &Player::bulletCard() const
 {
     return m_bulletDeck;
 }
@@ -79,17 +79,17 @@ void Player::setId(BanditType &newId)
     m_id = newId;
 }
 
-void Player::setHand(const std::vector<Card> &newHand)
+void Player::setHand(const std::vector<Card*> &newHand)
 {
     m_hand = newHand;
 }
 
-void Player::setDeck(const std::vector<Card> &newDeck)
+void Player::setDeck(const std::vector<Card*> &newDeck)
 {
     m_deck = newDeck;
 }
 
-void Player::setBulletDeck(const std::vector<BulletCard> &newBulletDeck)
+void Player::setBulletDeck(const std::vector<BulletCard*> &newBulletDeck)
 {
     m_bulletDeck = newBulletDeck;
 }

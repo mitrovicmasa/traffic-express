@@ -42,6 +42,6 @@ std::string toString(BanditType bandit)
         case BanditType::BUSINESS_WOMAN:
             return "Business woman";
         default:
-            break;
+            return "";
     }
 }
