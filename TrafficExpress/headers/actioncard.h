@@ -3,10 +3,28 @@
 
 #include <banditcard.h>
 
-class ActionCard : public BanditCard
-{
+enum class ActionType {
+    MOVE,
+    FLOOR_CHANGE,
+    MARSHAL,
+    FIRE,
+    PUNCH,
+    ROBBERY
+};
+
+class ActionCard : public BanditCard {
+
 public:
-    ActionCard();
+    ActionCard(ActionType action, BanditType bandit);
+    ~ActionCard();
+
+    std::string toString() const override;
+
+    ActionType action() const;
+    void setAction(ActionType newAction);
+
+private:
+    ActionType m_action;
 };
 
 #endif // ACTIONCARD_H

@@ -3,10 +3,19 @@
 
 #include <banditcard.h>
 
-class BulletCard : public BanditCard
-{
+class BulletCard : public BanditCard {
+
 public:
-    BulletCard();
+    BulletCard(BanditType bandit, unsigned numOfBullets);
+    ~BulletCard();
+
+    std::string toString() const override;
+
+    const unsigned &numOfBullets() const;
+    void setNumOfBullets(const unsigned &newNumOfBullets);
+
+private:
+    unsigned m_numOfBullets;
 };
 
 #endif // BULLETCARD_H
