@@ -17,13 +17,21 @@ std::string toString(BanditType bandit);
 class BanditCard : public Card {
 
 public:
+
+    // Constructors
     BanditCard(BanditType bandit);
+
+    // Destructor
     virtual ~BanditCard();
 
-    virtual std::string toString() const override;
-
-    void setBandit(BanditType newBandit);
+    // Get methods
     BanditType bandit() const;
+
+    // Set methods
+    void setBandit(BanditType newBandit);
+
+    // Other methods
+    virtual std::string toString() const override;
 
 private:
     BanditType m_bandit;

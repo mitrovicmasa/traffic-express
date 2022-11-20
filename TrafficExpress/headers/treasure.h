@@ -9,23 +9,34 @@ enum class TreasureType{
 class Treasure
 {
 public:
+
+    // Constructors
     Treasure();
-
-
     Treasure(int value,TreasureType type);
     Treasure(const Treasure&t);
 
-    Treasure& operator=(const Treasure&t);
+    // Destructor
 
-    std::string toString();
+
+    // Operator overloading
+    Treasure& operator=(const Treasure&t);
     bool operator==(const Treasure&t);
     bool operator!=(const Treasure&t);
 
+    // Get methods
     TreasureType getType();
     int getValue();
+
+    // Set methods
+
+
+    // Other methods
+
+    std::string toString();
+
 private:
     TreasureType m_type;
-    int m_value;
+    unsigned m_value;
 };
 
 #endif // TREASURE_H

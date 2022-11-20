@@ -44,23 +44,29 @@ std::string toStringMiniRoundType(const MiniRoundType &miniRound);
 class RoundCard {
 
 public:
+
+    // Constructors
     RoundCard(RoundCardType type, EventType event, const std::vector<MiniRoundType> &miniRound);
-    
+    RoundCard(const RoundCard&);
+
+    // Destructor
+    ~RoundCard() = default;
+
+    // Get methods
     RoundCardType type() const;
     const std::vector<MiniRoundType> &miniRound() const;
     EventType event() const;
 
+    // Set methods
     void setType(RoundCardType &newType);
     void setEvent(EventType &newEvent);
     void setMiniRound(const std::vector<MiniRoundType> &newMiniRound);
 
-    std::string toString() const;
+    // Other methods
 
-    ~RoundCard() = default;
-
-    RoundCard(const RoundCard&);
     void pushBackMiniRound(MiniRoundType type);
 
+    std::string toString() const;
 
 private:
 

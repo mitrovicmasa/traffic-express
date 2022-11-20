@@ -16,15 +16,22 @@ enum class ActionType {
 class ActionCard : public BanditCard {
 
 public:
-    ActionCard(ActionType action, BanditType bandit);
-    ~ActionCard();
 
+    // Constructors
+    ActionCard(ActionType action, BanditType bandit);
     Card *Copy() const override;
 
-    std::string toString() const override;
+    // Destructor
+    ~ActionCard();
 
+    // Get methods
     ActionType action() const;
+
+    // Set methods
     void setAction(ActionType newAction);
+
+    // Other methods
+    std::string toString() const override;
 
 private:
     ActionType m_action;

@@ -6,11 +6,15 @@
 class Card {
 
 public:
-    Card();
-    virtual ~Card();
 
+    // Constructors
+    Card();
     virtual Card *Copy() const = 0;
 
+    // Destructor
+    virtual ~Card();
+
+    // Other methods
     virtual std::string toString() const;
 
     //virtual bool operator==(const Card *c) const = 0;

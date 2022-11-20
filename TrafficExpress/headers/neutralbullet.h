@@ -6,17 +6,26 @@
 class NeutralBullet : public Card {
 
 public:
+
+    // Constructors
     NeutralBullet(const unsigned id);
+    Card *Copy() const override;
+
+    // Destructor
     ~NeutralBullet();
 
-    Card *Copy() const override;
+    // Get methods
+    const unsigned &id() const;
+
+    // Set methods
+    void setId(const unsigned &newId);
+
+    // Other methods
 
     std::string toString() const override;
 
-    const unsigned &id() const;
-    void setId(const unsigned &newId);
-
 private:
+
     unsigned m_id;
 };
 

@@ -6,17 +6,25 @@
 class BulletCard : public BanditCard {
 
 public:
-    BulletCard(BanditType bandit, unsigned numOfBullets);
-    ~BulletCard();
 
+    // Constructors
+    BulletCard(BanditType bandit, unsigned numOfBullets);
     Card *Copy() const override;
 
-    std::string toString() const override;
+    // Destructor
+    ~BulletCard();
 
+    // Get methods
     const unsigned &numOfBullets() const;
+
+    // Set methods
     void setNumOfBullets(const unsigned &newNumOfBullets);
 
+    // Other methods
+    std::string toString() const override;
+
 private:
+
     unsigned m_numOfBullets;
 };
 

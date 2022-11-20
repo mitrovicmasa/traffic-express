@@ -16,14 +16,21 @@
 class Player
 {
 public:
+
+    // Constructors
     Player();
     Player(BanditType id, const std::vector<Card*> &hand, const std::vector<Card*> &deck,
            const std::vector<BulletCard*> &bulletDeck, int positionInTrain, bool roof, const std::vector<Treasure> treasure);
     Player(BanditType id, int positionInTrain);
     Player(const Player &player);
 
+    // Destructor
+    ~Player() = default;
+
+    // Operator overloading
     Player &operator=(const Player &player);
 
+    // Get methods
     BanditType id() const;
     const std::vector<Card*> &hand() const;
     const std::vector<Card*> &deck() const;
@@ -32,6 +39,7 @@ public:
     bool roof() const;
     const std::vector<Treasure> &treasure() const;
 
+    // Set methods
     void setId(BanditType &newId);
     void setHand(const std::vector<Card*> &newHand);
     void setDeck(const std::vector<Card*> &newDeck);
@@ -40,14 +48,14 @@ public:
     void setRoof(bool &newRoof);
     void setTreasure(std::vector<Treasure> newTreasure);
 
+    // Other methods
     bool isBulletDeckEmpty() const;
     int countAmountOfTreasure() const;
 
     std::string toString() const;
 
-    ~Player() = default;
-
 private:
+
     BanditType m_id;
     std::vector<Card*> m_hand;
     std::vector<Card*> m_deck;
