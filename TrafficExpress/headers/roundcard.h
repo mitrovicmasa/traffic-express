@@ -41,10 +41,10 @@ std::string toStringRoundCardType(const RoundCardType &card);
 std::string toStringEventType(const EventType &event);
 std::string toStringMiniRoundType(const MiniRoundType &miniRound);
 
-class RoundCards {
+class RoundCard {
 
 public:
-    RoundCards(RoundCardType type, EventType event, const std::vector<MiniRoundType> &miniRound);
+    RoundCard(RoundCardType type, EventType event, const std::vector<MiniRoundType> &miniRound);
     
     RoundCardType type() const;
     const std::vector<MiniRoundType> &miniRound() const;
@@ -56,9 +56,9 @@ public:
 
     std::string toString() const;
 
-    ~RoundCards() = default;
+    ~RoundCard() = default;
 
-    RoundCards(const RoundCards&);
+    RoundCard(const RoundCard&);
     void pushBackMiniRound(MiniRoundType type);
 
 

@@ -26,8 +26,8 @@ set(PROJECT_SOURCES
         headers/treasure.h
         src/wagon.cpp
         headers/wagon.h
-        src/roundcards.cpp
-        headers/roundcards.h
+        src/roundcard.cpp
+        headers/roundcard.h
         src/game.cpp
         headers/game.h
         src/player.cpp
@@ -50,7 +50,7 @@ set(PROJECT_SOURCES
         mainwindow.ui
         src/treasure.cpp
         src/wagon.cpp
-        src/roundcards.cpp
+        src/roundcard.cpp
         src/game.cpp
         src/player.cpp
         src/card.cpp
@@ -64,7 +64,7 @@ set(PROJECT_HEADERS
         mainwindow.h
         headers/treasure.h
         headers/wagon.h
-        headers/roundcards.h
+        headers/roundcard.h
         headers/game.h
         headers/player.h
         headers/card.h
