@@ -9,6 +9,8 @@ public:
     BulletCard(BanditType bandit, unsigned numOfBullets);
     ~BulletCard();
 
+    Card *Copy() const override;
+
     std::string toString() const override;
 
     const unsigned &numOfBullets() const;

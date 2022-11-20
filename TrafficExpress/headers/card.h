@@ -9,7 +9,7 @@ public:
     Card();
     virtual ~Card();
 
-    //virtual Card *Copy() const = 0; TODO
+    virtual Card *Copy() const = 0;
 
     virtual std::string toString() const;
 

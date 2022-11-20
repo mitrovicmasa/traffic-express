@@ -23,3 +23,8 @@ NeutralBullet::~NeutralBullet()
 {
 
 }
+
+Card *NeutralBullet::Copy() const
+{
+    return new NeutralBullet(*this);
+}

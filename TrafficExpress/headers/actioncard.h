@@ -19,6 +19,8 @@ public:
     ActionCard(ActionType action, BanditType bandit);
     ~ActionCard();
 
+    Card *Copy() const override;
+
     std::string toString() const override;
 
     ActionType action() const;

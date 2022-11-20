@@ -23,3 +23,8 @@ BulletCard::~BulletCard()
 {
 
 }
+
+Card *BulletCard::Copy() const
+{
+    return new BulletCard(*this);
+}

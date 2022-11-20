@@ -9,6 +9,8 @@ public:
     NeutralBullet(const unsigned id);
     ~NeutralBullet();
 
+    Card *Copy() const override;
+
     std::string toString() const override;
 
     const unsigned &id() const;

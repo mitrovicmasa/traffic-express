@@ -4,7 +4,6 @@ ActionCard::ActionCard(ActionType action, BanditType bandit) : BanditCard(bandit
     m_action(action)
 {}
 
-//najgluplji toString ikad vidjen
 std::string ActionCard::toString() const
 {
     std::string actionName = "";
@@ -43,4 +42,9 @@ void ActionCard::setAction(ActionType newAction)
 ActionCard::~ActionCard()
 {
 
+}
+
+Card *ActionCard::Copy() const
+{
+    return new ActionCard(*this);
 }
