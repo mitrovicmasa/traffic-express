@@ -1,11 +1,20 @@
 #include "../headers/roundcard.h"
 
+// Constructors
 RoundCard::RoundCard(RoundCardType type, EventType event, const std::vector<MiniRoundType> &miniRound)
     : m_type(type), 
       m_event(event),
       m_miniRound(miniRound)
 {}
 
+RoundCard::RoundCard(const RoundCard &r)
+    :
+    m_type(r.m_type), 
+    m_event(r.m_event),
+    m_miniRound(r.m_miniRound)
+{}
+
+// Get methods
 RoundCardType RoundCard::type() const
 {
     return m_type;
@@ -21,7 +30,7 @@ const std::vector<MiniRoundType> &RoundCard::miniRound() const
     return m_miniRound;
 }
 
-
+// Set methods
 void RoundCard::setType(RoundCardType &newType)
 {
     m_type = newType;
@@ -35,6 +44,13 @@ void RoundCard::setEvent(EventType &newEvent)
 void RoundCard::setMiniRound(const std::vector<MiniRoundType> &newMiniRound)
 {
     m_miniRound = newMiniRound;
+}
+
+// Other methods
+void RoundCard::pushBackMiniRound(MiniRoundType type)
+{
+    m_miniRound.push_back(type);
+
 }
 
 std::string toStringRoundCardType(const RoundCardType &card)
@@ -96,15 +112,4 @@ std::string toStringMiniRoundType(const MiniRoundType &miniRound)
 
 }
 
-RoundCard::RoundCard(const RoundCard &r)
-    :
-    m_type(r.m_type), 
-    m_event(r.m_event),
-    m_miniRound(r.m_miniRound)
-{}
 
-void RoundCard::pushBackMiniRound(MiniRoundType type)
-{
-    m_miniRound.push_back(type);
-
-}

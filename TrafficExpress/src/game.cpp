@@ -1,5 +1,6 @@
 #include "../headers/game.h"
 
+// Constructors
 Game::Game()
 {
 
@@ -10,6 +11,7 @@ Game::Game(const std::vector<Player> &players, const std::vector<Wagon> &wagons,
            const std::vector<Treasure> &unusedTreasure, BanditType mostBulletsShot, BanditType richestPlayer)
 {}
 
+// Get methods
 const std::vector<Player> &Game::players() const
 {
     return m_players;
@@ -45,6 +47,7 @@ BanditType Game::richestPlayer() const
     return m_richestPlayer;
 }
 
+// Set methods
 void Game::setPlayers(const std::vector<Player> &newPlayers)
 {
     m_players = newPlayers;
@@ -79,4 +82,6 @@ void Game::setRichestPlayer(BanditType newRichestPlayer)
 {
     m_richestPlayer = newRichestPlayer;
 }
+
+//Other methods
 

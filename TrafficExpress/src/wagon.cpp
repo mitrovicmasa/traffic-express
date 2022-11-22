@@ -2,12 +2,14 @@
 #include <strings.h>
 #include<QRandomGenerator>
 
+// Constructors
 Wagon::Wagon()
     :m_contentDown(std::vector<Treasure>()),m_contentUp(std::vector<Treasure>())
 {
 
 }
 
+// Other methods
 void Wagon::addContentUp(const Treasure t)
 {
     m_contentUp.push_back(t);

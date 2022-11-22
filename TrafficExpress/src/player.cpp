@@ -1,5 +1,6 @@
 #include "../headers/player.h"
 
+// Constructors
 Player::Player()
 {}
 
@@ -14,41 +15,6 @@ Player::Player(BanditType id, const std::vector<Card*> &hand, const std::vector<
       m_treasure(treasure)
 {}
 
-Player::Player(BanditType id, int positionInTrain)
-    :m_id(id),m_positionInTrain(positionInTrain)
-{
-
-    m_hand=std::vector<Card*>();
-    m_deck=std::vector<Card*>();
-    m_deck.push_back(new ActionCard(ActionType::MOVE,id));
-    m_deck.push_back(new ActionCard(ActionType::MOVE,id));
-
-    m_deck.push_back(new ActionCard(ActionType::FIRE,id));
-    m_deck.push_back(new ActionCard(ActionType::FIRE,id));
-
-    m_deck.push_back(new ActionCard(ActionType::FLOOR_CHANGE,id));
-    m_deck.push_back(new ActionCard(ActionType::FLOOR_CHANGE,id));
-
-    m_deck.push_back(new ActionCard(ActionType::MARSHAL,id));
-    m_deck.push_back(new ActionCard(ActionType::PUNCH,id));
-
-    m_deck.push_back(new ActionCard(ActionType::TAKETREASURE,id));
-    m_deck.push_back(new ActionCard(ActionType::TAKETREASURE,id));
-
-
-    m_bulletDeck=std::vector<BulletCard*>();
-
-    for(unsigned i=1;i<=6;i++){
-        m_bulletDeck.push_back(new BulletCard(id,i));
-
-
-    }
-
-    m_roof=false;
-    m_treasure=std::vector<Treasure>();
-    m_treasure.push_back(Treasure());
-}
-
 Player::Player(const Player &player)
     : m_id(player.m_id),
       m_hand(player.m_hand),
@@ -59,21 +25,7 @@ Player::Player(const Player &player)
       m_treasure(player.m_treasure)
 {}
 
-
-Player &Player::operator=(const Player &player)
-{
-    auto tmp = Player(player);
-    std::swap(m_id, tmp.m_id);
-    std::swap(m_hand, tmp.m_hand);
-    std::swap(m_deck, tmp.m_deck);
-    std::swap(m_bulletDeck, tmp.m_bulletDeck);
-    std::swap(m_positionInTrain, tmp.m_positionInTrain);
-    std::swap(m_roof, tmp.m_roof);
-    std::swap(m_treasure, tmp.m_treasure);
-
-    return *this;
-}
-
+// Get methods
 BanditType Player::id() const
 {
     return m_id;
@@ -109,6 +61,7 @@ const std::vector<Treasure> &Player::treasure() const
     return m_treasure;
 }
 
+// Set methods
 void Player::setId(BanditType &newId)
 {
     m_id = newId;
@@ -142,6 +95,56 @@ void Player::setRoof(bool &newRoof)
 void Player::setTreasure(std::vector<Treasure> newTreasure)
 {
     m_treasure = newTreasure;
+}
+
+// Other methods
+Player::Player(BanditType id, int positionInTrain)
+    :m_id(id),m_positionInTrain(positionInTrain)
+{
+
+    m_hand=std::vector<Card*>();
+    m_deck=std::vector<Card*>();
+    m_deck.push_back(new ActionCard(ActionType::MOVE,id));
+    m_deck.push_back(new ActionCard(ActionType::MOVE,id));
+
+    m_deck.push_back(new ActionCard(ActionType::FIRE,id));
+    m_deck.push_back(new ActionCard(ActionType::FIRE,id));
+
+    m_deck.push_back(new ActionCard(ActionType::FLOOR_CHANGE,id));
+    m_deck.push_back(new ActionCard(ActionType::FLOOR_CHANGE,id));
+
+    m_deck.push_back(new ActionCard(ActionType::MARSHAL,id));
+    m_deck.push_back(new ActionCard(ActionType::PUNCH,id));
+
+    m_deck.push_back(new ActionCard(ActionType::TAKETREASURE,id));
+    m_deck.push_back(new ActionCard(ActionType::TAKETREASURE,id));
+
+
+    m_bulletDeck=std::vector<BulletCard*>();
+
+    for(unsigned i=1;i<=6;i++){
+        m_bulletDeck.push_back(new BulletCard(id,i));
+
+
+    }
+
+    m_roof=false;
+    m_treasure=std::vector<Treasure>();
+    m_treasure.push_back(Treasure());
+}
+
+Player &Player::operator=(const Player &player)
+{
+    auto tmp = Player(player);
+    std::swap(m_id, tmp.m_id);
+    std::swap(m_hand, tmp.m_hand);
+    std::swap(m_deck, tmp.m_deck);
+    std::swap(m_bulletDeck, tmp.m_bulletDeck);
+    std::swap(m_positionInTrain, tmp.m_positionInTrain);
+    std::swap(m_roof, tmp.m_roof);
+    std::swap(m_treasure, tmp.m_treasure);
+
+    return *this;
 }
 
 bool Player::isBulletDeckEmpty() const

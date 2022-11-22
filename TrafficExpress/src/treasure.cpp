@@ -1,5 +1,6 @@
 #include "../headers/treasure.h"
 
+// Constructors
 Treasure::Treasure()
     :m_type(TreasureType::MONEYBAG),m_value(250)
 {
@@ -18,12 +19,34 @@ Treasure::Treasure(const Treasure &t)
 
 }
 
+// Get methods
+TreasureType Treasure::getType()
+{
+    return m_type;
+}
+
+int Treasure::getValue()
+{
+    return m_value;
+}
+
+// Other methods
 Treasure &Treasure::operator=(const Treasure &t)
 {
     auto tmp=Treasure(t);
     std::swap(m_type,tmp.m_type);
     std::swap(m_value,tmp.m_value);
     return *this;
+}
+
+bool Treasure::operator==(const Treasure &t)
+{
+    return m_type==t.m_type && m_value==t.m_value;
+}
+
+bool Treasure::operator!=(const Treasure &t)
+{
+    return !(m_type==t.m_type && m_value==t.m_value);
 }
 
 std::string Treasure::toString()
@@ -37,23 +60,5 @@ std::string Treasure::toString()
     }
 }
 
-bool Treasure::operator==(const Treasure &t)
-{
-    return m_type==t.m_type && m_value==t.m_value;
-}
 
-bool Treasure::operator!=(const Treasure &t)
-{
-    return !(m_type==t.m_type && m_value==t.m_value);
-}
-
-TreasureType Treasure::getType()
-{
-    return m_type;
-}
-
-int Treasure::getValue()
-{
-    return m_value;
-}
 

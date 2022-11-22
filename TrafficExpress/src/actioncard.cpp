@@ -1,9 +1,35 @@
 #include "../headers/actioncard.h"
 
+// Constructors
 ActionCard::ActionCard(ActionType action, BanditType bandit) : BanditCard(bandit),
     m_action(action)
 {}
 
+Card *ActionCard::Copy() const
+{
+    return new ActionCard(*this);
+}
+
+
+// Destructor
+ActionCard::~ActionCard()
+{
+
+}
+
+// Get methods
+ActionType ActionCard::action() const
+{
+    return m_action;
+}
+
+// Set methods
+void ActionCard::setAction(ActionType newAction)
+{
+    m_action = newAction;
+}
+
+// Other methods
 std::string ActionCard::toString() const
 {
     std::string actionName = "";
@@ -26,25 +52,4 @@ std::string ActionCard::toString() const
             break;
     }
     return BanditCard::toString() + "doing action: " + actionName;
-}
-
-
-ActionType ActionCard::action() const
-{
-    return m_action;
-}
-
-void ActionCard::setAction(ActionType newAction)
-{
-    m_action = newAction;
-}
-
-ActionCard::~ActionCard()
-{
-
-}
-
-Card *ActionCard::Copy() const
-{
-    return new ActionCard(*this);
 }

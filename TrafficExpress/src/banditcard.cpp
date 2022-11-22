@@ -1,29 +1,34 @@
 #include "../headers/banditcard.h"
 
+// Constructors
 BanditCard::BanditCard(BanditType bandit) : m_bandit(bandit)
 {
+
 }
 
-std::string BanditCard::toString() const
+// Destructor
+BanditCard::~BanditCard()
 {
-    std::string banditName = ::toString(m_bandit);
-    return banditName + "'s bandit card ";
+
 }
 
-void BanditCard::setBandit(BanditType newBandit)
-{
-    m_bandit = newBandit;
-}
-
+// Get methods
 BanditType BanditCard::bandit() const
 {
     return m_bandit;
 }
 
-
-BanditCard::~BanditCard()
+// Set methods
+void BanditCard::setBandit(BanditType newBandit)
 {
+    m_bandit = newBandit;
+}
 
+// Other methods
+std::string BanditCard::toString() const
+{
+    std::string banditName = ::toString(m_bandit);
+    return banditName + "'s bandit card ";
 }
 
 std::string toString(BanditType bandit)

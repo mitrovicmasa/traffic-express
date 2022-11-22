@@ -1,30 +1,34 @@
 #include "../headers/bulletcard.h"
 
+// Constructors
 BulletCard::BulletCard(BanditType bandit, unsigned numOfBullets) : BanditCard(bandit)
 {}
 
-std::string BulletCard::toString() const
+Card *BulletCard::Copy() const
 {
-    return BanditCard::toString() + " ima jos " + std::to_string(m_numOfBullets);
+    return new BulletCard(*this);
 }
 
-
-const unsigned &BulletCard::numOfBullets() const
-{
-    return m_numOfBullets;
-}
-
-void BulletCard::setNumOfBullets(const unsigned &newNumOfBullets)
-{
-    m_numOfBullets = newNumOfBullets;
-}
-
+// Destructor
 BulletCard::~BulletCard()
 {
 
 }
 
-Card *BulletCard::Copy() const
+// Get methods
+const unsigned &BulletCard::numOfBullets() const
 {
-    return new BulletCard(*this);
+    return m_numOfBullets;
+}
+
+// Set methods
+void BulletCard::setNumOfBullets(const unsigned &newNumOfBullets)
+{
+    m_numOfBullets = newNumOfBullets;
+}
+
+// Other methods
+std::string BulletCard::toString() const
+{
+    return BanditCard::toString() + " ima jos " + std::to_string(m_numOfBullets);
 }
