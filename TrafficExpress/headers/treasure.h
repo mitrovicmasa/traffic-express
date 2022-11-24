@@ -13,6 +13,7 @@ public:
     // Constructors
     Treasure();
     Treasure(int value,TreasureType type);
+    Treasure(TreasureType type);
     Treasure(const Treasure&t);
 
     // Destructor

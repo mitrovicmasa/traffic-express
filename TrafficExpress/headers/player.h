@@ -21,7 +21,7 @@ public:
     Player();
     Player(BanditType id, const std::vector<Card*> &hand, const std::vector<Card*> &deck,
            const std::vector<BulletCard*> &bulletDeck, int positionInTrain, bool roof, const std::vector<Treasure> treasure);
-    Player(BanditType id, int positionInTrain);
+    Player(BanditType id);
     Player(const Player &player);
 
     // Destructor
@@ -51,6 +51,7 @@ public:
     // Other methods
     bool isBulletDeckEmpty() const;
     int countAmountOfTreasure() const;
+    void shuffleDeck();
 
     std::string toString() const;
 

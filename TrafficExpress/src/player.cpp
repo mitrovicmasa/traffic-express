@@ -1,5 +1,7 @@
 #include "../headers/player.h"
 
+#include <time.h>
+
 // Constructors
 Player::Player()
 {}
@@ -24,6 +26,38 @@ Player::Player(const Player &player)
       m_roof(player.m_roof),
       m_treasure(player.m_treasure)
 {}
+
+Player::Player(BanditType id)
+    :m_id(id)
+{
+
+    m_hand=std::vector<Card*>();
+    m_deck=std::vector<Card*>();
+    m_deck.push_back(new ActionCard(ActionType::MOVE,id));
+    m_deck.push_back(new ActionCard(ActionType::MOVE,id));
+
+    m_deck.push_back(new ActionCard(ActionType::FIRE,id));
+    m_deck.push_back(new ActionCard(ActionType::FIRE,id));
+
+    m_deck.push_back(new ActionCard(ActionType::FLOOR_CHANGE,id));
+    m_deck.push_back(new ActionCard(ActionType::FLOOR_CHANGE,id));
+
+    m_deck.push_back(new ActionCard(ActionType::MARSHAL,id));
+    m_deck.push_back(new ActionCard(ActionType::PUNCH,id));
+
+    m_deck.push_back(new ActionCard(ActionType::TAKETREASURE,id));
+    m_deck.push_back(new ActionCard(ActionType::TAKETREASURE,id));
+
+
+    m_bulletDeck = std::vector<BulletCard*>();
+    for(unsigned i=1;i<=6;i++){
+        m_bulletDeck.push_back(new BulletCard(id,i));
+    }
+
+    m_roof=false;
+    m_treasure=std::vector<Treasure>();
+    m_treasure.push_back(Treasure());
+}
 
 // Get methods
 BanditType Player::id() const
@@ -98,40 +132,7 @@ void Player::setTreasure(std::vector<Treasure> newTreasure)
 }
 
 // Other methods
-Player::Player(BanditType id, int positionInTrain)
-    :m_id(id),m_positionInTrain(positionInTrain)
-{
 
-    m_hand=std::vector<Card*>();
-    m_deck=std::vector<Card*>();
-    m_deck.push_back(new ActionCard(ActionType::MOVE,id));
-    m_deck.push_back(new ActionCard(ActionType::MOVE,id));
-
-    m_deck.push_back(new ActionCard(ActionType::FIRE,id));
-    m_deck.push_back(new ActionCard(ActionType::FIRE,id));
-
-    m_deck.push_back(new ActionCard(ActionType::FLOOR_CHANGE,id));
-    m_deck.push_back(new ActionCard(ActionType::FLOOR_CHANGE,id));
-
-    m_deck.push_back(new ActionCard(ActionType::MARSHAL,id));
-    m_deck.push_back(new ActionCard(ActionType::PUNCH,id));
-
-    m_deck.push_back(new ActionCard(ActionType::TAKETREASURE,id));
-    m_deck.push_back(new ActionCard(ActionType::TAKETREASURE,id));
-
-
-    m_bulletDeck=std::vector<BulletCard*>();
-
-    for(unsigned i=1;i<=6;i++){
-        m_bulletDeck.push_back(new BulletCard(id,i));
-
-
-    }
-
-    m_roof=false;
-    m_treasure=std::vector<Treasure>();
-    m_treasure.push_back(Treasure());
-}
 
 Player &Player::operator=(const Player &player)
 {
@@ -155,6 +156,12 @@ bool Player::isBulletDeckEmpty() const
 int Player::countAmountOfTreasure() const
 {
     return std::accumulate(m_treasure.cbegin(), m_treasure.cend(), 0, [](int acc, auto treasure) { return acc + treasure.getValue(); });
+}
+
+void Player::shuffleDeck()
+{
+    srand(time(0));
+    std::random_shuffle(this->m_deck.begin(),this->m_deck.end());
 }
 
 std::string Player::toString() const

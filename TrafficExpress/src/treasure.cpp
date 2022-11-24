@@ -13,6 +13,12 @@ Treasure::Treasure(int value, TreasureType type)
 
 }
 
+Treasure::Treasure(TreasureType type)
+    :m_type(type)
+{
+
+}
+
 Treasure::Treasure(const Treasure &t)
     :m_type(t.m_type),m_value(t.m_value)
 {
