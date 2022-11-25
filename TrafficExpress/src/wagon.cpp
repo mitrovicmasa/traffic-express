@@ -9,6 +9,12 @@ Wagon::Wagon()
 
 }
 
+Wagon::Wagon(const std::vector<Treasure> &contentDown, const std::vector<Treasure> &contentUp)
+    : m_contentDown(contentDown), m_contentUp(contentUp)
+{
+
+}
+
 // Other methods
 void Wagon::addContentUp(const Treasure t)
 {

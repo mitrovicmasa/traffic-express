@@ -54,13 +54,13 @@ int main(int argc, char *argv[])
         // 6x Wagons ((3xPurse,1xDiamond),(4xPurse,1xDiamond),(3xPurse),(1xPurse),(1xPurse,1xDiamond),(3xDiamond))
         // 1x Locomotive
     std::vector<Wagon> allPossibleWagons = {
-        Wagon(Treasure(TreasureType::MONEYBAG),Treasure(TreasureType::MONEYBAG),Treasure(TreasureType::MONEYBAG),Treasure(TreasureType::DIAMOND)),
-        Wagon(Treasure(TreasureType::MONEYBAG),Treasure(TreasureType::MONEYBAG),Treasure(TreasureType::MONEYBAG),Treasure(TreasureType::MONEYBAG),Treasure(TreasureType::DIAMOND)),
-        Wagon(Treasure(TreasureType::MONEYBAG),Treasure(TreasureType::MONEYBAG),Treasure(TreasureType::MONEYBAG)),
-        Wagon(Treasure(TreasureType::MONEYBAG)),
-        Wagon(Treasure(TreasureType::MONEYBAG),Treasure(TreasureType::DIAMOND)),
-        Wagon(Treasure(TreasureType::DIAMOND),Treasure(TreasureType::DIAMOND),Treasure(TreasureType::DIAMOND))
-        )};
+        Wagon({TreasureType::MONEYBAG, TreasureType::MONEYBAG, TreasureType::MONEYBAG, TreasureType::DIAMOND}, {}),
+        Wagon({TreasureType::MONEYBAG, TreasureType::MONEYBAG, TreasureType::MONEYBAG, TreasureType::MONEYBAG, TreasureType::DIAMOND}, {}),
+        Wagon({TreasureType::MONEYBAG, TreasureType::MONEYBAG, TreasureType::MONEYBAG}, {}),
+        Wagon({TreasureType::MONEYBAG}, {}),
+        Wagon({TreasureType::MONEYBAG, TreasureType::DIAMOND}, {}),
+        Wagon({TreasureType::DIAMOND, TreasureType::DIAMOND, TreasureType::DIAMOND}, {})
+    };
 
     //        Random Wagon order depending on number of players (Fisher-Yates shuffle)
     //        Place required Loot (of random value each) in the wagons

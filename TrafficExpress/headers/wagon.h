@@ -10,6 +10,7 @@ public:
 
     // Constructors
     Wagon();
+    Wagon(const std::vector<Treasure> &contentDown, const std::vector<Treasure> &contentUp);
 
     // Destructor
 
