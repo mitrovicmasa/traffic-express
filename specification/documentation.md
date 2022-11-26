@@ -157,7 +157,7 @@ Na kraju igre, ko je ispalio najviše metaka dobija bonus od 1000 dinara, a ko j
 
 **Dodatne informacije:** /
 
-![InicijalizacijaJednePartije](./use_cases/inicijalizacija_jedne_partije/inicijalizacija_jedne_partije.jpg)
+![InicijalizacijaJednePartije](./use_cases/inicijalizacija_jedne_partije/inicijalizacija_jedne_partije.png)
 
 ### Prikazivanje rang liste:
 
