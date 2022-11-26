@@ -43,8 +43,8 @@
 7. Aplikacija prelazi na glavni meni. 
 
 **Alternativni tokovi:**
-A1: Neočekivani izlaz iz aplikacije: Ukoliko u bilo kom koraku korisnik prekine aplikaciju, sve zapamćene informacije o partiji se poništavaju i aplikacija završava rad. Slučaj upotrebe je završen. 
-A2: Prekid konekcije sa serverom: Ukoliko se u bilo kom trenutku igrač diskonektuje sa servera, aplikacija nastavlja partiju umesto njega igrajući nasumične poteze. Aplikacija prikazuje igraču prikazuje poruku da je diskonektovan i vraća ga u glavni meni. Slučaj upotrebe je završen. 
+* A1: Neočekivani izlaz iz aplikacije: Ukoliko u bilo kom koraku korisnik prekine aplikaciju, sve zapamćene informacije o partiji se poništavaju i aplikacija završava rad. Slučaj upotrebe je završen. 
+* A2: Prekid konekcije sa serverom: Ukoliko se u bilo kom trenutku igrač diskonektuje sa servera, aplikacija nastavlja partiju umesto njega igrajući nasumične poteze. Aplikacija prikazuje igraču prikazuje poruku da je diskonektovan i vraća ga u glavni meni. Slučaj upotrebe je završen. 
 
 **Podtokovi:** /
 
