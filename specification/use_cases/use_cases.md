@@ -1,12 +1,12 @@
 ## Slučajevi upotrebe:
 
-- #### Igranje jedne partije igre:
+- **Igranje jedne partije igre:**
 
   - **Povezivanje na sever**
   - **Inicijalizacija jedne partije**
   - **Prikazivanje rang liste**
   
-- #### Prikazivanje pravila igre
+- **Prikazivanje pravila igre**
 
 
 ## Dijagram slučajeva upotrebe: 
