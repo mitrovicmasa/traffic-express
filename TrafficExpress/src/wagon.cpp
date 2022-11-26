@@ -15,6 +15,12 @@ Wagon::Wagon(const std::vector<Treasure> &contentDown, const std::vector<Treasur
 
 }
 
+// Setters
+void Wagon::setContentDown(const std::vector<Treasure>& newContentDown)
+{
+    m_contentDown = newContentDown;
+}
+
 // Other methods
 void Wagon::addContentUp(const Treasure t)
 {
@@ -65,6 +71,11 @@ Treasure Wagon::takeContentDown(TreasureType type)
         return r;
     }
     return Treasure(0,TreasureType::MONEYBAG);
+}
+
+int Wagon::numberOfTreasureInWagon(TreasureType type) const
+{
+    return std::count_if(m_contentDown.begin(), m_contentDown.end(), [type](auto treasure) { return treasure.getType() == type; });
 }
 
 std::string Wagon::toString()

@@ -17,7 +17,7 @@ public:
 
     // Get methods
     // Set methods
-
+    void setContentDown(const std::vector<Treasure>& newContentDown);
 
     // Other methods
 
@@ -25,6 +25,7 @@ public:
     void addContentDown(Treasure);
     Treasure takeContentUp(TreasureType);
     Treasure takeContentDown(TreasureType);
+    int numberOfTreasureInWagon(TreasureType) const;
 
     std::string toString();
 
