@@ -13,8 +13,145 @@
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
-  <widget class="QWidget" name="centralwidget"/>
-  <widget class="QMenuBar" name="menubar"/>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QStackedWidget" name="stackedWidget">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>0</y>
+      <width>781</width>
+      <height>551</height>
+     </rect>
+    </property>
+    <property name="currentIndex">
+     <number>2</number>
+    </property>
+    <widget class="QWidget" name="page">
+     <widget class="QWidget" name="verticalLayoutWidget">
+      <property name="geometry">
+       <rect>
+        <x>120</x>
+        <y>30</y>
+        <width>541</width>
+        <height>461</height>
+       </rect>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout">
+       <item>
+        <widget class="QLabel" name="label">
+         <property name="text">
+          <string>page0</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pbPlay">
+         <property name="text">
+          <string>Play</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pbRules">
+         <property name="text">
+          <string>Rules</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="page_2">
+     <widget class="QLabel" name="lbRules">
+      <property name="geometry">
+       <rect>
+        <x>160</x>
+        <y>140</y>
+        <width>351</width>
+        <height>141</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>The rules...</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="lbRules_2">
+      <property name="geometry">
+       <rect>
+        <x>270</x>
+        <y>60</y>
+        <width>181</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>page1</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pushButton_2">
+      <property name="geometry">
+       <rect>
+        <x>240</x>
+        <y>360</y>
+        <width>151</width>
+        <height>25</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>back to main menu</string>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="page_3">
+     <widget class="QGraphicsView" name="graphicsView">
+      <property name="geometry">
+       <rect>
+        <x>-10</x>
+        <y>50</y>
+        <width>791</width>
+        <height>391</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_2">
+      <property name="geometry">
+       <rect>
+        <x>300</x>
+        <y>20</y>
+        <width>67</width>
+        <height>17</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>page2</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pushButton">
+      <property name="geometry">
+       <rect>
+        <x>280</x>
+        <y>460</y>
+        <width>141</width>
+        <height>51</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>back to main menu</string>
+      </property>
+     </widget>
+    </widget>
+   </widget>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>800</width>
+     <height>22</height>
+    </rect>
+   </property>
+  </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
  <resources/>

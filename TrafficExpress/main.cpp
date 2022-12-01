@@ -10,10 +10,10 @@ std::vector<Treasure> getSpecificTreasure(std::vector<Treasure> treasure, Treasu
 
 int main(int argc, char *argv[])
 {
-//    QApplication a(argc, argv);
-//    MainWindow w;
-//    w.show();
-//    return a.exec();
+    QApplication a(argc, argv);
+    MainWindow w;
+    w.show();
+    return a.exec();
 
 
     //ToDo: Add 13x Neutral Bullet Cards to Game

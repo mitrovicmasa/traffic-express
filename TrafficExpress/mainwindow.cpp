@@ -14,3 +14,28 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+
+void MainWindow::on_pbRules_clicked()
+{
+    ui->stackedWidget->setCurrentIndex(1);
+}
+
+
+void MainWindow::on_pushButton_2_clicked()
+{
+    ui->stackedWidget->setCurrentIndex(0);
+}
+
+
+
+void MainWindow::on_pbPlay_clicked()
+{
+     ui->stackedWidget->setCurrentIndex(2);
+}
+
+
+void MainWindow::on_pushButton_clicked()
+{
+    ui->stackedWidget->setCurrentIndex(0);
+}
+
