@@ -1,12 +1,42 @@
 #include "mainwindow.h"
 #include "./ui_mainwindow.h"
 
+#include <QMessageBox>
+
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
+    //init of Dialog
+    dialog=new QDialog();
+
+    dialog->setWindowModality(Qt::WindowModality::ApplicationModal);
+    //dialog->setWindowTitle("")
+    dialog->setMinimumWidth(640);
+    dialog->setMinimumHeight(480);
+
+    QVBoxLayout *vl=new QVBoxLayout();
+
+
+    QPushButton*pbBackToMainMenu=new QPushButton();
+    pbBackToMainMenu->setParent(dialog);
+    pbBackToMainMenu->setText("Back to main menu");
+    connect(pbBackToMainMenu,&QPushButton::clicked,this,&MainWindow::onBackToTheMenu);
+
+    QPushButton*pbQuit=new QPushButton();
+    pbQuit->setParent(dialog);
+    pbQuit->setText("Quit");
+    connect(pbQuit,&QPushButton::clicked,this,&QCoreApplication::quit);
+
+    vl->addWidget(pbBackToMainMenu);
+    vl->addWidget(pbQuit);
+
+    dialog->setLayout(vl);
+    //end of dialog init
+
 
     connect(ui->pbGameRules, &QPushButton::clicked,
             this, &MainWindow::onGameRules);
@@ -25,6 +55,7 @@ MainWindow::MainWindow(QWidget *parent)
 MainWindow::~MainWindow()
 {
     delete ui;
+    delete dialog;
 }
 
 void MainWindow::onPlay()
@@ -40,6 +71,7 @@ void MainWindow::onGameRules()
 void MainWindow::onBackToTheMenu()
 {
     ui->stackedWidget->setCurrentIndex(0);
+    dialog->close();
 }
 
 void MainWindow::onConnect()
@@ -68,6 +100,14 @@ void MainWindow::onStart()
     // SADA POCINJE INICIJALIZACIJA PARTIJE !!!!!
 
     ui->stackedWidget->setCurrentIndex(4);
+}
+
+void MainWindow::keyPressEvent(QKeyEvent *event)
+{
+    if(ui->stackedWidget->currentIndex()==4 && event->key()==Qt::Key_Escape){
+
+        dialog->show();
+    }
 }
 
 

@@ -1,7 +1,10 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include <QKeyEvent>
 #include <QMainWindow>
+#include<QDialog>
+#include<QPushButton>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -24,6 +27,9 @@ private slots:
     void onStart();
 
 private:
+    void keyPressEvent(QKeyEvent*);
+
     Ui::MainWindow *ui;
+    QDialog*dialog;
 };
 #endif // MAINWINDOW_H

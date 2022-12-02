@@ -33,44 +33,14 @@
        <bool>true</bool>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>4</number>
       </property>
       <widget class="QWidget" name="pageMainMenu">
        <property name="palette">
         <palette>
-         <active>
-          <colorrole role="Button">
-           <brush brushstyle="SolidPattern">
-            <color alpha="255">
-             <red>205</red>
-             <green>94</green>
-             <blue>94</blue>
-            </color>
-           </brush>
-          </colorrole>
-         </active>
-         <inactive>
-          <colorrole role="Button">
-           <brush brushstyle="SolidPattern">
-            <color alpha="255">
-             <red>239</red>
-             <green>239</green>
-             <blue>239</blue>
-            </color>
-           </brush>
-          </colorrole>
-         </inactive>
-         <disabled>
-          <colorrole role="Button">
-           <brush brushstyle="SolidPattern">
-            <color alpha="255">
-             <red>205</red>
-             <green>94</green>
-             <blue>94</blue>
-            </color>
-           </brush>
-          </colorrole>
-         </disabled>
+         <active/>
+         <inactive/>
+         <disabled/>
         </palette>
        </property>
        <widget class="QPushButton" name="pbPlay">
@@ -469,7 +439,17 @@
         </property>
        </widget>
       </widget>
-      <widget class="QWidget" name="pageStartingGame"/>
+      <widget class="QWidget" name="pageStartingGame">
+       <layout class="QVBoxLayout" name="verticalLayout_3">
+        <item>
+         <layout class="QVBoxLayout" name="verticalLayout">
+          <item>
+           <widget class="QGraphicsView" name="graphicsView"/>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </widget>
      </widget>
     </item>
    </layout>
