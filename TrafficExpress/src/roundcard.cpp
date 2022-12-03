@@ -87,7 +87,9 @@ std::string toStringEventType(const EventType &event)
     case EventType::MARSHALS_REVENGE:
         return "Marshal's Revenge";
     case EventType::HOSTAGE_TACKING_OF_THE_CONDUCTOR:
-        return "Hostage-Taking of the Conductor";   
+        return "Hostage-Taking of the Conductor";
+    case EventType::NONE:
+        return "No event";
     default:
         return "";
     }
@@ -112,4 +114,16 @@ std::string toStringMiniRoundType(const MiniRoundType &miniRound)
 
 }
 
+std::string RoundCard::toString() const
+{
+    std::string output = "";
+    output += toStringEventType(m_event);
+    output += "\n--------------------------\n";
+    for (unsigned i = 0; i < m_miniRound.size(); ++i) {
+        output += toStringMiniRoundType(m_miniRound[i]);
+        output += "\n";
+    }
+    output += "--------------------------\n";
 
+    return output;
+}
