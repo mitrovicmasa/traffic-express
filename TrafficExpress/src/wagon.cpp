@@ -32,6 +32,11 @@ void Wagon::addContentDown(Treasure t)
 {
     m_contentDown.push_back(t);
 }
+
+void Wagon::clearContentDown()
+{
+    m_contentDown.clear();
+}
 /*this function returns a random reasure of Type type from
 m_contentUp,and removes it from m_contentUp,and if no such Treasure is found the function returns a
 Treasure of value 0 and tye MONEYBAG,and doesent change m_contentUp*/

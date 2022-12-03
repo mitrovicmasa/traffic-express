@@ -4,9 +4,11 @@
 #include <QApplication>
 #include <iostream>
 #include <random>
+#include <cstdlib>
+#include <ctime>
 
 void generateAllTreasure(const int &count, const int &value, TreasureType type, std::vector<Treasure> &treasure);
-std::vector<Treasure> getSpecificTreasure(std::vector<Treasure> treasure, TreasureType type);
+std::vector<unsigned> getMoneybags(std::vector<unsigned>& remainingMoneybags, unsigned numberOfMoneybags);
 std::vector<RoundCard*> generateRoundCards(std::vector<EventType> &events, std::vector<std::vector<MiniRoundType>> &miniRounds);
 std::vector<RoundCard*> selectRoundCards(RoundCardType type, std::vector<RoundCard*> &allRoundCards);
 RoundCard* selectOneTrainStationCard(std::vector<RoundCard*> &allRoundCards);
@@ -37,7 +39,7 @@ int main(int argc, char *argv[])
     Player player6 = Player(BanditType::BUSINESS_WOMAN);
 
     players = {player1, player2, player3, player4, player5, player6};
-    unsigned numberOfPlayers = players.size();
+    unsigned numberOfPlayers = 3; //players.size();
     std::cout << numberOfPlayers << std::endl;
 
     // Each player:
@@ -46,21 +48,20 @@ int main(int argc, char *argv[])
         player.shuffleDeck();
 
     // 18x Moneybags (8x250$, 2x300$, 2x350$, 2x400$, 2x450$, 2x500$), 6x Diamonds (5x500$), 2x Suitcase (2x 1000$)
-    std::vector<Treasure> allPossibleTreasure = {};
-    generateAllTreasure(8, 250, TreasureType::MONEYBAG, allPossibleTreasure);
-    generateAllTreasure(2, 300, TreasureType::MONEYBAG, allPossibleTreasure);
-    generateAllTreasure(2, 350, TreasureType::MONEYBAG, allPossibleTreasure);
-    generateAllTreasure(2, 400, TreasureType::MONEYBAG, allPossibleTreasure);
-    generateAllTreasure(2, 450, TreasureType::MONEYBAG, allPossibleTreasure);
-    generateAllTreasure(2, 500, TreasureType::MONEYBAG, allPossibleTreasure);
-    generateAllTreasure(6, 500, TreasureType::DIAMOND, allPossibleTreasure);
-    generateAllTreasure(2, 1000, TreasureType::SUITCASE, allPossibleTreasure);
+    std::vector<Treasure> allPossibleTreasure;
+    allPossibleTreasure.push_back({Treasure(250,TreasureType::MONEYBAG)}); //0
+    allPossibleTreasure.push_back({Treasure(300,TreasureType::MONEYBAG)}); //1
+    allPossibleTreasure.push_back({Treasure(350,TreasureType::MONEYBAG)}); //2
+    allPossibleTreasure.push_back({Treasure(400,TreasureType::MONEYBAG)}); //3
+    allPossibleTreasure.push_back({Treasure(450,TreasureType::MONEYBAG)}); //4
+    allPossibleTreasure.push_back({Treasure(500,TreasureType::MONEYBAG)}); //5
+    //allPossibleTreasure.insert({Treasure(500,TreasureType::DIAMOND),6});
+    //allPossibleTreasure.insert({Treasure(1000,TreasureType::SUITCASE),2});
 
     // Create Locomotive and n number of wagons: (Locomotive must be first/last in array)
         // 6x Wagons ((3xPurse,1xDiamond),(4xPurse,1xDiamond),(3xPurse),(1xPurse),(1xPurse,1xDiamond),(3xDiamond))
         // 1x Locomotive
     std::vector<Wagon> allPossibleWagons = {
-        Wagon(),
         Wagon({TreasureType::MONEYBAG, TreasureType::MONEYBAG, TreasureType::MONEYBAG, TreasureType::DIAMOND}, {}),
         Wagon({TreasureType::MONEYBAG, TreasureType::MONEYBAG, TreasureType::MONEYBAG, TreasureType::MONEYBAG, TreasureType::DIAMOND}, {}),
         Wagon({TreasureType::MONEYBAG, TreasureType::MONEYBAG, TreasureType::MONEYBAG}, {}),
@@ -69,44 +70,54 @@ int main(int argc, char *argv[])
         Wagon({TreasureType::DIAMOND, TreasureType::DIAMOND, TreasureType::DIAMOND}, {})
     };
 
-    //        Place required Loot (of random value each) in the wagons
-    unsigned numberOfWagons = allPossibleWagons.size();
+    // Choose n out of 6 wagons
 
-    std::vector<Treasure> moneybags = {};
-    std::vector<Treasure> diamonds = {};
+    std::vector<Wagon> selectedWagons = {};
+    std::sample(allPossibleWagons.begin(), allPossibleWagons.end(), std::back_inserter(selectedWagons),
+               numberOfPlayers, std::mt19937_64{std::random_device{}()});
+
+
+    // Place required Loot (of random value each) in the wagons
+
+
+    std::vector<unsigned> remainingMoneybags = {0,0,0,0,0,0,0,0,1,1,2,2,3,3,4,5,5};
+    std::vector<unsigned> selectedMoneybagsIndexes;
     std::vector<Treasure> contentDown = {};
 
-    for (unsigned i = 1; i < numberOfWagons; ++i) {
-        moneybags = getSpecificTreasure(allPossibleTreasure, TreasureType::MONEYBAG);
-        diamonds = getSpecificTreasure(allPossibleTreasure, TreasureType::DIAMOND);
+    for (unsigned i = 0; i < numberOfPlayers; ++i) {
 
-        int numberOfMoneybags = allPossibleWagons[i].numberOfTreasureInWagon(TreasureType::MONEYBAG);
-        int numberOfDiamonds = allPossibleWagons[i].numberOfTreasureInWagon(TreasureType::DIAMOND);
 
-        std::sample(moneybags.begin(), moneybags.end(), std::back_inserter(contentDown),
-                    numberOfMoneybags, std::mt19937_64{std::random_device{}()});
+        int numberOfMoneybags = selectedWagons[i].numberOfTreasureInWagon(TreasureType::MONEYBAG);
+        int numberOfDiamonds = selectedWagons[i].numberOfTreasureInWagon(TreasureType::DIAMOND);
+
+        selectedWagons[i].clearContentDown();
+
+        selectedMoneybagsIndexes = getMoneybags(remainingMoneybags,numberOfMoneybags);
+
+        for (unsigned i = 0; i < numberOfMoneybags; ++i)
+            contentDown.push_back(allPossibleTreasure[selectedMoneybagsIndexes[i]]);
 
         for (unsigned i = 0; i < numberOfDiamonds; ++i)
             contentDown.push_back(Treasure(500, TreasureType::DIAMOND));
 
-        allPossibleWagons[i].setContentDown(contentDown);
+        selectedWagons[i].setContentDown(contentDown);
 
         contentDown.clear();
-        moneybags.clear();
-        diamonds.clear();
+        selectedMoneybagsIndexes.clear();
     }
 
-    //        Random Wagon order depending on number of players (Fisher-Yates shuffle)
-    std::vector<Wagon> wagons;
-    std::sample(allPossibleWagons.cbegin() + 1, allPossibleWagons.cend(), std::back_inserter(wagons),
-                numberOfPlayers, std::mt19937_64{std::random_device{}()});
+    //Place Marshall and Suitcase in the Locomotive
 
-//    for (Wagon &wagon : wagons)
-//        std::cout << wagon.toString() << std::endl << std::endl;
+    selectedWagons.push_back(Wagon({Treasure(1000, TreasureType::SUITCASE)},{}));
 
-    //        Place Marshall in the Locomotive
-    //        Place Suitcase in the Locomotive
-    allPossibleWagons[0].addContentDown(Treasure(1000, TreasureType::SUITCASE));
+    // Test
+    for (Wagon &wagon : selectedWagons)
+        std::cout << wagon.toString() << std::endl << std::endl;
+
+
+
+
+
 
     // 17 RoundCards (7x 2-4, 7x 5-6, 3x TrainStation) (EXACT CARD LAYOUTS are attached in the appropriate task)
     std::vector<EventType> events = {
@@ -161,6 +172,8 @@ int main(int argc, char *argv[])
 
     for (auto *card : roundCards)
         std::cout << card->toString() << std::endl;
+
+
     // Create the Game
 
     return 0;
@@ -172,13 +185,21 @@ void generateAllTreasure(const int &amount, const int &value, TreasureType type,
         treasure.push_back(Treasure(value, type));
 }
 
-std::vector<Treasure> getSpecificTreasure(std::vector<Treasure> treasure, TreasureType type)
+
+std::vector<unsigned> getMoneybags(std::vector<unsigned>& remainingMoneybags, unsigned numberOfMoneybags)
 {
-    std::vector<Treasure> result = {};
-    std::copy_if(treasure.begin(), treasure.end(),
-                 std::back_inserter(result),
-                 [type](auto &t) { return t.getType() == type; });
-    return result;
+
+    std::vector<unsigned> selectedMoneybags;
+
+    for(unsigned i = 0; i<numberOfMoneybags; i++)
+    {
+        srand(time(0));
+        int randomIndex = rand() % remainingMoneybags.size();
+        selectedMoneybags.push_back(remainingMoneybags[randomIndex]);
+        remainingMoneybags.erase(remainingMoneybags.begin() + randomIndex);
+    }
+
+    return selectedMoneybags;
 }
 
 std::vector<RoundCard*> generateRoundCards(std::vector<EventType> &events, std::vector<std::vector<MiniRoundType>> &miniRounds)

@@ -23,6 +23,7 @@ public:
 
     void addContentUp( const Treasure );
     void addContentDown(Treasure);
+    void clearContentDown();
     Treasure takeContentUp(TreasureType);
     Treasure takeContentDown(TreasureType);
     int numberOfTreasureInWagon(TreasureType) const;
