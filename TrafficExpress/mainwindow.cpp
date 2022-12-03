@@ -2,6 +2,7 @@
 #include "./ui_mainwindow.h"
 
 #include <QMessageBox>
+#include <QFont>
 
 
 MainWindow::MainWindow(QWidget *parent)
@@ -24,11 +25,18 @@ MainWindow::MainWindow(QWidget *parent)
     QPushButton*pbBackToMainMenu=new QPushButton();
     pbBackToMainMenu->setParent(dialog);
     pbBackToMainMenu->setText("Back to main menu");
+    QFont font("Magnolia Sky");
+    font.setBold(true);
+    font.setPixelSize(14);
+    setFont(font);
+
+    //pbBackToMainMenu->setStyleSheet("border-image : url(:/images/button.png); color: white; background: transparent;");
     connect(pbBackToMainMenu,&QPushButton::clicked,this,&MainWindow::onBackToTheMenu);
 
     QPushButton*pbQuit=new QPushButton();
     pbQuit->setParent(dialog);
     pbQuit->setText("Quit");
+    //pbQuit->setStyleSheet("border-image : url(:/images/button.png); color: white; background: transparent;");
     connect(pbQuit,&QPushButton::clicked,this,&QCoreApplication::quit);
 
     vl->addWidget(pbBackToMainMenu);
@@ -66,6 +74,7 @@ void MainWindow::onPlay()
 void MainWindow::onGameRules()
 {
     ui->stackedWidget->setCurrentIndex(1);
+
 }
 
 void MainWindow::onBackToTheMenu()
