@@ -47,11 +47,16 @@ int main(int argc, char *argv[])
             // PHASE 2:
 
             // For every card played:
-                // If action possible:
-                    // print list of valid moves
-                    // Player chooses and plays the move
+            // print list of valid moves
+            // If action possible (list not empty):
+                // Player chooses and plays the move
 
     // Create printGameState function
 
+    // ToDo:
+        // Player special  abilities
+        // Round card effects
+        // Rang list
+        // Timer
     return 0;
 }
