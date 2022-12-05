@@ -6,8 +6,11 @@
 #include "player.h"
 #include "roundcard.h"
 #include "actioncard.h"
+#include "neutralbullet.h"
 
+#include <map>
 #include <vector>
+#include <random>
 #include <algorithm>
 
 class Game
@@ -16,6 +19,7 @@ public:
 
     // Constructors
     Game();
+    Game(const std::vector<Player> &players);
     Game(const std::vector<Player> &players, const std::vector<Wagon> &wagons, unsigned sheriffPosition,
          const std::vector<RoundCard*> &rounds, const std::vector<ActionCard*> &cardsPlayed,
          const std::vector<Treasure> &unusedTreasure, BanditType mostBulletsShot, BanditType richestPlayer);
@@ -25,6 +29,7 @@ public:
     const std::vector<Wagon> &wagons() const;
     const std::vector<RoundCard*> &rounds() const;
     const std::vector<ActionCard*> &cardsPlayed() const;
+    const std::vector<NeutralBullet> &neutralBulletDeck() const;
     const std::vector<Treasure> &unusedTreasure() const;
     BanditType mostBulletsShot() const;
     BanditType richestPlayer() const;
@@ -34,17 +39,21 @@ public:
     void setWagons(const std::vector<Wagon> &newWagons);
     void setRounds(const std::vector<RoundCard*> &newRounds);
     void setCardsPlayed(const std::vector<ActionCard*> &newCardsPlayed);
+    void setNeutralBulletDeck(const std::vector<NeutralBullet> &newNeutralBulletDeck);
     void setUnusedTreasure(const std::vector<Treasure> &newUnusedTreasure);
     void setMostBulletsShot(BanditType newMostBulletsShot);
     void setRichestPlayer(BanditType newRichestPlayer);
 
     //Other methods
 
-    const std::vector<Card> &shuffleDeck(std::vector<Card*> &cards) const;
-    const std::vector<Card> &drawCards(unsigned) const;
+    void initialize();
+    void shuffleDeck() const;
+    const std::vector<Card*> &drawCards(unsigned) const;
     std::vector<Card*> drawCards(unsigned numberOfCards, const Player &player) const;
-    std::vector<RoundCard*> selectRoundCards() const;
-    std::vector<Wagon> selectWagons() const;
+    std::vector<RoundCard*> selectRoundCards(RoundCardType cardType, std::vector<RoundCard*> &allRoundCards) const;
+    RoundCard* selectOneTrainStationCard(std::vector<RoundCard*> &allRoundCards);
+    std::vector<NeutralBullet> generateNeutralBullets(unsigned numberOfNeutralBullets) const;
+    std::vector<Wagon> selectWagons(std::vector<Wagon> &allPossibleWagons, unsigned) const;
     void placeBanditInWagon(unsigned) const;
 
 private:
@@ -54,9 +63,15 @@ private:
     unsigned m_sheriffPosition;
     std::vector<RoundCard*> m_rounds;
     std::vector<ActionCard*> m_cardsPlayed;
+    std::vector<NeutralBullet> m_neutralBulletDeck;
     std::vector<Treasure> m_unusedTreasure;
     BanditType m_mostBulletsShot;
     BanditType m_richestPlayer;
 };
+
+void generateAllTreasure(const int &count, const int &value, TreasureType type, std::vector<Treasure> &treasure);
+std::vector<unsigned> getMoneybags(std::vector<unsigned>& remainingMoneybags, unsigned numberOfMoneybags);
+std::vector<RoundCard*> generateRoundCards(std::vector<EventType> &events, std::vector<std::vector<MiniRoundType>> &miniRounds);
+std::vector<Treasure> remainingTreasure(std::vector<unsigned> &remainingMoneybags, unsigned remainingDiamonds, unsigned remainingSuitcases);
 
 #endif // GAME_H
