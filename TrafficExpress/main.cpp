@@ -9,10 +9,10 @@
 
 int main(int argc, char *argv[])
 {
-    QApplication a(argc, argv);
-    MainWindow w;
-    w.show();
-    return a.exec();
+//    QApplication a(argc, argv);
+//    MainWindow w;
+//    w.show();
+//    return a.exec();
 
     // Create n number of players
 
@@ -32,17 +32,29 @@ int main(int argc, char *argv[])
     game.initialize();
 
     // Each player selects one the first 2 wagons to place their character
+    game.selectBanditPositions();
 
-    // For every roundcard (round) :
 
+    // For every roundcard  (round) :
+
+    for (auto round : game.rounds())
+    {
         // For every miniRound
 
+        for (auto miniround : round->miniRound() )
+        {
             // PHASE 1:
 
             // For every player:
+            for (auto player: game.players())
+            {
                 // Draw cards
+
+
                 // option1: draw 3 cards
                 // option2: play card from hand
+            }
+
 
             // PHASE 2:
 
@@ -50,6 +62,8 @@ int main(int argc, char *argv[])
             // print list of valid moves
             // If action possible (list not empty):
                 // Player chooses and plays the move
+        }
+    }
 
     // Create printGameState function
 

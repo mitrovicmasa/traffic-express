@@ -318,6 +318,17 @@ void Game::shuffleDecks() const
         player.shuffleDeck();
 }
 
+void Game::selectBanditPositions()
+{
+    int position;
+    for(auto player: m_players)
+    {
+        std::cin >> position;
+        player.setPositionInTrain(position);
+
+    }
+}
+
 
 
 

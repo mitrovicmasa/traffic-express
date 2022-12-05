@@ -44,10 +44,9 @@ public:
     void setMostBulletsShot(BanditType newMostBulletsShot);
     void setRichestPlayer(BanditType newRichestPlayer);
 
-    //Other methods
 
-    void initialize();
-    void shuffleDecks() const;
+    // Initialization methods
+
     const std::vector<Card*> &drawCards(unsigned) const;
     std::vector<Card*> drawCards(unsigned numberOfCards, const Player &player) const;
     std::vector<RoundCard*> selectRoundCards(RoundCardType cardType, std::vector<RoundCard*> &allRoundCards) const;
@@ -55,6 +54,14 @@ public:
     std::vector<NeutralBullet> generateNeutralBullets(unsigned numberOfNeutralBullets) const;
     std::vector<Wagon> selectWagons(std::vector<Wagon> &allPossibleWagons, unsigned) const;
     void placeBanditInWagon(unsigned) const;
+
+    void initialize();
+
+    //Other methods
+
+    void shuffleDecks() const;
+    void selectBanditPositions();
+
 
 private:
 

@@ -116,7 +116,7 @@ void Player::setBulletDeck(const std::vector<BulletCard*> &newBulletDeck)
     m_bulletDeck = newBulletDeck;
 }
 
-void Player::setPositionInTrain(int &newPositionInTrain)
+void Player::setPositionInTrain(int newPositionInTrain)
 {
     m_positionInTrain = newPositionInTrain;
 }

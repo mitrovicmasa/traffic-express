@@ -44,7 +44,7 @@ public:
     void setHand(const std::vector<Card*> &newHand);
     void setDeck(const std::vector<Card*> &newDeck);
     void setBulletDeck(const std::vector<BulletCard*> &newBulletDeck);
-    void setPositionInTrain(int &newPositionInTrain);
+    void setPositionInTrain(int newPositionInTrain);
     void setRoof(bool &newRoof);
     void setTreasure(std::vector<Treasure> newTreasure);
 
