@@ -97,12 +97,99 @@ void Game::setRichestPlayer(BanditType newRichestPlayer)
     m_richestPlayer = newRichestPlayer;
 }
 
-//Other methods
+// Initialization methods
+
+std::vector<Wagon> Game::selectWagons(std::vector<Wagon> &allPossibleWagons, unsigned numberOfPlayers) const
+{
+    std::vector<Wagon> selectedWagons = {};
+    std::sample(allPossibleWagons.begin(), allPossibleWagons.end(), std::back_inserter(selectedWagons),
+               numberOfPlayers, std::mt19937_64{std::random_device{}()});
+    return selectedWagons;
+}
+std::vector<RoundCard*> Game::selectRoundCards(RoundCardType cardType, std::vector<RoundCard*> &allRoundCards) const
+{
+    std::vector<RoundCard*> cards, result = {};
+    std::copy_if(allRoundCards.cbegin(), allRoundCards.cend(),
+                 std::back_inserter(cards),
+                 [cardType](auto *card) { return card->type() == cardType; });
+
+    std::sample(cards.cbegin(), cards.cend(), std::back_inserter(result), 4, std::mt19937_64{std::random_device{}()});
+
+    return result;
+}
+RoundCard* Game::selectOneTrainStationCard(std::vector<RoundCard*> &allRoundCards)
+{
+    std::vector<RoundCard*> trainStationCards = {};
+    std::copy_if(allRoundCards.cbegin(), allRoundCards.cend(),
+                 std::back_inserter(trainStationCards),
+                 [](auto *card) { return card->type() == RoundCardType::TRAIN_STATION; });
+
+    srand(time(0));
+    return trainStationCards[rand() % trainStationCards.size()];
+}
+std::vector<unsigned> getMoneybags(std::vector<unsigned>& remainingMoneybags, unsigned numberOfMoneybags)
+{
+
+    std::vector<unsigned> selectedMoneybags = {};
+
+    for(unsigned i = 0; i < numberOfMoneybags; i++)
+    {
+        srand(time(0));
+        int randomIndex = rand() % remainingMoneybags.size();
+        selectedMoneybags.push_back(remainingMoneybags[randomIndex]);
+        remainingMoneybags.erase(remainingMoneybags.begin() + randomIndex);
+    }
+
+    return selectedMoneybags;
+}
+std::vector<RoundCard*> generateRoundCards(std::vector<EventType> &events, std::vector<std::vector<MiniRoundType>> &miniRounds)
+{
+    std::vector<RoundCard*> roundCards = {};
+    unsigned numberOfMiniRounds = miniRounds.size();
+    unsigned numberOfEvents = events.size();
+
+    for (unsigned i = 0; i < 7; ++i) {
+        roundCards.push_back(new RoundCard(RoundCardType::THREE_TO_FOUR_PLAYERS, events[i], miniRounds[i]));
+        roundCards.push_back(new RoundCard(RoundCardType::FIVE_TO_SIX_PLAYERS, events[i], miniRounds[i + 7]));
+    }
+
+    for (unsigned i = 7; i < numberOfEvents; ++i)
+        roundCards.push_back(new RoundCard(RoundCardType::TRAIN_STATION, events[i], miniRounds[numberOfMiniRounds - 1]));
+
+    return roundCards;
+}
+std::vector<Treasure> remainingTreasure(std::vector<unsigned> &remainingMoneybags, unsigned remainingDiamonds, unsigned remainingSuitcases)
+{
+    std::map<unsigned, unsigned> mappedMoneybagValues = {
+        {0, 250},
+        {1, 300},
+        {2, 350},
+        {3, 400},
+        {4, 450},
+        {5, 500}
+    };
+
+    std::vector<Treasure> treasure = {};
+    for (unsigned i = 0; i < remainingMoneybags.size(); ++i)
+        treasure.push_back(Treasure(mappedMoneybagValues[remainingMoneybags[i]], TreasureType::MONEYBAG));
+
+    treasure.insert(treasure.end(), remainingDiamonds, Treasure(500, TreasureType::DIAMOND));
+    treasure.insert(treasure.end(), remainingSuitcases, Treasure(1000, TreasureType::SUITCASE));
+
+    return treasure;
+}
+std::vector<NeutralBullet> Game::generateNeutralBullets(unsigned numberOfNeutralBullets) const
+{
+    std::vector<NeutralBullet> bulletDeck = {};
+    for (unsigned i = 0; i < numberOfNeutralBullets; ++i)
+        bulletDeck.push_back(NeutralBullet());
+    return bulletDeck;
+}
 
 void Game::initialize()
 {
     unsigned numberOfPlayers = m_players.size();
-    shuffleDeck();
+    shuffleDecks();
 
     // Treasure
     std::vector<Treasure> allPossibleTreasure;
@@ -167,7 +254,7 @@ void Game::initialize()
     setWagons(selectedWagons);
 
     // Unused treasure init??
-    setUnusedTreasure(::remainingTreasure(remainingMoneybags, remainingDiamonds, remainingSuitcases));
+    //setUnusedTreasure(::remainingTreasure(remainingMoneybags, remainingDiamonds, remainingSuitcases));
 
     // RoundCards
     std::vector<EventType> events = {
@@ -223,101 +310,15 @@ void Game::initialize()
     setNeutralBulletDeck(generateNeutralBullets(13));
 }
 
-void Game::shuffleDeck() const
+// Other methods
+
+void Game::shuffleDecks() const
 {
     for (Player player : m_players)
         player.shuffleDeck();
 }
 
-std::vector<Wagon> Game::selectWagons(std::vector<Wagon> &allPossibleWagons, unsigned numberOfPlayers) const
-{
-    std::vector<Wagon> selectedWagons = {};
-    std::sample(allPossibleWagons.begin(), allPossibleWagons.end(), std::back_inserter(selectedWagons),
-               numberOfPlayers, std::mt19937_64{std::random_device{}()});
-    return selectedWagons;
-}
 
-std::vector<RoundCard*> Game::selectRoundCards(RoundCardType cardType, std::vector<RoundCard*> &allRoundCards) const
-{
-    std::vector<RoundCard*> cards, result = {};
-    std::copy_if(allRoundCards.cbegin(), allRoundCards.cend(),
-                 std::back_inserter(cards),
-                 [cardType](auto *card) { return card->type() == cardType; });
 
-    std::sample(cards.cbegin(), cards.cend(), std::back_inserter(result), 4, std::mt19937_64{std::random_device{}()});
 
-    return result;
-}
 
-RoundCard* Game::selectOneTrainStationCard(std::vector<RoundCard*> &allRoundCards)
-{
-    std::vector<RoundCard*> trainStationCards = {};
-    std::copy_if(allRoundCards.cbegin(), allRoundCards.cend(),
-                 std::back_inserter(trainStationCards),
-                 [](auto *card) { return card->type() == RoundCardType::TRAIN_STATION; });
-
-    srand(time(0));
-    return trainStationCards[rand() % trainStationCards.size()];
-}
-
-std::vector<unsigned> getMoneybags(std::vector<unsigned>& remainingMoneybags, unsigned numberOfMoneybags)
-{
-
-    std::vector<unsigned> selectedMoneybags = {};
-
-    for(unsigned i = 0; i < numberOfMoneybags; i++)
-    {
-        srand(time(0));
-        int randomIndex = rand() % remainingMoneybags.size();
-        selectedMoneybags.push_back(remainingMoneybags[randomIndex]);
-        remainingMoneybags.erase(remainingMoneybags.begin() + randomIndex);
-    }
-
-    return selectedMoneybags;
-}
-
-std::vector<RoundCard*> generateRoundCards(std::vector<EventType> &events, std::vector<std::vector<MiniRoundType>> &miniRounds)
-{
-    std::vector<RoundCard*> roundCards = {};
-    unsigned numberOfMiniRounds = miniRounds.size();
-    unsigned numberOfEvents = events.size();
-
-    for (unsigned i = 0; i < 7; ++i) {
-        roundCards.push_back(new RoundCard(RoundCardType::THREE_TO_FOUR_PLAYERS, events[i], miniRounds[i]));
-        roundCards.push_back(new RoundCard(RoundCardType::FIVE_TO_SIX_PLAYERS, events[i], miniRounds[i + 7]));
-    }
-
-    for (unsigned i = 7; i < numberOfEvents; ++i)
-        roundCards.push_back(new RoundCard(RoundCardType::TRAIN_STATION, events[i], miniRounds[numberOfMiniRounds - 1]));
-
-    return roundCards;
-}
-
-std::vector<Treasure> remainingTreasure(std::vector<unsigned> &remainingMoneybags, unsigned remainingDiamonds, unsigned remainingSuitcases)
-{
-    std::map<unsigned, unsigned> mappedMoneybagValues = {
-        {0, 250},
-        {1, 300},
-        {2, 350},
-        {3, 400},
-        {4, 450},
-        {5, 500}
-    };
-
-    std::vector<Treasure> treasure = {};
-    for (unsigned i = 0; i < remainingMoneybags.size(); ++i)
-        treasure.push_back(Treasure(mappedMoneybagValues[remainingMoneybags[i]], TreasureType::MONEYBAG));
-
-    treasure.insert(treasure.end(), remainingDiamonds, Treasure(500, TreasureType::DIAMOND));
-    treasure.insert(treasure.end(), remainingSuitcases, Treasure(1000, TreasureType::SUITCASE));
-
-    return treasure;
-}
-
-std::vector<NeutralBullet> Game::generateNeutralBullets(unsigned numberOfNeutralBullets) const
-{
-    std::vector<NeutralBullet> bulletDeck = {};
-    for (unsigned i = 0; i < numberOfNeutralBullets; ++i)
-        bulletDeck.push_back(NeutralBullet(i));
-    return bulletDeck;
-}

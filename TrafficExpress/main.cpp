@@ -9,10 +9,10 @@
 
 int main(int argc, char *argv[])
 {
-//    QApplication a(argc, argv);
-//    MainWindow w;
-//    w.show();
-//    return a.exec();
+    QApplication a(argc, argv);
+    MainWindow w;
+    w.show();
+    return a.exec();
 
     // Create n number of players
 
@@ -30,6 +30,28 @@ int main(int argc, char *argv[])
     // Create the Game
     Game game(players);
     game.initialize();
+
+    // Each player selects one the first 2 wagons to place their character
+
+    // For every roundcard (round) :
+
+        // For every miniRound
+
+            // PHASE 1:
+
+            // For every player:
+                // Draw cards
+                // option1: draw 3 cards
+                // option2: play card from hand
+
+            // PHASE 2:
+
+            // For every card played:
+                // If action possible:
+                    // print list of valid moves
+                    // Player chooses and plays the move
+
+    // Create printGameState function
 
     return 0;
 }

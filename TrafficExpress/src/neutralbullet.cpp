@@ -1,7 +1,12 @@
 #include "../headers/neutralbullet.h"
 
 // Constructors
-NeutralBullet::NeutralBullet(unsigned const id) : m_id(id)
+NeutralBullet::NeutralBullet()
+{
+
+}
+
+NeutralBullet::NeutralBullet(BanditType id) : m_id(id)
 {}
 
 Card *NeutralBullet::Copy() const
@@ -16,13 +21,13 @@ NeutralBullet::~NeutralBullet()
 }
 
 // Get methods
-const unsigned &NeutralBullet::id() const
+const BanditType &NeutralBullet::id() const
 {
     return m_id;
 }
 
 // Set methods
-void NeutralBullet::setId(const unsigned &newId)
+void NeutralBullet::setId(const BanditType &newId)
 {
     m_id = newId;
 }
@@ -31,5 +36,5 @@ void NeutralBullet::setId(const unsigned &newId)
 
 std::string NeutralBullet::toString() const
 {
-    return "Neutral bullet id: " + std::to_string(m_id);
+    return "Neutral bullet id: " + ::toString(m_id);
 }

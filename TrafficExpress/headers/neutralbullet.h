@@ -2,23 +2,25 @@
 #define NEUTRALBULLET_H
 
 #include <card.h>
+#include <banditcard.h>
 
 class NeutralBullet : public Card {
 
 public:
 
     // Constructors
-    NeutralBullet(const unsigned id);
+    NeutralBullet();
+    NeutralBullet(BanditType id);
     Card *Copy() const override;
 
     // Destructor
     ~NeutralBullet();
 
     // Get methods
-    const unsigned &id() const;
+    const BanditType &id() const;
 
     // Set methods
-    void setId(const unsigned &newId);
+    void setId(const BanditType &newId);
 
     // Other methods
 
@@ -26,7 +28,7 @@ public:
 
 private:
 
-    unsigned m_id;
+    BanditType m_id;
 };
 
 #endif // NEUTRALBULLET_H

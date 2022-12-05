@@ -47,7 +47,7 @@ public:
     //Other methods
 
     void initialize();
-    void shuffleDeck() const;
+    void shuffleDecks() const;
     const std::vector<Card*> &drawCards(unsigned) const;
     std::vector<Card*> drawCards(unsigned numberOfCards, const Player &player) const;
     std::vector<RoundCard*> selectRoundCards(RoundCardType cardType, std::vector<RoundCard*> &allRoundCards) const;
