@@ -5,6 +5,7 @@
 #include <QMainWindow>
 #include<QDialog>
 #include<QPushButton>
+#include <QGraphicsScene>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -31,5 +32,6 @@ private:
 
     Ui::MainWindow *ui;
     QDialog*dialog;
+    QGraphicsScene*sc;
 };
 #endif // MAINWINDOW_H

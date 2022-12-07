@@ -1,26 +1,28 @@
 #include "../headers/treasure.h"
 
+#include <QPainter>
+
 // Constructors
 Treasure::Treasure()
-    :m_type(TreasureType::MONEYBAG),m_value(250)
+    :QGraphicsObject(),m_type(TreasureType::MONEYBAG),m_value(250)
 {
 
 }
 
 Treasure::Treasure(int value, TreasureType type)
-    :m_type(type),m_value(value)
+    :QGraphicsObject(),m_type(type),m_value(value)
 {
 
 }
 
 Treasure::Treasure(TreasureType type)
-    :m_type(type)
+    :QGraphicsObject(),m_type(type)
 {
 
 }
 
 Treasure::Treasure(const Treasure &t)
-    :m_type(t.m_type),m_value(t.m_value)
+    :QGraphicsObject(),m_type(t.m_type),m_value(t.m_value)
 {
 
 }
@@ -36,14 +38,18 @@ int Treasure::getValue()
     return m_value;
 }
 
-// Other methods
-Treasure &Treasure::operator=(const Treasure &t)
+int Treasure::visina() const
 {
-    auto tmp=Treasure(t);
-    std::swap(m_type,tmp.m_type);
-    std::swap(m_value,tmp.m_value);
-    return *this;
+    return 25;
 }
+
+int Treasure::sirina() const
+{
+    return 25;
+}
+
+// Other methods
+
 
 bool Treasure::operator==(const Treasure &t)
 {
@@ -64,6 +70,19 @@ std::string Treasure::toString()
                 default:return "UNKNOWN TREASURE TYPE";
 
     }
+}
+
+QRectF Treasure::boundingRect() const
+{
+    return QRectF(0,0,sirina(),visina());
+}
+
+void Treasure::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
+{
+    Q_UNUSED(option)
+    Q_UNUSED(widget)
+
+    painter->fillRect(boundingRect(),QColor::fromRgb(100,100,100));
 }
 
 

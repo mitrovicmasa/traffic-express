@@ -58,6 +58,7 @@ set(PROJECT_SOURCES
         src/neutralbullet.cpp
         src/actioncard.cpp
         src/bulletcard.cpp
+        src/train.cpp
         )
 
 set(PROJECT_HEADERS
@@ -72,6 +73,7 @@ set(PROJECT_HEADERS
         headers/neutralbullet.h
         headers/actioncard.h
         headers/bulletcard.h
+        headers/train.h
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)

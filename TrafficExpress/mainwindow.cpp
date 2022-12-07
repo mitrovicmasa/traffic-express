@@ -3,13 +3,45 @@
 
 #include <QMessageBox>
 #include <QFont>
+#include <treasure.h>
+#include <wagon.h>
+#include <train.h>
 
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
+    ,sc(new QGraphicsScene())
 {
     ui->setupUi(this);
+    ui->stackedWidget->setCurrentIndex(0);
+
+    //testing start
+    sc->setSceneRect(ui->graphicsView->rect());
+    ui->graphicsView->setScene(sc);
+    ui->graphicsView->setRenderHint(QPainter::Antialiasing);
+    ui->graphicsView->setAlignment(Qt::AlignTop | Qt::AlignLeft);
+
+//    Treasure*t=new Treasure();
+//    Treasure*t1=new Treasure();
+//    Wagon*w=new Wagon();
+//    w->addContentUp(t1);
+//    w->addContentUp(t);
+//    sc->addItem(w);
+//    w->setPos(100,100);
+
+    Train voz=Train();
+    for(int i=0;i<6;i++){
+        voz.push_back(new Wagon());
+        for( int j=0;j<3;j++){
+            voz.back()->addContentDown(new Treasure());
+
+        }
+    }
+    voz.addTrainToScene(sc);
+
+
+    //testing finish
 
     //init of Dialog
     dialog=new QDialog();
