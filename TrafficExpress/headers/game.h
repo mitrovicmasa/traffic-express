@@ -7,6 +7,7 @@
 #include "roundcard.h"
 #include "actioncard.h"
 #include "neutralbullet.h"
+#include "train.h"
 
 #include <map>
 #include <vector>
@@ -65,13 +66,13 @@ public:
 
 private:
 
-    std::vector<Player> m_players;
-    std::vector<Wagon> m_wagons;
+    std::vector<Player*> m_players;
+    Train m_wagons;
     unsigned m_sheriffPosition;
     std::vector<RoundCard*> m_rounds;
     std::vector<ActionCard*> m_cardsPlayed;
-    std::vector<NeutralBullet> m_neutralBulletDeck;
-    std::vector<Treasure> m_unusedTreasure;
+    std::vector<NeutralBullet*> m_neutralBulletDeck;
+    std::vector<Treasure*> m_unusedTreasure;
     BanditType m_mostBulletsShot;
     BanditType m_richestPlayer;
 };

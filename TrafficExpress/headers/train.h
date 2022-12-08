@@ -9,6 +9,7 @@
 class Train:public QGraphicsObject,public std::vector<Wagon*>
 {
     Q_OBJECT
+
 public:
     Train();
 

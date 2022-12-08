@@ -4,6 +4,7 @@
 #include "card.h"
 #include <vector>
 
+
 class Deck:public std::vector<Card*>
 {
 public:
