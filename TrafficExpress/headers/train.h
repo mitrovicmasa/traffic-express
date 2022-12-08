@@ -6,14 +6,19 @@
 
 
 
-class Train:public std::vector<Wagon*>
+class Train:public QGraphicsObject,public std::vector<Wagon*>
 {
-
+    Q_OBJECT
 public:
     Train();
 
     void addTrainToScene(QGraphicsScene*sc);
+    void addWagonToTrain(Wagon*);
 
+    // QGraphicsItem interface
+public:
+    QRectF boundingRect() const;
+    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 };
 
 #endif // TRAIN_H

@@ -9,6 +9,7 @@ enum class TreasureType{
 
 class Treasure:public QGraphicsObject
 {
+    Q_OBJECT
 public:
 
     // Constructors

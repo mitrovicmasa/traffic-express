@@ -38,16 +38,17 @@ MainWindow::MainWindow(QWidget *parent)
 //    sc->addItem(w);
 //    w->setPos(100,100);
 
-    Train voz=Train();
+    Train* voz=new Train();
     for(int i=0;i<6;i++){
-        voz.push_back(new Wagon());
+        voz->addWagonToTrain(new Wagon());
         for( int j=0;j<3;j++){
-            voz.back()->addContentDown(new Treasure());
+            voz->back()->addContentDown(new Treasure());
 
         }
     }
 
-    voz.addTrainToScene(sc);
+    sc->addItem(voz);
+    voz->setPos(50,50);
 
     Hand ruka= Hand();
     ruka.push_back(new ActionCard(ActionType::PUNCH, BanditType::BUSINESS_WOMAN));
