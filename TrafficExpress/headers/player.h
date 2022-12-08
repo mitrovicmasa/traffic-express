@@ -22,9 +22,8 @@ class Player:public QGraphicsObject
 public:
 
     // Constructors
-    Player();
+
     Player(BanditType id);
-    Player(const Player &player);
 
     // Destructor
     ~Player() = default;

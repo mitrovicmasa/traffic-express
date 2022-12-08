@@ -8,6 +8,7 @@
 #include <train.h>
 #include <hand.h>
 #include <deck.h>
+#include <table.h>
 #include <actioncard.h>
 #include <bulletcard.h>
 #include <neutralbullet.h>
@@ -65,6 +66,11 @@ MainWindow::MainWindow(QWidget *parent)
     spil.push_back(new BulletCard(BanditType::PICKPOCKET, 6));
     spil.addDeckToScene(sc);
 
+    //Table test
+    Table* tb = new Table();
+    sc->addItem(tb);
+    tb->setPos(1000,270);
+
 //  ne radi mi ovaj test, nmg sad :)
 //    std::vector<std::vector<MiniRoundType>> miniRounds = {
 //         {MiniRoundType::FACE_UP, MiniRoundType::DOUBLE_CARDS, MiniRoundType::FACE_UP},
@@ -90,6 +96,8 @@ void MainWindow::connectButtons()
             this, &MainWindow::onGameRules);
     connect(ui->pbPlay, &QPushButton::clicked,
             this, &MainWindow::onPlay);
+    connect(ui->pbQuit, &QPushButton::clicked,
+            this, &QCoreApplication::quit);
     connect(ui->pbBackToMain, &QPushButton::clicked,
             this, &MainWindow::onBackToTheMenu);
     connect(ui->pbConnect, &QPushButton::clicked,
@@ -112,7 +120,7 @@ void MainWindow::dialogInit()
     QVBoxLayout *vl=new QVBoxLayout();
 
 
-    QPushButton*pbBackToMainMenu=new QPushButton();
+    QPushButton *pbBackToMainMenu=new QPushButton();
     pbBackToMainMenu->setParent(dialog);
     pbBackToMainMenu->setText("Back to main menu");
     QFont font("Magnolia Sky");
@@ -123,7 +131,7 @@ void MainWindow::dialogInit()
     //pbBackToMainMenu->setStyleSheet("border-image : url(:/images/button.png); color: white; background: transparent;");
     connect(pbBackToMainMenu,&QPushButton::clicked,this,&MainWindow::onBackToTheMenu);
 
-    QPushButton*pbQuit=new QPushButton();
+    QPushButton *pbQuit=new QPushButton();
     pbQuit->setParent(dialog);
     pbQuit->setText("Quit");
     //pbQuit->setStyleSheet("border-image : url(:/images/button.png); color: white; background: transparent;");

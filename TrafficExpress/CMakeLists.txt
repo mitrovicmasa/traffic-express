@@ -61,6 +61,7 @@ set(PROJECT_SOURCES
         src/train.cpp
         src/hand.cpp
         src/deck.cpp
+        src/table.cpp
         )
 
 set(PROJECT_HEADERS
@@ -78,6 +79,7 @@ set(PROJECT_HEADERS
         headers/train.h
         headers/hand.h
         headers/deck.h
+        headers/table.h
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
