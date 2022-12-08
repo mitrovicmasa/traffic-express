@@ -11,10 +11,10 @@ public:
     // Constructors
     NeutralBullet();
     NeutralBullet(BanditType id);
-    Card *Copy() const override;
+//    Card *Copy() const override;
 
     // Destructor
-    ~NeutralBullet();
+    ~NeutralBullet() override;
 
     // Get methods
     const BanditType &id() const;
@@ -26,6 +26,7 @@ public:
 
     std::string toString() const override;
 
+    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
 private:
 
     BanditType m_id;

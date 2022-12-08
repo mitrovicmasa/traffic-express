@@ -1,14 +1,15 @@
 #include "../headers/actioncard.h"
+#include <qpainter.h>
 
 // Constructors
-ActionCard::ActionCard(ActionType action, BanditType bandit) : BanditCard(bandit),
-    m_action(action)
+ActionCard::ActionCard(ActionType action, BanditType bandit) : m_action(action),
+    BanditCard(bandit)
 {}
 
-Card *ActionCard::Copy() const
-{
-    return new ActionCard(*this);
-}
+//Card *ActionCard::Copy() const
+//{
+//    return new ActionCard(*this);
+//}
 
 
 // Destructor
@@ -53,3 +54,30 @@ std::string ActionCard::toString() const
     }
     return BanditCard::toString() + "doing action: " + actionName;
 }
+
+void ActionCard::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
+{
+    switch (this->bandit()) {
+        case BanditType::PICKPOCKET:
+            painter->fillRect(boundingRect(),QColor::fromRgb(80,110,240));
+            break;
+        case BanditType::SEDUCTRESS:
+            painter->fillRect(boundingRect(),QColor::fromRgb(240,80,120));
+            break;
+        case BanditType::STUDENT:
+            painter->fillRect(boundingRect(),QColor::fromRgb(220,80,240));
+            break;
+        case BanditType::RETIREE:
+            painter->fillRect(boundingRect(),QColor::fromRgb(50,150,100));
+            break;
+        case BanditType::HOMELESS_MAN:
+            painter->fillRect(boundingRect(),QColor::fromRgb(240,240,80));
+            break;
+        case BanditType::BUSINESS_WOMAN:
+            painter->fillRect(boundingRect(),QColor::fromRgb(240,150,80));
+            break;
+        default:
+            return;
+    }
+}
+

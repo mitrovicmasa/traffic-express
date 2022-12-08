@@ -7,12 +7,14 @@ NeutralBullet::NeutralBullet()
 }
 
 NeutralBullet::NeutralBullet(BanditType id) : m_id(id)
-{}
-
-Card *NeutralBullet::Copy() const
 {
-    return new NeutralBullet(*this);
+
 }
+
+//Card *NeutralBullet::Copy() const
+//{
+//    return new NeutralBullet(*this);
+//}
 
 // Destructor
 NeutralBullet::~NeutralBullet()
@@ -37,4 +39,10 @@ void NeutralBullet::setId(const BanditType &newId)
 std::string NeutralBullet::toString() const
 {
     return "Neutral bullet id: " + ::toString(m_id);
+}
+
+
+void NeutralBullet::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
+{
+    painter->fillRect(boundingRect(),QColor::fromRgb(200,200,150));
 }

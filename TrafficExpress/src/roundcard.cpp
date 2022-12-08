@@ -127,3 +127,23 @@ std::string RoundCard::toString() const
 
     return output;
 }
+
+int RoundCard::visina() const
+{
+    return 50;
+}
+
+int RoundCard::sirina() const
+{
+    return 100;
+}
+
+QRectF RoundCard::boundingRect() const
+{
+    return QRectF(0,0,sirina(),visina());
+}
+
+void RoundCard::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
+{
+    painter->fillRect(boundingRect(),QColor::fromRgb(200,200,170));
+}

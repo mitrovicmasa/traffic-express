@@ -19,7 +19,7 @@ public:
 
     // Constructors
     ActionCard(ActionType action, BanditType bandit);
-    Card *Copy() const override;
+    //Card *Copy() const override;
 
     // Destructor
     ~ActionCard();
@@ -32,6 +32,8 @@ public:
 
     // Other methods
     std::string toString() const override;
+
+    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
 
 private:
     ActionType m_action;

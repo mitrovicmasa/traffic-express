@@ -6,17 +6,25 @@
 #include <treasure.h>
 #include <wagon.h>
 #include <train.h>
-
+#include <hand.h>
+#include <deck.h>
+#include <actioncard.h>
+#include <bulletcard.h>
+#include <neutralbullet.h>
+#include <roundcard.h>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
-    ,sc(new QGraphicsScene())
+    , sc(new QGraphicsScene())
 {
     ui->setupUi(this);
     ui->stackedWidget->setCurrentIndex(0);
 
-    //testing start
+    dialogInit();
+    connectButtons();
+
+    //testing start *******************************************************
     sc->setSceneRect(ui->graphicsView->rect());
     ui->graphicsView->setScene(sc);
     ui->graphicsView->setRenderHint(QPainter::Antialiasing);
@@ -38,12 +46,61 @@ MainWindow::MainWindow(QWidget *parent)
 
         }
     }
+
     voz.addTrainToScene(sc);
 
+    Hand ruka= Hand();
+    ruka.push_back(new ActionCard(ActionType::PUNCH, BanditType::BUSINESS_WOMAN));
+    ruka.push_back(new ActionCard(ActionType::PUNCH, BanditType::HOMELESS_MAN));
+    ruka.push_back(new NeutralBullet());
+    ruka.push_back(new BulletCard(BanditType::PICKPOCKET, 6));
+    ruka.addHandToScene(sc);
 
-    //testing finish
 
-    //init of Dialog
+    Deck spil = Deck();
+    spil.push_back(new ActionCard(ActionType::PUNCH, BanditType::BUSINESS_WOMAN));
+    spil.push_back(new ActionCard(ActionType::PUNCH, BanditType::HOMELESS_MAN));
+    spil.push_back(new NeutralBullet());
+    spil.push_back(new BulletCard(BanditType::PICKPOCKET, 6));
+    spil.addDeckToScene(sc);
+
+//  ne radi mi ovaj test, nmg sad :)
+//    std::vector<std::vector<MiniRoundType>> miniRounds = {
+//         {MiniRoundType::FACE_UP, MiniRoundType::DOUBLE_CARDS, MiniRoundType::FACE_UP},
+//         {MiniRoundType::FACE_UP, MiniRoundType::FACE_UP, MiniRoundType::HIDDEN, MiniRoundType::OPPOSITE_DIRECTION}
+//    };
+//    RoundCard* rc = new RoundCard(RoundCardType::FIVE_TO_SIX_PLAYERS, EventType::NONE, miniRounds[0]);
+//    sc->addItem(rc);
+//    rc.setPos(0,0);
+
+    //testing finish ************************************************************
+}
+
+MainWindow::~MainWindow()
+{
+    delete ui;
+    delete dialog;
+}
+
+
+void MainWindow::connectButtons()
+{
+    connect(ui->pbGameRules, &QPushButton::clicked,
+            this, &MainWindow::onGameRules);
+    connect(ui->pbPlay, &QPushButton::clicked,
+            this, &MainWindow::onPlay);
+    connect(ui->pbBackToMain, &QPushButton::clicked,
+            this, &MainWindow::onBackToTheMenu);
+    connect(ui->pbConnect, &QPushButton::clicked,
+            this, &MainWindow::onConnect);
+    connect(ui->pbReady, &QPushButton::clicked,
+            this, &MainWindow::onReady);
+    connect(ui->pbStart, &QPushButton::clicked,
+            this, &MainWindow::onStart);
+}
+
+void MainWindow::dialogInit()
+{
     dialog=new QDialog();
 
     dialog->setWindowModality(Qt::WindowModality::ApplicationModal);
@@ -75,27 +132,6 @@ MainWindow::MainWindow(QWidget *parent)
     vl->addWidget(pbQuit);
 
     dialog->setLayout(vl);
-    //end of dialog init
-
-
-    connect(ui->pbGameRules, &QPushButton::clicked,
-            this, &MainWindow::onGameRules);
-    connect(ui->pbPlay, &QPushButton::clicked,
-            this, &MainWindow::onPlay);
-    connect(ui->pbBackToMain, &QPushButton::clicked,
-            this, &MainWindow::onBackToTheMenu);
-    connect(ui->pbConnect, &QPushButton::clicked,
-            this, &MainWindow::onConnect);
-    connect(ui->pbReady, &QPushButton::clicked,
-            this, &MainWindow::onReady);
-    connect(ui->pbStart, &QPushButton::clicked,
-            this, &MainWindow::onStart);
-}
-
-MainWindow::~MainWindow()
-{
-    delete ui;
-    delete dialog;
 }
 
 void MainWindow::onPlay()

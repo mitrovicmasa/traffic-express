@@ -9,7 +9,7 @@ public:
 
     // Constructors
     BulletCard(BanditType bandit, unsigned numOfBullets);
-    Card *Copy() const override;
+//    Card *Copy() const override;
 
     // Destructor
     ~BulletCard();
@@ -22,6 +22,8 @@ public:
 
     // Other methods
     std::string toString() const override;
+
+    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
 
 private:
 

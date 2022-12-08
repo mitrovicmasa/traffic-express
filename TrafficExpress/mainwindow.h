@@ -27,6 +27,8 @@ private slots:
     void onReady();
     void onStart();
 
+    void connectButtons();
+    void dialogInit();
 private:
     void keyPressEvent(QKeyEvent*);
 

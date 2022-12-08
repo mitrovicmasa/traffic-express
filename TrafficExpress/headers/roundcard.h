@@ -4,8 +4,8 @@
 #include <iostream>
 #include <string>
 #include <vector>
-
-#include "card.h"
+#include <QGraphicsObject>
+#include <qpainter.h>
 
 enum class RoundCardType {
     
@@ -68,6 +68,12 @@ public:
     void pushBackMiniRound(MiniRoundType type);
 
     std::string toString() const;
+
+    int visina()const;
+    int sirina()const;
+
+    QRectF boundingRect() const;
+    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 
 private:
 
