@@ -58,9 +58,6 @@ public:
     int width()const;
     int height()const;
 
-
-    BanditType id() const;
-
 private:
 
     BanditType m_id;
