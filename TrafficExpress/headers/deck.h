@@ -5,12 +5,17 @@
 #include <vector>
 
 
-class Deck:public std::vector<Card*>
+class Deck:public QGraphicsObject,public std::vector<Card*>
 {
+    Q_OBJECT
 public:
     Deck();
 
-    void addDeckToScene(QGraphicsScene*sc);
+    //void addDeckToScene(QGraphicsScene*sc);
+    void addCardToDeck(Card* card);
+
+    QRectF boundingRect() const;
+    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 };
 
 #endif // DECK_H

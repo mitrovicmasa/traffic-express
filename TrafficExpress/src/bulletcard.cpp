@@ -32,6 +32,11 @@ std::string BulletCard::toString() const
     return BanditCard::toString() + " ima jos " + std::to_string(m_numOfBullets);
 }
 
+CardType BulletCard::Type() const
+{
+    return CardType::BULLET_CARD;
+}
+
 void BulletCard::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
 

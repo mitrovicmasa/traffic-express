@@ -5,9 +5,10 @@
 #include <QGraphicsObject>
 #include <qpainter.h>
 
-enum Side {
-    FRONT,
-    BACK
+enum CardType {
+    ACTION_CARD,
+    BULLET_CARD,
+    NEUTRAL_BULLET
 };
 
 class Card:public QGraphicsObject
@@ -24,9 +25,10 @@ public:
 
     // Other methods
     virtual std::string toString() const;
+    virtual CardType Type() const=0;
 private:
 
-    // QGraphicsItem interface
+    // QGraphicsObject interface
 public:
     virtual int visina()const;
     virtual int sirina()const;

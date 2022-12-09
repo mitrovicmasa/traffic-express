@@ -11,8 +11,8 @@ Player::Player(BanditType id)
     :QGraphicsObject(),m_id(id)
 {
 
-    m_hand=Hand();
-    m_deck=Deck();
+    //m_hand=Hand();
+    //m_deck=Deck();
 
 //    m_deck.push_back(new ActionCard(ActionType::MOVE,id));
 //    m_deck.back()->setParentItem(&m_deck);

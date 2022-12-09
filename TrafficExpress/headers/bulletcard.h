@@ -22,6 +22,7 @@ public:
 
     // Other methods
     std::string toString() const override;
+    CardType Type() const override;
 
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
 

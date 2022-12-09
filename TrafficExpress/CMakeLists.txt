@@ -16,6 +16,7 @@ find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
 
 include_directories(src/)
 include_directories(headers/)
+
 #[[
 set(PROJECT_SOURCES
         main.cpp

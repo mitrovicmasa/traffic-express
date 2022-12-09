@@ -55,6 +55,11 @@ std::string ActionCard::toString() const
     return BanditCard::toString() + "doing action: " + actionName;
 }
 
+CardType ActionCard::Type() const
+{
+    return CardType::ACTION_CARD;
+}
+
 void ActionCard::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
     switch (this->bandit()) {

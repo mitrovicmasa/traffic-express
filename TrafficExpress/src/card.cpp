@@ -1,7 +1,7 @@
 #include "../headers/card.h"
 
 // Constructors
-Card::Card()
+Card::Card():QGraphicsObject()
 {
 
 }
