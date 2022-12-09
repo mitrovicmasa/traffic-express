@@ -57,7 +57,7 @@ Player::Player(BanditType id)
 
 QRectF Player::boundingRect() const
 {
-    return QRectF(0,0,50,50);
+    return QRectF(0,0,25,35);
 }
 
 void Player::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
@@ -100,5 +100,20 @@ std::string Player::toString() const
          + "Current amount of treasure: " + std::to_string(currentAmountOfTreasure) + "\n"
          + "Current number of cards in deck: " + std::to_string(m_deck.size()) + "\n"
          + "Current number of bullets in bullet deck: " + std::to_string(m_bulletDeck.size()) + "\n"
-         + positionInWagon +"\ncards In deck:\n"+cardsInDeck+ "\n";
+            + positionInWagon +"\ncards In deck:\n"+cardsInDeck+ "\n";
+}
+
+int Player::width() const
+{
+    return 25;
+}
+
+int Player::height() const
+{
+    return 35;
+}
+
+BanditType Player::id() const
+{
+    return m_id;
 }

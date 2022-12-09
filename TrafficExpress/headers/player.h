@@ -49,6 +49,11 @@ public:
     void shuffleDeck();
 
     std::string toString() const;
+    int width()const;
+    int height()const;
+
+
+    BanditType id() const;
 
 private:
 

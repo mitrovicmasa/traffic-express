@@ -1,6 +1,7 @@
 #ifndef WAGON_H
 #define WAGON_H
 
+#include <player.h>
 #include <treasure.h>
 #include <vector>
 
@@ -24,19 +25,28 @@ public:
 
     void addContentUp(  Treasure* );
     void addContentDown(Treasure*);
+    void addPlayerUp(Player*);
+    void addPlayerDown(Player*);
 
     Treasure* takeContentUp(TreasureType);
     Treasure* takeContentDown(TreasureType);
+    Player* takePlayerUp(BanditType );
+    Player* takePlayerDown(BanditType );
+
+
     int numberOfTreasureInWagonDown(TreasureType) const;
 
     std::string toString();
     int visina()const;
     int sirina()const;
 
+
 private:
 
 std::vector<Treasure*>m_contentUp;
 std::vector<Treasure*>m_contentDown;
+std::vector<Player*>m_playersUp;
+std::vector<Player*>m_playersDown;
 
 // QGraphicsItem interface
 public:
