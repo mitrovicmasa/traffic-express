@@ -15,7 +15,7 @@
 #include <deck.h>
 #include <hand.h>
 
-class Player:public QGraphicsObject
+class Player : public QGraphicsObject
 {
     Q_OBJECT
 
@@ -32,7 +32,13 @@ public:
     Player &operator=(const Player &player);
 
     // Get methods
-
+    BanditType id() const;
+    Hand *hand() const;
+    Deck *deck() const;
+    const std::vector<BulletCard*> &bulletDeck() const;
+    int positionInTrain() const;
+    bool roof() const;
+    const std::vector<Treasure*> &treasure() const;
 
     // Set methods
 
@@ -53,8 +59,8 @@ public:
 private:
 
     BanditType m_id;
-    Hand m_hand;
-    Deck m_deck;
+    Hand *m_hand;
+    Deck *m_deck;
     std::vector<BulletCard*> m_bulletDeck;
     int m_positionInTrain;
     bool m_roof;
