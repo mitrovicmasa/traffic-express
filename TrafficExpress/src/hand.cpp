@@ -26,6 +26,13 @@ void Hand::addCardToHand(Card *card)
     card->setPos((this->size()-1)*60,50);
 }
 
+void Hand::push_back(Card *card)
+{
+    std::vector<Card*>::push_back(card);
+    card->setParentItem(this);
+    card->setPos((this->size()-1)*60,50);
+}
+
 QRectF Hand::boundingRect() const
 {
     return QRectF(0,0,(this->size()+1)*100,200);

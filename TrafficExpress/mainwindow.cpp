@@ -41,7 +41,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     Train* voz=new Train();
     for(int i=0;i<6;i++){
-        voz->addWagonToTrain(new Wagon());
+        voz->push_back(new Wagon());
         for( int j=0;j<3;j++){
             voz->back()->addContentDown(new Treasure());
 
@@ -52,16 +52,16 @@ MainWindow::MainWindow(QWidget *parent)
     voz->setPos(50,50);
 
     Hand* ruka= new Hand();
-    ruka->addCardToHand(new ActionCard(ActionType::PUNCH, BanditType::BUSINESS_WOMAN));
-    ruka->addCardToHand(new ActionCard(ActionType::PUNCH, BanditType::HOMELESS_MAN));
-    ruka->addCardToHand(new NeutralBullet());
-    ruka->addCardToHand(new BulletCard(BanditType::PICKPOCKET, 6));
+    ruka->push_back(new ActionCard(ActionType::PUNCH, BanditType::BUSINESS_WOMAN));
+    ruka->push_back(new ActionCard(ActionType::PUNCH, BanditType::HOMELESS_MAN));
+    ruka->push_back(new NeutralBullet());
+    ruka->push_back(new BulletCard(BanditType::PICKPOCKET, 6));
     sc->addItem(ruka);
     ruka->setPos(50,500);
 
     Deck* spil = new Deck();
-    spil->addCardToDeck(new ActionCard(ActionType::PUNCH, BanditType::BUSINESS_WOMAN));
-    spil->addCardToDeck(new NeutralBullet());
+    spil->push_back(new ActionCard(ActionType::PUNCH, BanditType::BUSINESS_WOMAN));
+    spil->push_back(new NeutralBullet());
     sc->addItem(spil);
     spil->setPos(600,500);
 

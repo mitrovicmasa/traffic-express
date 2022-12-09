@@ -15,7 +15,7 @@ public:
 
     void addTrainToScene(QGraphicsScene*sc);
     void addWagonToTrain(Wagon*);
-
+    void push_back(Wagon*w);
     // QGraphicsItem interface
 public:
     QRectF boundingRect() const;

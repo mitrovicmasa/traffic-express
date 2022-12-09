@@ -21,6 +21,13 @@ void Deck::addCardToDeck(Card *card)
     card->setPos(10,50);
 }
 
+void Deck::push_back(Card *card)
+{
+    std::vector<Card*>::push_back(card);
+    card->setParentItem(this);
+    card->setPos(10,50);
+}
+
 QRectF Deck::boundingRect() const
 {
     return QRectF(0,0,200,200);

@@ -13,6 +13,7 @@ public:
 
     //void addDeckToScene(QGraphicsScene*sc);
     void addCardToDeck(Card* card);
+    void push_back(Card*);
 
     QRectF boundingRect() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);

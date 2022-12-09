@@ -12,6 +12,7 @@ public:
 
     //void addHandToScene(QGraphicsScene*sc);
     void addCardToHand(Card* card);
+    void push_back(Card*);
 
     QRectF boundingRect() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
