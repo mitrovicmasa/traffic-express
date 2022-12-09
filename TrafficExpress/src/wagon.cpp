@@ -30,6 +30,20 @@ void Wagon::addContentDown(Treasure *t)
     t->setPos(10+(m_contentDown.size()-1)*(2*t->sirina()),visina()-t->visina());
 }
 
+void Wagon::addPlayerUp(Player *p)
+{
+    m_playersUp.push_back(p);
+    p->setParentItem(this);
+    p->setPos(5+(p->width()+5)*(m_playersUp.size()-1),-p->height()-25);
+}
+
+void Wagon::addPlayerDown(Player *p)
+{
+    m_playersDown.push_back(p);
+    p->setParentItem(this);
+    p->setPos(5+(p->width()+5)*(m_playersDown.size()-1),+25);
+}
+
 Treasure *Wagon::takeContentUp(TreasureType t)
 {
     Treasure* r;
@@ -63,6 +77,42 @@ Treasure *Wagon::takeContentDown(TreasureType t)
         return r;
     }
     return new Treasure(0,TreasureType::MONEYBAG);
+
+}
+
+Player *Wagon::takePlayerUp(BanditType bandit)
+{
+    Player* playerToRemove=nullptr;
+
+
+    for(auto x=m_playersUp.begin();x!=m_playersUp.end();x++){
+        if((*x)->id()==bandit){
+            playerToRemove=*x;
+            (*x)->setParentItem(nullptr);
+            m_playersUp.erase(x);
+            break;
+        }
+    }
+    return playerToRemove;
+
+
+
+}
+
+Player *Wagon::takePlayerDown(BanditType bandit)
+{
+    Player* playerToRemove=nullptr;
+
+
+    for(auto x=m_playersDown.begin();x!=m_playersDown.end();x++){
+        if((*x)->id()==bandit){
+            playerToRemove=*x;
+            (*x)->setParentItem(nullptr);
+            m_playersDown.erase(x);
+            break;
+        }
+    }
+    return playerToRemove;
 
 }
 

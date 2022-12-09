@@ -44,10 +44,11 @@ MainWindow::MainWindow(QWidget *parent)
         voz->push_back(new Wagon());
         for( int j=0;j<3;j++){
             voz->back()->addContentDown(new Treasure());
-
+            voz->back()->addPlayerDown(new Player(BanditType::BUSINESS_WOMAN));
         }
-    }
 
+    }
+    voz->back()->takePlayerDown(BanditType::BUSINESS_WOMAN);
     sc->addItem(voz);
     voz->setPos(50,50);
 

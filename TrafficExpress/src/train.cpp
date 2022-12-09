@@ -23,14 +23,14 @@ void Train::addWagonToTrain(Wagon *w)
 {
     this->push_back(w);
     w->setParentItem(this);
-    w->setPos((this->size()-1)*300,50);
+    w->setPos((this->size()-1)*300,100);
 }
 
 void Train::push_back(Wagon*w)
 {
     std::vector<Wagon*>::push_back(w);
     w->setParentItem(this);
-    w->setPos((this->size()-1)*300,50);
+    w->setPos((this->size()-1)*300,100);
 }
 
 QRectF Train::boundingRect() const
