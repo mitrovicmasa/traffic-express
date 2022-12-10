@@ -13,6 +13,7 @@
 #include <bulletcard.h>
 #include <neutralbullet.h>
 #include <roundcard.h>
+#include <QPixmap>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -30,6 +31,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->graphicsView->setScene(sc);
     ui->graphicsView->setRenderHint(QPainter::Antialiasing);
     ui->graphicsView->setAlignment(Qt::AlignTop | Qt::AlignLeft);
+    ui->graphicsView->setBackgroundBrush(QPixmap(":/img/resource/clouds.png"));
 
 //    Treasure*t=new Treasure();
 //    Treasure*t1=new Treasure();
@@ -53,7 +55,7 @@ MainWindow::MainWindow(QWidget *parent)
     voz->setPos(50,50);
 
     Hand* ruka= new Hand();
-    ruka->push_back(new ActionCard(ActionType::PUNCH, BanditType::BUSINESS_WOMAN));
+    ruka->push_back(new ActionCard(ActionType::PUNCH, BanditType::PICKPOCKET));
     ruka->push_back(new ActionCard(ActionType::PUNCH, BanditType::HOMELESS_MAN));
     ruka->push_back(new NeutralBullet());
     ruka->push_back(new BulletCard(BanditType::PICKPOCKET, 6));

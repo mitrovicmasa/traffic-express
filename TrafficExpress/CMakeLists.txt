@@ -14,6 +14,11 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
 
+
+set(RESOURCES resource/resource.qrc)
+qt_add_resources(RES_SOURCES ${RESOURCES})
+
+
 include_directories(src/)
 include_directories(headers/)
 
@@ -105,6 +110,7 @@ else()
         add_executable(TrafficExpress
             ${PROJECT_SOURCES}
             ${PROJECT_HEADERS}
+            ${RES_SOURCES}
         )
     endif()
 endif()
