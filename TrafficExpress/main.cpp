@@ -9,64 +9,77 @@
 
 int main(int argc, char *argv[])
 {
-//    QApplication a(argc, argv);
-//    MainWindow w;
-//    w.showFullScreen();
-//    //w.show();
-//    return a.exec();
+    QApplication a(argc, argv);
+    MainWindow w;
+    w.showFullScreen();
+//    w.show();
+    return a.exec();
 
     // Create n number of players
 
-//    std::vector<Player> players;
+    std::vector<Player*> players;
+    players = {
+        new Player(BanditType::PICKPOCKET),
+        new Player(BanditType::SEDUCTRESS),
+        new Player(BanditType::STUDENT),
+        new Player(BanditType::RETIREE),
+        new Player(BanditType::HOMELESS_MAN),
+        new Player(BanditType::BUSINESS_WOMAN)
+    };
 
-//    Player player1 = Player(BanditType::PICKPOCKET);
-//    Player player2 = Player(BanditType::SEDUCTRESS);
-//    Player player3 = Player(BanditType::STUDENT);
-//    Player player4 = Player(BanditType::RETIREE);
-//    Player player5 = Player(BanditType::HOMELESS_MAN);
-//    Player player6 = Player(BanditType::BUSINESS_WOMAN);
+    // Create the Games
+    Game game(players);
+    game.initialize();
 
-//    std::cout << player1.toString() << std::endl;
-
-//    players = {player1, player2, player3, player4, player5, player6};
-
-//    // Create the Game
-//    Game game(players);
-//    game.initialize();
-
-//    // Each player selects one the first 2 wagons to place their character
+    // Each player selects one the first 2 wagons to place their character
 //    game.selectBanditPositions();
 
+    //// TEST - start
+//    std::cout << "--- PLAYERS ---" << std::endl;
+//    for (auto *player : game.players())
+//        std::cout << player->toString() << std::endl;
+//    std::cout << "------------------------------------" << std::endl;
 
-//    // For every roundcard  (round) :
+//    std::cout << "--- WAGONS ---" << std::endl;
+//    for (auto *wagon : *game.wagons())
+//        std::cout << wagon->toString() << std::endl;
 
-//    for (auto round : game.rounds())
-//    {
-//        // For every miniRound
+//    std::cout << "------------------------------------" << std::endl;
 
-//        for (auto miniround : round->miniRound() )
-//        {
-//            // PHASE 1:
+//    std::cout << "--- ROUND CARDS ---" << std::endl;
+//    for (auto *roundCard : game.rounds())
+//        std::cout << roundCard->toString() << std::endl;
+    //// TEST - end
 
-//            // For every player:
-//            for (auto player: game.players())
-//            {
-//                // Draw cards
+    // For every roundcard  (round) :
+
+    for (auto round : game.rounds())
+    {
+        // For every miniRound
+
+        for (auto miniround : round->miniRound() )
+        {
+            // PHASE 1:
+
+            // For every player:
+            for (auto player: game.players())
+            {
+                // Draw cards
 
 
-//                // option1: draw 3 cards
-//                // option2: play card from hand
-//            }
+                // option1: draw 3 cards
+                // option2: play card from hand
+            }
 
 
-//            // PHASE 2:
+            // PHASE 2:
 
-//            // For every card played:
-//            // print list of valid moves
-//            // If action possible (list not empty):
-//                // Player chooses and plays the move
-//        }
-//    }
+            // For every card played:
+            // print list of valid moves
+            // If action possible (list not empty):
+                // Player chooses and plays the move
+        }
+    }
 
     // Create printGameState function
 
@@ -82,7 +95,6 @@ int main(int argc, char *argv[])
 
 //    w.takeContentDown(TreasureType::MONEYBAG);
 //    std::cout<<w.toString()<<std::endl<<w.numberOfTreasureInWagonDown(TreasureType::MONEYBAG)<<std::endl;
-
 
     return 0;
 }

@@ -41,7 +41,7 @@ public:
     const std::vector<Treasure*> &treasure() const;
 
     // Set methods
-
+    void setPositionInTrain(int newPositionInTrain);
 
     // QT methods
 

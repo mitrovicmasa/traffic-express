@@ -72,7 +72,10 @@ const std::vector<Treasure*> &Player::treasure() const
 }
 
 // Set methods
-
+void Player::setPositionInTrain(int newPositionInTrain)
+{
+    m_positionInTrain = newPositionInTrain;
+}
 
 // QT methods
 

@@ -16,6 +16,14 @@ Wagon::Wagon(const std::vector<Treasure *> &contentDown, const std::vector<Treas
 
 }
 
+// Getters
+
+// Setters
+void Wagon::setContentDown(std::vector<Treasure*> newContentDown)
+{
+    m_contentDown = newContentDown;
+}
+
 void Wagon::addContentUp(Treasure *t)
 {
     m_contentUp.push_back(t);

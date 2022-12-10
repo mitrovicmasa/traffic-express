@@ -19,7 +19,7 @@ public:
 
     // Get methods
     // Set methods
-
+    void setContentDown(std::vector<Treasure*> newContentDown);
 
     // Other methods
 
