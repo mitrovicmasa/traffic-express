@@ -6,7 +6,7 @@
 
 
 Table::Table()
-   :QGraphicsObject()
+   :QGraphicsObject(), std::vector<PlayerStats*>()
 {
 
 }
@@ -23,6 +23,13 @@ void Table::addTreasureInTable(Treasure *t)
     t->setParentItem(this);
     t->setPos((this->size()-3), 100);
 
+}
+
+void Table::push_back(PlayerStats *p)
+{
+    std::vector<PlayerStats*>::push_back(p);
+    p->setParentItem(this);
+    p->setPos(0,(this->size()-1)*70);
 }
 
 // Other methods

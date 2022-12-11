@@ -3,11 +3,12 @@
 
 #include "player.h"
 #include "treasure.h"
+#include "playerstats.h"
 #include <QGraphicsObject>
 #include <string>
 #include <vector>
 
-class Table: public QGraphicsObject, public std::vector<Player*>
+class Table: public QGraphicsObject, public std::vector<PlayerStats*>
 {
     Q_OBJECT
 
@@ -20,6 +21,8 @@ public:
     // Other methods
     void addTableToScene(QGraphicsScene *sc);
     void addTreasureInTable(Treasure* );
+    void push_back(PlayerStats* p);
+
 
 
     int height() const;

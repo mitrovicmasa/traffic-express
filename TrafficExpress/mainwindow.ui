@@ -36,7 +36,7 @@
        <bool>true</bool>
       </property>
       <property name="currentIndex">
-       <number>2</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="pageMainMenu">
        <property name="palette">
@@ -542,6 +542,65 @@ hr { height: 1px; border-width: 0; }
          <bool>false</bool>
         </property>
        </widget>
+       <widget class="QPushButton" name="pbBackToMain_2">
+        <property name="geometry">
+         <rect>
+          <x>480</x>
+          <y>380</y>
+          <width>200</width>
+          <height>70</height>
+         </rect>
+        </property>
+        <property name="palette">
+         <palette>
+          <active>
+           <colorrole role="Button">
+            <brush brushstyle="SolidPattern">
+             <color alpha="255">
+              <red>205</red>
+              <green>94</green>
+              <blue>94</blue>
+             </color>
+            </brush>
+           </colorrole>
+          </active>
+          <inactive>
+           <colorrole role="Button">
+            <brush brushstyle="SolidPattern">
+             <color alpha="255">
+              <red>239</red>
+              <green>239</green>
+              <blue>239</blue>
+             </color>
+            </brush>
+           </colorrole>
+          </inactive>
+          <disabled>
+           <colorrole role="Button">
+            <brush brushstyle="SolidPattern">
+             <color alpha="255">
+              <red>205</red>
+              <green>94</green>
+              <blue>94</blue>
+             </color>
+            </brush>
+           </colorrole>
+          </disabled>
+         </palette>
+        </property>
+        <property name="text">
+         <string>BACK TO THE MENU</string>
+        </property>
+        <property name="autoDefault">
+         <bool>false</bool>
+        </property>
+        <property name="default">
+         <bool>false</bool>
+        </property>
+        <property name="flat">
+         <bool>false</bool>
+        </property>
+       </widget>
       </widget>
       <widget class="QWidget" name="pageWaitingRoom">
        <widget class="QLabel" name="labelWaitingRoom">
@@ -613,8 +672,8 @@ hr { height: 1px; border-width: 0; }
        <widget class="QPushButton" name="pbReady">
         <property name="geometry">
          <rect>
-          <x>800</x>
-          <y>260</y>
+          <x>790</x>
+          <y>200</y>
           <width>200</width>
           <height>70</height>
          </rect>
@@ -663,8 +722,8 @@ hr { height: 1px; border-width: 0; }
        <widget class="QPushButton" name="pbStart">
         <property name="geometry">
          <rect>
-          <x>800</x>
-          <y>390</y>
+          <x>790</x>
+          <y>300</y>
           <width>200</width>
           <height>70</height>
          </rect>
@@ -708,6 +767,62 @@ hr { height: 1px; border-width: 0; }
         </property>
         <property name="text">
          <string>START</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="pbBackToMain_3">
+        <property name="geometry">
+         <rect>
+          <x>790</x>
+          <y>400</y>
+          <width>200</width>
+          <height>70</height>
+         </rect>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>200</width>
+          <height>70</height>
+         </size>
+        </property>
+        <property name="palette">
+         <palette>
+          <active>
+           <colorrole role="Button">
+            <brush brushstyle="SolidPattern">
+             <color alpha="255">
+              <red>205</red>
+              <green>94</green>
+              <blue>94</blue>
+             </color>
+            </brush>
+           </colorrole>
+          </active>
+          <inactive>
+           <colorrole role="Button">
+            <brush brushstyle="SolidPattern">
+             <color alpha="255">
+              <red>239</red>
+              <green>239</green>
+              <blue>239</blue>
+             </color>
+            </brush>
+           </colorrole>
+          </inactive>
+          <disabled>
+           <colorrole role="Button">
+            <brush brushstyle="SolidPattern">
+             <color alpha="255">
+              <red>205</red>
+              <green>94</green>
+              <blue>94</blue>
+             </color>
+            </brush>
+           </colorrole>
+          </disabled>
+         </palette>
+        </property>
+        <property name="text">
+         <string>BACK TO THE MENU</string>
         </property>
        </widget>
       </widget>

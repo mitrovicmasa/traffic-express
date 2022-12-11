@@ -82,7 +82,8 @@ void Treasure::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, 
     Q_UNUSED(option)
     Q_UNUSED(widget)
 
-    painter->fillRect(boundingRect(),QColor::fromRgb(100,100,100));
+    painter->fillRect(boundingRect(),QColor::fromRgb(255,153,51));
+    painter->drawText(boundingRect(),"$");
 }
 
 

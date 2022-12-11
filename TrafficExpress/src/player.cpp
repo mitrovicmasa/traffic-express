@@ -34,6 +34,8 @@ Player::Player(BanditType id)
     m_treasure.push_back(new Treasure());
 }
 
+
+
 // Get methods
 
 BanditType Player::id() const
@@ -66,7 +68,7 @@ bool Player::roof() const
     return m_roof;
 }
 
-const std::vector<Treasure*> &Player::treasure() const
+const std::vector<Treasure*> &Player::treasure()
 {
     return m_treasure;
 }

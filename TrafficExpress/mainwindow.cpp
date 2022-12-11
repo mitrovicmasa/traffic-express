@@ -13,6 +13,7 @@
 #include <bulletcard.h>
 #include <neutralbullet.h>
 #include <roundcard.h>
+#include <playerstats.h>
 #include <QPixmap>
 
 MainWindow::MainWindow(QWidget *parent)
@@ -25,6 +26,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     dialogInit();
     connectButtons();
+    //setButtonIcon();
 
     //testing start *******************************************************
     sc->setSceneRect(ui->graphicsView->rect());
@@ -81,8 +83,17 @@ MainWindow::MainWindow(QWidget *parent)
 
     //Table test
     Table* tb = new Table();
+
+    for (int i = 0; i<4; i++){
+        tb->push_back(new PlayerStats());
+    }
     sc->addItem(tb);
     tb->setPos(810,270);
+
+
+//    PlayerStats *ps = new PlayerStats();
+//    sc->addItem(ps);
+//    ps->setPos(810, 270);
 
 //  ne radi mi ovaj test, nmg sad :)
 //    std::vector<std::vector<MiniRoundType>> miniRounds = {
@@ -112,6 +123,10 @@ void MainWindow::connectButtons()
     connect(ui->pbQuit, &QPushButton::clicked,
             this, &QCoreApplication::quit);
     connect(ui->pbBackToMain, &QPushButton::clicked,
+            this, &MainWindow::onBackToTheMenu);
+    connect(ui->pbBackToMain_2, &QPushButton::clicked,
+            this, &MainWindow::onBackToTheMenu);
+    connect(ui->pbBackToMain_3, &QPushButton::clicked,
             this, &MainWindow::onBackToTheMenu);
     connect(ui->pbConnect, &QPushButton::clicked,
             this, &MainWindow::onConnect);
@@ -155,6 +170,18 @@ void MainWindow::dialogInit()
 
     dialog->setLayout(vl);
 }
+
+//void MainWindow::setButtonIcon()
+//{
+//    QImage img;
+//        QPixmap pixmap;
+
+//        img.load(":/../resource/button.png");
+//        pixmap = QPixmap::fromImage(img).scaled(30, 30);
+
+//        ui->pbPlay->setIcon(QIcon(pixmap));
+//        ui->pbPlay->setIconSize(QSize(30, 30));
+//}
 
 void MainWindow::onPlay()
 {

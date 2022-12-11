@@ -38,7 +38,7 @@ public:
     const std::vector<BulletCard*> &bulletDeck() const;
     int positionInTrain() const;
     bool roof() const;
-    const std::vector<Treasure*> &treasure() const;
+    const std::vector<Treasure*> &treasure();
 
     // Set methods
     void setPositionInTrain(int newPositionInTrain);
