@@ -31,7 +31,6 @@ MainWindow::MainWindow(QWidget *parent)
     ui->graphicsView->setScene(sc);
     ui->graphicsView->setRenderHint(QPainter::Antialiasing);
     ui->graphicsView->setAlignment(Qt::AlignTop | Qt::AlignLeft);
-    ui->graphicsView->setBackgroundBrush(QPixmap(":/img/resource/clouds.png"));
 
 //    Treasure*t=new Treasure();
 //    Treasure*t1=new Treasure();
@@ -55,37 +54,35 @@ MainWindow::MainWindow(QWidget *parent)
     voz->setPos(50,50);
 
     Hand* ruka= new Hand();
-    ruka->push_back(new ActionCard(ActionType::PUNCH, BanditType::PICKPOCKET));
+    ActionCard *ac = new ActionCard(ActionType::PUNCH, BanditType::PICKPOCKET);
+    ac->setFaceUp(false);
+    ruka->push_back(ac);
     ruka->push_back(new ActionCard(ActionType::PUNCH, BanditType::HOMELESS_MAN));
     ruka->push_back(new NeutralBullet());
-    ruka->push_back(new BulletCard(BanditType::PICKPOCKET, 6));
+    ruka->push_back(new BulletCard(BanditType::SEDUCTRESS, 3));
+    ruka->push_back(new BulletCard(BanditType::RETIREE, 4));
+    ruka->push_back(new ActionCard(ActionType::ROBBERY, BanditType::STUDENT));
+    ruka->push_back(new ActionCard(ActionType::FLOOR_CHANGE, BanditType::PICKPOCKET));
     sc->addItem(ruka);
-    ruka->setPos(50,500);
+    ruka->setPos(50,450);
 
     Deck* spil = new Deck();
     spil->push_back(new ActionCard(ActionType::PUNCH, BanditType::BUSINESS_WOMAN));
-    spil->push_back(new NeutralBullet());
+    NeutralBullet *nb = new NeutralBullet();
+    nb->setFaceUp(false);
+    spil->push_back(nb);
     sc->addItem(spil);
-    spil->setPos(600,500);
+    spil->setPos(50,300);
 
-//    ruka.push_back(new ActionCard(ActionType::PUNCH, BanditType::BUSINESS_WOMAN));
-//    ruka.push_back(new ActionCard(ActionType::PUNCH, BanditType::HOMELESS_MAN));
-//    ruka.push_back(new NeutralBullet());
-//    ruka.push_back(new BulletCard(BanditType::PICKPOCKET, 6));
-//    ruka.addHandToScene(sc);
-
-
-//    Deck spil = Deck();
-//    spil.push_back(new ActionCard(ActionType::PUNCH, BanditType::BUSINESS_WOMAN));
-//    spil.push_back(new ActionCard(ActionType::PUNCH, BanditType::HOMELESS_MAN));
-//    spil.push_back(new NeutralBullet());
-//    spil.push_back(new BulletCard(BanditType::PICKPOCKET, 6));
-//    spil.addDeckToScene(sc);
+    Deck* grupniSpil = new Deck();
+    grupniSpil->push_back(new ActionCard(ActionType::FIRE, BanditType::STUDENT));
+    sc->addItem(grupniSpil);
+    grupniSpil->setPos(300,300);
 
     //Table test
     Table* tb = new Table();
     sc->addItem(tb);
-    tb->setPos(1000,270);
+    tb->setPos(810,270);
 
 //  ne radi mi ovaj test, nmg sad :)
 //    std::vector<std::vector<MiniRoundType>> miniRounds = {

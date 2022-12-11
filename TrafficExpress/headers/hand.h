@@ -10,7 +10,7 @@ class Hand:public QGraphicsObject, public std::vector<Card*>
 public:
     Hand();
 
-    //void addHandToScene(QGraphicsScene*sc);
+    // GUI
     void addCardToHand(Card* card);
     void push_back(Card*);
 

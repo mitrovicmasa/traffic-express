@@ -48,5 +48,12 @@ CardType NeutralBullet::Type() const
 
 void NeutralBullet::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
+    if(!this->faceUp()) {
+        painter->fillRect(boundingRect(),QColor::fromRgb(200,200,200));
+        painter->drawText(boundingRect(), "?");
+        return ;
+    }
+
     painter->fillRect(boundingRect(),QColor::fromRgb(200,200,150));
+    painter->drawText(boundingRect(), "NEUTRALL\nBULLET");
 }

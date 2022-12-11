@@ -6,31 +6,25 @@ Deck::Deck():QGraphicsObject(),std::vector<Card*>()
 
 }
 
-//void Deck::addDeckToScene(QGraphicsScene *sc)
-//{
-//    for(int i=0;i<size();i++){
-//        sc->addItem((*this)[i]);
-//        (*this)[i]->setPos(800,400);
-//    }
-//}
+// GUI
 
 void Deck::addCardToDeck(Card *card)
 {
     this->push_back(card);
     card->setParentItem(this);
-    card->setPos(10,50);
+    card->setPos(10,10);
 }
 
 void Deck::push_back(Card *card)
 {
     std::vector<Card*>::push_back(card);
     card->setParentItem(this);
-    card->setPos(10,50);
+    card->setPos(10,10);
 }
 
 QRectF Deck::boundingRect() const
 {
-    return QRectF(0,0,200,200);
+    return QRectF(0,0,80,120);
 }
 
 void Deck::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)

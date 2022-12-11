@@ -34,6 +34,7 @@ public:
     virtual std::string toString() const override;
 
 private:
+
     BanditType m_bandit;
 };
 

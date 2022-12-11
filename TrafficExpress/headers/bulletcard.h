@@ -24,6 +24,7 @@ public:
     std::string toString() const override;
     CardType Type() const override;
 
+    // GUI
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
 
 private:

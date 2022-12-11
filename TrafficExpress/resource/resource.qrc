@@ -86,5 +86,6 @@
         <file>bullet_blue_3.png</file>
         <file>bullet_blue_2.png</file>
         <file>bullet_blue_1.png</file>
+        <file>marshal.png</file>
     </qresource>
 </RCC>

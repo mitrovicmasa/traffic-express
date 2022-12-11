@@ -1,6 +1,8 @@
 #include "../headers/bulletcard.h"
 // Constructors
-BulletCard::BulletCard(BanditType bandit, unsigned numOfBullets) : BanditCard(bandit)
+BulletCard::BulletCard(BanditType bandit, unsigned numOfBullets):
+    BanditCard(bandit),
+    m_numOfBullets(numOfBullets)
 {}
 
 //Card *BulletCard::Copy() const
@@ -37,8 +39,15 @@ CardType BulletCard::Type() const
     return CardType::BULLET_CARD;
 }
 
+// GUI
 void BulletCard::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
+
+    if(!this->faceUp()) {
+        painter->fillRect(boundingRect(),QColor::fromRgb(200,200,200));
+        painter->drawText(boundingRect(), "?");
+        return ;
+    }
 
     switch (this->bandit()) {
         case BanditType::PICKPOCKET:
@@ -62,4 +71,6 @@ void BulletCard::paint(QPainter *painter, const QStyleOptionGraphicsItem *option
         default:
             return;
     }
+
+    painter->drawText(boundingRect(), QString::number(this->numOfBullets()));
 }

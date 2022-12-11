@@ -60,8 +60,15 @@ CardType ActionCard::Type() const
     return CardType::ACTION_CARD;
 }
 
+// GUI
 void ActionCard::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
+    if(!this->faceUp()) {
+        painter->fillRect(boundingRect(),QColor::fromRgb(200,200,200));
+        painter->drawText(boundingRect(), "?");
+        return ;
+    }
+
     switch (this->bandit()) {
         case BanditType::PICKPOCKET:
             painter->fillRect(boundingRect(),QColor::fromRgb(80,110,240));
@@ -80,6 +87,29 @@ void ActionCard::paint(QPainter *painter, const QStyleOptionGraphicsItem *option
             break;
         case BanditType::BUSINESS_WOMAN:
             painter->fillRect(boundingRect(),QColor::fromRgb(240,150,80));
+            break;
+        default:
+            return;
+    }
+
+    switch (this->m_action) {
+        case ActionType::FIRE:
+            painter->drawText(boundingRect(), "FIRE");
+            break;
+        case ActionType::FLOOR_CHANGE:
+            painter->drawText(boundingRect(), "FLOOR\nCHANGE");
+            break;
+        case ActionType::MARSHAL:
+            painter->drawText(boundingRect(), "MARSHAL");
+            break;
+        case ActionType::MOVE:
+            painter->drawText(boundingRect(), "MOVE");
+            break;
+        case ActionType::PUNCH:
+            painter->drawText(boundingRect(), "PUNCH");
+            break;
+        case ActionType::ROBBERY:
+            painter->drawText(boundingRect(), "ROBBERY");
             break;
         default:
             return;

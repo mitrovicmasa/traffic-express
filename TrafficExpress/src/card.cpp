@@ -12,23 +12,36 @@ Card::~Card()
 
 }
 
+// Get methods
+bool Card::faceUp() const
+{
+    return m_faceUp;
+}
+
+// Set methods
+void Card::setFaceUp(bool newFaceUp)
+{
+    m_faceUp = newFaceUp;
+}
+
 // Other methods
 std::string Card::toString() const
 {
     return "";
 }
 
-int Card::visina() const
+// GUI
+int Card::height() const
 {
     return 100;
 }
 
-int Card::sirina() const
+int Card::width() const
 {
     return 50;
 }
 
 QRectF Card::boundingRect() const
 {
-    return QRectF(0,0,sirina(),visina());
+    return QRectF(0,0,width(),height());
 }

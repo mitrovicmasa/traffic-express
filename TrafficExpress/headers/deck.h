@@ -11,7 +11,7 @@ class Deck:public QGraphicsObject,public std::vector<Card*>
 public:
     Deck();
 
-    //void addDeckToScene(QGraphicsScene*sc);
+    // GUI
     void addCardToDeck(Card* card);
     void push_back(Card*);
 

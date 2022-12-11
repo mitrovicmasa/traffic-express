@@ -31,7 +31,6 @@ private slots:
     void dialogInit();
 private:
     void keyPressEvent(QKeyEvent*);
-
     Ui::MainWindow *ui;
     QDialog*dialog;
     QGraphicsScene*sc;
