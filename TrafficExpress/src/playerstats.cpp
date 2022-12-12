@@ -39,7 +39,7 @@ void PlayerStats::paint(QPainter *painter, const QStyleOptionGraphicsItem *optio
     Q_UNUSED(option)
     Q_UNUSED(widget)
 
-    painter->fillRect(boundingRect(),QColor::fromRgb(0, 204, 204));
+    painter->fillRect(boundingRect(),QColor(210,222,230));
 
     int num;
     for (BulletCard *b :m_player->bulletDeck()){

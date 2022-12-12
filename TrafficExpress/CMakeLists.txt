@@ -13,11 +13,10 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
+find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Gui)
 
-
-set(RESOURCES resource/resource.qrc)
+set(RESOURCES ${CMAKE_CURRENT_SOURCE_DIR}/resource/resource.qrc)
 qt_add_resources(RES_SOURCES ${RESOURCES})
-
 
 include_directories(src/)
 include_directories(headers/)
@@ -95,6 +94,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         MANUAL_FINALIZATION
         ${PROJECT_SOURCES}
         ${PROJECT_HEADERS}
+        ${RES_SOURCES}
     )
 # Define target properties for Android with Qt 6 as:
 #    set_property(TARGET TrafficExpress APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR

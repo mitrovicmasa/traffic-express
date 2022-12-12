@@ -83,12 +83,36 @@ void Player::setPositionInTrain(int newPositionInTrain)
 
 QRectF Player::boundingRect() const
 {
-    return QRectF(0,0,25,35);
+    return QRectF(0,0,50,50);
 }
 
 void Player::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
-    painter->fillRect(boundingRect(),QColor::fromRgb(0,50,60));
+    QString color;
+    switch (this->m_id) {
+        case BanditType::PICKPOCKET:
+            color = "green";
+            break;
+        case BanditType::SEDUCTRESS:
+            color = "yellow";
+            break;
+        case BanditType::STUDENT:
+            color = "blue";
+            break;
+        case BanditType::RETIREE:
+            color = "red";
+            break;
+        case BanditType::HOMELESS_MAN:
+            color = "orange";
+            break;
+        case BanditType::BUSINESS_WOMAN:
+            color = "purple";
+            break;
+        default:
+            return;
+    }
+    QString path = "://player_" + color + ".png";
+    painter->drawPixmap(boundingRect(), QPixmap(path), QRectF(0,0,0,0));
 }
 
 // Other methods

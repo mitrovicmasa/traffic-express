@@ -33,12 +33,12 @@ std::string Card::toString() const
 // GUI
 int Card::height() const
 {
-    return 100;
+    return 80;
 }
 
 int Card::width() const
 {
-    return 50;
+    return 80;
 }
 
 QRectF Card::boundingRect() const

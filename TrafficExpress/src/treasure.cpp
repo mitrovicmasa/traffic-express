@@ -74,16 +74,30 @@ std::string Treasure::toString()
 
 QRectF Treasure::boundingRect() const
 {
-    return QRectF(0,0,sirina(),visina());
+    return QRectF(0,0,25,25);
 }
 
 void Treasure::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
-    Q_UNUSED(option)
-    Q_UNUSED(widget)
+//    Q_UNUSED(option)
+//    Q_UNUSED(widget)
 
-    painter->fillRect(boundingRect(),QColor::fromRgb(255,153,51));
-    painter->drawText(boundingRect(),"$");
+    QString type;
+    switch(this->getType()){
+        case TreasureType::MONEYBAG:
+            type = "moneybag";
+            break;
+        case TreasureType::DIAMOND:
+            type = "diamond";
+            break;
+        case TreasureType::SUITCASE:
+            type = "suitcase";
+            break;
+        default:return ;
+    }
+
+    QString path = "://" + type + ".png";
+    painter->drawPixmap(boundingRect(), QPixmap(path), QRectF(0,0,0,0));
 }
 
 

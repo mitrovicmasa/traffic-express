@@ -44,33 +44,34 @@ void BulletCard::paint(QPainter *painter, const QStyleOptionGraphicsItem *option
 {
 
     if(!this->faceUp()) {
-        painter->fillRect(boundingRect(),QColor::fromRgb(200,200,200));
-        painter->drawText(boundingRect(), "?");
+        painter->drawPixmap(boundingRect(), QPixmap("://card_back.png"), QRectF(0,0,0,0));
         return ;
     }
 
+    QString number = QString::number(this->numOfBullets());
+    QString color;
     switch (this->bandit()) {
         case BanditType::PICKPOCKET:
-            painter->fillRect(boundingRect(),QColor::fromRgb(80,110,240));
+            color = "green";
             break;
         case BanditType::SEDUCTRESS:
-            painter->fillRect(boundingRect(),QColor::fromRgb(240,80,120));
+            color = "yellow";
             break;
         case BanditType::STUDENT:
-            painter->fillRect(boundingRect(),QColor::fromRgb(220,80,240));
+            color = "blue";
             break;
         case BanditType::RETIREE:
-            painter->fillRect(boundingRect(),QColor::fromRgb(50,150,100));
+            color = "red";
             break;
         case BanditType::HOMELESS_MAN:
-            painter->fillRect(boundingRect(),QColor::fromRgb(240,240,80));
+            color = "orange";
             break;
         case BanditType::BUSINESS_WOMAN:
-            painter->fillRect(boundingRect(),QColor::fromRgb(240,150,80));
+            color = "purple";
             break;
         default:
             return;
     }
-
-    painter->drawText(boundingRect(), QString::number(this->numOfBullets()));
+    QString path = "://bullet_" + color + "_" + number + ".png";
+    painter->drawPixmap(boundingRect(), QPixmap(path), QRectF(0,0,0,0));
 }

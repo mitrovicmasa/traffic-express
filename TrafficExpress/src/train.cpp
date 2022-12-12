@@ -30,17 +30,18 @@ void Train::push_back(Wagon*w)
 {
     std::vector<Wagon*>::push_back(w);
     w->setParentItem(this);
-    w->setPos((this->size()-1)*300,100);
+    w->setPos((this->size()-1)*200,10);
 }
 
 QRectF Train::boundingRect() const
 {
-    return QRectF(0,0,(this->size()+1)*250,200);
+    return QRectF(0,0,(this->size()+1)*200,200);
 }
 
 void Train::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
-    painter->fillRect(boundingRect(),QColor(50,50,50));
+    painter->fillRect(boundingRect(),QColor(100,100,100));
+    painter->drawText(boundingRect(), "TRAIN:");
 }
 
 

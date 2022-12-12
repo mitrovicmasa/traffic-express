@@ -38,13 +38,13 @@ std::string ActionCard::toString() const
         case ActionType::MOVE:
             actionName = "move";break;
         case ActionType::FLOOR_CHANGE:
-            actionName = "floor change";break;
+            actionName = "floor_change";break;
         case ActionType::FIRE:
             actionName = "fire";break;
         case ActionType::PUNCH:
             actionName = "punch";break;
         case ActionType::MARSHAL:
-            actionName = "move marshal";break;
+            actionName = "marshal";break;
         case ActionType::ROBBERY:
             actionName = "robbery";break;
         case ActionType::TAKETREASURE:
@@ -64,55 +64,58 @@ CardType ActionCard::Type() const
 void ActionCard::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
     if(!this->faceUp()) {
-        painter->fillRect(boundingRect(),QColor::fromRgb(200,200,200));
-        painter->drawText(boundingRect(), "?");
+        painter->drawPixmap(boundingRect(), QPixmap("://card_back.png"), QRectF(0,0,0,0));
         return ;
     }
 
+    QString color;
     switch (this->bandit()) {
         case BanditType::PICKPOCKET:
-            painter->fillRect(boundingRect(),QColor::fromRgb(80,110,240));
+            color = "green";
             break;
         case BanditType::SEDUCTRESS:
-            painter->fillRect(boundingRect(),QColor::fromRgb(240,80,120));
+            color = "yellow";
             break;
         case BanditType::STUDENT:
-            painter->fillRect(boundingRect(),QColor::fromRgb(220,80,240));
+            color = "blue";
             break;
         case BanditType::RETIREE:
-            painter->fillRect(boundingRect(),QColor::fromRgb(50,150,100));
+            color = "red";
             break;
         case BanditType::HOMELESS_MAN:
-            painter->fillRect(boundingRect(),QColor::fromRgb(240,240,80));
+            color = "orange";
             break;
         case BanditType::BUSINESS_WOMAN:
-            painter->fillRect(boundingRect(),QColor::fromRgb(240,150,80));
+            color = "purple";
             break;
         default:
             return;
     }
 
+    QString action;
     switch (this->m_action) {
         case ActionType::FIRE:
-            painter->drawText(boundingRect(), "FIRE");
+            action = "fire";
             break;
         case ActionType::FLOOR_CHANGE:
-            painter->drawText(boundingRect(), "FLOOR\nCHANGE");
+            action = "floor_change";
             break;
         case ActionType::MARSHAL:
-            painter->drawText(boundingRect(), "MARSHAL");
+            action = "marshal";
             break;
         case ActionType::MOVE:
-            painter->drawText(boundingRect(), "MOVE");
+            action = "move";
             break;
         case ActionType::PUNCH:
-            painter->drawText(boundingRect(), "PUNCH");
+            action = "punch";
             break;
         case ActionType::ROBBERY:
-            painter->drawText(boundingRect(), "ROBBERY");
+            action = "robbery";
             break;
         default:
             return;
     }
+    QString path = "://" + action + "_" + color + ".png";
+    painter->drawPixmap(boundingRect(), QPixmap(path), QRectF(0,0,0,0));
 }
 

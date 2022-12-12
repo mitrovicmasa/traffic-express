@@ -26,11 +26,14 @@ MainWindow::MainWindow(QWidget *parent)
 
     dialogInit();
     connectButtons();
+    ui->labelTrafficExpress->setPixmap(QPixmap("://traffic_express.png").scaled(QSize(350,350), Qt::IgnoreAspectRatio, Qt::FastTransformation));
     //setButtonIcon();
 
     //testing start *******************************************************
     sc->setSceneRect(ui->graphicsView->rect());
     ui->graphicsView->setScene(sc);
+    //ui->graphicsView->setBackgroundBrush(QPixmap("://clouds.png"));
+    //ui->graphicsView->setBackgroundBrush(QColor:);
     ui->graphicsView->setRenderHint(QPainter::Antialiasing);
     ui->graphicsView->setAlignment(Qt::AlignTop | Qt::AlignLeft);
 
@@ -46,8 +49,10 @@ MainWindow::MainWindow(QWidget *parent)
     for(int i=0;i<6;i++){
         voz->push_back(new Wagon());
         for( int j=0;j<3;j++){
-            voz->back()->addContentDown(new Treasure());
+            voz->back()->addContentDown(new Treasure(250, TreasureType::MONEYBAG));
             voz->back()->addPlayerDown(new Player(BanditType::BUSINESS_WOMAN));
+            voz->back()->addPlayerUp(new Player(BanditType::PICKPOCKET));
+            voz->back()->addContentUp(new Treasure(500, TreasureType::DIAMOND));
         }
 
     }
@@ -56,9 +61,7 @@ MainWindow::MainWindow(QWidget *parent)
     voz->setPos(50,50);
 
     Hand* ruka= new Hand();
-    ActionCard *ac = new ActionCard(ActionType::PUNCH, BanditType::PICKPOCKET);
-    ac->setFaceUp(false);
-    ruka->push_back(ac);
+    ruka->push_back( new ActionCard(ActionType::MARSHAL, BanditType::BUSINESS_WOMAN));
     ruka->push_back(new ActionCard(ActionType::PUNCH, BanditType::HOMELESS_MAN));
     ruka->push_back(new NeutralBullet());
     ruka->push_back(new BulletCard(BanditType::SEDUCTRESS, 3));
@@ -83,7 +86,6 @@ MainWindow::MainWindow(QWidget *parent)
 
     //Table test
     Table* tb = new Table();
-
     for (int i = 0; i<4; i++){
         tb->push_back(new PlayerStats());
     }
@@ -147,22 +149,20 @@ void MainWindow::dialogInit()
 
     QVBoxLayout *vl=new QVBoxLayout();
 
-
     QPushButton *pbBackToMainMenu=new QPushButton();
+    pbBackToMainMenu->setPalette(QPalette("://buttonPaleta.xml"));
     pbBackToMainMenu->setParent(dialog);
     pbBackToMainMenu->setText("Back to main menu");
     QFont font("Magnolia Sky");
     font.setBold(true);
     font.setPixelSize(14);
     setFont(font);
-
-    //pbBackToMainMenu->setStyleSheet("border-image : url(:/images/button.png); color: white; background: transparent;");
     connect(pbBackToMainMenu,&QPushButton::clicked,this,&MainWindow::onBackToTheMenu);
 
     QPushButton *pbQuit=new QPushButton();
+    pbQuit->setPalette(QPalette("://buttonPaleta.xml"));
     pbQuit->setParent(dialog);
     pbQuit->setText("Quit");
-    //pbQuit->setStyleSheet("border-image : url(:/images/button.png); color: white; background: transparent;");
     connect(pbQuit,&QPushButton::clicked,this,&QCoreApplication::quit);
 
     vl->addWidget(pbBackToMainMenu);

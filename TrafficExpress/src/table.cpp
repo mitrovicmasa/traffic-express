@@ -29,7 +29,7 @@ void Table::push_back(PlayerStats *p)
 {
     std::vector<PlayerStats*>::push_back(p);
     p->setParentItem(this);
-    p->setPos(0,(this->size()-1)*70);
+    p->setPos(0,(this->size()-1)*70+1);
 }
 
 // Other methods
