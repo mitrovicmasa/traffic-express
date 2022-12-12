@@ -1,21 +1,29 @@
 #include "../headers/roundcard.h"
 
 // Constructors
-RoundCard::RoundCard(RoundCardType type, EventType event, const std::vector<MiniRoundType> &miniRound)
-    : m_type(type), 
-      m_event(event),
-      m_miniRound(miniRound)
+RoundCard::RoundCard(RoundCardType type, EventType event, const std::vector<MiniRound*> &miniRound)
+    :QGraphicsObject(),std::vector<MiniRound*>(miniRound), m_type(type),
+      m_event(event)
+
 {}
 
+RoundCard::RoundCard(RoundCardType type, EventType event, const std::vector<MiniRoundType> &miniRound)
+    :QGraphicsObject(),std::vector<MiniRound*>(), m_type(type),
+      m_event(event)
+{
+    for(auto x:miniRound){
+        this->push_back(new MiniRound(x));
+    }
+}
+
 RoundCard::RoundCard(const RoundCard &r)
-    :
+    :QGraphicsObject(),std::vector<MiniRound*>(),
     m_type(r.m_type), 
-    m_event(r.m_event),
-    m_miniRound(r.m_miniRound)
+    m_event(r.m_event)
 {}
 
 // Get methods
-RoundCardType RoundCard::type() const
+RoundCardType RoundCard::typeOfRoundCard() const
 {
     return m_type;
 }
@@ -25,10 +33,7 @@ EventType RoundCard::event() const
     return m_event;
 }
 
-const std::vector<MiniRoundType> &RoundCard::miniRound() const
-{
-    return m_miniRound;
-}
+
 
 // Set methods
 void RoundCard::setType(RoundCardType &newType)
@@ -41,17 +46,17 @@ void RoundCard::setEvent(EventType &newEvent)
     m_event = newEvent;
 }
 
-void RoundCard::setMiniRound(const std::vector<MiniRoundType> &newMiniRound)
+void RoundCard::push_back(MiniRound*mr)
 {
-    m_miniRound = newMiniRound;
+    std::vector<MiniRound*>::push_back(mr);
+    mr->setParentItem(this);
+    mr->setPos((size()-1)*(mr->width()+10),height()-mr->height());
 }
+
+
 
 // Other methods
-void RoundCard::pushBackMiniRound(MiniRoundType type)
-{
-    m_miniRound.push_back(type);
 
-}
 
 std::string toStringRoundCardType(const RoundCardType &card)
 {
@@ -119,8 +124,8 @@ std::string RoundCard::toString() const
     std::string output = "";
     output += toStringEventType(m_event);
     output += "\n--------------------------\n";
-    for (unsigned i = 0; i < m_miniRound.size(); ++i) {
-        output += toStringMiniRoundType(m_miniRound[i]);
+    for (unsigned i = 0; i <size(); ++i) {
+        output += (*this)[i]->toString();
         output += "\n";
     }
     output += "--------------------------\n";
@@ -128,22 +133,24 @@ std::string RoundCard::toString() const
     return output;
 }
 
-int RoundCard::visina() const
-{
-    return 50;
-}
-
-int RoundCard::sirina() const
+int RoundCard::height() const
 {
     return 100;
 }
 
+int RoundCard::width() const
+{
+    return 250;
+}
+
 QRectF RoundCard::boundingRect() const
 {
-    return QRectF(0,0,sirina(),visina());
+    return QRectF(0,0,width(),height());
 }
 
 void RoundCard::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
     painter->fillRect(boundingRect(),QColor::fromRgb(200,200,170));
+
+
 }

@@ -37,8 +37,8 @@ public:
     int numberOfTreasureInWagonDown(TreasureType) const;
 
     std::string toString();
-    int visina()const;
-    int sirina()const;
+    int height()const;
+    int width()const;
 
 
 private:

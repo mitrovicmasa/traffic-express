@@ -107,7 +107,7 @@ std::vector<RoundCard*> Game::selectRoundCards(RoundCardType cardType, std::vect
     std::vector<RoundCard*> cards, result = {};
     std::copy_if(allRoundCards.cbegin(), allRoundCards.cend(),
                  std::back_inserter(cards),
-                 [cardType](auto *card) { return card->type() == cardType; });
+                 [cardType](RoundCard *card) { return card->typeOfRoundCard() == cardType; });
 
     std::sample(cards.cbegin(), cards.cend(), std::back_inserter(result), 4, std::mt19937_64{std::random_device{}()});
 
@@ -119,7 +119,7 @@ RoundCard* Game::selectOneTrainStationCard(std::vector<RoundCard*> &allRoundCard
     std::vector<RoundCard*> trainStationCards = {};
     std::copy_if(allRoundCards.cbegin(), allRoundCards.cend(),
                  std::back_inserter(trainStationCards),
-                 [](auto *card) { return card->type() == RoundCardType::TRAIN_STATION; });
+                 [](RoundCard *card) { return card->typeOfRoundCard() == RoundCardType::TRAIN_STATION; });
 
     srand(time(0));
     return trainStationCards[rand() % trainStationCards.size()];

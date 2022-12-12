@@ -68,6 +68,7 @@ set(PROJECT_SOURCES
         src/deck.cpp
         src/table.cpp
         src/playerstats.cpp
+        src/miniround.cpp
         )
 
 set(PROJECT_HEADERS
@@ -87,6 +88,7 @@ set(PROJECT_HEADERS
         headers/deck.h
         headers/table.h
         headers/playerstats.h
+        headers/miniround.h
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)

@@ -57,7 +57,7 @@ int main(int argc, char *argv[])
     {
         // For every miniRound
 
-        for (auto miniround : round->miniRound() )
+        for (auto *miniround :(*round) )
         {
             // PHASE 1:
 

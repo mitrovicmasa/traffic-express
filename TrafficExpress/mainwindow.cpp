@@ -15,6 +15,7 @@
 #include <roundcard.h>
 #include <playerstats.h>
 #include <QPixmap>
+#include<headers/miniround.h>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -91,6 +92,22 @@ MainWindow::MainWindow(QWidget *parent)
     }
     sc->addItem(tb);
     tb->setPos(810,270);
+
+    MiniRound*mr=new MiniRound(MiniRoundType::DOUBLE_CARDS);
+    MiniRound*mr1=new MiniRound(MiniRoundType::HIDDEN);
+    RoundCard*rc=new RoundCard(RoundCardType::THREE_TO_FOUR_PLAYERS,EventType::MARSHALS_REVENGE,std::vector<MiniRound*>());
+    sc->addItem(rc);
+    rc->setPos(500,300);
+    //rc->push_back(mr);
+    //rc->push_back(mr1);
+    for(int i=0;i<4;i++){
+        rc->push_back(new MiniRound(MiniRoundType::HIDDEN));
+
+    }
+//    mr->setParentItem(rc);
+//    mr->setPos(0,0);
+//    mr1->setParentItem(rc);
+//    mr1->setPos(60,0);
 
 
 //    PlayerStats *ps = new PlayerStats();

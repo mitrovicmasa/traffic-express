@@ -6,6 +6,7 @@
 #include <vector>
 #include <QGraphicsObject>
 #include <qpainter.h>
+#include<miniround.h>
 
 enum class RoundCardType {
     
@@ -29,24 +30,26 @@ enum class EventType {
 
 };
 
-enum class MiniRoundType {
+//enum class MiniRoundType {
 
-    FACE_UP,
-    HIDDEN,
-    DOUBLE_CARDS,
-    OPPOSITE_DIRECTION
+//    FACE_UP,
+//    HIDDEN,
+//    DOUBLE_CARDS,
+//    OPPOSITE_DIRECTION
 
-};
+//};
 
 std::string toStringRoundCardType(const RoundCardType &card);
 std::string toStringEventType(const EventType &event);
 std::string toStringMiniRoundType(const MiniRoundType &miniRound);
 
-class RoundCard {
-
+class RoundCard:public QGraphicsObject,public std::vector<MiniRound*>
+{
+    Q_OBJECT
 public:
 
     // Constructors
+    RoundCard(RoundCardType type, EventType event, const std::vector<MiniRound*> &miniRound);
     RoundCard(RoundCardType type, EventType event, const std::vector<MiniRoundType> &miniRound);
     RoundCard(const RoundCard&);
 
@@ -54,23 +57,24 @@ public:
     ~RoundCard() = default;
 
     // Get methods
-    RoundCardType type() const;
-    const std::vector<MiniRoundType> &miniRound() const;
+    RoundCardType typeOfRoundCard() const;
+
     EventType event() const;
 
     // Set methods
     void setType(RoundCardType &newType);
     void setEvent(EventType &newEvent);
-    void setMiniRound(const std::vector<MiniRoundType> &newMiniRound);
+
 
     // Other methods
 
     void pushBackMiniRound(MiniRoundType type);
+    void push_back(MiniRound*);
 
     std::string toString() const;
 
-    int visina()const;
-    int sirina()const;
+    int height()const;
+    int width()const;
 
     QRectF boundingRect() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
@@ -79,7 +83,7 @@ private:
 
     RoundCardType m_type;
     EventType m_event;
-    std::vector<MiniRoundType> m_miniRound;
+    //std::vector<MiniRoundType> m_miniRound;
 
 };
 

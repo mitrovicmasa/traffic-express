@@ -35,7 +35,7 @@ void Wagon::addContentDown(Treasure *t)
 {
     m_contentDown.push_back(t);
     t->setParentItem(this);
-    t->setPos(10+(m_contentDown.size()-1)*(2*t->sirina()),-30+visina()-t->visina());
+    t->setPos(10+(m_contentDown.size()-1)*(2*t->sirina()),-30+height()-t->visina());
 }
 
 void Wagon::addPlayerUp(Player *p)
@@ -141,19 +141,19 @@ std::string Wagon::toString()
 
 }
 
-int Wagon::visina() const
+int Wagon::height() const
 {
     return 180;
 }
 
-int Wagon::sirina() const
+int Wagon::width() const
 {
     return 180;
 }
 
 QRectF Wagon::boundingRect() const
 {
-    return QRectF(0,0,sirina(),visina());
+    return QRectF(0,0,width(),height());
 }
 
 void Wagon::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
