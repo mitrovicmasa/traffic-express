@@ -38,8 +38,16 @@ public:
 
     bool faceUp() const;
 
+signals:
+    void Moved();
+
 private:
     bool m_faceUp = true;
+
+protected:
+    void mouseMoveEvent(QGraphicsSceneMouseEvent *event) override;
+    void mousePressEvent(QGraphicsSceneMouseEvent *event);
+
 };
 
 #endif // CARD_H

@@ -451,7 +451,7 @@
        <bool>true</bool>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="pageMainMenu">
        <property name="palette">
@@ -465,7 +465,7 @@
         <property name="geometry">
          <rect>
           <x>470</x>
-          <y>320</y>
+          <y>330</y>
           <width>200</width>
           <height>70</height>
          </rect>
@@ -516,6 +516,9 @@
         <property name="text">
          <string>PLAY</string>
         </property>
+        <property name="icon">
+         <iconset theme="applications-games"/>
+        </property>
         <property name="flat">
          <bool>false</bool>
         </property>
@@ -524,7 +527,7 @@
         <property name="geometry">
          <rect>
           <x>470</x>
-          <y>410</y>
+          <y>420</y>
           <width>200</width>
           <height>70</height>
          </rect>
@@ -574,7 +577,7 @@
         <property name="geometry">
          <rect>
           <x>470</x>
-          <y>500</y>
+          <y>510</y>
           <width>200</width>
           <height>70</height>
          </rect>
@@ -623,14 +626,17 @@
        <widget class="QLabel" name="labelTrafficExpress">
         <property name="geometry">
          <rect>
-          <x>390</x>
-          <y>20</y>
-          <width>421</width>
-          <height>291</height>
+          <x>380</x>
+          <y>10</y>
+          <width>371</width>
+          <height>301</height>
          </rect>
         </property>
         <property name="text">
          <string/>
+        </property>
+        <property name="scaledContents">
+         <bool>true</bool>
         </property>
        </widget>
       </widget>
@@ -743,6 +749,11 @@
           </disabled>
          </palette>
         </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton::pressed {
+	background-color:rgb(100, 170, 255);
+}</string>
+        </property>
         <property name="text">
          <string>BACK TO THE MENU</string>
         </property>
@@ -811,10 +822,10 @@ hr { height: 1px; border-width: 0; }
            <bool>false</bool>
           </property>
           <property name="frameShape">
-           <enum>QFrame::StyledPanel</enum>
+           <enum>QFrame::Box</enum>
           </property>
           <property name="frameShadow">
-           <enum>QFrame::Plain</enum>
+           <enum>QFrame::Sunken</enum>
           </property>
           <property name="tabChangesFocus">
            <bool>true</bool>

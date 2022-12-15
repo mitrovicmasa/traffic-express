@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <wagon.h>
+#include <treasure.h>
 
 
 
@@ -20,6 +21,7 @@ public:
 public:
     QRectF boundingRect() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
+    void test();
 };
 
 #endif // TRAIN_H

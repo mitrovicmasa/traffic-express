@@ -6,7 +6,7 @@
 Treasure::Treasure()
     :QGraphicsObject(),m_type(TreasureType::MONEYBAG),m_value(250)
 {
-
+    setFlags(GraphicsItemFlag::ItemIsSelectable | GraphicsItemFlag::ItemIsMovable);
 }
 
 Treasure::Treasure(int value, TreasureType type)
@@ -72,6 +72,7 @@ std::string Treasure::toString()
     }
 }
 
+
 QRectF Treasure::boundingRect() const
 {
     return QRectF(0,0,25,25);
@@ -98,7 +99,22 @@ void Treasure::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, 
 
     QString path = "://" + type + ".png";
     painter->drawPixmap(boundingRect(), QPixmap(path), QRectF(0,0,0,0));
+
 }
+
+void Treasure::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
+{
+    QGraphicsObject::mouseMoveEvent(event);
+    emit Moved();
+
+}
+
+void Treasure::mousePressEvent(QGraphicsSceneMouseEvent *event)
+{
+    emit Moved();
+}
+
+
 
 
 

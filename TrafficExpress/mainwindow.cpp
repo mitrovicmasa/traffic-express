@@ -2,6 +2,7 @@
 #include "./ui_mainwindow.h"
 
 #include <QMessageBox>
+#include <QStyle>
 #include <QFont>
 #include <treasure.h>
 #include <wagon.h>
@@ -23,12 +24,14 @@ MainWindow::MainWindow(QWidget *parent)
     , sc(new QGraphicsScene())
 {
     ui->setupUi(this);
+    this->setWindowTitle("Traffic Express");
     ui->stackedWidget->setCurrentIndex(0);
 
     dialogInit();
     connectButtons();
     ui->labelTrafficExpress->setPixmap(QPixmap("://traffic_express.png").scaled(QSize(350,350), Qt::IgnoreAspectRatio, Qt::FastTransformation));
     //setButtonIcon();
+
 
     //testing start *******************************************************
     sc->setSceneRect(ui->graphicsView->rect());
@@ -38,6 +41,20 @@ MainWindow::MainWindow(QWidget *parent)
     ui->graphicsView->setRenderHint(QPainter::Antialiasing);
     ui->graphicsView->setAlignment(Qt::AlignTop | Qt::AlignLeft);
 
+    //Set background image for button
+    ui->pbPlay->setStyleSheet("border-image : url(://button.png); color: white; background: transparent;");
+    ui->pbBackToMain->setStyleSheet("border-image : url(://button.png); color: white; background: transparent;");
+    ui->pbQuit->setStyleSheet("border-image : url(://button.png); color: white; background: transparent;");
+    ui->pbGameRules->setStyleSheet("border-image : url(://button.png); color: white; background: transparent;");
+    ui->pbConnect->setStyleSheet("border-image : url(://button.png); color: white; background: transparent;");
+    ui->pbBackToMain_2->setStyleSheet("border-image : url(://button.png); color: white; background: transparent;");
+    ui->pbBackToMain_3->setStyleSheet("border-image : url(://button.png); color: white; background: transparent;");
+    ui->pbConnect->setStyleSheet("border-image : url(://button.png); color: white; background: transparent;");
+    ui->pbStart->setStyleSheet("border-image : url(://button.png); color: white; background: transparent;");
+    ui->pbReady->setStyleSheet("border-image : url(://button.png); color: white; background: transparent;");
+
+    ui->scroll_rules->setStyleSheet("border-image : url(://rules_bg.jpg);");
+    ui->textEdit->setStyleSheet("border-image : url(://rules_bg.jpg);");
 //    Treasure*t=new Treasure();
 //    Treasure*t1=new Treasure();
 //    Wagon*w=new Wagon();
@@ -54,7 +71,8 @@ MainWindow::MainWindow(QWidget *parent)
             voz->back()->addPlayerDown(new Player(BanditType::BUSINESS_WOMAN));
             voz->back()->addPlayerUp(new Player(BanditType::PICKPOCKET));
             voz->back()->addContentUp(new Treasure(500, TreasureType::DIAMOND));
-        }
+        }    
+
 
     }
     voz->back()->takePlayerDown(BanditType::BUSINESS_WOMAN);
@@ -92,6 +110,8 @@ MainWindow::MainWindow(QWidget *parent)
     }
     sc->addItem(tb);
     tb->setPos(810,270);
+
+    //connect();
 
     MiniRound*mr=new MiniRound(MiniRoundType::DOUBLE_CARDS);
     MiniRound*mr1=new MiniRound(MiniRoundType::HIDDEN);
@@ -175,12 +195,16 @@ void MainWindow::dialogInit()
     font.setPixelSize(14);
     setFont(font);
     connect(pbBackToMainMenu,&QPushButton::clicked,this,&MainWindow::onBackToTheMenu);
+    pbBackToMainMenu->setStyleSheet("border-image : url(://button.png); color: white; background: transparent;");
+
+
 
     QPushButton *pbQuit=new QPushButton();
     pbQuit->setPalette(QPalette("://buttonPaleta.xml"));
     pbQuit->setParent(dialog);
     pbQuit->setText("Quit");
     connect(pbQuit,&QPushButton::clicked,this,&QCoreApplication::quit);
+    pbQuit->setStyleSheet("border-image : url(://button.png); color: white; background: transparent;");
 
     vl->addWidget(pbBackToMainMenu);
     vl->addWidget(pbQuit);
@@ -190,15 +214,28 @@ void MainWindow::dialogInit()
 
 //void MainWindow::setButtonIcon()
 //{
-//    QImage img;
+//        QImage img;
 //        QPixmap pixmap;
 
-//        img.load(":/../resource/button.png");
+//        img.load("://rules_button.png");
 //        pixmap = QPixmap::fromImage(img).scaled(30, 30);
 
-//        ui->pbPlay->setIcon(QIcon(pixmap));
-//        ui->pbPlay->setIconSize(QSize(30, 30));
+//        //ui->pbBackToMain->setPixmap(QIcon(pixmap));
+//        ui->pbBackToMain->setIconSize(QSize(30, 30));
 //}
+
+// Message Box
+void MainWindow::showMessageBox(QString content) const {
+  QMessageBox mb;
+
+  mb.setWindowTitle("Message: ");
+  mb.setIconPixmap(QPixmap("://box.jpg"));
+  mb.setInformativeText(content);
+  //mb.setIcon(QMessageBox::Question);
+  //mb.setTextInteractionFlags(QStyle::StandardPixmap);
+  mb.exec();
+}
+
 
 void MainWindow::onPlay()
 {
@@ -223,6 +260,8 @@ void MainWindow::onConnect()
     // postaviti ime plejera na name, a ako polje nije popunjeno onda na Player1, Player2...
 
     // napraviti konekciju sa serverom :))))))
+
+    showMessageBox("Enter your username!");
 
     ui->stackedWidget->setCurrentIndex(3);
 }

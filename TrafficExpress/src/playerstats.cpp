@@ -6,12 +6,14 @@
 PlayerStats::PlayerStats()
     :QGraphicsObject(), m_player(new Player(BanditType::BUSINESS_WOMAN))
 {
+
     // Treasure in table
     int i=0;
     for(Treasure *t :m_player->treasure()){
         t->setParentItem(this);
         t->setPos(i*30+80, 20);
         i++;
+        connect(t, &Treasure::Moved, this, &PlayerStats::test);
        }
 
 
@@ -26,6 +28,8 @@ PlayerStats::PlayerStats(Player *t)
         t->setPos(i*30+80, 20);
         i++;
        }
+
+
 }
 
 // Other methods
@@ -47,4 +51,10 @@ void PlayerStats::paint(QPainter *painter, const QStyleOptionGraphicsItem *optio
         //painter->drawText(boundingRect(), "Player " + QString::number(i) + "- Number of bullets: " + QString::number(num));
     }
     painter->drawText(boundingRect(), "Player - Number of bullets: " + QString::number(num));
+}
+
+// Test moveEevent and pressEvent
+void PlayerStats::test()
+{
+    std::cout<<"Moved treasure!"<<std::endl;
 }

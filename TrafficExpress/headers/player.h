@@ -58,6 +58,9 @@ public:
     int width()const;
     int height()const;
 
+signals:
+    void Moved();
+
 private:
 
     BanditType m_id;
@@ -67,5 +70,9 @@ private:
     int m_positionInTrain;
     bool m_roof;
     std::vector<Treasure*> m_treasure;
+
+protected:
+    void mouseMoveEvent(QGraphicsSceneMouseEvent *event) override;
+    void mousePressEvent(QGraphicsSceneMouseEvent *event);
 };
 #endif // PLAYER_H

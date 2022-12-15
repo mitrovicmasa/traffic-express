@@ -7,6 +7,7 @@
 #include <QGraphicsObject>
 #include <string>
 #include <vector>
+#include <signal.h>
 
 class Table: public QGraphicsObject, public std::vector<PlayerStats*>
 {
@@ -22,6 +23,7 @@ public:
     void addTableToScene(QGraphicsScene *sc);
     void addTreasureInTable(Treasure* );
     void push_back(PlayerStats* p);
+    void test();
 
 
 

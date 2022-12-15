@@ -44,4 +44,10 @@ void Train::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWi
     painter->drawText(boundingRect(), "TRAIN:");
 }
 
+// Test moveEevent and pressEvent
+void Train::test()
+{
+    std::cout<<"Moved on the train!"<<std::endl;
+}
+
 

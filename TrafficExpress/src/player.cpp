@@ -160,3 +160,15 @@ int Player::height() const
 {
     return 35;
 }
+
+void Player::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
+{
+    QGraphicsObject::mouseMoveEvent(event);
+    emit Moved();
+
+}
+
+void Player::mousePressEvent(QGraphicsSceneMouseEvent *event)
+{
+    emit Moved();
+}
