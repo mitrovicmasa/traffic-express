@@ -32,6 +32,8 @@ Player::Player(BanditType id)
     m_roof = false;
     m_treasure = std::vector<Treasure*>();
     m_treasure.push_back(new Treasure());
+
+    setFlags(GraphicsItemFlag::ItemIsSelectable);
 }
 
 
@@ -79,41 +81,6 @@ void Player::setPositionInTrain(int newPositionInTrain)
     m_positionInTrain = newPositionInTrain;
 }
 
-// QT methods
-
-QRectF Player::boundingRect() const
-{
-    return QRectF(0,0,50,50);
-}
-
-void Player::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
-{
-    QString color;
-    switch (this->m_id) {
-        case BanditType::PICKPOCKET:
-            color = "green";
-            break;
-        case BanditType::SEDUCTRESS:
-            color = "yellow";
-            break;
-        case BanditType::STUDENT:
-            color = "blue";
-            break;
-        case BanditType::RETIREE:
-            color = "red";
-            break;
-        case BanditType::HOMELESS_MAN:
-            color = "orange";
-            break;
-        case BanditType::BUSINESS_WOMAN:
-            color = "purple";
-            break;
-        default:
-            return;
-    }
-    QString path = "://player_" + color + ".png";
-    painter->drawPixmap(boundingRect(), QPixmap(path), QRectF(0,0,0,0));
-}
 
 // Other methods
 
@@ -151,6 +118,42 @@ std::string Player::toString() const
             + positionInWagon +"\ncards In deck:\n"+cardsInDeck+ "\n";
 }
 
+// GUI
+
+QRectF Player::boundingRect() const
+{
+    return QRectF(0,0,50,50);
+}
+
+void Player::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
+{
+    QString color;
+    switch (this->m_id) {
+        case BanditType::PICKPOCKET:
+            color = "green";
+            break;
+        case BanditType::SEDUCTRESS:
+            color = "yellow";
+            break;
+        case BanditType::STUDENT:
+            color = "blue";
+            break;
+        case BanditType::RETIREE:
+            color = "red";
+            break;
+        case BanditType::HOMELESS_MAN:
+            color = "orange";
+            break;
+        case BanditType::BUSINESS_WOMAN:
+            color = "purple";
+            break;
+        default:
+            return;
+    }
+    QString path = "://player_" + color + ".png";
+    painter->drawPixmap(boundingRect(), QPixmap(path), QRectF(0,0,0,0));
+}
+
 int Player::width() const
 {
     return 25;
@@ -161,14 +164,9 @@ int Player::height() const
     return 35;
 }
 
-void Player::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
-{
-    QGraphicsObject::mouseMoveEvent(event);
-    emit Moved();
-
-}
 
 void Player::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
-    emit Moved();
+    QGraphicsObject::mousePressEvent(event);
+    emit clicked();
 }

@@ -6,12 +6,6 @@ ActionCard::ActionCard(ActionType action, BanditType bandit) : m_action(action),
     BanditCard(bandit)
 {}
 
-//Card *ActionCard::Copy() const
-//{
-//    return new ActionCard(*this);
-//}
-
-
 // Destructor
 ActionCard::~ActionCard()
 {
@@ -52,7 +46,7 @@ std::string ActionCard::toString() const
         default:
             break;
     }
-    return BanditCard::toString() + "doing action: " + actionName;
+    return BanditCard::toString() + " doing action: " + actionName;
 }
 
 CardType ActionCard::Type() const

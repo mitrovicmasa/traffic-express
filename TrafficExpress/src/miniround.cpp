@@ -14,6 +14,27 @@ MiniRound::MiniRound(MiniRoundType t)
 
 }
 
+// Other methods
+std::string MiniRound::toString()
+{
+    switch (m_type)
+        {
+        case MiniRoundType::HIDDEN:
+            return "Hidden!";
+        case MiniRoundType::DOUBLE_CARDS:
+            return "Double cards!";
+        case MiniRoundType::OPPOSITE_DIRECTION:
+            return "Opposite direction!";
+        case MiniRoundType::FACE_UP:
+            return "Face up - default!";
+        default:
+            return "";
+        }
+
+}
+
+
+// GUI
 QRectF MiniRound::boundingRect() const
 {
     return QRectF(0,0,width(),height());
@@ -40,22 +61,4 @@ int MiniRound::height() const
 int MiniRound::width() const
 {
     return 50;
-}
-
-std::string MiniRound::toString()
-{
-    switch (m_type)
-        {
-        case MiniRoundType::HIDDEN:
-            return "Hidden!";
-        case MiniRoundType::DOUBLE_CARDS:
-            return "Double cards!";
-        case MiniRoundType::OPPOSITE_DIRECTION:
-            return "Opposite direction!";
-        case MiniRoundType::FACE_UP:
-            return "Face up - default!";
-        default:
-            return "";
-        }
-
 }

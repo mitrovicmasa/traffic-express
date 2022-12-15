@@ -19,18 +19,16 @@ public:
     MiniRound();
     MiniRound(MiniRoundType);
 
-private:
-    MiniRoundType m_type;
-
-    // QGraphicsItem interface
-public:
-
+    // GUI
     QRectF boundingRect() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 
     int height()const;
     int width()const;
     std::string toString();
+
+private:
+    MiniRoundType m_type;
 };
 
 #endif // MINIROUND_H

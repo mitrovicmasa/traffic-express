@@ -3,7 +3,7 @@
 // Constructors
 Card::Card():QGraphicsObject()
 {
-
+    setFlags(GraphicsItemFlag::ItemIsSelectable);
 }
 
 // Destructor
@@ -46,14 +46,8 @@ QRectF Card::boundingRect() const
     return QRectF(0,0,width(),height());
 }
 
-void Card::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
-{
-    QGraphicsObject::mouseMoveEvent(event);
-    emit Moved();
-
-}
-
 void Card::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
-    emit Moved();
+    QGraphicsObject::mousePressEvent(event);
+    emit clicked();
 }

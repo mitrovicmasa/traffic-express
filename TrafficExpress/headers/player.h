@@ -43,12 +43,6 @@ public:
     // Set methods
     void setPositionInTrain(int newPositionInTrain);
 
-    // QT methods
-
-    QRectF boundingRect() const;
-    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
-
-
     // Other methods
     bool isBulletDeckEmpty() const;
     int countAmountOfTreasure() const;
@@ -58,8 +52,13 @@ public:
     int width()const;
     int height()const;
 
+    // GUI
+    QRectF boundingRect() const;
+    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
+    void mousePressEvent(QGraphicsSceneMouseEvent *event);
+
 signals:
-    void Moved();
+    void clicked();
 
 private:
 
@@ -70,9 +69,5 @@ private:
     int m_positionInTrain;
     bool m_roof;
     std::vector<Treasure*> m_treasure;
-
-protected:
-    void mouseMoveEvent(QGraphicsSceneMouseEvent *event) override;
-    void mousePressEvent(QGraphicsSceneMouseEvent *event);
 };
 #endif // PLAYER_H

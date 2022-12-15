@@ -23,6 +23,12 @@ public:
     // Destructor
     virtual ~Card();
 
+    // Set methods
+    void setFaceUp(bool newFaceUp);
+
+    // Get methods
+    bool faceUp() const;
+
     // Other methods
     virtual std::string toString() const;
     virtual CardType Type() const=0;
@@ -33,20 +39,13 @@ public:
 
     virtual QRectF boundingRect() const;
     virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)=0;
-
-    void setFaceUp(bool newFaceUp);
-
-    bool faceUp() const;
+    void mousePressEvent(QGraphicsSceneMouseEvent *event);
 
 signals:
-    void Moved();
+    void clicked();
 
 private:
     bool m_faceUp = true;
-
-protected:
-    void mouseMoveEvent(QGraphicsSceneMouseEvent *event) override;
-    void mousePressEvent(QGraphicsSceneMouseEvent *event);
 
 };
 

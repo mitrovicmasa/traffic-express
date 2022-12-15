@@ -10,18 +10,17 @@ class PlayerStats: public QGraphicsObject
 {
     Q_OBJECT
 public:
+    // Constructors
     PlayerStats();
-
     PlayerStats(Player*);
 
-private:
-    Player *m_player;
-
-    //QGraphicsItem interface
-public:
+    // GUI
     QRectF boundingRect() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
     void test();
+
+private:
+    Player *m_player;
 };
 
 

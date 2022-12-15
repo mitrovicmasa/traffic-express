@@ -21,23 +21,18 @@ public:
 
     // Other methods
     void addTableToScene(QGraphicsScene *sc);
-    void addTreasureInTable(Treasure* );
     void push_back(PlayerStats* p);
-    void test();
 
 
-
+    // GUI
     int height() const;
     int width() const;
 
-private:
-    std::vector<Treasure*> m_content;
-
-
-    // QGraphicsItem interface
-public:
     QRectF boundingRect() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
+    void test();
+private:
+    std::vector<Treasure*> m_content;
 
 };
 

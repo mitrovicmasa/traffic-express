@@ -24,7 +24,6 @@ public:
 
 
     // Operator overloading
-
     bool operator==(const Treasure&t);
     bool operator!=(const Treasure&t);
 
@@ -40,26 +39,17 @@ public:
     int sirina() const;
     std::string toString();
 
+    // GUI
+    QRectF boundingRect() const;
+    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
+    void mousePressEvent(QGraphicsSceneMouseEvent *event);
+
 signals:
-    void Moved();
+    void clicked();
 
 private:
     TreasureType m_type;
     unsigned m_value;
-
-protected:
-    void mouseMoveEvent(QGraphicsSceneMouseEvent *event) override;
-    void mousePressEvent(QGraphicsSceneMouseEvent *event);
-
-
-
-
-    // QGraphicsItem interface
-public:
-    QRectF boundingRect() const;
-    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
-
-    // QGraphicsItem interface
 
 };
 

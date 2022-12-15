@@ -17,35 +17,16 @@ void Table::addTableToScene(QGraphicsScene *sc)
     (this)->setPos(800,800);
 }
 
-void Table::addTreasureInTable(Treasure *t)
-{
-
-    m_content.push_back(t);
-    t->setParentItem(this);
-    t->setPos((this->size()-3), 100);
-
-    //connect(cvor, &CvorZaposleni::Pomeren, this, &Tabla::NacrtajNoveVeze);
-
-
-
-
-}
 
 void Table::push_back(PlayerStats *p)
 {
     std::vector<PlayerStats*>::push_back(p);
     p->setParentItem(this);
     p->setPos(0,(this->size()-1)*70+1);
-    //connect(p, &Treasure::Moved, this, &Table::test);
 }
 
-void Table::test()
-{
-    std::cout<<"Pomera se!"<<std::endl;
-}
 
-// Other methods
-
+// GUI
 
 int Table::height() const
 {

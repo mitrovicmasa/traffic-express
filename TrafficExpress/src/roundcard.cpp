@@ -132,6 +132,7 @@ std::string RoundCard::toString() const
 
     return output;
 }
+// GUI
 
 int RoundCard::height() const
 {

@@ -33,25 +33,30 @@ public:
     Player* takePlayerUp(BanditType );
     Player* takePlayerDown(BanditType );
 
-
     int numberOfTreasureInWagonDown(TreasureType) const;
 
     std::string toString();
+
+    // GUI
     int height()const;
     int width()const;
 
+    QRectF boundingRect() const;
+    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
+    void mousePressEvent(QGraphicsSceneMouseEvent *event);
+    void testTreasure();
+    void testPlayers();
+
+signals:
+    void clicked();
 
 private:
 
-std::vector<Treasure*>m_contentUp;
-std::vector<Treasure*>m_contentDown;
-std::vector<Player*>m_playersUp;
-std::vector<Player*>m_playersDown;
+    std::vector<Treasure*>m_contentUp;
+    std::vector<Treasure*>m_contentDown;
+    std::vector<Player*>m_playersUp;
+    std::vector<Player*>m_playersDown;
 
-// QGraphicsItem interface
-public:
-QRectF boundingRect() const;
-void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 };
 
 #endif // WAGON_H

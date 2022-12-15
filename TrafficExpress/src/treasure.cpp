@@ -6,25 +6,25 @@
 Treasure::Treasure()
     :QGraphicsObject(),m_type(TreasureType::MONEYBAG),m_value(250)
 {
-    setFlags(GraphicsItemFlag::ItemIsSelectable | GraphicsItemFlag::ItemIsMovable);
+    setFlags(GraphicsItemFlag::ItemIsSelectable);
 }
 
 Treasure::Treasure(int value, TreasureType type)
     :QGraphicsObject(),m_type(type),m_value(value)
 {
-
+    setFlags(GraphicsItemFlag::ItemIsSelectable);
 }
 
 Treasure::Treasure(TreasureType type)
     :QGraphicsObject(),m_type(type)
 {
-
+    setFlags(GraphicsItemFlag::ItemIsSelectable);
 }
 
 Treasure::Treasure(const Treasure &t)
     :QGraphicsObject(),m_type(t.m_type),m_value(t.m_value)
 {
-
+    setFlags(GraphicsItemFlag::ItemIsSelectable);
 }
 
 // Get methods
@@ -72,7 +72,7 @@ std::string Treasure::toString()
     }
 }
 
-
+// GUI
 QRectF Treasure::boundingRect() const
 {
     return QRectF(0,0,25,25);
@@ -102,16 +102,10 @@ void Treasure::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, 
 
 }
 
-void Treasure::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
-{
-    QGraphicsObject::mouseMoveEvent(event);
-    emit Moved();
-
-}
-
 void Treasure::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
-    emit Moved();
+    QGraphicsObject::mousePressEvent(event);
+    emit clicked();
 }
 
 

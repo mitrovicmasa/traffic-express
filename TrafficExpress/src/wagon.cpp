@@ -2,18 +2,18 @@
 #include <strings.h>
 #include<QRandomGenerator>
 #include <qpainter.h>
-
+#include <iostream>
 //// Constructors
 Wagon::Wagon()
     :QGraphicsObject()
 {
-
+    setFlags(GraphicsItemFlag::ItemIsSelectable);
 }
 
 Wagon::Wagon(const std::vector<Treasure *> &contentDown, const std::vector<Treasure *> &contentUp)
     :QGraphicsObject(),m_contentUp(contentUp),m_contentDown(contentDown)
 {
-
+    setFlags(GraphicsItemFlag::ItemIsSelectable);
 }
 
 // Getters
@@ -26,6 +26,7 @@ void Wagon::setContentDown(std::vector<Treasure*> newContentDown)
 
 void Wagon::addContentUp(Treasure *t)
 {
+    connect(t, &Treasure::clicked, this, &Wagon::testTreasure);
     m_contentUp.push_back(t);
     t->setParentItem(this);
     t->setPos(10+(m_contentUp.size()-1)*(2*t->sirina()),70-t->visina());
@@ -33,6 +34,7 @@ void Wagon::addContentUp(Treasure *t)
 
 void Wagon::addContentDown(Treasure *t)
 {
+    connect(t, &Treasure::clicked, this, &Wagon::testTreasure);
     m_contentDown.push_back(t);
     t->setParentItem(this);
     t->setPos(10+(m_contentDown.size()-1)*(2*t->sirina()),-30+height()-t->visina());
@@ -40,6 +42,7 @@ void Wagon::addContentDown(Treasure *t)
 
 void Wagon::addPlayerUp(Player *p)
 {
+    connect(p, &Player::clicked, this, &Wagon::testPlayers);
     m_playersUp.push_back(p);
     p->setParentItem(this);
     p->setPos(5+(p->width()+5)*(m_playersUp.size()-1),70-p->height()-25);
@@ -47,6 +50,7 @@ void Wagon::addPlayerUp(Player *p)
 
 void Wagon::addPlayerDown(Player *p)
 {
+    connect(p, &Player::clicked, this, &Wagon::testPlayers);
     m_playersDown.push_back(p);
     p->setParentItem(this);
     p->setPos(5+(p->width()+5)*(m_playersDown.size()-1),+80);
@@ -141,6 +145,8 @@ std::string Wagon::toString()
 
 }
 
+// GUI
+
 int Wagon::height() const
 {
     return 180;
@@ -158,8 +164,23 @@ QRectF Wagon::boundingRect() const
 
 void Wagon::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
-    //painter->fillRect(boundingRect(),QColor::fromRgb(180,180,170));
     painter->drawPixmap(boundingRect(), QPixmap("://wagon.png"), QRectF(0,0,0,0));
+}
+
+void Wagon::mousePressEvent(QGraphicsSceneMouseEvent *event)
+{
+    QGraphicsObject::mousePressEvent(event);
+    emit clicked();
+}
+
+void Wagon::testTreasure()
+{
+    std::cout<< "Treasure clicked!" << std::endl;
+}
+
+void Wagon::testPlayers()
+{
+    std::cout<< "Player clicked!" << std::endl;
 }
 
 

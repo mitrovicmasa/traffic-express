@@ -11,11 +11,6 @@ NeutralBullet::NeutralBullet(BanditType id) : m_id(id)
 
 }
 
-//Card *NeutralBullet::Copy() const
-//{
-//    return new NeutralBullet(*this);
-//}
-
 // Destructor
 NeutralBullet::~NeutralBullet()
 {
@@ -46,6 +41,7 @@ CardType NeutralBullet::Type() const
     return CardType::NEUTRAL_BULLET;
 }
 
+// GUI
 void NeutralBullet::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
     if(!this->faceUp()) {

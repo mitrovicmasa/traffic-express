@@ -9,12 +9,13 @@ class Deck:public QGraphicsObject,public std::vector<Card*>
 {
     Q_OBJECT
 public:
+    // Constructors
     Deck();
 
-    // GUI
-    void addCardToDeck(Card* card);
+    // Other methods
     void push_back(Card*);
 
+    // GUI
     QRectF boundingRect() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
     void test();

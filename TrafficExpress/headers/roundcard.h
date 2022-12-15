@@ -73,6 +73,7 @@ public:
 
     std::string toString() const;
 
+    // GUI
     int height()const;
     int width()const;
 
@@ -84,9 +85,6 @@ private:
     RoundCardType m_type;
     EventType m_event;
     //std::vector<MiniRoundType> m_miniRound;
-
 };
-
-
 
 #endif //ROUNDCARDS_H

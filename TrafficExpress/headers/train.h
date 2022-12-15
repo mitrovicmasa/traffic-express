@@ -12,13 +12,14 @@ class Train:public QGraphicsObject,public std::vector<Wagon*>
     Q_OBJECT
 
 public:
+    // Constructors
     Train();
 
+    // Other methods
     void addTrainToScene(QGraphicsScene*sc);
-    void addWagonToTrain(Wagon*);
     void push_back(Wagon*w);
-    // QGraphicsItem interface
-public:
+
+    // GUI
     QRectF boundingRect() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
     void test();

@@ -88,11 +88,9 @@
         <file>bullet_blue_1.png</file>
         <file>marshal.png</file>
         <file>buttonPaleta.xml</file>
-        <file>tram.png</file>
         <file>dialog_box.png</file>
         <file>box.jpg</file>
         <file>button.png</file>
         <file>rules_bg.jpg</file>
-        <file>rules_button.png</file>
     </qresource>
 </RCC>

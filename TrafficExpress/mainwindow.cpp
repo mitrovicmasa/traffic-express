@@ -29,8 +29,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     dialogInit();
     connectButtons();
-    ui->labelTrafficExpress->setPixmap(QPixmap("://traffic_express.png").scaled(QSize(350,350), Qt::IgnoreAspectRatio, Qt::FastTransformation));
-    //setButtonIcon();
+    setImages();
 
 
     //testing start *******************************************************
@@ -41,20 +40,6 @@ MainWindow::MainWindow(QWidget *parent)
     ui->graphicsView->setRenderHint(QPainter::Antialiasing);
     ui->graphicsView->setAlignment(Qt::AlignTop | Qt::AlignLeft);
 
-    //Set background image for button
-    ui->pbPlay->setStyleSheet("border-image : url(://button.png); color: white; background: transparent;");
-    ui->pbBackToMain->setStyleSheet("border-image : url(://button.png); color: white; background: transparent;");
-    ui->pbQuit->setStyleSheet("border-image : url(://button.png); color: white; background: transparent;");
-    ui->pbGameRules->setStyleSheet("border-image : url(://button.png); color: white; background: transparent;");
-    ui->pbConnect->setStyleSheet("border-image : url(://button.png); color: white; background: transparent;");
-    ui->pbBackToMain_2->setStyleSheet("border-image : url(://button.png); color: white; background: transparent;");
-    ui->pbBackToMain_3->setStyleSheet("border-image : url(://button.png); color: white; background: transparent;");
-    ui->pbConnect->setStyleSheet("border-image : url(://button.png); color: white; background: transparent;");
-    ui->pbStart->setStyleSheet("border-image : url(://button.png); color: white; background: transparent;");
-    ui->pbReady->setStyleSheet("border-image : url(://button.png); color: white; background: transparent;");
-
-    ui->scroll_rules->setStyleSheet("border-image : url(://rules_bg.jpg);");
-    ui->textEdit->setStyleSheet("border-image : url(://rules_bg.jpg);");
 //    Treasure*t=new Treasure();
 //    Treasure*t1=new Treasure();
 //    Wagon*w=new Wagon();
@@ -111,8 +96,6 @@ MainWindow::MainWindow(QWidget *parent)
     sc->addItem(tb);
     tb->setPos(810,270);
 
-    //connect();
-
     MiniRound*mr=new MiniRound(MiniRoundType::DOUBLE_CARDS);
     MiniRound*mr1=new MiniRound(MiniRoundType::HIDDEN);
     RoundCard*rc=new RoundCard(RoundCardType::THREE_TO_FOUR_PLAYERS,EventType::MARSHALS_REVENGE,std::vector<MiniRound*>());
@@ -128,20 +111,6 @@ MainWindow::MainWindow(QWidget *parent)
 //    mr->setPos(0,0);
 //    mr1->setParentItem(rc);
 //    mr1->setPos(60,0);
-
-
-//    PlayerStats *ps = new PlayerStats();
-//    sc->addItem(ps);
-//    ps->setPos(810, 270);
-
-//  ne radi mi ovaj test, nmg sad :)
-//    std::vector<std::vector<MiniRoundType>> miniRounds = {
-//         {MiniRoundType::FACE_UP, MiniRoundType::DOUBLE_CARDS, MiniRoundType::FACE_UP},
-//         {MiniRoundType::FACE_UP, MiniRoundType::FACE_UP, MiniRoundType::HIDDEN, MiniRoundType::OPPOSITE_DIRECTION}
-//    };
-//    RoundCard* rc = new RoundCard(RoundCardType::FIVE_TO_SIX_PLAYERS, EventType::NONE, miniRounds[0]);
-//    sc->addItem(rc);
-//    rc.setPos(0,0);
 
     //testing finish ************************************************************
 }
@@ -212,17 +181,23 @@ void MainWindow::dialogInit()
     dialog->setLayout(vl);
 }
 
-//void MainWindow::setButtonIcon()
-//{
-//        QImage img;
-//        QPixmap pixmap;
+void MainWindow::setImages()
+{
+    ui->labelTrafficExpress->setPixmap(QPixmap("://traffic_express.png").scaled(QSize(350,350), Qt::IgnoreAspectRatio, Qt::FastTransformation));
+    ui->pbPlay->setStyleSheet("border-image : url(://button.png); color: white; background: transparent;");
+    ui->pbBackToMain->setStyleSheet("border-image : url(://button.png); color: white; background: transparent;");
+    ui->pbQuit->setStyleSheet("border-image : url(://button.png); color: white; background: transparent;");
+    ui->pbGameRules->setStyleSheet("border-image : url(://button.png); color: white; background: transparent;");
+    ui->pbConnect->setStyleSheet("border-image : url(://button.png); color: white; background: transparent;");
+    ui->pbBackToMain_2->setStyleSheet("border-image : url(://button.png); color: white; background: transparent;");
+    ui->pbBackToMain_3->setStyleSheet("border-image : url(://button.png); color: white; background: transparent;");
+    ui->pbConnect->setStyleSheet("border-image : url(://button.png); color: white; background: transparent;");
+    ui->pbStart->setStyleSheet("border-image : url(://button.png); color: white; background: transparent;");
+    ui->pbReady->setStyleSheet("border-image : url(://button.png); color: white; background: transparent;");
 
-//        img.load("://rules_button.png");
-//        pixmap = QPixmap::fromImage(img).scaled(30, 30);
-
-//        //ui->pbBackToMain->setPixmap(QIcon(pixmap));
-//        ui->pbBackToMain->setIconSize(QSize(30, 30));
-//}
+    ui->scroll_rules->setStyleSheet("border-image : url(://rules_bg.jpg);");
+    ui->textEdit->setStyleSheet("border-image : url(://rules_bg.jpg);");
+}
 
 // Message Box
 void MainWindow::showMessageBox(QString content) const {
@@ -261,7 +236,7 @@ void MainWindow::onConnect()
 
     // napraviti konekciju sa serverom :))))))
 
-    showMessageBox("Enter your username!");
+    //showMessageBox("Enter your username!");
 
     ui->stackedWidget->setCurrentIndex(3);
 }

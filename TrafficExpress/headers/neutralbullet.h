@@ -22,7 +22,6 @@ public:
     void setId(const BanditType &newId);
 
     // Other methods
-
     std::string toString() const override;
     CardType Type() const override;
 

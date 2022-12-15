@@ -29,9 +29,8 @@ private slots:
 
     void connectButtons();
     void dialogInit();
-
+    void setImages();
 private:
-    void setButtonIcon();
     void showMessageBox(QString content) const;
     void keyPressEvent(QKeyEvent*);
     Ui::MainWindow *ui;

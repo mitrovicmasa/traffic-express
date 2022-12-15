@@ -13,7 +13,7 @@ PlayerStats::PlayerStats()
         t->setParentItem(this);
         t->setPos(i*30+80, 20);
         i++;
-        connect(t, &Treasure::Moved, this, &PlayerStats::test);
+        connect(t, &Treasure::clicked, this, &PlayerStats::test);
        }
 
 
@@ -32,7 +32,7 @@ PlayerStats::PlayerStats(Player *t)
 
 }
 
-// Other methods
+// GUI
 QRectF PlayerStats::boundingRect() const
 {
     return QRectF(0,0,300,70);
@@ -48,13 +48,11 @@ void PlayerStats::paint(QPainter *painter, const QStyleOptionGraphicsItem *optio
     int num;
     for (BulletCard *b :m_player->bulletDeck()){
         num = b->numOfBullets();
-        //painter->drawText(boundingRect(), "Player " + QString::number(i) + "- Number of bullets: " + QString::number(num));
     }
     painter->drawText(boundingRect(), "Player - Number of bullets: " + QString::number(num));
 }
 
-// Test moveEevent and pressEvent
 void PlayerStats::test()
 {
-    std::cout<<"Moved treasure!"<<std::endl;
+    std::cout<<"Clicked treasure!"<<std::endl;
 }
