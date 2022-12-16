@@ -329,8 +329,17 @@ void Game::selectBanditPositions()
     int position;
     for(auto *player: m_players)
     {
-        std::cin >> position;
-        player->setPositionInTrain(position);
+        std::cout << "Choose wagon 0 or 1 for player " << ::toString(player->id())<< "\n";
+        while(std::cin >> position)
+        {
+        if(position == 0 || position == 1)
+        {
+            player->setPositionInTrain(position);
+            break;
+        }
+        else
+            std::cout << "Choose one of the first two wagons!" << "\n";
+        }
     }
 }
 

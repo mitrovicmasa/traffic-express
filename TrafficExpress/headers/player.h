@@ -6,7 +6,8 @@
 #include <string>
 #include <numeric>
 #include <functional>
-
+#include <random>
+#include <chrono>
 #include <card.h>
 #include <treasure.h>
 #include <actioncard.h>
@@ -47,7 +48,9 @@ public:
     // Other methods
     bool isBulletDeckEmpty() const;
     int countAmountOfTreasure() const;
+    void returnCardsToDeck();
     void shuffleDeck();
+    void drawStartingCards();
 
     std::string toString() const;
     int width()const;

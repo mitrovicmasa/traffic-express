@@ -30,11 +30,11 @@ std::vector<Treasure*> getWagonContent(Train* wagons, unsigned, bool);
 
 int main(int argc, char *argv[])
 {
-    QApplication a(argc, argv);
-    MainWindow w;
-    w.showFullScreen();
-    w.show();
-    return a.exec();
+//    QApplication a(argc, argv);
+//    MainWindow w;
+//    w.showFullScreen();
+//    w.show();
+//    return a.exec();
 
     // Create n number of players
 
@@ -53,9 +53,10 @@ int main(int argc, char *argv[])
     game.initialize();
 
     // Each player selects one the first 2 wagons to place their character
-    game.selectBanditPositions();
+    //game.selectBanditPositions();
 
-    //// TEST - start
+
+   // TEST - INIT
 //    std::cout << "--- PLAYERS ---" << std::endl;
 //    for (auto *player : game.players())
 //        std::cout << player->toString() << std::endl;
@@ -72,30 +73,44 @@ int main(int argc, char *argv[])
 //        std::cout << roundCard->toString() << std::endl;
     // TEST - end
 
+
+
+
+
+
     // For every roundcard  (round) :
 
-//    for (auto round : game.rounds())
-//    {
-        // For every miniRound
+    for (auto round : game.rounds())
+    {
+         //For every miniRound
 
-//        for (auto *miniround :(*round) )
-//        {
-            // PHASE 1:
+        for (auto *miniround :(*round) )
+        {
+            // DRAW PHASE
 
-            // For every player:
-//            for (auto player: game.players())
-//            {
-                // Draw cards
+            for (auto player: game.players())
+            {
+                player->returnCardsToDeck();
+                player->shuffleDeck();
+                player->drawStartingCards();
+                std::cout << player->toString() << std::endl;
+            }
 
+            //PHASE 1:
 
-                // option1: draw 3 cards
-                // option2: play card from hand
-//            }
-        game.setCardsPlayed({
-                           new ActionCard(ActionType::MOVE, BanditType::PICKPOCKET),
-                           new ActionCard(ActionType::MARSHAL, BanditType::SEDUCTRESS),
-                           new ActionCard(ActionType::ROBBERY, BanditType::STUDENT),
-                                 new ActionCard(ActionType::PUNCH, BanditType::PICKPOCKET),
+             //For every player:
+            for (auto player: game.players())
+            {
+
+                 //option1: draw 3 cards
+                 //option2: play card from hand
+            }
+
+//        game.setCardsPlayed({
+//                           new ActionCard(ActionType::MOVE, BanditType::PICKPOCKET),
+//                           new ActionCard(ActionType::MARSHAL, BanditType::SEDUCTRESS),
+//                           new ActionCard(ActionType::ROBBERY, BanditType::STUDENT),
+//                                 new ActionCard(ActionType::PUNCH, BanditType::PICKPOCKET),
 //                           new ActionCard(ActionType::MARSHAL, BanditType::HOMELESS_MAN),
 //                                 new ActionCard(ActionType::PUNCH, BanditType::BUSINESS_WOMAN),
 //                            new ActionCard(ActionType::MOVE, BanditType::PICKPOCKET),
@@ -104,7 +119,7 @@ int main(int argc, char *argv[])
 //                            new ActionCard(ActionType::FLOOR_CHANGE, BanditType::RETIREE),
 //                            new ActionCard(ActionType::MARSHAL, BanditType::HOMELESS_MAN),
 //                                  new ActionCard(ActionType::PUNCH, BanditType::BUSINESS_WOMAN),
-                          });
+//                          });
 
 
             // PHASE 2:
@@ -113,61 +128,58 @@ int main(int argc, char *argv[])
             // print list of valid moves
             // If action possible (list not empty):
                 // Player chooses and plays the move
-        for (auto *card : game.cardsPlayed()) {
-            ActionType action = card->action();
-            BanditType bandit = card->bandit();
 
-            unsigned position = game.findPlayerById(bandit);
-            std::cout << ::toString(bandit) << " is on the move!" << std::endl;
+//        for (auto *card : game.cardsPlayed()) {
+//            ActionType action = card->action();
+//            BanditType bandit = card->bandit();
 
-            if (action == ActionType::FLOOR_CHANGE) {
-                actionFloorChange(game, position);
-                std::cout << ::toString(bandit) << " changes floor!" << std::endl;
-                std::cout << "#### STATS ####" << std::endl;
-                printPlayerStat(game.players());
-                std::cout << "###############" << std::endl;
-            } else if (action == ActionType::MARSHAL) {
-                actionMarshal(game);
-                std::cout << "Marshal's new position: " << std::to_string(game.sheriffPosition()) << std::endl;
-                std::cout << "#### STATS ####" << std::endl;
-                printPlayerStat(game.players());
-                std::cout << "###############" << std::endl;
-            } else if (action == ActionType::MOVE) {
-                actionMove(game, position);
-                std::cout << "#### STATS ####" << std::endl;
-                printPlayerStat(game.players());
-                std::cout << "###############" << std::endl;
-            } else if (action == ActionType::PUNCH) {
-                actionPunch(game, position);
-                std::cout << "#### STATS ####" << std::endl;
-                printPlayerStat(game.players());
-                std::cout << "###############" << std::endl;
-            } else if (action == ActionType::ROBBERY) {
-                actionRobbery(game, position);
-                std::cout << "#### STATS ####" << std::endl;
-                printPlayerStat(game.players());
-                std::cout << "###############" << std::endl;
-            } else {
-                continue;
-            }
-        }
+//            unsigned position = game.findPlayerById(bandit);
+//            std::cout << ::toString(bandit) << " is on the move!" << std::endl;
+
+//            if (action == ActionType::FLOOR_CHANGE) {
+//                actionFloorChange(game, position);
+//                std::cout << ::toString(bandit) << " changes floor!" << std::endl;
+//                std::cout << "#### STATS ####" << std::endl;
+//                printPlayerStat(game.players());
+//                std::cout << "###############" << std::endl;
+//            } else if (action == ActionType::MARSHAL) {
+//                actionMarshal(game);
+//                std::cout << "Marshal's new position: " << std::to_string(game.sheriffPosition()) << std::endl;
+//                std::cout << "#### STATS ####" << std::endl;
+//                printPlayerStat(game.players());
+//                std::cout << "###############" << std::endl;
+//            } else if (action == ActionType::MOVE) {
+//                actionMove(game, position);
+//                std::cout << "#### STATS ####" << std::endl;
+//                printPlayerStat(game.players());
+//                std::cout << "###############" << std::endl;
+//            } else if (action == ActionType::PUNCH) {
+//                actionPunch(game, position);
+//                std::cout << "#### STATS ####" << std::endl;
+//                printPlayerStat(game.players());
+//                std::cout << "###############" << std::endl;
+//            } else if (action == ActionType::ROBBERY) {
+//                actionRobbery(game, position);
+//                std::cout << "#### STATS ####" << std::endl;
+//                printPlayerStat(game.players());
+//                std::cout << "###############" << std::endl;
+//            } else {
+//                continue;
+//            }
 //        }
-//    }
+        }
+    }
 
-    // Create printGameState function
+
 
     // ToDo:
+
+        // Rang list
+
         // Player special  abilities
         // Round card effects
-        // Rang list
         // Timer
 
-//    Wagon w;
-//    w.addContentDown(new Treasure());
-//    std::cout<<w.toString()<<std::endl<<w.numberOfTreasureInWagonDown(TreasureType::MONEYBAG)<<std::endl;
-
-//    w.takeContentDown(TreasureType::MONEYBAG);
-//    std::cout<<w.toString()<<std::endl<<w.numberOfTreasureInWagonDown(TreasureType::MONEYBAG)<<std::endl;
 
     return 0;
 }

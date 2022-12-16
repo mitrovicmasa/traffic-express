@@ -98,10 +98,31 @@ int Player::countAmountOfTreasure() const
     return std::accumulate(m_treasure.cbegin(), m_treasure.cend(), 0, [](int acc, auto treasure) { return acc + treasure->getValue(); });
 }
 
+void Player::returnCardsToDeck()
+{
+    while(!m_hand->empty())
+    {
+        m_deck->push_back(*(m_hand->begin()));
+        m_hand->erase(m_hand->begin());
+    }
+}
+
 void Player::shuffleDeck()
 {
-    srand(time(0));
-    std::random_shuffle(this->m_deck->begin(),this->m_deck->end());
+    unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+    std::shuffle (this->m_deck->begin(),this->m_deck->end(), std::default_random_engine(seed));
+
+}
+
+void Player::drawStartingCards()
+{
+
+    for(unsigned i=0; i<6; i++)
+    {
+        m_hand->push_back(*(m_deck->begin()));
+        m_deck->erase(m_deck->begin());
+    }
+
 }
 
 std::string Player::toString() const
@@ -113,13 +134,17 @@ std::string Player::toString() const
     for(auto x: *m_deck)
         cardsInDeck += x->toString() + "\n";
 
+    std::string cardsInHand= "";
+    for(auto x: *m_hand)
+        cardsInHand += x->toString() + "\n";
+
 
     return "Bandit: "  + ::toString(m_id) + "\n"
          + "Position in train: " + std::to_string(m_positionInTrain) + "\n"
          + "Current amount of treasure: " + std::to_string(currentAmountOfTreasure) + "\n"
          + "Current number of cards in deck: " + std::to_string(m_deck->size()) + "\n"
          + "Current number of bullets in bullet deck: " + std::to_string(m_bulletDeck.size()) + "\n"
-            + positionInWagon +"\nCards in deck:\n"+cardsInDeck+ "\n";
+            + positionInWagon +"\nCards in deck:\n"+cardsInDeck+ "\n"+"\nCards in hand:\n"+cardsInHand+ "\n";
 }
 
 // GUI
