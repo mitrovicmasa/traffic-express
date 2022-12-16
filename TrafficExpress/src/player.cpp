@@ -114,10 +114,10 @@ void Player::shuffleDeck()
 
 }
 
-void Player::drawStartingCards()
+void Player::drawCards(unsigned n)
 {
 
-    for(unsigned i=0; i<6; i++)
+    for(unsigned i=0; i<n; i++)
     {
         m_hand->push_back(*(m_deck->begin()));
         m_deck->erase(m_deck->begin());

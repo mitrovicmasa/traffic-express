@@ -27,7 +27,7 @@ public:
     const std::vector<Player*> &players() const;
     Train *wagons() const;
     const std::vector<RoundCard*> &rounds() const;
-    const std::vector<ActionCard*> &cardsPlayed() const;
+    const std::vector<ActionCard*> &cardsPlayed() ;
     std::vector<NeutralBullet*> neutralBulletDeck() const;
     const std::vector<Treasure*> &unusedTreasure() const;
     BanditType mostBulletsShot() const;

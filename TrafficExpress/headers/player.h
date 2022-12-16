@@ -50,7 +50,7 @@ public:
     int countAmountOfTreasure() const;
     void returnCardsToDeck();
     void shuffleDeck();
-    void drawStartingCards();
+    void drawCards(unsigned n);
 
     std::string toString() const;
     int width()const;

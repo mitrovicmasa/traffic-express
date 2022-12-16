@@ -74,10 +74,6 @@ int main(int argc, char *argv[])
     // TEST - end
 
 
-
-
-
-
     // For every roundcard  (round) :
 
     for (auto round : game.rounds())
@@ -92,19 +88,45 @@ int main(int argc, char *argv[])
             {
                 player->returnCardsToDeck();
                 player->shuffleDeck();
-                player->drawStartingCards();
-                std::cout << player->toString() << std::endl;
+                player->drawCards(6);
+
             }
 
             //PHASE 1:
 
              //For every player:
+
+            std::vector<ActionCard*> cardsPlayed;
+
             for (auto player: game.players())
             {
+                std::cout << player->toString() << std::endl;
 
-                 //option1: draw 3 cards
+                std::cout << "Select option 1 or 2 \n";
+                unsigned option;
+                std::cin >> option;
+
+                if (option == 1)
+                {
+                    player->drawCards(3);
+                }
+                if (option == 2)
+                {
+                    std::cout << "Select index of desired card:" << "\n";
+                    unsigned ind;
+                    std::cin >> ind;
+
+                    //std::cout << player->hand()->at(ind)->toString() << "\n";
+                    cardsPlayed.push_back((ActionCard *)player->hand()->at(ind));
+                }
                  //option2: play card from hand
             }
+
+            game.setCardsPlayed(cardsPlayed);
+
+//            std::cout << "PLAYED CARDS";
+//            for(auto card: cardsPlayed)
+//                std::cout << card->toString() << "\n";
 
 //        game.setCardsPlayed({
 //                           new ActionCard(ActionType::MOVE, BanditType::PICKPOCKET),

@@ -26,7 +26,7 @@ const std::vector<RoundCard*> &Game::rounds() const
     return m_rounds;
 }
 
-const std::vector<ActionCard*> &Game::cardsPlayed() const
+const std::vector<ActionCard*> &Game::cardsPlayed()
 {
     return m_cardsPlayed;
 }
