@@ -81,6 +81,10 @@ void Player::setPositionInTrain(int newPositionInTrain)
     m_positionInTrain = newPositionInTrain;
 }
 
+void Player::setRoof(bool newRoof)
+{
+    m_roof = newRoof;
+}
 
 // Other methods
 
@@ -105,7 +109,7 @@ std::string Player::toString() const
     std::string positionInWagon = m_roof ? "Bandit is on the roof" : "Bandit is in the wagon";
     int currentAmountOfTreasure = countAmountOfTreasure();
 
-    std::string cardsInDeck= " ";
+    std::string cardsInDeck= "";
     for(auto x: *m_deck)
         cardsInDeck += x->toString() + "\n";
 
@@ -115,7 +119,7 @@ std::string Player::toString() const
          + "Current amount of treasure: " + std::to_string(currentAmountOfTreasure) + "\n"
          + "Current number of cards in deck: " + std::to_string(m_deck->size()) + "\n"
          + "Current number of bullets in bullet deck: " + std::to_string(m_bulletDeck.size()) + "\n"
-            + positionInWagon +"\ncards In deck:\n"+cardsInDeck+ "\n";
+            + positionInWagon +"\nCards in deck:\n"+cardsInDeck+ "\n";
 }
 
 // GUI

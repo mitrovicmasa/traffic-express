@@ -27,20 +27,22 @@ public:
     const Train *wagons() const;
     const std::vector<RoundCard*> &rounds() const;
     const std::vector<ActionCard*> &cardsPlayed() const;
-    const std::vector<NeutralBullet*> &neutralBulletDeck() const;
+    std::vector<NeutralBullet*> neutralBulletDeck() const;
     const std::vector<Treasure*> &unusedTreasure() const;
     BanditType mostBulletsShot() const;
     BanditType richestPlayer() const;
+    unsigned sheriffPosition() const;
 
     //Set methods
     void setPlayers(const std::vector<Player*> &newPlayers);
     void setWagons(Train* newWagons);
     void setRounds(const std::vector<RoundCard*> &newRounds);
-    void setCardsPlayed(const std::vector<ActionCard*> &newCardsPlayed);
+    void setCardsPlayed(std::vector<ActionCard*> newCardsPlayed);
     void setNeutralBulletDeck(const std::vector<NeutralBullet*> &newNeutralBulletDeck);
     void setUnusedTreasure(const std::vector<Treasure*> &newUnusedTreasure);
     void setMostBulletsShot(BanditType newMostBulletsShot);
     void setRichestPlayer(BanditType newRichestPlayer);
+    void setSeriffPosition(unsigned newSheriffPosition);
 
 
     // Initialization methods
@@ -59,6 +61,7 @@ public:
 
     void shuffleDecks() const;
     void selectBanditPositions();
+    unsigned findPlayerById(BanditType);
 
 
 private:

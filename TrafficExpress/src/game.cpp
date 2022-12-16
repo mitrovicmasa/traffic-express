@@ -31,7 +31,7 @@ const std::vector<ActionCard*> &Game::cardsPlayed() const
     return m_cardsPlayed;
 }
 
-const std::vector<NeutralBullet*> &Game::neutralBulletDeck() const
+std::vector<NeutralBullet*> Game::neutralBulletDeck() const
 {
     return m_neutralBulletDeck;
 }
@@ -51,6 +51,11 @@ BanditType Game::richestPlayer() const
     return m_richestPlayer;
 }
 
+unsigned Game::sheriffPosition() const
+{
+    return m_sheriffPosition;
+}
+
 //// Set methods
 //void Game::setPlayers(const std::vector<Player> &newPlayers)
 //{
@@ -67,10 +72,10 @@ void Game::setRounds(const std::vector<RoundCard*> &newRounds)
     m_rounds = newRounds;
 }
 
-//void Game::setCardsPlayed(const std::vector<ActionCard*> &newCardsPlayed)
-//{
-//    m_cardsPlayed = newCardsPlayed;
-//}
+void Game::setCardsPlayed(std::vector<ActionCard*> newCardsPlayed)
+{
+    m_cardsPlayed = newCardsPlayed;
+}
 
 void Game::setNeutralBulletDeck(const std::vector<NeutralBullet*> &newNeutralBulletDeck)
 {
@@ -90,6 +95,11 @@ void Game::setMostBulletsShot(BanditType newMostBulletsShot)
 void Game::setRichestPlayer(BanditType newRichestPlayer)
 {
     m_richestPlayer = newRichestPlayer;
+}
+
+void Game::setSeriffPosition(unsigned newSheriffPosition)
+{
+    m_sheriffPosition = newSheriffPosition;
 }
 
 //// Initialization methods
@@ -324,6 +334,14 @@ void Game::selectBanditPositions()
     }
 }
 
+unsigned Game::findPlayerById(BanditType banditId)
+{
+    unsigned position;
+    for (unsigned i = 0; i < m_players.size(); ++i)
+        if (m_players[i]->id() == banditId)
+            position = i;
 
+    return position;
+}
 
 

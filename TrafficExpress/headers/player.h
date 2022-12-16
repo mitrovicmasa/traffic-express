@@ -42,6 +42,7 @@ public:
 
     // Set methods
     void setPositionInTrain(int newPositionInTrain);
+    void setRoof(bool newRoof);
 
     // Other methods
     bool isBulletDeckEmpty() const;
