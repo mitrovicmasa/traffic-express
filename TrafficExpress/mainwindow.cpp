@@ -16,7 +16,7 @@
 #include <roundcard.h>
 #include <playerstats.h>
 #include <QPixmap>
-#include<headers/miniround.h>
+#include <headers/miniround.h>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -30,89 +30,6 @@ MainWindow::MainWindow(QWidget *parent)
     dialogInit();
     connectButtons();
     setImages();
-
-
-    //testing start *******************************************************
-    sc->setSceneRect(ui->graphicsView->rect());
-    ui->graphicsView->setScene(sc);
-    //ui->graphicsView->setBackgroundBrush(QPixmap("://clouds.png"));
-    //ui->graphicsView->setBackgroundBrush(QColor:);
-    ui->graphicsView->setRenderHint(QPainter::Antialiasing);
-    ui->graphicsView->setAlignment(Qt::AlignTop | Qt::AlignLeft);
-
-//    Treasure*t=new Treasure();
-//    Treasure*t1=new Treasure();
-//    Wagon*w=new Wagon();
-//    w->addContentUp(t1);
-//    w->addContentUp(t);
-//    sc->addItem(w);
-//    w->setPos(100,100);
-
-    Train* voz=new Train();
-    for(int i=0;i<6;i++){
-        voz->push_back(new Wagon());
-        for( int j=0;j<3;j++){
-            voz->back()->addContentDown(new Treasure(250, TreasureType::MONEYBAG));
-            voz->back()->addPlayerDown(new Player(BanditType::BUSINESS_WOMAN));
-            voz->back()->addPlayerUp(new Player(BanditType::PICKPOCKET));
-            voz->back()->addContentUp(new Treasure(500, TreasureType::DIAMOND));
-        }    
-
-
-    }
-    voz->back()->takePlayerDown(BanditType::BUSINESS_WOMAN);
-    sc->addItem(voz);
-    voz->setPos(50,50);
-
-    Hand* ruka= new Hand();
-    ruka->push_back( new ActionCard(ActionType::MARSHAL, BanditType::BUSINESS_WOMAN));
-    ruka->push_back(new ActionCard(ActionType::PUNCH, BanditType::HOMELESS_MAN));
-    ruka->push_back(new NeutralBullet());
-    ruka->push_back(new BulletCard(BanditType::SEDUCTRESS, 3));
-    ruka->push_back(new BulletCard(BanditType::RETIREE, 4));
-    ruka->push_back(new ActionCard(ActionType::ROBBERY, BanditType::STUDENT));
-    ruka->push_back(new ActionCard(ActionType::FLOOR_CHANGE, BanditType::PICKPOCKET));
-    sc->addItem(ruka);
-    ruka->setPos(50,450);
-
-    Deck* spil = new Deck();
-    spil->push_back(new ActionCard(ActionType::PUNCH, BanditType::BUSINESS_WOMAN));
-    NeutralBullet *nb = new NeutralBullet();
-    nb->setFaceUp(false);
-    spil->push_back(nb);
-    sc->addItem(spil);
-    spil->setPos(50,300);
-
-    Deck* grupniSpil = new Deck();
-    grupniSpil->push_back(new ActionCard(ActionType::FIRE, BanditType::STUDENT));
-    sc->addItem(grupniSpil);
-    grupniSpil->setPos(300,300);
-
-    //Table test
-    Table* tb = new Table();
-    for (int i = 0; i<4; i++){
-        tb->push_back(new PlayerStats());
-    }
-    sc->addItem(tb);
-    tb->setPos(810,270);
-
-    MiniRound*mr=new MiniRound(MiniRoundType::DOUBLE_CARDS);
-    MiniRound*mr1=new MiniRound(MiniRoundType::HIDDEN);
-    RoundCard*rc=new RoundCard(RoundCardType::THREE_TO_FOUR_PLAYERS,EventType::MARSHALS_REVENGE,std::vector<MiniRound*>());
-    sc->addItem(rc);
-    rc->setPos(500,300);
-    //rc->push_back(mr);
-    //rc->push_back(mr1);
-    for(int i=0;i<4;i++){
-        rc->push_back(new MiniRound(MiniRoundType::HIDDEN));
-
-    }
-//    mr->setParentItem(rc);
-//    mr->setPos(0,0);
-//    mr1->setParentItem(rc);
-//    mr1->setPos(60,0);
-
-    //testing finish ************************************************************
 }
 
 MainWindow::~MainWindow()
@@ -199,6 +116,7 @@ void MainWindow::setImages()
     ui->textEdit->setStyleSheet("border-image : url(://rules_bg.jpg);");
 }
 
+
 // Message Box
 void MainWindow::showMessageBox(QString content) const {
   QMessageBox mb;
@@ -254,15 +172,66 @@ void MainWindow::onStart()
         a ako nije host, ne desi se nista...
         nmp za pocetak cu staviti da svako moze da klikne  */
 
-    // SADA POCINJE INICIJALIZACIJA PARTIJE !!!!!
+    // imaginarni plejeri u nasoj partiji
+    std::vector<Player*> players;
+        players = {
+            new Player(BanditType::PICKPOCKET),
+            new Player(BanditType::SEDUCTRESS),
+            new Player(BanditType::STUDENT),
+    //        new Player(BanditType::RETIREE),
+    //        new Player(BanditType::HOMELESS_MAN),
+    //        new Player(BanditType::BUSINESS_WOMAN)
+        };
+
+    // inicijalizacija partije s ovim plejerima
+    // i pocetni gui tj. samo one stvari koje svi vide
+    this->game = new Game(players);
+    this->game->initialize();
+    initializeGameGUI(this->game);
 
     ui->stackedWidget->setCurrentIndex(4);
+}
+
+
+void MainWindow::initializeGameGUI(Game *game)
+{
+    sc->setSceneRect(ui->graphicsView->rect());
+    ui->graphicsView->setScene(sc);
+    ui->graphicsView->setBackgroundBrush(QPixmap("://clouds.png"));
+    ui->graphicsView->setRenderHint(QPainter::Antialiasing);
+    ui->graphicsView->setAlignment(Qt::AlignTop | Qt::AlignLeft);
+
+    train = game->wagons();
+    sc->addItem(train);
+    train->setPos(50,50);
+
+    table = new Table();
+    for (Player* p:game->players()){
+        table->push_back(new PlayerStats(p));
+    }
+    sc->addItem(table);
+    table->setPos(810,270);
+
+    roundcard = game->rounds()[0];
+    sc->addItem(roundcard);
+    roundcard->setPos(500,300);
+
+    groupDeck = new Deck();
+    sc->addItem(groupDeck);
+    groupDeck->setPos(300,300);
+
+    playerDeck = new Deck();
+    sc->addItem(playerDeck);
+    playerDeck->setPos(50,300);
+
+    hand = new Hand();
+    sc->addItem(hand);
+    hand->setPos(50,450);
 }
 
 void MainWindow::keyPressEvent(QKeyEvent *event)
 {
     if(ui->stackedWidget->currentIndex()==4 && event->key()==Qt::Key_Escape){
-
         dialog->show();
     }
 }

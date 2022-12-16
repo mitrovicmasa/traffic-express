@@ -247,7 +247,6 @@ void Game::initialize()
             contentDown.push_back(new Treasure(500, TreasureType::DIAMOND));
 
         (*selectedWagons)[i]->setContentDown(contentDown);
-
         contentDown.clear();
         selectedMoneybagsIndexes.clear();
     }

@@ -30,99 +30,99 @@ std::vector<Treasure*> getWagonContent(Train* wagons, unsigned, bool);
 
 int main(int argc, char *argv[])
 {
-//    QApplication a(argc, argv);
-//    MainWindow w;
-//    w.showFullScreen();
-//    w.show();
-//    return a.exec();
+    QApplication a(argc, argv);
+    MainWindow w;
+    //w.showFullScreen();
+    w.show();
+    return a.exec();
 
     // Create n number of players
 
-    std::vector<Player*> players;
-    players = {
-        new Player(BanditType::PICKPOCKET),
-        new Player(BanditType::SEDUCTRESS),
-        new Player(BanditType::STUDENT),
-//        new Player(BanditType::RETIREE),
-//        new Player(BanditType::HOMELESS_MAN),
-//        new Player(BanditType::BUSINESS_WOMAN)
-    };
+//    std::vector<Player*> players;
+//    players = {
+//        new Player(BanditType::PICKPOCKET),
+//        new Player(BanditType::SEDUCTRESS),
+//        new Player(BanditType::STUDENT),
+////        new Player(BanditType::RETIREE),
+////        new Player(BanditType::HOMELESS_MAN),
+////        new Player(BanditType::BUSINESS_WOMAN)
+//    };
 
-    // Create the Games
-    Game game(players);
-    game.initialize();
+//    // Create the Games
+//    Game game(players);
+//    game.initialize();
 
-    // Each player selects one the first 2 wagons to place their character
-    //game.selectBanditPositions();
-
-
-   // TEST - INIT
-//    std::cout << "--- PLAYERS ---" << std::endl;
-//    for (auto *player : game.players())
-//        std::cout << player->toString() << std::endl;
-//    std::cout << "------------------------------------" << std::endl;
-
-//    std::cout << "--- WAGONS ---" << std::endl;
-//    for (auto *wagon : *game.wagons())
-//        std::cout << wagon->toString() << std::endl;
-
-//    std::cout << "------------------------------------" << std::endl;
-
-//    std::cout << "--- ROUND CARDS ---" << std::endl;
-//    for (auto *roundCard : game.rounds())
-//        std::cout << roundCard->toString() << std::endl;
-    // TEST - end
+//    // Each player selects one the first 2 wagons to place their character
+//    //game.selectBanditPositions();
 
 
-    // For every roundcard  (round) :
+//   // TEST - INIT
+////    std::cout << "--- PLAYERS ---" << std::endl;
+////    for (auto *player : game.players())
+////        std::cout << player->toString() << std::endl;
+////    std::cout << "------------------------------------" << std::endl;
 
-    for (auto round : game.rounds())
-    {
-         //For every miniRound
+////    std::cout << "--- WAGONS ---" << std::endl;
+////    for (auto *wagon : *game.wagons())
+////        std::cout << wagon->toString() << std::endl;
 
-        for (auto *miniround :(*round) )
-        {
-            // DRAW PHASE
+////    std::cout << "------------------------------------" << std::endl;
 
-            for (auto player: game.players())
-            {
-                player->returnCardsToDeck();
-                player->shuffleDeck();
-                player->drawCards(6);
+////    std::cout << "--- ROUND CARDS ---" << std::endl;
+////    for (auto *roundCard : game.rounds())
+////        std::cout << roundCard->toString() << std::endl;
+//    // TEST - end
 
-            }
 
-            //PHASE 1:
+//    // For every roundcard  (round) :
 
-             //For every player:
+//    for (auto round : game.rounds())
+//    {
+//         //For every miniRound
 
-            std::vector<ActionCard*> cardsPlayed;
+//        for (auto *miniround :(*round) )
+//        {
+//            // DRAW PHASE
 
-            for (auto player: game.players())
-            {
-                std::cout << player->toString() << std::endl;
+//            for (auto player: game.players())
+//            {
+//                player->returnCardsToDeck();
+//                player->shuffleDeck();
+//                player->drawCards(6);
 
-                std::cout << "Select option 1 or 2 \n";
-                unsigned option;
-                std::cin >> option;
+//            }
 
-                if (option == 1)
-                {
-                    player->drawCards(3);
-                }
-                if (option == 2)
-                {
-                    std::cout << "Select index of desired card:" << "\n";
-                    unsigned ind;
-                    std::cin >> ind;
+//            //PHASE 1:
 
-                    //std::cout << player->hand()->at(ind)->toString() << "\n";
-                    cardsPlayed.push_back((ActionCard *)player->hand()->at(ind));
-                }
-                 //option2: play card from hand
-            }
+//             //For every player:
 
-            game.setCardsPlayed(cardsPlayed);
+//            std::vector<ActionCard*> cardsPlayed;
+
+//            for (auto player: game.players())
+//            {
+//                std::cout << player->toString() << std::endl;
+
+//                std::cout << "Select option 1 or 2 \n";
+//                unsigned option;
+//                std::cin >> option;
+
+//                if (option == 1)
+//                {
+//                    player->drawCards(3);
+//                }
+//                if (option == 2)
+//                {
+//                    std::cout << "Select index of desired card:" << "\n";
+//                    unsigned ind;
+//                    std::cin >> ind;
+
+//                    //std::cout << player->hand()->at(ind)->toString() << "\n";
+//                    cardsPlayed.push_back((ActionCard *)player->hand()->at(ind));
+//                }
+//                 //option2: play card from hand
+//            }
+
+//            game.setCardsPlayed(cardsPlayed);
 
 //            std::cout << "PLAYED CARDS";
 //            for(auto card: cardsPlayed)
@@ -189,8 +189,8 @@ int main(int argc, char *argv[])
 //                continue;
 //            }
 //        }
-        }
-    }
+//        }
+//    }
 
 
 

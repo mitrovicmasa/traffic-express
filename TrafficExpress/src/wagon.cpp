@@ -30,7 +30,13 @@ std::vector<Treasure*> Wagon::contentUp()
 // Setters
 void Wagon::setContentDown(std::vector<Treasure*> newContentDown)
 {
-    m_contentDown = newContentDown;
+ //   m_contentDown = newContentDown;
+    for(Treasure* t: newContentDown) {
+        connect(t, &Treasure::clicked, this, &Wagon::testTreasure);
+        m_contentDown.push_back(t);
+        t->setParentItem(this);
+        t->setPos(10+(m_contentDown.size()-1)*(2*t->sirina()),-30+height()-t->visina());
+    }
 }
 
 void Wagon::addContentUp(Treasure *t)

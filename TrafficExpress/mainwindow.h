@@ -6,6 +6,8 @@
 #include<QDialog>
 #include<QPushButton>
 #include <QGraphicsScene>
+#include <game.h>
+#include <table.h>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -30,7 +32,15 @@ private slots:
     void connectButtons();
     void dialogInit();
     void setImages();
+    void initializeGameGUI(Game*);
 private:
+    Game* game;
+    Train* train;
+    Deck* groupDeck;
+    Deck* playerDeck;
+    Hand* hand;
+    Table* table;
+    RoundCard* roundcard;
     void showMessageBox(QString content) const;
     void keyPressEvent(QKeyEvent*);
     Ui::MainWindow *ui;

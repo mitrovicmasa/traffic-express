@@ -1,22 +1,19 @@
 #include "../headers/playerstats.h"
 
 #include <QPainter>
+#include <string.h>
 
 // Constructors
 PlayerStats::PlayerStats()
     :QGraphicsObject(), m_player(new Player(BanditType::BUSINESS_WOMAN))
 {
-
-    // Treasure in table
-    int i=0;
+    int i = 0;
     for(Treasure *t :m_player->treasure()){
         t->setParentItem(this);
         t->setPos(i*30+80, 20);
         i++;
         connect(t, &Treasure::clicked, this, &PlayerStats::test);
        }
-
-
 }
 
 PlayerStats::PlayerStats(Player *t)
@@ -27,9 +24,8 @@ PlayerStats::PlayerStats(Player *t)
         t->setParentItem(this);
         t->setPos(i*30+80, 20);
         i++;
+        connect(t, &Treasure::clicked, this, &PlayerStats::test);
        }
-
-
 }
 
 // GUI
@@ -49,7 +45,8 @@ void PlayerStats::paint(QPainter *painter, const QStyleOptionGraphicsItem *optio
     for (BulletCard *b :m_player->bulletDeck()){
         num = b->numOfBullets();
     }
-    painter->drawText(boundingRect(), "Player - Number of bullets: " + QString::number(num));
+    QString bandit = QString::fromStdString(toString(m_player->id()));
+    painter->drawText(boundingRect(),  bandit + " - Number of bullets: " + QString::number(num));
 }
 
 void PlayerStats::test()
