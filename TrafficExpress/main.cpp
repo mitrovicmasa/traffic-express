@@ -6,10 +6,15 @@
 #include <random>
 #include <cstdlib>
 #include <ctime>
+#include <vector>
+#include <numeric>
+#include <algorithm>
 
 // Actions
 void actionMarshal(Game &game);
 void actionMove(Game &game, unsigned);
+void actionPunch(Game &game, unsigned);
+void actionRobbery(Game &game, unsigned);
 void actionFloorChange(Game &game, unsigned);
 
 void placeBanditsOnTheRoof(Game &game, unsigned);
@@ -17,6 +22,11 @@ void printPlayerStat(std::vector<Player*> players);
 
 unsigned chooseNewPositionForMarshal();
 unsigned chooseNewPositionInTrain(int, int, int);
+unsigned chooseTreasureToTake(std::vector<Treasure*> content);
+
+BanditType chooseBanditToPunch(std::vector<BanditType> bandits);
+std::vector<BanditType> getPossibleTargets(std::vector<Player*> players, BanditType, unsigned, bool);
+std::vector<Treasure*> getWagonContent(Train* wagons, unsigned, bool);
 
 int main(int argc, char *argv[])
 {
@@ -82,10 +92,10 @@ int main(int argc, char *argv[])
                 // option2: play card from hand
 //            }
         game.setCardsPlayed({
-                           new ActionCard(ActionType::FLOOR_CHANGE, BanditType::PICKPOCKET),
+                           new ActionCard(ActionType::MOVE, BanditType::PICKPOCKET),
                            new ActionCard(ActionType::MARSHAL, BanditType::SEDUCTRESS),
-                           new ActionCard(ActionType::MOVE, BanditType::STUDENT),
-//                                 new ActionCard(ActionType::PUNCH, BanditType::RETIREE),
+                           new ActionCard(ActionType::ROBBERY, BanditType::STUDENT),
+                                 new ActionCard(ActionType::PUNCH, BanditType::PICKPOCKET),
 //                           new ActionCard(ActionType::MARSHAL, BanditType::HOMELESS_MAN),
 //                                 new ActionCard(ActionType::PUNCH, BanditType::BUSINESS_WOMAN),
 //                            new ActionCard(ActionType::MOVE, BanditType::PICKPOCKET),
@@ -124,6 +134,16 @@ int main(int argc, char *argv[])
                 std::cout << "###############" << std::endl;
             } else if (action == ActionType::MOVE) {
                 actionMove(game, position);
+                std::cout << "#### STATS ####" << std::endl;
+                printPlayerStat(game.players());
+                std::cout << "###############" << std::endl;
+            } else if (action == ActionType::PUNCH) {
+                actionPunch(game, position);
+                std::cout << "#### STATS ####" << std::endl;
+                printPlayerStat(game.players());
+                std::cout << "###############" << std::endl;
+            } else if (action == ActionType::ROBBERY) {
+                actionRobbery(game, position);
                 std::cout << "#### STATS ####" << std::endl;
                 printPlayerStat(game.players());
                 std::cout << "###############" << std::endl;
@@ -192,6 +212,63 @@ void actionMove(Game &game, unsigned position)
     }
 }
 
+void actionPunch(Game &game, unsigned position)
+{
+    unsigned currentPositionInTrain = game.players()[position]->positionInTrain();
+    BanditType bandit = game.players()[position]->id();
+
+    std::vector<BanditType> possibleTargets = getPossibleTargets(game.players(), bandit, currentPositionInTrain, game.players()[position]->roof());
+    if (possibleTargets.empty()) {
+        std::cout << "Better luck next time!" << std::endl;
+        return;
+    }
+
+    BanditType target = chooseBanditToPunch(possibleTargets);
+
+    unsigned banditsPosition = game.findPlayerById(target);
+
+    if (game.players()[banditsPosition]->treasure().empty()) {
+        std::cout << "Better luck next time!" << std::endl;
+        return;
+    }
+
+    unsigned treasureIdx = chooseTreasureToTake(game.players()[banditsPosition]->treasure());
+    if (game.players()[position]->roof()) {
+        (*game.wagons())[currentPositionInTrain]->addContentUp(game.players()[banditsPosition]->treasure()[treasureIdx]);
+    } else {
+        (*game.wagons())[currentPositionInTrain]->addContentDown(game.players()[banditsPosition]->treasure()[treasureIdx]);
+    }
+
+    // TODO: fix removing treasure from vector
+//    delete game.players()[banditsPosition]->treasure()[treasureIdx];
+//    game.players()[banditsPosition]->treasure()[treasureIdx] = nullptr;
+
+//    game.players()[banditsPosition]->treasure().erase(std::remove(game.players()[banditsPosition]->treasure().begin(),
+//                                                                  game.players()[banditsPosition]->treasure().end(), nullptr),
+//                                                      game.players()[banditsPosition]->treasure().end());
+
+}
+
+void actionRobbery(Game &game, unsigned position)
+{
+    unsigned currentPositionInTrain = game.players()[position]->positionInTrain();
+    std::vector<Treasure*> content = getWagonContent(game.wagons(), currentPositionInTrain, game.players()[position]->roof());
+
+    if (content.empty()) {
+        std::cout << "Better luck next time!" << std::endl;
+        return;
+    }
+
+    unsigned treasureIdx = chooseTreasureToTake(content);
+    if (game.players()[position]->roof()) {
+        game.players()[position]->treasure().push_back(content[treasureIdx]);
+        // remove treasure from content up
+    } else {
+        game.players()[position]->treasure().push_back(content[treasureIdx]);
+        // remove treasure from content down
+    }
+}
+
 unsigned chooseNewPositionInTrain(int currentPosition, int numberOfWagons, int numberOfSteps)
 {
     unsigned newPosition;
@@ -232,3 +309,55 @@ void printPlayerStat(std::vector<Player*> players)
     for (auto *player : players)
         std::cout << player->toString() << std::endl;
 }
+
+std::vector<BanditType> getPossibleTargets(std::vector<Player*> players, BanditType banditId, unsigned positionInTrain, bool roof)
+{
+    std::vector<BanditType> targets = {};
+    for (auto *player : players) {
+        if (player->roof() == roof && player->positionInTrain() == positionInTrain && player->id() != banditId) {
+            targets.push_back(player->id());
+        }
+    }
+
+    return targets;
+}
+
+std::vector<Treasure*> getWagonContent(Train* wagons, unsigned position, bool roof)
+{
+    std::cout << "Available treasure: " << std::endl;
+    if (roof) {
+        for (auto treasure : (*wagons)[position]->contentUp()) {
+            std::cout << treasure->toString() << std::endl;
+        }
+        return (*wagons)[position]->contentUp();
+    } else {
+        for (auto treasure : (*wagons)[position]->contentDown()) {
+            std::cout << treasure->toString() << std::endl;
+        }
+        return (*wagons)[position]->contentDown();
+    }
+}
+
+unsigned chooseTreasureToTake(std::vector<Treasure*> content)
+{
+    unsigned treasureIdx;
+    std::cout << "Select one treasure to take: " << std::endl;
+    for (auto *treasure : content) {
+        std::cout << treasure->toString() << std::endl;
+    }
+
+    std::cin >> treasureIdx;
+    return treasureIdx;
+}
+
+BanditType chooseBanditToPunch(std::vector<BanditType> bandits)
+{
+    unsigned targetIdx;
+    std::cout << "Choose one target to punch: (enter index)" << std::endl;
+    for (BanditType bandit : bandits)
+        std::cout << ::toString(bandit) << std::endl;
+
+    std::cin >> targetIdx;
+    return bandits[targetIdx];
+}
+

@@ -24,7 +24,7 @@ public:
 
     //Get methods
     const std::vector<Player*> &players() const;
-    const Train *wagons() const;
+    Train *wagons() const;
     const std::vector<RoundCard*> &rounds() const;
     const std::vector<ActionCard*> &cardsPlayed() const;
     std::vector<NeutralBullet*> neutralBulletDeck() const;

@@ -16,7 +16,7 @@ const std::vector<Player*> &Game::players() const
     return m_players;
 }
 
-const Train* Game::wagons() const
+Train* Game::wagons() const
 {
     return m_wagons;
 }

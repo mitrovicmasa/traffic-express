@@ -18,6 +18,9 @@ public:
 
 
     // Get methods
+    std::vector<Treasure*> contentDown();
+    std::vector<Treasure*> contentUp();
+
     // Set methods
     void setContentDown(std::vector<Treasure*> newContentDown);
 

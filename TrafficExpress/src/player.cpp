@@ -70,7 +70,7 @@ bool Player::roof() const
     return m_roof;
 }
 
-const std::vector<Treasure*> &Player::treasure()
+std::vector<Treasure*> Player::treasure()
 {
     return m_treasure;
 }
