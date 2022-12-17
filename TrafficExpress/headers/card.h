@@ -18,7 +18,7 @@ public:
 
     // Constructors
     Card();
-    //virtual Card *Copy() const = 0;
+    virtual Card *Copy() const = 0;
 
     // Destructor
     virtual ~Card();

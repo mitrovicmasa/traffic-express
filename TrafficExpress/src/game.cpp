@@ -10,6 +10,41 @@ Game::Game(const std::vector<Player*> &players)
     : m_players(players)
 {}
 
+Game::Game(const Game &other)
+    :m_players(std::vector<Player*>()),
+      m_wagons(new Train(*(other.m_wagons))),
+      m_sheriffPosition(other.m_sheriffPosition),
+      m_rounds(std::vector<RoundCard*>()),
+      m_cardsPlayed(std::vector<ActionCard*>()),
+      m_neutralBulletDeck(std::vector<NeutralBullet*>()),
+      m_unusedTreasure(std::vector<Treasure*>()),
+      m_mostBulletsShot(other.m_mostBulletsShot),
+      m_richestPlayer(other.m_richestPlayer)
+
+
+{
+    //Danger players in train and in game are different
+    //Only use when train has no players inside
+    for(Player*p:other.m_players)
+        m_players.push_back(new Player(*p));
+
+    for(RoundCard*rc:other.m_rounds)
+        m_rounds.push_back(new RoundCard(*rc));
+
+
+    for(ActionCard*ac:other.m_cardsPlayed)
+        m_cardsPlayed.push_back((ActionCard*)ac->Copy());
+
+    for(NeutralBullet*nb:other.m_neutralBulletDeck)
+        m_neutralBulletDeck.push_back((NeutralBullet*)nb->Copy());
+
+    for(Treasure*t:other.m_unusedTreasure)
+        m_unusedTreasure.push_back(new Treasure(*t));
+
+
+
+}
+
 //// Get methods
 const std::vector<Player*> &Game::players() const
 {

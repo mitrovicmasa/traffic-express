@@ -11,6 +11,7 @@ class Deck:public QGraphicsObject,public std::vector<Card*>
 public:
     // Constructors
     Deck();
+    Deck(const Deck&);
 
     // Other methods
     void push_back(Card*);

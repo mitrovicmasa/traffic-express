@@ -40,6 +40,10 @@ public:
 private:
 
     ActionType m_action;
+
+    // Card interface
+public:
+    Card *Copy() const override;
 };
 
 #endif // ACTIONCARD_H

@@ -7,6 +7,13 @@ Deck::Deck():QGraphicsObject(),std::vector<Card*>()
 
 }
 
+Deck::Deck(const Deck &d)
+    :QGraphicsObject(),std::vector<Card*>()
+{
+    for(Card* c:d)
+        this->push_back(c->Copy());
+}
+
 // GUI
 
 void Deck::push_back(Card *card)

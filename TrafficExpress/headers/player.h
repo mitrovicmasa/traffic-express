@@ -25,6 +25,7 @@ public:
     // Constructors
 
     Player(BanditType id);
+    Player(const Player&);
 
     // Destructor
     ~Player() = default;

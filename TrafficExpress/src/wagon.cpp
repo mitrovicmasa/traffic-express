@@ -16,6 +16,27 @@ Wagon::Wagon(const std::vector<Treasure *> &contentDown, const std::vector<Treas
     setFlags(GraphicsItemFlag::ItemIsSelectable);
 }
 
+Wagon::Wagon(const Wagon &other)
+    :m_contentUp(std::vector<Treasure*>()),
+      m_contentDown(std::vector<Treasure*>()),
+      m_playersUp(std::vector<Player*>()),
+      m_playersDown(std::vector<Player*>())
+{
+    for(Treasure*t:other.m_contentUp)
+        this->addContentUp(new Treasure(*t));
+
+    for(Treasure*t:other.m_contentDown)
+        this->addContentDown(new Treasure(*t));
+
+    for(Player*p:other.m_playersUp)
+        this->addPlayerUp(new Player(*p));
+
+    for(Player*p:other.m_playersDown)
+        this->addPlayerDown(new Player(*p));
+
+
+}
+
 // Getters
 std::vector<Treasure*> Wagon::contentDown()
 {

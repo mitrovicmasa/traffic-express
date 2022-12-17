@@ -113,3 +113,8 @@ void ActionCard::paint(QPainter *painter, const QStyleOptionGraphicsItem *option
     painter->drawPixmap(boundingRect(), QPixmap(path), QRectF(0,0,0,0));
 }
 
+Card *ActionCard::Copy() const
+{
+    return new ActionCard(m_action,bandit());
+}
+

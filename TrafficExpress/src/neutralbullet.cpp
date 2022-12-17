@@ -51,3 +51,8 @@ void NeutralBullet::paint(QPainter *painter, const QStyleOptionGraphicsItem *opt
 
     painter->drawPixmap(boundingRect(), QPixmap("://neutralbullet.png"), QRectF(0,0,0,0));
 }
+
+Card *NeutralBullet::Copy() const
+{
+    return new NeutralBullet(id());
+}

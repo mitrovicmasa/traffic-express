@@ -18,6 +18,7 @@ class MiniRound:public QGraphicsObject
 public:
     MiniRound();
     MiniRound(MiniRoundType);
+    MiniRound(const MiniRound&);
 
     // GUI
     QRectF boundingRect() const;

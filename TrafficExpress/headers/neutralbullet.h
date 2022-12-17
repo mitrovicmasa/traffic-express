@@ -30,6 +30,10 @@ public:
 private:
 
     BanditType m_id;
+
+    // Card interface
+public:
+    Card *Copy() const override;
 };
 
 #endif // NEUTRALBULLET_H

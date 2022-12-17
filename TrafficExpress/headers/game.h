@@ -22,7 +22,7 @@ public:
     // Constructors
     Game();
     Game(const std::vector<Player*> &players);
-
+    Game(const Game&);
     //Get methods
     const std::vector<Player*> &players() const;
     Train *wagons() const;

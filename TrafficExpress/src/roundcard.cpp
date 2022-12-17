@@ -16,11 +16,16 @@ RoundCard::RoundCard(RoundCardType type, EventType event, const std::vector<Mini
     }
 }
 
-RoundCard::RoundCard(const RoundCard &r)
+RoundCard::RoundCard(const RoundCard &other)
     :QGraphicsObject(),std::vector<MiniRound*>(),
-    m_type(r.m_type), 
-    m_event(r.m_event)
-{}
+    m_type(other.m_type),
+    m_event(other.m_event)
+{
+    for(MiniRound*mr:other)
+        this->push_back(new MiniRound(*mr));
+
+
+}
 
 // Get methods
 RoundCardType RoundCard::typeOfRoundCard() const

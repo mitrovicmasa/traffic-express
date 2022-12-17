@@ -14,6 +14,12 @@ MiniRound::MiniRound(MiniRoundType t)
 
 }
 
+MiniRound::MiniRound(const MiniRound &other)
+    :QGraphicsObject(),m_type(other.m_type)
+{
+
+}
+
 // Other methods
 std::string MiniRound::toString()
 {

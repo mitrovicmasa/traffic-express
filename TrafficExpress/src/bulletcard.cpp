@@ -75,3 +75,8 @@ void BulletCard::paint(QPainter *painter, const QStyleOptionGraphicsItem *option
     QString path = "://bullet_" + color + "_" + number + ".png";
     painter->drawPixmap(boundingRect(), QPixmap(path), QRectF(0,0,0,0));
 }
+
+Card *BulletCard::Copy() const
+{
+    return new BulletCard(bandit(),m_numOfBullets);
+}

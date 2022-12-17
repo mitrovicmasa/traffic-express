@@ -17,6 +17,15 @@ Train::Train(std::vector<Wagon *>wagons)
         this->push_back(w);
 }
 
+Train::Train(const Train &other)
+    :QGraphicsObject(),std::vector<Wagon*>()
+{
+    for(Wagon*w:other){
+        this->push_back(new Wagon(*w));
+    }
+
+}
+
 // Other methods
 void Train::addTrainToScene(QGraphicsScene *sc)
 {

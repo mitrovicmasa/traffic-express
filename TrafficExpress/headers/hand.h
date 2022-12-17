@@ -10,6 +10,7 @@ class Hand:public QGraphicsObject, public std::vector<Card*>
 public:
     // Constructors
     Hand();
+    Hand(const Hand&h);
 
     // Other methods
     void push_back(Card*);

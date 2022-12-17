@@ -30,6 +30,10 @@ public:
 private:
 
     unsigned m_numOfBullets;
+
+    // Card interface
+public:
+    Card *Copy() const override;
 };
 
 #endif // BULLETCARD_H

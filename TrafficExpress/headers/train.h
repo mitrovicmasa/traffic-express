@@ -15,6 +15,7 @@ public:
     // Constructors
     Train();
     Train(std::vector<Wagon*>);
+    Train(const Train&);
 
     // Other methods
     void addTrainToScene(QGraphicsScene*sc);
