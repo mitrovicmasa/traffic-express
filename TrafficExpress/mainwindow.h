@@ -8,6 +8,7 @@
 #include <QGraphicsScene>
 #include <game.h>
 #include <table.h>
+#include <playerperspective.h>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -32,15 +33,10 @@ private slots:
     void connectButtons();
     void dialogInit();
     void setImages();
-    void initializeGameGUI(Game*);
+    //void initializeGameGUI(Game*);
 private:
-    Game* game;
-    Train* train;
-    Deck* groupDeck;
-    Deck* playerDeck;
-    Hand* hand;
-    Table* table;
-    RoundCard* roundcard;
+    std::vector<PlayerPerspective*>pps;
+    int indexOfPlayerToMove;
     void showMessageBox(QString content) const;
     void keyPressEvent(QKeyEvent*);
     Ui::MainWindow *ui;

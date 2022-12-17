@@ -185,55 +185,85 @@ void MainWindow::onStart()
 
     // inicijalizacija partije s ovim plejerima
     // i pocetni gui tj. samo one stvari koje svi vide
-    this->game = new Game(players);
-    this->game->initialize();
-    initializeGameGUI(this->game);
+
+
+
+
+    Game*game=new Game(players);
+    game->initialize();
+    PlayerPerspective*pp=new PlayerPerspective(game,1);
+    pp->addGameToScene();
+    //pp->drawCards(6);
+    this->pps=std::vector<PlayerPerspective*>();
+    for(int i=0;i<players.size();i++){
+        this->pps.push_back(new PlayerPerspective(new Game(*game),i));
+        pps.back()->addGameToScene();
+        pps.back()->drawCards(6);
+    }
+    indexOfPlayerToMove=0;
+
+//    pp->setSceneRect(ui->graphicsView->rect());
+//    ui->graphicsView->setScene(pp);
+    pps[0]->setSceneRect(ui->graphicsView->rect());
+    ui->graphicsView->setScene(pps[0]);
+    ui->graphicsView->setBackgroundBrush(QPixmap("://clouds.png"));
+    ui->graphicsView->setRenderHint(QPainter::Antialiasing);
+    ui->graphicsView->setAlignment(Qt::AlignTop | Qt::AlignLeft);
+
+
 
     ui->stackedWidget->setCurrentIndex(4);
 }
 
 
-void MainWindow::initializeGameGUI(Game *game)
-{
-    sc->setSceneRect(ui->graphicsView->rect());
-    ui->graphicsView->setScene(sc);
-    ui->graphicsView->setBackgroundBrush(QPixmap("://clouds.png"));
-    ui->graphicsView->setRenderHint(QPainter::Antialiasing);
-    ui->graphicsView->setAlignment(Qt::AlignTop | Qt::AlignLeft);
+//void MainWindow::initializeGameGUI(Game *game)
+//{
+//    sc->setSceneRect(ui->graphicsView->rect());
+//    ui->graphicsView->setScene(sc);
+//    ui->graphicsView->setBackgroundBrush(QPixmap("://clouds.png"));
+//    ui->graphicsView->setRenderHint(QPainter::Antialiasing);
+//    ui->graphicsView->setAlignment(Qt::AlignTop | Qt::AlignLeft);
 
-    train = game->wagons();
-    sc->addItem(train);
-    train->setPos(50,50);
+//    train = game->wagons();
+//    sc->addItem(train);
+//    train->setPos(50,50);
 
-    table = new Table();
-    for (Player* p:game->players()){
-        table->push_back(new PlayerStats(p));
-    }
-    sc->addItem(table);
-    table->setPos(810,270);
+//    table = new Table();
+//    for (Player* p:game->players()){
+//        table->push_back(new PlayerStats(p));
+//    }
+//    sc->addItem(table);
+//    table->setPos(810,270);
 
-    roundcard = game->rounds()[0];
-    sc->addItem(roundcard);
-    roundcard->setPos(500,300);
+//    roundcard = game->rounds()[0];
+//    sc->addItem(roundcard);
+//    roundcard->setPos(500,300);
 
-    groupDeck = new Deck();
-    sc->addItem(groupDeck);
-    groupDeck->setPos(300,300);
+//    groupDeck = new Deck();
+//    sc->addItem(groupDeck);
+//    groupDeck->setPos(300,300);
 
-    playerDeck = new Deck();
-    sc->addItem(playerDeck);
-    playerDeck->setPos(50,300);
+//    playerDeck = new Deck();
+//    sc->addItem(playerDeck);
+//    playerDeck->setPos(50,300);
 
-    hand = new Hand();
-    sc->addItem(hand);
-    hand->setPos(50,450);
-}
+//    hand = new Hand();
+//    sc->addItem(hand);
+//    hand->setPos(50,450);
+//}
 
 void MainWindow::keyPressEvent(QKeyEvent *event)
 {
     if(ui->stackedWidget->currentIndex()==4 && event->key()==Qt::Key_Escape){
         dialog->show();
     }
+    if(event->key()==Qt::Key_G){
+        indexOfPlayerToMove=(indexOfPlayerToMove+1)%(pps.size());
+        pps[indexOfPlayerToMove]->setSceneRect(ui->graphicsView->rect());
+        ui->graphicsView->setScene(pps[indexOfPlayerToMove]);
+    }
+
+
 }
 
 
