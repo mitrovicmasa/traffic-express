@@ -14,6 +14,7 @@ class Train:public QGraphicsObject,public std::vector<Wagon*>
 public:
     // Constructors
     Train();
+    Train(std::vector<Wagon*>);
 
     // Other methods
     void addTrainToScene(QGraphicsScene*sc);

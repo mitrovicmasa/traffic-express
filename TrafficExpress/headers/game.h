@@ -53,7 +53,7 @@ public:
     std::vector<RoundCard*> selectRoundCards(RoundCardType cardType, std::vector<RoundCard*> &allRoundCards) const;
     RoundCard* selectOneTrainStationCard(std::vector<RoundCard*> &allRoundCards);
     std::vector<NeutralBullet*> generateNeutralBullets(unsigned numberOfNeutralBullets) const;
-    Train* selectWagons(Train* allPossibleWagons, unsigned numberOfPlayers) const;
+    Train* selectWagons(std::vector<Wagon*> allPossibleWagons, unsigned numberOfPlayers) const;
     void placeBanditInWagon(unsigned) const;
 
     void initialize();

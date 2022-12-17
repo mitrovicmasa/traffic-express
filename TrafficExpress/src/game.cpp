@@ -104,12 +104,12 @@ void Game::setSeriffPosition(unsigned newSheriffPosition)
 
 //// Initialization methods
 
-Train* Game::selectWagons(Train* allPossibleWagons, unsigned numberOfPlayers) const
+Train* Game::selectWagons(std::vector<Wagon*> allPossibleWagons, unsigned numberOfPlayers) const
 {
-    Train* selectedWagons = new Train();
-    std::sample(allPossibleWagons->begin(), allPossibleWagons->end(), std::back_inserter(*selectedWagons),
+    std::vector<Wagon*> selectedWagons ;
+    std::sample(allPossibleWagons.begin(), allPossibleWagons.end(), std::back_inserter(selectedWagons),
                numberOfPlayers, std::mt19937_64{std::random_device{}()});
-    return selectedWagons;
+    return new Train(selectedWagons);
 }
 
 std::vector<RoundCard*> Game::selectRoundCards(RoundCardType cardType, std::vector<RoundCard*> &allRoundCards) const
@@ -203,24 +203,24 @@ void Game::initialize()
     shuffleDecks();
 
     // Treasure
-    std::vector<Treasure*> allPossibleTreasure;
-    allPossibleTreasure.push_back(new Treasure(250, TreasureType::MONEYBAG)); //0
-    allPossibleTreasure.push_back(new Treasure(300, TreasureType::MONEYBAG)); //1
-    allPossibleTreasure.push_back(new Treasure(350, TreasureType::MONEYBAG)); //2
-    allPossibleTreasure.push_back(new Treasure(400, TreasureType::MONEYBAG)); //3
-    allPossibleTreasure.push_back(new Treasure(450, TreasureType::MONEYBAG)); //4
-    allPossibleTreasure.push_back(new Treasure(500, TreasureType::MONEYBAG)); //5
-    allPossibleTreasure.insert(allPossibleTreasure.end(), 6, new Treasure(500,TreasureType::DIAMOND));
-    allPossibleTreasure.insert(allPossibleTreasure.end(), 2, new Treasure(1000,TreasureType::SUITCASE));
+    std::vector<Treasure> allPossibleTreasure;
+    allPossibleTreasure.push_back( Treasure(250, TreasureType::MONEYBAG)); //0
+    allPossibleTreasure.push_back( Treasure(300, TreasureType::MONEYBAG)); //1
+    allPossibleTreasure.push_back( Treasure(350, TreasureType::MONEYBAG)); //2
+    allPossibleTreasure.push_back( Treasure(400, TreasureType::MONEYBAG)); //3
+    allPossibleTreasure.push_back( Treasure(450, TreasureType::MONEYBAG)); //4
+    allPossibleTreasure.push_back( Treasure(500, TreasureType::MONEYBAG)); //5
+    //allPossibleTreasure.insert(allPossibleTreasure.end(), 6, new Treasure(500,TreasureType::DIAMOND));
+    //allPossibleTreasure.insert(allPossibleTreasure.end(), 2, new Treasure(1000,TreasureType::SUITCASE));
 
     // Wagons
-    Train* allPossibleWagons = new Train();
-    allPossibleWagons->push_back(new Wagon({new Treasure(TreasureType::MONEYBAG), new Treasure(TreasureType::MONEYBAG), new Treasure(TreasureType::MONEYBAG), new Treasure(TreasureType::DIAMOND)}, {}));
-    allPossibleWagons->push_back(new Wagon({new Treasure(TreasureType::MONEYBAG), new Treasure(TreasureType::MONEYBAG), new Treasure(TreasureType::MONEYBAG), new Treasure(TreasureType::MONEYBAG), new Treasure(TreasureType::DIAMOND)}, {}));
-    allPossibleWagons->push_back(new Wagon({new Treasure(TreasureType::MONEYBAG), new Treasure(TreasureType::MONEYBAG), new Treasure(TreasureType::MONEYBAG)}, {}));
-    allPossibleWagons->push_back(new Wagon({new Treasure(TreasureType::MONEYBAG)}, {}));
-    allPossibleWagons->push_back(new Wagon({new Treasure(TreasureType::MONEYBAG), new Treasure(TreasureType::DIAMOND)}, {}));
-    allPossibleWagons->push_back(new Wagon({new Treasure(TreasureType::DIAMOND), new Treasure(TreasureType::DIAMOND), new Treasure(TreasureType::DIAMOND)}, {}));
+    std::vector<Wagon*> allPossibleWagons = std::vector<Wagon*>();
+    allPossibleWagons.push_back(new Wagon({new Treasure(TreasureType::MONEYBAG), new Treasure(TreasureType::MONEYBAG), new Treasure(TreasureType::MONEYBAG), new Treasure(TreasureType::DIAMOND)}, {}));
+    allPossibleWagons.push_back(new Wagon({new Treasure(TreasureType::MONEYBAG), new Treasure(TreasureType::MONEYBAG), new Treasure(TreasureType::MONEYBAG), new Treasure(TreasureType::MONEYBAG), new Treasure(TreasureType::DIAMOND)}, {}));
+    allPossibleWagons.push_back(new Wagon({new Treasure(TreasureType::MONEYBAG), new Treasure(TreasureType::MONEYBAG), new Treasure(TreasureType::MONEYBAG)}, {}));
+    allPossibleWagons.push_back(new Wagon({new Treasure(TreasureType::MONEYBAG)}, {}));
+    allPossibleWagons.push_back(new Wagon({new Treasure(TreasureType::MONEYBAG), new Treasure(TreasureType::DIAMOND)}, {}));
+    allPossibleWagons.push_back(new Wagon({new Treasure(TreasureType::DIAMOND), new Treasure(TreasureType::DIAMOND), new Treasure(TreasureType::DIAMOND)}, {}));
 
     Train* selectedWagons = selectWagons(allPossibleWagons, numberOfPlayers);
 
@@ -241,7 +241,7 @@ void Game::initialize()
         selectedMoneybagsIndexes = ::getMoneybags(remainingMoneybags,numberOfMoneybags);
 
         for (unsigned i = 0; i < numberOfMoneybags; ++i)
-            contentDown.push_back(allPossibleTreasure[selectedMoneybagsIndexes[i]]);
+            contentDown.push_back(new Treasure(allPossibleTreasure[selectedMoneybagsIndexes[i]]));
 
         for (unsigned i = 0; i < numberOfDiamonds; ++i)
             contentDown.push_back(new Treasure(500, TreasureType::DIAMOND));

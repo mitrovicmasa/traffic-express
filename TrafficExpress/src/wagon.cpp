@@ -30,6 +30,11 @@ std::vector<Treasure*> Wagon::contentUp()
 // Setters
 void Wagon::setContentDown(std::vector<Treasure*> newContentDown)
 {
+    for(Treasure*x:m_contentDown){
+        delete x;
+    }
+    m_contentDown.clear();
+
  //   m_contentDown = newContentDown;
     for(Treasure* t: newContentDown) {
         connect(t, &Treasure::clicked, this, &Wagon::testTreasure);
