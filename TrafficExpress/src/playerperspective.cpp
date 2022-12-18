@@ -18,7 +18,6 @@ PlayerPerspective::PlayerPerspective(Game *game, int playerIndex, QObject *paren
 void PlayerPerspective::addGameToScene()
 {
 
-
     auto train = m_game->wagons();
     this->addItem(train);
     train->setPos(50,50);
@@ -77,7 +76,8 @@ void PlayerPerspective::onClickedTreasureInWagonInTrainInTran(Treasure *t, Wagon
     if(m_player->isItMyMove()){
         std::cout<<"It is my move"<<std::endl;
        Treasure* selectedTreasure=w->takeContentDown(t->getType());
-       m_player->treasure().push_back(selectedTreasure);
+       disconnect(selectedTreasure,&Treasure::clickedTreasure,w,&Wagon::OnCickedTreasuere);
+       //m_player->treasure().push_back(selectedTreasure);
 
 
        (*m_table)[m_game->getIndexOfPlayerToMove()]->addTreasureToPlayer(selectedTreasure);
