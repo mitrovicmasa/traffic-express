@@ -36,7 +36,7 @@ private slots:
     //void initializeGameGUI(Game*);
 private:
     std::vector<PlayerPerspective*>pps;
-    int indexOfPlayerToMove;
+
     void showMessageBox(QString content) const;
     void keyPressEvent(QKeyEvent*);
     Ui::MainWindow *ui;

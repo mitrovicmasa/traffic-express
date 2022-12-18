@@ -50,3 +50,16 @@ void PlayerPerspective::drawCards(int n)
 {
     m_player->drawCards(n);
 }
+
+void PlayerPerspective::setNextPlayerToToMove()
+{
+    int lastIndex=m_game->getIndexOfPlayerToMove();
+    int nextIndex=(lastIndex+1)%(m_game->players().size());
+    m_game->setIndexOfPlayerToMove(nextIndex);
+
+}
+
+int PlayerPerspective::getPlayerToMoveIndex() const
+{
+    return m_game->getIndexOfPlayerToMove();
+}

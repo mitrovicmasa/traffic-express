@@ -7,8 +7,10 @@
 //}
 
 Game::Game(const std::vector<Player*> &players)
-    : m_players(players)
-{}
+    : m_players(players),m_indexOfPlayerToMove(0)
+{
+    m_players[m_indexOfPlayerToMove]->setMyMove(true);
+}
 
 Game::Game(const Game &other)
     :m_players(std::vector<Player*>()),
@@ -19,7 +21,8 @@ Game::Game(const Game &other)
       m_neutralBulletDeck(std::vector<NeutralBullet*>()),
       m_unusedTreasure(std::vector<Treasure*>()),
       m_mostBulletsShot(other.m_mostBulletsShot),
-      m_richestPlayer(other.m_richestPlayer)
+      m_richestPlayer(other.m_richestPlayer),
+      m_indexOfPlayerToMove(other.m_indexOfPlayerToMove)
 
 
 {
@@ -91,6 +94,11 @@ unsigned Game::sheriffPosition() const
     return m_sheriffPosition;
 }
 
+int Game::getIndexOfPlayerToMove() const
+{
+    return m_indexOfPlayerToMove;
+}
+
 //// Set methods
 //void Game::setPlayers(const std::vector<Player> &newPlayers)
 //{
@@ -135,6 +143,13 @@ void Game::setRichestPlayer(BanditType newRichestPlayer)
 void Game::setSeriffPosition(unsigned newSheriffPosition)
 {
     m_sheriffPosition = newSheriffPosition;
+}
+
+void Game::setIndexOfPlayerToMove(int nextPlayerIndex)
+{
+    m_players[m_indexOfPlayerToMove]->setMyMove(false);
+    m_indexOfPlayerToMove=nextPlayerIndex;
+    m_players[m_indexOfPlayerToMove]->setMyMove(true);
 }
 
 //// Initialization methods

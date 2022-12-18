@@ -106,6 +106,8 @@ void ActionCard::paint(QPainter *painter, const QStyleOptionGraphicsItem *option
         case ActionType::ROBBERY:
             action = "robbery";
             break;
+        case ActionType::TAKETREASURE:
+            action="robbery";break;
         default:
             return;
     }

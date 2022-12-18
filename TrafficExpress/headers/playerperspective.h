@@ -13,8 +13,10 @@ public:
     void addGameToScene();
     void removeGameFromScene();
     void drawCards(int n);
+    void setNextPlayerToToMove();
+    int getPlayerToMoveIndex()const;
 private:
-    bool m_myTurn;
+    void setMyMove(bool);
     Player*m_player;
     Game*m_game;
 };

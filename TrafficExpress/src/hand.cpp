@@ -38,5 +38,14 @@ void Hand::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWid
 
 void Hand::test()
 {
-    std::cout<<"Card clicked!"<<std::endl;
+    std::cout<<"Card clicked from hand!"<<std::endl;
+}
+
+void Hand::mousePressEvent(QGraphicsSceneMouseEvent *event)
+{
+    QGraphicsObject::mousePressEvent(event);
+    std::cout<<"Hand clicked!Hand size:"<<this->size()<<std::endl;
+    for (Card*c:(*this))
+        std::cout<<"\t"<<c->toString()<<std::endl;
+
 }

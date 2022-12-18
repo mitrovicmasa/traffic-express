@@ -6,7 +6,7 @@
 
 // Constructors
 Player::Player(BanditType id)
-    : QGraphicsObject(), m_id(id)
+    : QGraphicsObject(), m_id(id),m_isItMyMove(false)
 {
 
     m_hand = new Hand();
@@ -44,7 +44,8 @@ Player::Player(const Player &other)
       m_bulletDeck(std::vector<BulletCard*>()),
       m_positionInTrain(other.m_positionInTrain),
       m_roof(other.m_roof),
-      m_treasure(std::vector<Treasure*>())
+      m_treasure(std::vector<Treasure*>()),
+      m_isItMyMove(other.m_isItMyMove)
 {
 
     for(BulletCard*bc:other.m_bulletDeck)
@@ -94,6 +95,11 @@ std::vector<Treasure*> Player::treasure()
     return m_treasure;
 }
 
+bool Player::isItMyMove() const
+{
+    return m_isItMyMove;
+}
+
 // Set methods
 void Player::setPositionInTrain(int newPositionInTrain)
 {
@@ -103,6 +109,11 @@ void Player::setPositionInTrain(int newPositionInTrain)
 void Player::setRoof(bool newRoof)
 {
     m_roof = newRoof;
+}
+
+void Player::setMyMove(bool v)
+{
+    m_isItMyMove=v;
 }
 
 // Other methods
@@ -135,11 +146,12 @@ void Player::shuffleDeck()
 
 void Player::drawCards(unsigned n)
 {
+    int originalDeckSize=m_deck->size();
+    for(unsigned i=0; i<originalDeckSize && i<n; i++)
+    {   Card* front=m_deck->front();
+        m_deck->pop_front();
+        m_hand->push_back(front);
 
-    for(unsigned i=0; i<n; i++)
-    {
-        m_hand->push_back(*(m_deck->begin()));
-        m_deck->erase(m_deck->begin());
     }
 
 }

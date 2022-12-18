@@ -41,10 +41,12 @@ public:
     int positionInTrain() const;
     bool roof() const;
     std::vector<Treasure*> treasure();
+    bool isItMyMove()const;
 
     // Set methods
     void setPositionInTrain(int newPositionInTrain);
     void setRoof(bool newRoof);
+    void setMyMove(bool);
 
     // Other methods
     bool isBulletDeckEmpty() const;
@@ -52,6 +54,7 @@ public:
     void returnCardsToDeck();
     void shuffleDeck();
     void drawCards(unsigned n);
+
 
     std::string toString() const;
     int width()const;
@@ -66,7 +69,7 @@ signals:
     void clicked();
 
 private:
-
+    bool m_isItMyMove;
     BanditType m_id;
     Hand *m_hand;
     Deck *m_deck;

@@ -21,6 +21,10 @@ public:
     void test();
 private:
 
+
+    // QGraphicsItem interface
+protected:
+    void mousePressEvent(QGraphicsSceneMouseEvent *event);
 };
 
 #endif // HAND_H

@@ -33,6 +33,7 @@ public:
     BanditType mostBulletsShot() const;
     BanditType richestPlayer() const;
     unsigned sheriffPosition() const;
+    int getIndexOfPlayerToMove()const;
 
     //Set methods
     void setPlayers(const std::vector<Player*> &newPlayers);
@@ -44,6 +45,7 @@ public:
     void setMostBulletsShot(BanditType newMostBulletsShot);
     void setRichestPlayer(BanditType newRichestPlayer);
     void setSeriffPosition(unsigned newSheriffPosition);
+    void setIndexOfPlayerToMove(int);
 
 
     // Initialization methods
@@ -66,7 +68,7 @@ public:
 
 
 private:
-
+    int m_indexOfPlayerToMove;
     std::vector<Player*> m_players;
     Train* m_wagons;
     unsigned m_sheriffPosition;

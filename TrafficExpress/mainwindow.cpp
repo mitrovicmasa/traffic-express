@@ -200,7 +200,7 @@ void MainWindow::onStart()
         pps.back()->addGameToScene();
         pps.back()->drawCards(6);
     }
-    indexOfPlayerToMove=0;
+
 
 //    pp->setSceneRect(ui->graphicsView->rect());
 //    ui->graphicsView->setScene(pp);
@@ -258,9 +258,22 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
         dialog->show();
     }
     if(event->key()==Qt::Key_G){
-        indexOfPlayerToMove=(indexOfPlayerToMove+1)%(pps.size());
-        pps[indexOfPlayerToMove]->setSceneRect(ui->graphicsView->rect());
-        ui->graphicsView->setScene(pps[indexOfPlayerToMove]);
+//        indexOfPlayerToMove=(indexOfPlayerToMove+1)%(pps.size());
+//        pps[indexOfPlayerToMove]->setSceneRect(ui->graphicsView->rect());
+//        ui->graphicsView->setScene(pps[indexOfPlayerToMove]);
+        for(PlayerPerspective*pp:pps){
+            pp->setNextPlayerToToMove();
+
+        }
+        int pToMove=pps[0]->getPlayerToMoveIndex();
+        pps[pToMove]->setSceneRect(ui->graphicsView->rect());
+        ui->graphicsView->setScene(pps[pToMove]);
+
+
+    }
+    if(event->key()==Qt::Key_D){
+        int pToMove=pps[0]->getPlayerToMoveIndex();
+        pps[pToMove]->drawCards(1);
     }
 
 

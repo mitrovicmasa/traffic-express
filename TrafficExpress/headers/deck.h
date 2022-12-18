@@ -15,11 +15,19 @@ public:
 
     // Other methods
     void push_back(Card*);
+    void pop_back();
+
+    void push_front(Card*);
+    void pop_front();
 
     // GUI
     QRectF boundingRect() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
     void test();
+
+    // QGraphicsItem interface
+protected:
+    void mousePressEvent(QGraphicsSceneMouseEvent *event);
 };
 
 #endif // DECK_H
