@@ -13,6 +13,7 @@ public:
     // Constructors
     PlayerStats();
     PlayerStats(Player*);
+    void addTreasureToPlayer(Treasure*);
 
     // GUI
     QRectF boundingRect() const;

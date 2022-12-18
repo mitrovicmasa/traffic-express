@@ -3,6 +3,7 @@
 
 #include <game.h>
 #include <qgraphicsscene.h>
+#include <table.h>
 
 
 
@@ -15,10 +16,16 @@ public:
     void drawCards(int n);
     void setNextPlayerToToMove();
     int getPlayerToMoveIndex()const;
+
+
+public slots:
+    void onClickedTreasureInWagonInTrainInTran(Treasure*t,Wagon*w,Train*train);
+
 private:
     void setMyMove(bool);
     Player*m_player;
     Game*m_game;
+    Table*m_table;
 };
 
 #endif // PLAYERPERSPECTIVE_H

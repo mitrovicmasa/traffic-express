@@ -108,6 +108,7 @@ int Game::getIndexOfPlayerToMove() const
 void Game::setWagons(Train* newWagons)
 {
     m_wagons = newWagons;
+    //connect(m_wagons,&Train::clickedTreasureInWagonInTrain,this,&Game::onClickedTreasureInWagonInTrainInTran);
 }
 
 void Game::setRounds(const std::vector<RoundCard*> &newRounds)
@@ -401,5 +402,7 @@ unsigned Game::findPlayerById(BanditType banditId)
 
     return position;
 }
+
+
 
 

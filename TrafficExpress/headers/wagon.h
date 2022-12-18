@@ -53,7 +53,10 @@ public:
 
 signals:
     void clicked();
+    void clickedTreasureInWagon(Treasure*t,Wagon*w);
 
+public slots:
+    void OnCickedTreasuere(Treasure*t);
 private:
 
     std::vector<Treasure*>m_contentUp;

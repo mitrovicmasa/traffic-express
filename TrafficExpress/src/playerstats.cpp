@@ -25,7 +25,16 @@ PlayerStats::PlayerStats(Player *t)
         t->setPos(i*30+80, 20);
         i++;
         connect(t, &Treasure::clicked, this, &PlayerStats::test);
-       }
+    }
+}
+
+void PlayerStats::addTreasureToPlayer(Treasure *t)
+{
+    m_player->treasure().push_back(t);
+    t->setParentItem(this);
+    t->setPos((m_player->treasure().size()-1)*30+80, 20);
+
+    connect(t, &Treasure::clicked, this, &PlayerStats::test);
 }
 
 // GUI

@@ -68,6 +68,7 @@ void Wagon::setContentDown(std::vector<Treasure*> newContentDown)
 void Wagon::addContentUp(Treasure *t)
 {
     connect(t, &Treasure::clicked, this, &Wagon::testTreasure);
+    connect(t, &Treasure::clickedTreasure, this, &Wagon::OnCickedTreasuere);
     m_contentUp.push_back(t);
     t->setParentItem(this);
     t->setPos(10+(m_contentUp.size()-1)*(2*t->sirina()),70-t->visina());
@@ -76,6 +77,7 @@ void Wagon::addContentUp(Treasure *t)
 void Wagon::addContentDown(Treasure *t)
 {
     connect(t, &Treasure::clicked, this, &Wagon::testTreasure);
+    connect(t, &Treasure::clickedTreasure, this, &Wagon::OnCickedTreasuere);
     m_contentDown.push_back(t);
     t->setParentItem(this);
     t->setPos(10+(m_contentDown.size()-1)*(2*t->sirina()),-30+height()-t->visina());
@@ -127,6 +129,7 @@ Treasure *Wagon::takeContentDown(TreasureType t)
         int index=QRandomGenerator::global()->bounded((int)tmp.size());
         r=tmp[index];
         m_contentDown.erase(std::find(m_contentDown.begin(),m_contentDown.end(),r));
+        r->setParentItem(nullptr);
         return r;
     }
     return new Treasure(0,TreasureType::MONEYBAG);
@@ -222,6 +225,11 @@ void Wagon::testTreasure()
 void Wagon::testPlayers()
 {
     std::cout<< "Player clicked!" << std::endl;
+}
+
+void Wagon::OnCickedTreasuere(Treasure *t)
+{   //std::cout<<"Treasure signals wagon"<<std::endl;
+    emit clickedTreasureInWagon(t,this);
 }
 
 

@@ -39,6 +39,7 @@ void Train::addTrainToScene(QGraphicsScene *sc)
 void Train::push_back(Wagon*w)
 {
     connect(w, &Wagon::clicked, this, &Train::test);
+    connect(w, &Wagon::clickedTreasureInWagon, this, &Train::onClickedTreasureInWagon);
     std::vector<Wagon*>::push_back(w);
     w->setParentItem(this);
     w->setPos((this->size()-1)*200,10);
@@ -59,6 +60,11 @@ void Train::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWi
 void Train::test()
 {
     std::cout<<"Wagon clicked!"<<std::endl;
+}
+
+void Train::onClickedTreasureInWagon(Treasure *t, Wagon *w)
+{
+    emit clickedTreasureInWagonInTrain(t,w,this);
 }
 
 

@@ -67,6 +67,7 @@ public:
     unsigned findPlayerById(BanditType);
 
 
+
 private:
     int m_indexOfPlayerToMove;
     std::vector<Player*> m_players;

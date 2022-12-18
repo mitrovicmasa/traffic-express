@@ -40,7 +40,7 @@ public:
     const std::vector<BulletCard*> &bulletDeck() const;
     int positionInTrain() const;
     bool roof() const;
-    std::vector<Treasure*> treasure();
+    std::vector<Treasure*>& treasure();
     bool isItMyMove()const;
 
     // Set methods

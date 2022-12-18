@@ -46,6 +46,7 @@ public:
 
 signals:
     void clicked();
+    void clickedTreasure(Treasure*t);
 
 private:
     TreasureType m_type;

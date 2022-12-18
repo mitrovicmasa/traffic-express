@@ -106,6 +106,7 @@ void Treasure::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
     QGraphicsObject::mousePressEvent(event);
     emit clicked();
+    emit clickedTreasure(this);
 }
 
 
