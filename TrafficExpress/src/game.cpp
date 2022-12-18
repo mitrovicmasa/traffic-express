@@ -17,12 +17,14 @@ Game::Game(const Game &other)
       m_wagons(new Train(*(other.m_wagons))),
       m_sheriffPosition(other.m_sheriffPosition),
       m_rounds(std::vector<RoundCard*>()),
-      m_cardsPlayed(std::vector<ActionCard*>()),
+      //m_cardsPlayed(std::vector<ActionCard*>()),
       m_neutralBulletDeck(std::vector<NeutralBullet*>()),
       m_unusedTreasure(std::vector<Treasure*>()),
       m_mostBulletsShot(other.m_mostBulletsShot),
       m_richestPlayer(other.m_richestPlayer),
-      m_indexOfPlayerToMove(other.m_indexOfPlayerToMove)
+      m_indexOfPlayerToMove(other.m_indexOfPlayerToMove),
+      m_cardsPlayed(new Deck(*(other.m_cardsPlayed)))
+
 
 
 {
@@ -35,8 +37,8 @@ Game::Game(const Game &other)
         m_rounds.push_back(new RoundCard(*rc));
 
 
-    for(ActionCard*ac:other.m_cardsPlayed)
-        m_cardsPlayed.push_back((ActionCard*)ac->Copy());
+//    for(ActionCard*ac:other.m_cardsPlayed)
+//        m_cardsPlayed.push_back((ActionCard*)ac->Copy());
 
     for(NeutralBullet*nb:other.m_neutralBulletDeck)
         m_neutralBulletDeck.push_back((NeutralBullet*)nb->Copy());
@@ -64,10 +66,10 @@ const std::vector<RoundCard*> &Game::rounds() const
     return m_rounds;
 }
 
-const std::vector<ActionCard*> &Game::cardsPlayed()
-{
-    return m_cardsPlayed;
-}
+//const std::vector<ActionCard*> &Game::cardsPlayed()
+//{
+//    return m_cardsPlayed;
+//}
 
 std::vector<NeutralBullet*> Game::neutralBulletDeck() const
 {
@@ -99,6 +101,11 @@ int Game::getIndexOfPlayerToMove() const
     return m_indexOfPlayerToMove;
 }
 
+Deck *Game::getCardsPlayed()
+{
+    return m_cardsPlayed;
+}
+
 //// Set methods
 //void Game::setPlayers(const std::vector<Player> &newPlayers)
 //{
@@ -116,10 +123,10 @@ void Game::setRounds(const std::vector<RoundCard*> &newRounds)
     m_rounds = newRounds;
 }
 
-void Game::setCardsPlayed(std::vector<ActionCard*> newCardsPlayed)
-{
-    m_cardsPlayed = newCardsPlayed;
-}
+//void Game::setCardsPlayed(std::vector<ActionCard*> newCardsPlayed)
+//{
+//    m_cardsPlayed = newCardsPlayed;
+//}
 
 void Game::setNeutralBulletDeck(const std::vector<NeutralBullet*> &newNeutralBulletDeck)
 {
@@ -250,6 +257,7 @@ std::vector<NeutralBullet*> Game::generateNeutralBullets(unsigned numberOfNeutra
 
 void Game::initialize()
 {
+    m_cardsPlayed=new Deck();
     unsigned numberOfPlayers = m_players.size();
     shuffleDecks();
 

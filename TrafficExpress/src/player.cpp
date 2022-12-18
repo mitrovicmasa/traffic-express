@@ -150,8 +150,9 @@ void Player::drawCards(unsigned n)
 {
     int originalDeckSize=m_deck->size();
     for(unsigned i=0; i<originalDeckSize && i<n; i++)
-    {   Card* front=m_deck->front();
-        m_deck->pop_front();
+    {
+        Card* front=m_deck->back();
+        m_deck->pop_back();
         m_hand->push_back(front);
 
     }

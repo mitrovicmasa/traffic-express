@@ -31,7 +31,7 @@ void PlayerPerspective::addGameToScene()
     this->addItem(roundcard);
     roundcard->setPos(500,300);
 
-    Deck*groupDeck = new Deck();
+    Deck*groupDeck = m_game->getCardsPlayed();
     this->addItem(groupDeck);
     groupDeck->setPos(300,300);
 
@@ -90,8 +90,24 @@ void PlayerPerspective::onClickedCardInHandInPlayer(Card *c, Hand *h, Player *p)
 {
     std::cout<<"Player perspective recieved signal"<<std::endl;
 
-    if(p->isItMyMove()){
+    if(p->isItMyMove() && c->Type()==CardType::ACTION_CARD){
         std::cout<<"It is my move!"<<std::endl;
+        ActionCard*ac=static_cast<ActionCard*>(c);
+        for(auto it=h->begin();it!=h->end();it++){
+            Card*tmp=*it;
+            if(tmp->Type()==CardType::ACTION_CARD){
+
+                ActionCard* tmpac=static_cast<ActionCard*>(tmp);
+                if(ac->action()==tmpac->action()){
+                    h->erase(it);
+                    m_game->getCardsPlayed()->push_back(tmp);
+                    break;
+                }
+            }
+
+
+
+        }
 
 
     }

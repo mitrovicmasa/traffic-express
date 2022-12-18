@@ -15,6 +15,7 @@ public:
     // Other methods
     void push_back(Card*);
 
+
     // GUI
     QRectF boundingRect() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
