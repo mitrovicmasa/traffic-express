@@ -20,6 +20,7 @@ Hand::Hand(const Hand &h)
 void Hand::push_back(Card *card)
 {
     connect(card, &Card::clicked, this, &Hand::test);
+    connect(card, &Card::clickedCard, this, &Hand::onClickedCard);
     std::vector<Card*>::push_back(card);
     card->setParentItem(this);
     card->setPos((this->size()-1)*70+5,20);
@@ -39,6 +40,12 @@ void Hand::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWid
 void Hand::test()
 {
     std::cout<<"Card clicked from hand!"<<std::endl;
+}
+
+void Hand::onClickedCard(Card*c)
+{
+    std::cout<<"Card clicked from hand! signal"<<std::endl;
+    emit clickedCardInHand(c,this);
 }
 
 void Hand::mousePressEvent(QGraphicsSceneMouseEvent *event)

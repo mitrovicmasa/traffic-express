@@ -21,6 +21,11 @@ public:
     void test();
 private:
 
+signals:
+    void clickedCardInHand(Card*c,Hand*h);
+
+public slots:
+    void onClickedCard(Card*c);
 
     // QGraphicsItem interface
 protected:

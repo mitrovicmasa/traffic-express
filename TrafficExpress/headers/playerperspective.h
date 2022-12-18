@@ -20,6 +20,7 @@ public:
 
 public slots:
     void onClickedTreasureInWagonInTrainInTran(Treasure*t,Wagon*w,Train*train);
+    void onClickedCardInHandInPlayer(Card*c,Hand*h,Player*p);
 
 private:
     void setMyMove(bool);

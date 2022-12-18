@@ -43,6 +43,8 @@ public:
 
 signals:
     void clicked();
+    void clickedCard(Card*c);
+
 
 private:
     bool m_faceUp = true;

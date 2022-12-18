@@ -34,6 +34,7 @@ Player::Player(BanditType id)
     m_treasure.push_back(new Treasure());
 
     setFlags(GraphicsItemFlag::ItemIsSelectable);
+    connect(m_hand,&Hand::clickedCardInHand,this,&Player::onClickedCardInHand);
 }
 
 Player::Player(const Player &other)
@@ -54,6 +55,7 @@ Player::Player(const Player &other)
 
     for(Treasure*t:other.m_treasure)
         m_treasure.push_back(new Treasure(*t));
+    connect(m_hand,&Hand::clickedCardInHand,this,&Player::onClickedCardInHand);
 }
 
 
@@ -229,4 +231,10 @@ void Player::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
     QGraphicsObject::mousePressEvent(event);
     emit clicked();
+}
+
+void Player::onClickedCardInHand(Card *c, Hand *h)
+{
+    std::cout<<"signal recieved in player"<<std::endl;
+    emit clickedCardInHandInPlayer(c,h,this);
 }

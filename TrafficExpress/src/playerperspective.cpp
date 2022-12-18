@@ -13,6 +13,7 @@ PlayerPerspective::PlayerPerspective(Game *game, int playerIndex, QObject *paren
     for (Player* p:m_game->players()){
         m_table->push_back(new PlayerStats(p));
     }
+    connect(m_player,&Player::clickedCardInHandInPlayer,this,&PlayerPerspective::onClickedCardInHandInPlayer);
 }
 
 void PlayerPerspective::addGameToScene()
@@ -81,6 +82,17 @@ void PlayerPerspective::onClickedTreasureInWagonInTrainInTran(Treasure *t, Wagon
 
 
        (*m_table)[m_game->getIndexOfPlayerToMove()]->addTreasureToPlayer(selectedTreasure);
+
+    }
+}
+
+void PlayerPerspective::onClickedCardInHandInPlayer(Card *c, Hand *h, Player *p)
+{
+    std::cout<<"Player perspective recieved signal"<<std::endl;
+
+    if(p->isItMyMove()){
+        std::cout<<"It is my move!"<<std::endl;
+
 
     }
 }
