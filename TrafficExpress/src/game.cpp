@@ -6,20 +6,20 @@
 
 //}
 
-Game::Game(const std::vector<Player*> &players)
+Game::Game( std::vector<Player*> &players)
     : m_players(players),m_indexOfPlayerToMove(0)
 {
     m_players[m_indexOfPlayerToMove]->setMyMove(true);
 }
 
 Game::Game(const Game &other)
-    :m_players(std::vector<Player*>()),
+    :m_players(PlayerGroup()),
       m_wagons(new Train(*(other.m_wagons))),
       m_sheriffPosition(other.m_sheriffPosition),
       m_rounds(std::vector<RoundCard*>()),
       //m_cardsPlayed(std::vector<ActionCard*>()),
       m_neutralBulletDeck(std::vector<NeutralBullet*>()),
-      m_unusedTreasure(std::vector<Treasure*>()),
+      m_unusedTreasure(other.m_unusedTreasure),
       m_mostBulletsShot(other.m_mostBulletsShot),
       m_richestPlayer(other.m_richestPlayer),
       m_indexOfPlayerToMove(other.m_indexOfPlayerToMove),
@@ -274,12 +274,12 @@ void Game::initialize()
 
     // Wagons
     std::vector<Wagon*> allPossibleWagons = std::vector<Wagon*>();
-    allPossibleWagons.push_back(new Wagon({new Treasure(TreasureType::MONEYBAG), new Treasure(TreasureType::MONEYBAG), new Treasure(TreasureType::MONEYBAG), new Treasure(TreasureType::DIAMOND)}, {}));
-    allPossibleWagons.push_back(new Wagon({new Treasure(TreasureType::MONEYBAG), new Treasure(TreasureType::MONEYBAG), new Treasure(TreasureType::MONEYBAG), new Treasure(TreasureType::MONEYBAG), new Treasure(TreasureType::DIAMOND)}, {}));
-    allPossibleWagons.push_back(new Wagon({new Treasure(TreasureType::MONEYBAG), new Treasure(TreasureType::MONEYBAG), new Treasure(TreasureType::MONEYBAG)}, {}));
-    allPossibleWagons.push_back(new Wagon({new Treasure(TreasureType::MONEYBAG)}, {}));
-    allPossibleWagons.push_back(new Wagon({new Treasure(TreasureType::MONEYBAG), new Treasure(TreasureType::DIAMOND)}, {}));
-    allPossibleWagons.push_back(new Wagon({new Treasure(TreasureType::DIAMOND), new Treasure(TreasureType::DIAMOND), new Treasure(TreasureType::DIAMOND)}, {}));
+    allPossibleWagons.push_back(new Wagon(TreasureChest({new Treasure(TreasureType::MONEYBAG), new Treasure(TreasureType::MONEYBAG), new Treasure(TreasureType::MONEYBAG), new Treasure(TreasureType::DIAMOND)}), TreasureChest()));
+    allPossibleWagons.push_back(new Wagon(TreasureChest({new Treasure(TreasureType::MONEYBAG), new Treasure(TreasureType::MONEYBAG), new Treasure(TreasureType::MONEYBAG), new Treasure(TreasureType::MONEYBAG), new Treasure(TreasureType::DIAMOND)}), TreasureChest()));
+    allPossibleWagons.push_back(new Wagon(TreasureChest({new Treasure(TreasureType::MONEYBAG), new Treasure(TreasureType::MONEYBAG), new Treasure(TreasureType::MONEYBAG)}), TreasureChest()));
+    allPossibleWagons.push_back(new Wagon(TreasureChest({new Treasure(TreasureType::MONEYBAG)}), TreasureChest()));
+    allPossibleWagons.push_back(new Wagon(TreasureChest({new Treasure(TreasureType::MONEYBAG), new Treasure(TreasureType::DIAMOND)}), TreasureChest()));
+    allPossibleWagons.push_back(new Wagon(TreasureChest({new Treasure(TreasureType::DIAMOND), new Treasure(TreasureType::DIAMOND), new Treasure(TreasureType::DIAMOND)}), TreasureChest()));
 
     Train* selectedWagons = selectWagons(allPossibleWagons, numberOfPlayers);
 
@@ -311,7 +311,7 @@ void Game::initialize()
     }
 
     // Place Marshal and suitcase in Locomotive
-    selectedWagons->push_back(new Wagon({new Treasure(1000, TreasureType::SUITCASE)},{}));
+    selectedWagons->push_back(new Wagon(TreasureChest({new Treasure(1000, TreasureType::SUITCASE)}),TreasureChest()));
     m_sheriffPosition = selectedWagons->size() - 1;
 
     // Set wagons for current game

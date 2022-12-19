@@ -4,10 +4,11 @@
 #include <vector>
 #include <wagon.h>
 #include <treasure.h>
+#include <wagonarray.h>
 
 
 
-class Train:public QGraphicsObject,public std::vector<Wagon*>
+class Train:public QGraphicsObject
 {
     Q_OBJECT
 
@@ -20,6 +21,10 @@ public:
     // Other methods
     void addTrainToScene(QGraphicsScene*sc);
     void push_back(Wagon*w);
+    int size();
+    Wagon* operator[](int i);
+    //geters
+    WagonArray&getWagons();
 
     // GUI
     QRectF boundingRect() const;
@@ -31,6 +36,9 @@ signals:
 public slots:
     void onClickedTreasureInWagon(Treasure*t,Wagon*w);
     void onClickedWagon(Wagon*);
+
+private:
+    WagonArray m_wagons;
 };
 
 #endif // TRAIN_H

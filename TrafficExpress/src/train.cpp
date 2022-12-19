@@ -5,22 +5,24 @@
 #include <qpainter.h>
 
 Train::Train()
-    :QGraphicsObject(),std::vector<Wagon*>()
+    :QGraphicsObject()
 {
 
 }
 
 Train::Train(std::vector<Wagon *>wagons)
-    :QGraphicsObject(),std::vector<Wagon*>()
+    :QGraphicsObject()
 {
-    for(Wagon*w :wagons)
+    for(Wagon*w :wagons){
         this->push_back(w);
+    }
 }
 
 Train::Train(const Train &other)
-    :QGraphicsObject(),std::vector<Wagon*>()
+    :QGraphicsObject()
 {
-    for(Wagon*w:other){
+    //TODO
+    for(Wagon*w:other.m_wagons){
         this->push_back(new Wagon(*w));
     }
 
@@ -29,9 +31,9 @@ Train::Train(const Train &other)
 // Other methods
 void Train::addTrainToScene(QGraphicsScene *sc)
 {
-    for(int i=0;i<size();i++){
-        sc->addItem((*this)[i]);
-        (*this)[i]->setPos(i*300,100);
+    for(int i=0;i<m_wagons.size();i++){
+        sc->addItem(m_wagons[i]);
+        m_wagons[i]->setPos(i*300,100);
 
     }
 }
@@ -41,15 +43,30 @@ void Train::push_back(Wagon*w)
     connect(w, &Wagon::clicked, this, &Train::test);
     connect(w, &Wagon::clickedTreasureInWagon, this, &Train::onClickedTreasureInWagon);
     connect(w,&Wagon::clickedWagon,this,&Train::onClickedWagon);
-    std::vector<Wagon*>::push_back(w);
+    m_wagons.push_back(w);
     w->setParentItem(this);
-    w->setPos((this->size()-1)*200,10);
+    w->setPos((m_wagons.size()-1)*200,10);
+}
+
+int Train::size()
+{
+    return m_wagons.size();
+}
+
+Wagon *Train::operator[](int i)
+{
+    return m_wagons[i];
+}
+
+WagonArray &Train::getWagons()
+{
+    return m_wagons;
 }
 
 // GUI
 QRectF Train::boundingRect() const
 {
-    return QRectF(0,0,(this->size()+1)*200,200);
+    return QRectF(0,0,(m_wagons.size()+1)*200,200);
 }
 
 void Train::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)

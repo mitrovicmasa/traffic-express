@@ -21,7 +21,7 @@ public:
 
     // Constructors
     Game();
-    Game(const std::vector<Player*> &players);
+    Game(std::vector<Player*> &players);
     Game(const Game&);
     //Get methods
     const std::vector<Player*> &players() const;
@@ -71,14 +71,14 @@ public:
 
 private:
     int m_indexOfPlayerToMove;
-    std::vector<Player*> m_players;
+    PlayerGroup m_players;
     Train* m_wagons;
     unsigned m_sheriffPosition;
     std::vector<RoundCard*> m_rounds;
     Deck*m_cardsPlayed;
-    //std::vector<ActionCard*> m_cardsPlayed;
+
     std::vector<NeutralBullet*> m_neutralBulletDeck;
-    std::vector<Treasure*> m_unusedTreasure;
+    TreasureChest m_unusedTreasure;
     BanditType m_mostBulletsShot;
     BanditType m_richestPlayer;
 };

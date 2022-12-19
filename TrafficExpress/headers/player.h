@@ -15,6 +15,7 @@
 #include <bulletcard.h>
 #include <deck.h>
 #include <hand.h>
+#include <treasurechest.h>
 
 class Player : public QGraphicsObject
 {
@@ -40,7 +41,7 @@ public:
     const std::vector<BulletCard*> &bulletDeck() const;
     int positionInTrain() const;
     bool roof() const;
-    std::vector<Treasure*>& treasure();
+    TreasureChest& treasure();
     bool isItMyMove()const;
 
     // Set methods
@@ -79,6 +80,6 @@ private:
     std::vector<BulletCard*> m_bulletDeck;
     int m_positionInTrain;
     bool m_roof;
-    std::vector<Treasure*> m_treasure;
+    TreasureChest m_treasure;
 };
 #endif // PLAYER_H

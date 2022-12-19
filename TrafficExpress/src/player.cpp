@@ -93,7 +93,7 @@ bool Player::roof() const
     return m_roof;
 }
 
-std::vector<Treasure*>& Player::treasure()
+TreasureChest& Player::treasure()
 {
     return m_treasure;
 }
@@ -131,19 +131,19 @@ int Player::countAmountOfTreasure() const
     return std::accumulate(m_treasure.cbegin(), m_treasure.cend(), 0, [](int acc, auto treasure) { return acc + treasure->getValue(); });
 }
 
-void Player::returnCardsToDeck()
-{
-    while(!m_hand->empty())
-    {
-        m_deck->push_back(*(m_hand->begin()));
-        m_hand->erase(m_hand->begin());
-    }
-}
+//void Player::returnCardsToDeck()
+//{
+//    while(!m_hand->empty())
+//    {
+//        m_deck->push_back(*(m_hand->begin()));
+//        m_hand->erase(m_hand->begin());
+//    }
+//}
 
 void Player::shuffleDeck()
 {
-    unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
-    std::shuffle (this->m_deck->begin(),this->m_deck->end(), std::default_random_engine(seed));
+//    unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+//    std::shuffle (this->m_deck->begin(),this->m_deck->end(), std::default_random_engine(seed));
 
 }
 
@@ -167,11 +167,11 @@ std::string Player::toString() const
     int currentAmountOfTreasure = countAmountOfTreasure();
 
     std::string cardsInDeck= "";
-    for(auto x: *m_deck)
+    for(auto x: (m_deck->getCards()))
         cardsInDeck += x->toString() + "\n";
 
     std::string cardsInHand= "";
-    for(auto x: *m_hand)
+    for(auto x: m_hand->getCards())
         cardsInHand += x->toString() + "\n";
 
 

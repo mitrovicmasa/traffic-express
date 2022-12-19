@@ -3,16 +3,21 @@
 #include <iostream>
 // Constructors
 
-Hand::Hand():QGraphicsObject(),std::vector<Card*>()
+Hand::Hand():QGraphicsObject()
 {
 
 }
 
 Hand::Hand(const Hand &h)
-    :QGraphicsObject(),std::vector<Card*>()
+    :QGraphicsObject()
 {
-    for(Card*c:h)
+    for(Card*c:h.m_cards)
         this->push_back(c->Copy());
+}
+
+CardColection &Hand::getCards()
+{
+    return m_cards;
 }
 
 // GUI
@@ -21,15 +26,20 @@ void Hand::push_back(Card *card)
 {
     connect(card, &Card::clicked, this, &Hand::test);
     connect(card, &Card::clickedCard, this, &Hand::onClickedCard);
-    std::vector<Card*>::push_back(card);
+    m_cards.push_back(card);
     card->setParentItem(this);
-    card->setPos((this->size()-1)*70+5,20);
+    card->setPos((m_cards.size()-1)*70+5,20);
+}
+
+bool Hand::empty()
+{
+    return m_cards.empty();
 }
 
 void Hand::repositionCards()
 {
-    for(int i=0;i<this->size();i++){
-        (*this)[i]->setPos(i*70+5,20);
+    for(int i=0;i<m_cards.size();i++){
+        m_cards[i]->setPos(i*70+5,20);
 
 
     }
@@ -60,8 +70,8 @@ void Hand::onClickedCard(Card*c)
 void Hand::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
     QGraphicsObject::mousePressEvent(event);
-    std::cout<<"Hand clicked!Hand size:"<<this->size()<<std::endl;
-    for (Card*c:(*this))
+    std::cout<<"Hand clicked!Hand size:"<<m_cards.size()<<std::endl;
+    for (Card*c:m_cards)
         std::cout<<"\t"<<c->toString()<<std::endl;
 
 }

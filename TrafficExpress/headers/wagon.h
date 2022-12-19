@@ -2,7 +2,9 @@
 #define WAGON_H
 
 #include <player.h>
+#include <playergroup.h>
 #include <treasure.h>
+#include <treasurechest.h>
 #include <vector>
 
 class Wagon:public QGraphicsObject
@@ -12,18 +14,18 @@ public:
 
     // Constructors
     Wagon();
-    Wagon(const std::vector<Treasure*> &contentDown, const std::vector<Treasure*> &contentUp);
+    Wagon(TreasureChest contentDown, TreasureChest contentUp);
     Wagon(const Wagon&other);
 
     // Destructor
 
 
     // Get methods
-    std::vector<Treasure*> contentDown();
-    std::vector<Treasure*> contentUp();
+    TreasureChest& getContentDown();
+    TreasureChest& getContentUp();
 
     // Set methods
-    void setContentDown(std::vector<Treasure*> newContentDown);
+    void setContentDown(TreasureChest newContentDown);
 
     // Other methods
 
@@ -62,10 +64,10 @@ public slots:
     void OnCickedTreasuere(Treasure*t);
 private:
 
-    std::vector<Treasure*>m_contentUp;
-    std::vector<Treasure*>m_contentDown;
-    std::vector<Player*>m_playersUp;
-    std::vector<Player*>m_playersDown;
+    TreasureChest m_contentUp;
+    TreasureChest m_contentDown;
+    PlayerGroup m_playersUp;
+    PlayerGroup m_playersDown;
 
 };
 

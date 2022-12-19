@@ -191,9 +191,9 @@ void MainWindow::onStart()
 
     Game*game=new Game(players);
     game->initialize();
-    PlayerPerspective*pp=new PlayerPerspective(game,1);
-    pp->addGameToScene();
-    //pp->drawCards(6);
+//    PlayerPerspective*pp=new PlayerPerspective(game,1);
+//    pp->addGameToScene();
+//    pp->drawCards(6);
     this->pps=std::vector<PlayerPerspective*>();
     for(int i=0;i<players.size();i++){
         this->pps.push_back(new PlayerPerspective(new Game(*game),i));
@@ -202,10 +202,11 @@ void MainWindow::onStart()
     }
 
 
-//    pp->setSceneRect(ui->graphicsView->rect());
-//    ui->graphicsView->setScene(pp);
+
     pps[0]->setSceneRect(ui->graphicsView->rect());
     ui->graphicsView->setScene(pps[0]);
+//    pp->setSceneRect(ui->graphicsView->rect());
+//    ui->graphicsView->setScene(pp);
     ui->graphicsView->setBackgroundBrush(QPixmap("://clouds.png"));
     ui->graphicsView->setRenderHint(QPainter::Antialiasing);
     ui->graphicsView->setAlignment(Qt::AlignTop | Qt::AlignLeft);

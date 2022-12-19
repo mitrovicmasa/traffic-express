@@ -1,10 +1,11 @@
 #ifndef HAND_H
 #define HAND_H
 
+#include <cardcolection.h>
 #include <vector>
 #include "card.h"
 
-class Hand:public QGraphicsObject, public std::vector<Card*>
+class Hand:public QGraphicsObject
 {
     Q_OBJECT
 public:
@@ -12,8 +13,12 @@ public:
     Hand();
     Hand(const Hand&h);
 
+    //geters
+    CardColection&getCards();
+
     // Other methods
     void push_back(Card*);
+    bool empty();
 
     void repositionCards();
 
@@ -33,6 +38,8 @@ public slots:
     // QGraphicsItem interface
 protected:
     void mousePressEvent(QGraphicsSceneMouseEvent *event);
+private:
+    CardColection m_cards;
 };
 
 #endif // HAND_H

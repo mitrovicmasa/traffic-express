@@ -2,16 +2,22 @@
 #include <qgraphicsscene.h>
 #include <iostream>
 
-Deck::Deck():QGraphicsObject(),std::vector<Card*>()
+Deck::Deck():QGraphicsObject()
 {
 
 }
 
 Deck::Deck(const Deck &d)
-    :QGraphicsObject(),std::vector<Card*>()
+    :QGraphicsObject()
 {
-    for(Card* c:d)
+    //TODO
+    for(Card* c:d.m_cards)
         this->push_back(c->Copy());
+}
+
+CardColection &Deck::getCards()
+{
+    return m_cards;
 }
 
 // GUI
@@ -19,31 +25,46 @@ Deck::Deck(const Deck &d)
 void Deck::push_back(Card *card)
 {
     connect(card, &Card::clicked, this, &Deck::test);
-    std::vector<Card*>::push_back(card);
+    m_cards.push_back(card);
     card->setParentItem(this);
     card->setPos(5,20);
 }
 
 void Deck::pop_back()
 {
-    disconnect(this->back(),&Card::clicked,this,&Deck::test);
-    this->back()->setParentItem(nullptr);
-    std::vector<Card*>::pop_back();
+    disconnect(m_cards.back(),&Card::clicked,this,&Deck::test);
+    m_cards.back()->setParentItem(nullptr);
+    m_cards.pop_back();
+}
+
+int Deck::size()
+{
+    return m_cards.size();
+}
+
+Card *Deck::back()
+{
+    return m_cards.back();
+}
+
+Card *Deck::front()
+{
+    return m_cards.front();
 }
 
 void Deck::push_front(Card *card)
 {
     connect(card, &Card::clicked, this, &Deck::test);
-    std::vector<Card*>::insert(this->begin(),card);
+    m_cards.insert(m_cards.begin(),card);
     card->setParentItem(this);
     card->setPos(5,20);
 }
 
 void Deck::pop_front()
 {
-    disconnect(this->front(),&Card::clicked,this,&Deck::test);
-    this->front()->setParentItem(nullptr);
-    std::vector<Card*>::erase(this->begin());
+    disconnect(m_cards.front(),&Card::clicked,this,&Deck::test);
+    m_cards.front()->setParentItem(nullptr);
+    m_cards.erase(m_cards.begin());
 }
 
 QRectF Deck::boundingRect() const
@@ -64,18 +85,18 @@ void Deck::test()
 
 void Deck::setAllCardsFaceDown()
 {
-    for(Card*x:(*this))
+    for(Card*x:m_cards)
         x->setFaceUp(false);
 }
 
 void Deck::setAllCardsFaceUp()
 {
-    for(Card*x:(*this))
+    for(Card*x:m_cards)
         x->setFaceUp(true);
 }
 
 void Deck::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
     QGraphicsObject::mousePressEvent(event);
-    std::cout<<"Deck clicked!Deck size:"<<this->size()<<std::endl;
+    std::cout<<"Deck clicked!Deck size:"<<m_cards.size()<<std::endl;
 }

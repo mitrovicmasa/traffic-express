@@ -2,10 +2,11 @@
 #define DECK_H
 
 #include "card.h"
+#include <cardcolection.h>
 #include <vector>
 
 
-class Deck:public QGraphicsObject,public std::vector<Card*>
+class Deck:public QGraphicsObject
 {
     Q_OBJECT
 public:
@@ -13,9 +14,15 @@ public:
     Deck();
     Deck(const Deck&);
 
+    //geters
+    CardColection& getCards();
+
     // Other methods
     void push_back(Card*);
     void pop_back();
+    int size();
+    Card*back();
+    Card*front();
 
     void push_front(Card*);
     void pop_front();
@@ -30,6 +37,8 @@ public:
     // QGraphicsItem interface
 protected:
     void mousePressEvent(QGraphicsSceneMouseEvent *event);
+private:
+    CardColection m_cards;
 };
 
 #endif // DECK_H

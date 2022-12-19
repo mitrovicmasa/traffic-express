@@ -20,6 +20,8 @@ qt_add_resources(RES_SOURCES ${RESOURCES})
 
 include_directories(src/)
 include_directories(headers/)
+include_directories(src/collections)
+include_directories(headers/collections/)
 
 #[[
 set(PROJECT_SOURCES
@@ -70,6 +72,10 @@ set(PROJECT_SOURCES
         src/playerstats.cpp
         src/miniround.cpp
         src/playerperspective.cpp
+        src/collections/treasurechest.cpp
+        src/collections/cardcolection.cpp
+        src/collections/wagonarray.cpp
+        src/collections/playergroup.cpp
         )
 
 set(PROJECT_HEADERS
@@ -91,6 +97,10 @@ set(PROJECT_HEADERS
         headers/playerstats.h
         headers/miniround.h
         headers/playerperspective.h
+        headers/collections/treasurechest.h
+        headers/collections/cardcolection.h
+        headers/collections/wagonarray.h
+        headers/collections/playergroup.h
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)

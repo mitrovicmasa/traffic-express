@@ -10,17 +10,13 @@ Wagon::Wagon()
     setFlags(GraphicsItemFlag::ItemIsSelectable);
 }
 
-Wagon::Wagon(const std::vector<Treasure *> &contentDown, const std::vector<Treasure *> &contentUp)
+Wagon::Wagon(TreasureChest contentDown, TreasureChest contentUp)
     :QGraphicsObject(),m_contentUp(contentUp),m_contentDown(contentDown)
 {
     setFlags(GraphicsItemFlag::ItemIsSelectable);
 }
 
 Wagon::Wagon(const Wagon &other)
-    :m_contentUp(std::vector<Treasure*>()),
-      m_contentDown(std::vector<Treasure*>()),
-      m_playersUp(std::vector<Player*>()),
-      m_playersDown(std::vector<Player*>())
 {
     for(Treasure*t:other.m_contentUp)
         this->addContentUp(new Treasure(*t));
@@ -38,18 +34,18 @@ Wagon::Wagon(const Wagon &other)
 }
 
 // Getters
-std::vector<Treasure*> Wagon::contentDown()
+TreasureChest& Wagon::getContentDown()
 {
     return m_contentDown;
 }
 
-std::vector<Treasure*> Wagon::contentUp()
+TreasureChest& Wagon::getContentUp()
 {
     return m_contentUp;
 }
 
 // Setters
-void Wagon::setContentDown(std::vector<Treasure*> newContentDown)
+void Wagon::setContentDown(TreasureChest newContentDown)
 {
     for(Treasure*x:m_contentDown){
         delete x;
