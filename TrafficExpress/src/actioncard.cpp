@@ -117,6 +117,8 @@ void ActionCard::paint(QPainter *painter, const QStyleOptionGraphicsItem *option
 
 Card *ActionCard::Copy() const
 {
-    return new ActionCard(m_action,bandit());
+     auto tmp=new ActionCard(m_action,bandit());
+     tmp->setFaceUp(this->faceUp());
+     return tmp;
 }
 

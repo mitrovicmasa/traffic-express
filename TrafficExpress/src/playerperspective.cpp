@@ -36,6 +36,7 @@ void PlayerPerspective::addGameToScene()
     groupDeck->setPos(300,300);
 
     Deck* playerDeck = m_player->deck();
+    //m_player->deck()->setAllCardsFaceDown();
     this->addItem(playerDeck);
     playerDeck->setPos(50,300);
 

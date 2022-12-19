@@ -62,6 +62,18 @@ void Deck::test()
     std::cout<<"Card clicked from deck!"<<std::endl;
 }
 
+void Deck::setAllCardsFaceDown()
+{
+    for(Card*x:(*this))
+        x->setFaceUp(false);
+}
+
+void Deck::setAllCardsFaceUp()
+{
+    for(Card*x:(*this))
+        x->setFaceUp(true);
+}
+
 void Deck::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
     QGraphicsObject::mousePressEvent(event);

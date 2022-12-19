@@ -22,6 +22,7 @@ Player::Player(BanditType id)
     m_deck->push_back(new ActionCard(ActionType::PUNCH, id));
     m_deck->push_back(new ActionCard(ActionType::TAKETREASURE, id));
     m_deck->push_back(new ActionCard(ActionType::TAKETREASURE, id));
+    m_deck->setAllCardsFaceDown();
 
 
     m_bulletDeck = std::vector<BulletCard*>();
@@ -153,6 +154,7 @@ void Player::drawCards(unsigned n)
     {
         Card* front=m_deck->back();
         m_deck->pop_back();
+        front->setFaceUp(true);
         m_hand->push_back(front);
 
     }
