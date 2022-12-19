@@ -144,14 +144,14 @@ int Player::countAmountOfTreasure() const
     return std::accumulate(m_treasure.cbegin(), m_treasure.cend(), 0, [](int acc, auto treasure) { return acc + treasure->getValue(); });
 }
 
-//void Player::returnCardsToDeck()
-//{
+void Player::returnCardsToDeck()
+{
 //    while(!m_hand->empty())
 //    {
-//        m_deck->push_back(*(m_hand->begin()));
+//        m_deck->push_back((m_hand->getCards());
 //        m_hand->erase(m_hand->begin());
 //    }
-//}
+}
 
 void Player::shuffleDeck()
 {
