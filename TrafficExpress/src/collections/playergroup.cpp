@@ -10,3 +10,16 @@ PlayerGroup::PlayerGroup(std::vector<Player *> &vp)
     for(Player*p:vp)
         this->push_back(p);
 }
+
+PlayerGroup::PlayerGroup(const PlayerGroup &other)
+{
+
+    for(Player* p:other){
+        this->push_back(new Player(p->isItMyMove(),p->id(),p->hand(),p->deck(),std::vector<BulletCard*>(),p->positionInTrain(),
+                                   p->roof(),p->treasure()));
+
+    }
+
+}
+
+

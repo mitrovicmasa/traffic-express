@@ -4,8 +4,16 @@
 #include <qpainter.h>
 #include <qpainter.h>
 
-Train::Train()
+Train::Train(WagonArray &wa)
     :QGraphicsObject()
+{
+    for(Wagon*w:wa){
+        this->push_back(new Wagon(w->getContentUp(),w->getContentDown(),w->getPlayersUp(),w->getPlayersDown()));
+
+    }
+}
+
+Train::Train()
 {
 
 }

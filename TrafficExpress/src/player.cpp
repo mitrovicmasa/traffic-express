@@ -59,6 +59,19 @@ Player::Player(const Player &other)
     connect(m_hand,&Hand::clickedCardInHand,this,&Player::onClickedCardInHand);
 }
 
+Player::Player(bool isItMyMove, BanditType id, Hand *h, Deck *d, std::vector<BulletCard *> bcd, int pos, bool roof, TreasureChest tc)
+    :m_isItMyMove(isItMyMove),m_id(id),m_hand(new Hand(h->getCards())),m_deck(new Deck(d->getCards())),
+      m_bulletDeck(std::vector<BulletCard*>()),m_positionInTrain(pos),m_roof(roof),m_treasure(TreasureChest(tc))
+{
+
+//Todo bulletCardDeck
+
+
+
+
+    setFlags(GraphicsItemFlag::ItemIsSelectable);
+}
+
 
 
 // Get methods

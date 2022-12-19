@@ -10,6 +10,7 @@ class CardColection:public std::vector<Card*>
 {
 public:
     CardColection();
+    CardColection Copy();
 };
 
 #endif // CARDCOLECTION_H

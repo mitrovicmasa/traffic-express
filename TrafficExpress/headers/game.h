@@ -24,12 +24,12 @@ public:
     Game(std::vector<Player*> &players);
     Game(const Game&);
     //Get methods
-    const std::vector<Player*> &players() const;
+    const PlayerGroup &players() const;
     Train *wagons() const;
     const std::vector<RoundCard*> &rounds() const;
     //const std::vector<ActionCard*> &cardsPlayed() ;
     std::vector<NeutralBullet*> neutralBulletDeck() const;
-    const std::vector<Treasure*> &unusedTreasure() const;
+    const TreasureChest &unusedTreasure() const;
     BanditType mostBulletsShot() const;
     BanditType richestPlayer() const;
     unsigned sheriffPosition() const;

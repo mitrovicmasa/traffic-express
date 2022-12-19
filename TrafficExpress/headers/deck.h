@@ -13,6 +13,8 @@ public:
     // Constructors
     Deck();
     Deck(const Deck&);
+    //this is a copy constructor
+    Deck(CardColection&cc);
 
     //geters
     CardColection& getCards();

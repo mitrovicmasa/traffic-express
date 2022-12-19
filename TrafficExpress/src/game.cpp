@@ -13,8 +13,8 @@ Game::Game( std::vector<Player*> &players)
 }
 
 Game::Game(const Game &other)
-    :m_players(PlayerGroup()),
-      m_wagons(new Train(*(other.m_wagons))),
+    :m_players(PlayerGroup(other.players())),
+      m_wagons(new Train(other.wagons()->getWagons())),
       m_sheriffPosition(other.m_sheriffPosition),
       m_rounds(std::vector<RoundCard*>()),
       //m_cardsPlayed(std::vector<ActionCard*>()),
@@ -23,7 +23,7 @@ Game::Game(const Game &other)
       m_mostBulletsShot(other.m_mostBulletsShot),
       m_richestPlayer(other.m_richestPlayer),
       m_indexOfPlayerToMove(other.m_indexOfPlayerToMove),
-      m_cardsPlayed(new Deck(*(other.m_cardsPlayed)))
+      m_cardsPlayed(new Deck((other.m_cardsPlayed->getCards())))
 
 
 
@@ -51,7 +51,7 @@ Game::Game(const Game &other)
 }
 
 //// Get methods
-const std::vector<Player*> &Game::players() const
+const PlayerGroup &Game::players() const
 {
     return m_players;
 }
@@ -372,6 +372,10 @@ void Game::initialize()
 
     // Neutral Bullets
     setNeutralBulletDeck(generateNeutralBullets(13));
+    Player*tmp=m_players[0];
+    auto p=new Player(tmp->isItMyMove(),tmp->id(),tmp->hand(),
+                      tmp->deck(),std::vector<BulletCard*>(),tmp->positionInTrain(),tmp->roof(),tmp->treasure());
+    m_wagons->getWagons()[0]->addPlayerDown(p);
 }
 
 //// Other methods

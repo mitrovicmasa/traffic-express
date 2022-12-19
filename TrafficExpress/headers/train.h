@@ -17,6 +17,8 @@ public:
     Train();
     Train(std::vector<Wagon*>);
     Train(const Train&);
+    //this is a copy constructor
+    Train(WagonArray&wa);
 
     // Other methods
     void addTrainToScene(QGraphicsScene*sc);

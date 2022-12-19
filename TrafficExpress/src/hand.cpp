@@ -15,6 +15,11 @@ Hand::Hand(const Hand &h)
         this->push_back(c->Copy());
 }
 
+Hand::Hand(CardColection &cc)
+{
+    m_cards=CardColection(cc);
+}
+
 CardColection &Hand::getCards()
 {
     return m_cards;

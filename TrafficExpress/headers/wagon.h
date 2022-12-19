@@ -16,6 +16,8 @@ public:
     Wagon();
     Wagon(TreasureChest contentDown, TreasureChest contentUp);
     Wagon(const Wagon&other);
+    //this is a copy constructor
+    Wagon(TreasureChest&upt,TreasureChest&downt,PlayerGroup&upp,PlayerGroup&downp);
 
     // Destructor
 
@@ -23,6 +25,8 @@ public:
     // Get methods
     TreasureChest& getContentDown();
     TreasureChest& getContentUp();
+    PlayerGroup& getPlayersUp();
+    PlayerGroup& getPlayersDown();
 
     // Set methods
     void setContentDown(TreasureChest newContentDown);

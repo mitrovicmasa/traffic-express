@@ -13,6 +13,8 @@ public:
     Hand();
     Hand(const Hand&h);
 
+    Hand(CardColection& cc);
+
     //geters
     CardColection&getCards();
 

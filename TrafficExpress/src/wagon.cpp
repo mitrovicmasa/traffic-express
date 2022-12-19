@@ -4,10 +4,28 @@
 #include <qpainter.h>
 #include <iostream>
 //// Constructors
-Wagon::Wagon()
+///
+///
+///
+///
+
+Wagon::Wagon(TreasureChest &upt, TreasureChest &downt, PlayerGroup &upp, PlayerGroup &downp)
     :QGraphicsObject()
 {
     setFlags(GraphicsItemFlag::ItemIsSelectable);
+    m_contentDown=TreasureChest(downt);
+    m_contentUp=TreasureChest(upt);
+    m_playersUp=PlayerGroup(upp);
+    m_playersDown=PlayerGroup(downp);
+
+
+}
+
+
+
+Wagon::Wagon()
+{
+
 }
 
 Wagon::Wagon(TreasureChest contentDown, TreasureChest contentUp)
@@ -42,6 +60,16 @@ TreasureChest& Wagon::getContentDown()
 TreasureChest& Wagon::getContentUp()
 {
     return m_contentUp;
+}
+
+PlayerGroup &Wagon::getPlayersUp()
+{
+    return m_playersUp;
+}
+
+PlayerGroup &Wagon::getPlayersDown()
+{
+    return m_playersDown;
 }
 
 // Setters
