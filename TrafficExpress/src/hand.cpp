@@ -26,6 +26,15 @@ void Hand::push_back(Card *card)
     card->setPos((this->size()-1)*70+5,20);
 }
 
+void Hand::repositionCards()
+{
+    for(int i=0;i<this->size();i++){
+        (*this)[i]->setPos(i*70+5,20);
+
+
+    }
+}
+
 QRectF Hand::boundingRect() const
 {
     return QRectF(0,0,520,120);

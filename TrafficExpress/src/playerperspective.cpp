@@ -109,6 +109,7 @@ void PlayerPerspective::onClickedCardInHandInPlayer(Card *c, Hand *h, Player *p)
 
 
         }
+        h->repositionCards();
 
 
     }

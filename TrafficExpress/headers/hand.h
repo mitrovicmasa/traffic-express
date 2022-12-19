@@ -15,6 +15,8 @@ public:
     // Other methods
     void push_back(Card*);
 
+    void repositionCards();
+
 
     // GUI
     QRectF boundingRect() const;
