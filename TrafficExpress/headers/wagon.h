@@ -54,6 +54,7 @@ public:
 signals:
     void clicked();
     void clickedTreasureInWagon(Treasure*t,Wagon*w);
+    void clickedWagon(Wagon*w);
 
 public slots:
     void OnCickedTreasuere(Treasure*t);

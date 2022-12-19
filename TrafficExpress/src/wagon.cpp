@@ -215,6 +215,7 @@ void Wagon::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
     QGraphicsObject::mousePressEvent(event);
     emit clicked();
+    emit clickedWagon(this);
 }
 
 void Wagon::testTreasure()

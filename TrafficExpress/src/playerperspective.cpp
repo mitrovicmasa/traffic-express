@@ -8,7 +8,7 @@ PlayerPerspective::PlayerPerspective(Game *game, int playerIndex, QObject *paren
 {
     Train*train=m_game->wagons();
     connect(train,&Train::clickedTreasureInWagonInTrain,this,&PlayerPerspective::onClickedTreasureInWagonInTrainInTran);
-
+    connect(train,&Train::clickedWagonInTrain,this,&PlayerPerspective::onClickedWagonInTrain);
     //m_table= new Table();
     for (Player* p:m_game->players()){
         m_table->push_back(new PlayerStats(p));
@@ -112,4 +112,16 @@ void PlayerPerspective::onClickedCardInHandInPlayer(Card *c, Hand *h, Player *p)
 
 
     }
+}
+
+void PlayerPerspective::onClickedWagonInTrain(Wagon *w, Train *train)
+{
+    std::cout<<"Wagon clicked in train n player perspective!"<<std::endl;
+    if(m_player->isItMyMove()){
+        w->addPlayerDown(m_player);
+
+
+
+    }
+
 }

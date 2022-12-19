@@ -40,6 +40,7 @@ void Train::push_back(Wagon*w)
 {
     connect(w, &Wagon::clicked, this, &Train::test);
     connect(w, &Wagon::clickedTreasureInWagon, this, &Train::onClickedTreasureInWagon);
+    connect(w,&Wagon::clickedWagon,this,&Train::onClickedWagon);
     std::vector<Wagon*>::push_back(w);
     w->setParentItem(this);
     w->setPos((this->size()-1)*200,10);
@@ -65,6 +66,12 @@ void Train::test()
 void Train::onClickedTreasureInWagon(Treasure *t, Wagon *w)
 {
     emit clickedTreasureInWagonInTrain(t,w,this);
+}
+
+void Train::onClickedWagon(Wagon *w)
+{
+    std::cout<<"signal recieved in train from wagon!"<<std::endl;
+    emit clickedWagonInTrain(w,this);
 }
 
 
