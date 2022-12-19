@@ -51,6 +51,8 @@ public:
     void testTreasure();
     void testPlayers();
 
+    void repositionTreasure();
+
 signals:
     void clicked();
     void clickedTreasureInWagon(Treasure*t,Wagon*w);

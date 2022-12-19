@@ -228,6 +228,14 @@ void Wagon::testPlayers()
     std::cout<< "Player clicked!" << std::endl;
 }
 
+void Wagon::repositionTreasure()
+{
+    for(int i=0;i<m_contentDown.size();i++){
+        m_contentDown[i]->setPos(10+(i)*(2*(m_contentDown[i]->sirina())),
+                                 -30+height()-(m_contentDown[i]->visina()));
+    }
+}
+
 void Wagon::OnCickedTreasuere(Treasure *t)
 {   //std::cout<<"Treasure signals wagon"<<std::endl;
     emit clickedTreasureInWagon(t,this);

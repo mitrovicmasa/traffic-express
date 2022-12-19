@@ -78,12 +78,13 @@ void PlayerPerspective::onClickedTreasureInWagonInTrainInTran(Treasure *t, Wagon
     if(m_player->isItMyMove()){
         std::cout<<"It is my move"<<std::endl;
        Treasure* selectedTreasure=w->takeContentDown(t->getType());
+
        disconnect(selectedTreasure,&Treasure::clickedTreasure,w,&Wagon::OnCickedTreasuere);
        //m_player->treasure().push_back(selectedTreasure);
 
 
        (*m_table)[m_game->getIndexOfPlayerToMove()]->addTreasureToPlayer(selectedTreasure);
-
+        w->repositionTreasure();
     }
 }
 
