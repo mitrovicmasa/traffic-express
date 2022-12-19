@@ -66,10 +66,7 @@ const std::vector<RoundCard*> &Game::rounds() const
     return m_rounds;
 }
 
-//const std::vector<ActionCard*> &Game::cardsPlayed()
-//{
-//    return m_cardsPlayed;
-//}
+
 
 std::vector<NeutralBullet*> Game::neutralBulletDeck() const
 {
@@ -413,6 +410,11 @@ unsigned Game::findPlayerById(BanditType banditId)
             position = i;
 
     return position;
+}
+
+void Game::setCardsPlayed(Deck *newCardsPlayed)
+{
+    m_cardsPlayed = newCardsPlayed;
 }
 
 

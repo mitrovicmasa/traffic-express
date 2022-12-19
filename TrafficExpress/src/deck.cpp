@@ -15,7 +15,7 @@ Deck::Deck(const Deck &d)
         this->push_back(c->Copy());
 }
 
-Deck::Deck(CardColection &cc)
+Deck::Deck(CardColection cc)
 {
     m_cards=CardColection(cc);
 }

@@ -6,6 +6,13 @@ CardColection::CardColection()
 
 }
 
+CardColection::CardColection(std::vector<ActionCard *> cards)
+{
+    for(Card* c: cards){
+        this->push_back(c);
+    }
+}
+
 CardColection CardColection::Copy()
 {
     CardColection cc=CardColection();

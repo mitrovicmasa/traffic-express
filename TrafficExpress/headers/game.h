@@ -27,7 +27,6 @@ public:
     const PlayerGroup &players() const;
     Train *wagons() const;
     const std::vector<RoundCard*> &rounds() const;
-    //const std::vector<ActionCard*> &cardsPlayed() ;
     std::vector<NeutralBullet*> neutralBulletDeck() const;
     const TreasureChest &unusedTreasure() const;
     BanditType mostBulletsShot() const;
@@ -69,13 +68,15 @@ public:
 
 
 
+    void setCardsPlayed(Deck *newCardsPlayed);
+
 private:
     int m_indexOfPlayerToMove;
     PlayerGroup m_players;
     Train* m_wagons;
     unsigned m_sheriffPosition;
     std::vector<RoundCard*> m_rounds;
-    Deck*m_cardsPlayed;
+    Deck* m_cardsPlayed;
 
     std::vector<NeutralBullet*> m_neutralBulletDeck;
     TreasureChest m_unusedTreasure;

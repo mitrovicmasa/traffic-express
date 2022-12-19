@@ -24,6 +24,7 @@ public:
 
     void repositionCards();
 
+    Card* operator[] (int ind) {return m_cards[ind];}
 
     // GUI
     QRectF boundingRect() const;
