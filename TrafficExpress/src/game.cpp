@@ -17,7 +17,7 @@ Game::Game(const Game &other)
     :m_players(PlayerGroup(other.m_players)),
       m_wagons(new Train(other.wagons()->getWagons())),
       m_sheriffPosition(other.m_sheriffPosition),
-      m_rounds(std::vector<RoundCard*>()),
+      m_rounds(other.m_rounds),
       //m_cardsPlayed(std::vector<ActionCard*>()),
       m_neutralBulletDeck(std::vector<NeutralBullet*>()),
       m_unusedTreasure(other.m_unusedTreasure),

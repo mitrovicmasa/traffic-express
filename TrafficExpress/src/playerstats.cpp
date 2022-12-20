@@ -78,6 +78,7 @@ void PlayerStats::paint(QPainter *painter, const QStyleOptionGraphicsItem *optio
     int num;
     for (BulletCard *b :m_player->bulletDeck()){
         num = b->numOfBullets();
+
     }
     QString bandit = QString::fromStdString(toString(m_player->id()));
     painter->drawText(boundingRect(),  bandit + " - Number of bullets: " + QString::number(num));

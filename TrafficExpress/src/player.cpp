@@ -67,6 +67,8 @@ Player::Player(bool isItMyMove, BanditType id, Hand *h, Deck *d, std::vector<Bul
 //Todo bulletCardDeck
     connect(m_hand,&Hand::clickedCardInHand,this,&Player::onClickedCardInHand);
 
+    for(BulletCard*bc:bcd)
+        m_bulletDeck.push_back((BulletCard*)bc->Copy());
 
 
 

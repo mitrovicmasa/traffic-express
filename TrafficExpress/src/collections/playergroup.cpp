@@ -15,7 +15,7 @@ PlayerGroup::PlayerGroup(const PlayerGroup &other)
 {
 
     for(Player* p:other){
-        this->push_back(new Player(p->isItMyMove(),p->id(),p->hand(),p->deck(),std::vector<BulletCard*>(),p->positionInTrain(),
+        this->push_back(new Player(p->isItMyMove(),p->id(),p->hand(),p->deck(),p->bulletDeck(),p->positionInTrain(),
                                    p->roof(),p->treasure()));
 
     }
