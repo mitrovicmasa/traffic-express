@@ -13,10 +13,34 @@ Wagon::Wagon(TreasureChest &upt, TreasureChest &downt, PlayerGroup &upp, PlayerG
     :QGraphicsObject()
 {
     setFlags(GraphicsItemFlag::ItemIsSelectable);
-    m_contentDown=TreasureChest(downt);
-    m_contentUp=TreasureChest(upt);
-    m_playersUp=PlayerGroup(upp);
-    m_playersDown=PlayerGroup(downp);
+    auto tc=TreasureChest(downt);
+
+    for(Treasure*t:tc){
+        this->addContentDown(t);
+
+    }
+
+    auto tc1=TreasureChest(upt);
+
+    for(Treasure*t:tc1){
+        this->addContentUp(t);
+
+    }
+
+    auto pg=PlayerGroup(upp);
+
+    for(Player*p:pg){
+        this->addPlayerUp(p);
+
+    }
+
+    auto pg1=PlayerGroup(downp);
+
+    for(Player*p:pg1){
+        this->addPlayerDown(p);
+
+    }
+
 
 
 }
@@ -47,7 +71,7 @@ Wagon::Wagon(const Wagon &other)
 
     for(Player*p:other.m_playersDown)
         this->addPlayerDown(new Player(*p));
-
+    setFlags(GraphicsItemFlag::ItemIsSelectable);
 
 }
 

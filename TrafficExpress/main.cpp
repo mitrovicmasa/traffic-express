@@ -30,11 +30,11 @@ std::vector<Treasure*> getWagonContent(Train* wagons, unsigned, bool);
 
 int main(int argc, char *argv[])
 {
-//    QApplication a(argc, argv);
-//    MainWindow w;
-//    //w.showFullScreen();
-//    w.show();
-//    return a.exec();
+    QApplication a(argc, argv);
+    MainWindow w;
+    //w.showFullScreen();
+    w.show();
+    return a.exec();
 
     // Create n number of players
 

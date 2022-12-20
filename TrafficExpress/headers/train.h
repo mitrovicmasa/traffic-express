@@ -23,7 +23,13 @@ public:
     // Other methods
     void addTrainToScene(QGraphicsScene*sc);
     void push_back(Wagon*w);
+    Wagon*back();
+    Wagon*front();
+    void pop_back();
     int size();
+    bool empty();
+    void push_front(Wagon*);
+    void pop_front();
     Wagon* operator[](int i);
     //geters
     WagonArray&getWagons();

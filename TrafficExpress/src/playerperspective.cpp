@@ -66,7 +66,8 @@ void PlayerPerspective::setNextPlayerToToMove()
 
 int PlayerPerspective::getPlayerToMoveIndex() const
 {
-    return m_game->getIndexOfPlayerToMove();
+    //return m_game->getIndexOfPlayerToMove();
+    return 0;
 }
 
 void PlayerPerspective::onClickedTreasureInWagonInTrainInTran(Treasure *t, Wagon *w, Train *train)

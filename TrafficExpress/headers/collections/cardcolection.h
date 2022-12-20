@@ -12,6 +12,7 @@ class CardColection:public std::vector<Card*>
 public:
     CardColection();
     CardColection(std::vector<ActionCard*> cards);
+    CardColection(const CardColection&);
     CardColection Copy();
 };
 

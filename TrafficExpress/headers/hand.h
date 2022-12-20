@@ -20,7 +20,12 @@ public:
 
     // Other methods
     void push_back(Card*);
+    void pop_back();
+    Card*back();
+    Card*front();
     bool empty();
+    void push_front(Card*);
+    void pop_front();
 
     void repositionCards();
 

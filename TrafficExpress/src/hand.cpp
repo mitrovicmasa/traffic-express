@@ -17,7 +17,11 @@ Hand::Hand(const Hand &h)
 
 Hand::Hand(CardColection &cc)
 {
-    m_cards=CardColection(cc);
+    auto cpy=CardColection(cc);
+    for(Card*c:cpy){
+
+        this->push_back(c);
+    }
 }
 
 CardColection &Hand::getCards()
@@ -29,16 +33,55 @@ CardColection &Hand::getCards()
 
 void Hand::push_back(Card *card)
 {
-    connect(card, &Card::clicked, this, &Hand::test);
+    //connect(card, &Card::clicked, this, &Hand::test);
     connect(card, &Card::clickedCard, this, &Hand::onClickedCard);
     m_cards.push_back(card);
     card->setParentItem(this);
     card->setPos((m_cards.size()-1)*70+5,20);
 }
 
+void Hand::pop_back()
+{
+    //disconnect(m_cards.back(), &Card::clicked, this, &Hand::test);
+    disconnect(m_cards.back(), &Card::clickedCard, this, &Hand::onClickedCard);
+    m_cards.back()->setParentItem(nullptr);
+    m_cards.pop_back();
+
+}
+
+Card *Hand::back()
+{
+    return m_cards.back();
+}
+
+Card *Hand::front()
+{
+    return m_cards.front();
+}
+
 bool Hand::empty()
 {
     return m_cards.empty();
+}
+
+void Hand::push_front(Card *card)
+{
+
+    //connect(card, &Card::clicked, this, &Hand::test);
+    connect(card, &Card::clickedCard, this, &Hand::onClickedCard);
+    m_cards.insert(m_cards.begin(),card);
+    card->setParentItem(this);
+    card->setPos((m_cards.size()-1)*70+5,20);
+}
+
+void Hand::pop_front()
+{
+    //disconnect(m_cards.front(), &Card::clicked, this, &Hand::test);
+    disconnect(m_cards.front(), &Card::clickedCard, this, &Hand::onClickedCard);
+    m_cards.front()->setParentItem(this);
+    m_cards.erase(m_cards.begin());
+
+
 }
 
 void Hand::repositionCards()
@@ -68,7 +111,7 @@ void Hand::test()
 
 void Hand::onClickedCard(Card*c)
 {
-    std::cout<<"Card clicked from hand! signal"<<std::endl;
+    //std::cout<<"Card clicked from hand! signal"<<std::endl;
     emit clickedCardInHand(c,this);
 }
 

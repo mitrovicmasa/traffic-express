@@ -48,7 +48,7 @@ void Train::addTrainToScene(QGraphicsScene *sc)
 
 void Train::push_back(Wagon*w)
 {
-    connect(w, &Wagon::clicked, this, &Train::test);
+    //connect(w, &Wagon::clicked, this, &Train::test);
     connect(w, &Wagon::clickedTreasureInWagon, this, &Train::onClickedTreasureInWagon);
     connect(w,&Wagon::clickedWagon,this,&Train::onClickedWagon);
     m_wagons.push_back(w);
@@ -56,9 +56,44 @@ void Train::push_back(Wagon*w)
     w->setPos((m_wagons.size()-1)*200,10);
 }
 
+Wagon *Train::back()
+{
+    return m_wagons.back();
+}
+
+Wagon *Train::front()
+{
+    return m_wagons.front();
+}
+
+void Train::pop_back()
+{
+    //disconnect(m_wagons.back(), &Wagon::clicked, this, &Train::test);
+    disconnect(m_wagons.back(), &Wagon::clickedTreasureInWagon, this, &Train::onClickedTreasureInWagon);
+    disconnect(m_wagons.back(),&Wagon::clickedWagon,this,&Train::onClickedWagon);
+    m_wagons.back()->setParentItem(nullptr);
+    m_wagons.erase(m_wagons.begin());
+
+}
+
 int Train::size()
 {
     return m_wagons.size();
+}
+
+bool Train::empty()
+{
+    return m_wagons.empty();
+}
+
+void Train::push_front(Wagon *w)
+{
+    //connect(w, &Wagon::clicked, this, &Train::test);
+    connect(w, &Wagon::clickedTreasureInWagon, this, &Train::onClickedTreasureInWagon);
+    connect(w,&Wagon::clickedWagon,this,&Train::onClickedWagon);
+    m_wagons.insert(m_wagons.begin(),w);
+    w->setParentItem(this);
+    w->setPos((m_wagons.size()-1)*200,10);
 }
 
 Wagon *Train::operator[](int i)
@@ -95,7 +130,7 @@ void Train::onClickedTreasureInWagon(Treasure *t, Wagon *w)
 
 void Train::onClickedWagon(Wagon *w)
 {
-    std::cout<<"signal recieved in train from wagon!"<<std::endl;
+    //std::cout<<"signal recieved in train from wagon!"<<std::endl;
     emit clickedWagonInTrain(w,this);
 }
 

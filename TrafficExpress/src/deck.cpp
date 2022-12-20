@@ -17,7 +17,12 @@ Deck::Deck(const Deck &d)
 
 Deck::Deck(CardColection cc)
 {
-    m_cards=CardColection(cc);
+    auto cpy=CardColection(cc);
+    for(Card*c:cpy){
+        this->push_back(c);
+
+    }
+
 }
 
 CardColection &Deck::getCards()
@@ -47,6 +52,11 @@ int Deck::size()
     return m_cards.size();
 }
 
+bool Deck::empty()
+{
+    return m_cards.empty();
+}
+
 Card *Deck::back()
 {
     return m_cards.back();
@@ -55,6 +65,11 @@ Card *Deck::back()
 Card *Deck::front()
 {
     return m_cards.front();
+}
+
+Card *Deck::operator[](int ind)
+{
+    return m_cards[ind];
 }
 
 void Deck::push_front(Card *card)

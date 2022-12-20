@@ -24,9 +24,10 @@ public:
     void push_back(Card*);
     void pop_back();
     int size();
+    bool empty();
     Card*back();
     Card*front();
-
+    Card* operator[] (int ind);
     void push_front(Card*);
     void pop_front();
 

@@ -65,6 +65,7 @@ Player::Player(bool isItMyMove, BanditType id, Hand *h, Deck *d, std::vector<Bul
 {
 
 //Todo bulletCardDeck
+    connect(m_hand,&Hand::clickedCardInHand,this,&Player::onClickedCardInHand);
 
 
 
@@ -251,6 +252,6 @@ void Player::mousePressEvent(QGraphicsSceneMouseEvent *event)
 
 void Player::onClickedCardInHand(Card *c, Hand *h)
 {
-    std::cout<<"signal recieved in player"<<std::endl;
+    //std::cout<<"signal recieved in player from card!"<<std::endl;
     emit clickedCardInHandInPlayer(c,h,this);
 }

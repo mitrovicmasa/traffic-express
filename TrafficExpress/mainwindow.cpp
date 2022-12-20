@@ -192,22 +192,22 @@ void MainWindow::onStart()
     Game*game=new Game(players);
     game->initialize();
 
-    PlayerPerspective*pp=new PlayerPerspective(game,1);
-    pp->addGameToScene();
-    pp->drawCards(6);
-//    this->pps=std::vector<PlayerPerspective*>();
-//    for(int i=0;i<players.size();i++){
-//        this->pps.push_back(new PlayerPerspective(new Game(*game),i));
-//        pps.back()->addGameToScene();
-//        pps.back()->drawCards(6);
-//    }
+//    PlayerPerspective*pp=new PlayerPerspective(game,1);
+//    pp->addGameToScene();
+//    pp->drawCards(6);
+    this->pps=std::vector<PlayerPerspective*>();
+    for(int i=0;i<players.size();i++){
+        this->pps.push_back(new PlayerPerspective(new Game(*game),i));
+        pps.back()->addGameToScene();
+        pps.back()->drawCards(6);
+    }
 
 
 
-//    pps[0]->setSceneRect(ui->graphicsView->rect());
-//    ui->graphicsView->setScene(pps[0]);
-    pp->setSceneRect(ui->graphicsView->rect());
-    ui->graphicsView->setScene(pp);
+    pps[0]->setSceneRect(ui->graphicsView->rect());
+    ui->graphicsView->setScene(pps[0]);
+//    pp->setSceneRect(ui->graphicsView->rect());
+//    ui->graphicsView->setScene(pp);
     ui->graphicsView->setBackgroundBrush(QPixmap("://clouds.png"));
     ui->graphicsView->setRenderHint(QPainter::Antialiasing);
     ui->graphicsView->setAlignment(Qt::AlignTop | Qt::AlignLeft);
@@ -274,6 +274,7 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
 
     }
     if(event->key()==Qt::Key_D){
+        //std::cout<<"im here"<<std::endl;
         int pToMove=pps[0]->getPlayerToMoveIndex();
         pps[pToMove]->drawCards(1);
     }
