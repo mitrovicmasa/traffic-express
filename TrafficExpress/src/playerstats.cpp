@@ -37,6 +37,19 @@ void PlayerStats::addTreasureToPlayer(Treasure *t)
     connect(t, &Treasure::clickedTreasure, this, &PlayerStats::onTreasureClicked);
 }
 
+Treasure *PlayerStats::takeTreasureFromPlayer(Treasure *t)
+{
+    TreasureChest tmp=m_player->treasure();
+    for(auto it=tmp.begin();it!=tmp.end();it++){
+        if(*it==t){
+            disconnect(*it, &Treasure::clickedTreasure, this, &PlayerStats::onTreasureClicked);
+            m_player->treasure().erase(it);
+            return t;
+        }
+    }
+    return nullptr;
+}
+
 // GUI
 QRectF PlayerStats::boundingRect() const
 {

@@ -43,7 +43,14 @@ public:
     Treasure* takeContentUp(TreasureType);
     Treasure* takeContentDown(TreasureType);
     Player* takePlayerUp(BanditType );
-    Player* takePlayerDown(BanditType );
+    Player *takePlayerDown(BanditType );
+
+    Treasure* takeContentUp(Treasure*);
+    Treasure* takeContentDown(Treasure*);
+    Player* takePlayerUp(Player* );
+    Player* takePlayerDown(Player* );
+
+
 
     int numberOfTreasureInWagonDown(TreasureType) const;
 
@@ -60,6 +67,7 @@ public:
     void testPlayers();
 
     void repositionTreasure();
+    void repositionPlayers();
 
 signals:
     void clicked();

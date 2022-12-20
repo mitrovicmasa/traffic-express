@@ -14,6 +14,7 @@ public:
     PlayerStats();
     PlayerStats(Player*);
     void addTreasureToPlayer(Treasure*);
+    Treasure* takeTreasureFromPlayer(Treasure*);
 
     // GUI
     QRectF boundingRect() const;

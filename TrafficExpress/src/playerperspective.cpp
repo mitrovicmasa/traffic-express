@@ -86,9 +86,9 @@ void PlayerPerspective::onClickedTreasureInWagonInTrainInTran(Treasure *t, Wagon
 
     if(m_player->isItMyMove()){
         std::cout<<"It is my move"<<std::endl;
-       Treasure* selectedTreasure=w->takeContentDown(t->getType());
+       Treasure* selectedTreasure=w->takeContentDown(t);
 
-       disconnect(selectedTreasure,&Treasure::clickedTreasure,w,&Wagon::OnCickedTreasuere);
+       //disconnect(selectedTreasure,&Treasure::clickedTreasure,w,&Wagon::OnCickedTreasuere);
        //m_player->treasure().push_back(selectedTreasure);
 
 
@@ -106,20 +106,13 @@ void PlayerPerspective::onClickedCardInHandInPlayer(Card *c, Hand *h, Player *p)
         ActionCard*ac=static_cast<ActionCard*>(c);
         for(auto it=h->getCards().begin();it!=h->getCards().end();it++){
             Card*tmp=*it;
-            if(tmp->Type()==CardType::ACTION_CARD){
-
-                ActionCard* tmpac=static_cast<ActionCard*>(tmp);
-                if(ac->action()==tmpac->action()){
-                    h->getCards().erase(it);
-                    m_game->getCardsPlayed()->push_back(tmp);
-                    break;
-                }
+            if(tmp->Type()==CardType::ACTION_CARD && tmp==c){
+                m_game->getCardsPlayed()->push_back(h->takeCard(c));
+                h->repositionCards();
+                break;
             }
-
-
-
         }
-        h->repositionCards();
+
 
 
     }
@@ -130,9 +123,12 @@ void PlayerPerspective::onClickedTreasureInPlayerStatsInTable(Treasure *, Player
     std::cout<<"signal recieved in player perspective"<<std::endl;
 }
 
-void PlayerPerspective::onClickedPlayerInWagonInTrain(Player *, Wagon *, Train *)
+void PlayerPerspective::onClickedPlayerInWagonInTrain(Player *p, Wagon *w, Train *t)
 {
     std::cout<<"Player is clicked"<<std::endl;
+    (*t)[0]->addPlayerDown(w->takePlayerDown(p));
+
+
 }
 
 void PlayerPerspective::onClickedWagonInTrain(Wagon *w, Train *train)

@@ -78,10 +78,25 @@ void Hand::pop_front()
 {
     //disconnect(m_cards.front(), &Card::clicked, this, &Hand::test);
     disconnect(m_cards.front(), &Card::clickedCard, this, &Hand::onClickedCard);
-    m_cards.front()->setParentItem(this);
+    m_cards.front()->setParentItem(nullptr);
     m_cards.erase(m_cards.begin());
 
 
+}
+
+Card *Hand::takeCard(Card *c)
+{
+    for(auto it=m_cards.begin();it!=m_cards.end();it++){
+        if(c==*it){
+            disconnect(c, &Card::clickedCard, this, &Hand::onClickedCard);
+            c->setParentItem(nullptr);
+            m_cards.erase(it);
+            repositionCards();
+            return c;
+        }
+
+    }
+    return nullptr;
 }
 
 void Hand::repositionCards()

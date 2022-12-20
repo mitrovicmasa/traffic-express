@@ -133,6 +133,7 @@ void Wagon::addContentDown(Treasure *t)
 
 void Wagon::addPlayerUp(Player *p)
 {
+    p->setRoof(true);
     connect(p, &Player::clickedPlayer, this, &Wagon::onClickedPlayer);
     m_playersUp.push_back(p);
     p->setParentItem(this);
@@ -141,6 +142,7 @@ void Wagon::addPlayerUp(Player *p)
 
 void Wagon::addPlayerDown(Player *p)
 {
+    p->setRoof(false);
     connect(p, &Player::clickedPlayer, this, &Wagon::onClickedPlayer);
     m_playersDown.push_back(p);
     p->setParentItem(this);
@@ -161,6 +163,7 @@ Treasure *Wagon::takeContentUp(TreasureType t)
         m_contentDown.erase(std::find(m_contentDown.begin(),m_contentDown.end(),r));
         disconnect(r, &Treasure::clicked, this, &Wagon::testTreasure);
         disconnect(r, &Treasure::clickedTreasure, this, &Wagon::OnCickedTreasuere);
+        repositionTreasure();
         return r;
     }
     return new Treasure(0,TreasureType::MONEYBAG);
@@ -182,6 +185,7 @@ Treasure *Wagon::takeContentDown(TreasureType t)
         r->setParentItem(nullptr);
         disconnect(r, &Treasure::clicked, this, &Wagon::testTreasure);
         disconnect(r, &Treasure::clickedTreasure, this, &Wagon::OnCickedTreasuere);
+        repositionTreasure();
         return r;
     }
     return new Treasure(0,TreasureType::MONEYBAG);
@@ -199,6 +203,7 @@ Player *Wagon::takePlayerUp(BanditType bandit)
             (*x)->setParentItem(nullptr);
             m_playersUp.erase(x);
             disconnect(playerToRemove, &Player::clickedPlayer, this, &Wagon::onClickedPlayer);
+            repositionPlayers();
             break;
         }
     }
@@ -219,11 +224,78 @@ Player *Wagon::takePlayerDown(BanditType bandit)
             (*x)->setParentItem(nullptr);
             m_playersDown.erase(x);
             disconnect(playerToRemove, &Player::clickedPlayer, this, &Wagon::onClickedPlayer);
+            repositionPlayers();
             break;
         }
     }
     return playerToRemove;
 
+}
+
+Treasure *Wagon::takeContentUp(Treasure *t)
+{
+    for(auto it=m_contentUp.begin();it!=m_contentUp.end();it++){
+        if(*it==t){
+            t->setParentItem(nullptr);
+            disconnect(*it, &Treasure::clicked, this, &Wagon::testTreasure);
+            disconnect(*it, &Treasure::clickedTreasure, this, &Wagon::OnCickedTreasuere);
+            m_contentUp.erase(it);
+            repositionTreasure();
+            return t;
+        }
+    }
+    return nullptr;
+}
+
+Treasure *Wagon::takeContentDown(Treasure *t)
+{
+    for(auto it=m_contentDown.begin();it!=m_contentDown.end();it++){
+        if(*it==t){
+            t->setParentItem(nullptr);
+            disconnect(*it, &Treasure::clicked, this, &Wagon::testTreasure);
+            disconnect(*it, &Treasure::clickedTreasure, this, &Wagon::OnCickedTreasuere);
+            m_contentDown.erase(it);
+            repositionTreasure();
+            return t;
+        }
+    }
+    return nullptr;
+}
+
+Player *Wagon::takePlayerUp(Player *p)
+{
+
+
+    for(auto it=m_playersUp.begin();it!=m_playersUp.end();it++){
+        if((*it)==p){
+            disconnect(p, &Player::clickedPlayer, this, &Wagon::onClickedPlayer);
+
+            p->setParentItem(nullptr);
+            m_playersUp.erase(it);
+            repositionPlayers();
+
+
+            return p;
+        }
+    }
+    return nullptr;
+}
+
+Player *Wagon::takePlayerDown(Player *p)
+{
+    for(auto it=m_playersDown.begin();it!=m_playersDown.end();it++){
+        if((*it)==p){
+            disconnect(p, &Player::clickedPlayer, this, &Wagon::onClickedPlayer);
+
+            p->setParentItem(nullptr);
+            m_playersDown.erase(it);
+            repositionPlayers();
+
+
+            return p;
+        }
+    }
+    return nullptr;
 }
 
 int Wagon::numberOfTreasureInWagonDown(TreasureType type) const
@@ -288,6 +360,20 @@ void Wagon::repositionTreasure()
         m_contentDown[i]->setPos(10+(i)*(2*(m_contentDown[i]->sirina())),
                                  -30+height()-(m_contentDown[i]->visina()));
     }
+}
+
+void Wagon::repositionPlayers()
+{
+    for(int i=0;i<m_playersUp.size();i++){
+        m_playersUp[i]->setPos(5+(m_playersUp[i]->width()+5)*(i),70-m_playersUp[i]->height()-25);
+
+    }
+    for(int i=0;i<m_playersDown.size();i++){
+        m_playersDown[i]->setPos(5+(m_playersDown[i]->width()+5)*(i),+80);
+
+    }
+
+
 }
 
 void Wagon::OnCickedTreasuere(Treasure *t)
