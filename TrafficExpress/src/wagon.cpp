@@ -58,22 +58,22 @@ Wagon::Wagon(TreasureChest contentDown, TreasureChest contentUp)
     setFlags(GraphicsItemFlag::ItemIsSelectable);
 }
 
-Wagon::Wagon(const Wagon &other)
-{
-    for(Treasure*t:other.m_contentUp)
-        this->addContentUp(new Treasure(*t));
+//Wagon::Wagon(const Wagon &other)
+//{
+//    for(Treasure*t:other.m_contentUp)
+//        this->addContentUp(new Treasure(*t));
 
-    for(Treasure*t:other.m_contentDown)
-        this->addContentDown(new Treasure(*t));
+//    for(Treasure*t:other.m_contentDown)
+//        this->addContentDown(new Treasure(*t));
 
-    for(Player*p:other.m_playersUp)
-        this->addPlayerUp(new Player(*p));
+//    for(Player*p:other.m_playersUp)
+//        this->addPlayerUp(new Player(*p));
 
-    for(Player*p:other.m_playersDown)
-        this->addPlayerDown(new Player(*p));
-    setFlags(GraphicsItemFlag::ItemIsSelectable);
+//    for(Player*p:other.m_playersDown)
+//        this->addPlayerDown(new Player(*p));
+//    setFlags(GraphicsItemFlag::ItemIsSelectable);
 
-}
+//}
 
 // Getters
 TreasureChest& Wagon::getContentDown()

@@ -12,8 +12,10 @@ class Deck:public QGraphicsObject
 public:
     // Constructors
     Deck();
-    Deck(const Deck&);
-    //this is a copy constructor
+    //copy constructor dangerous
+    //Deck(const Deck&);
+
+    //this is a safe copy constructor
     Deck(CardColection cc);
 
 

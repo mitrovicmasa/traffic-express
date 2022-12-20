@@ -26,9 +26,10 @@ public:
     // Constructors
 
     Player(BanditType id);
-    Player(const Player&);
+    //this is not safe
+//    Player(const Player&);
 
-    //this is a copy constructor
+    //this is a safe copy constructor
 
     Player(bool isItMyMove,BanditType id,Hand*h,Deck*d,std::vector<BulletCard*> bcd,int pos,bool roof,TreasureChest tc);
 

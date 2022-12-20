@@ -16,8 +16,10 @@ public:
     // Constructors
     Train();
     Train(std::vector<Wagon*>);
-    Train(const Train&);
-    //this is a copy constructor
+    //this is not safe
+//    Train(const Train&);
+
+    //this is a safe copy constructor
     Train(WagonArray&wa);
 
     // Other methods

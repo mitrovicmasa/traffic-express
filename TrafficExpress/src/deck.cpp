@@ -7,13 +7,13 @@ Deck::Deck():QGraphicsObject()
 
 }
 
-Deck::Deck(const Deck &d)
-    :QGraphicsObject()
-{
-    //TODO
-    for(Card* c:d.m_cards)
-        this->push_back(c->Copy());
-}
+//Deck::Deck(const Deck &d)
+//    :QGraphicsObject()
+//{
+//    //TODO
+//    for(Card* c:d.m_cards)
+//        this->push_back(c->Copy());
+//}
 
 Deck::Deck(CardColection cc)
 {

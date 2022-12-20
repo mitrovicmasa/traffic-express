@@ -11,8 +11,10 @@ class Hand:public QGraphicsObject
 public:
     // Constructors
     Hand();
-    Hand(const Hand&h);
+    //this is not safe
+    //Hand(const Hand&h);
 
+    //this is a safe copy constructor
     Hand(CardColection& cc);
 
     //geters

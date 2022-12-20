@@ -15,8 +15,10 @@ public:
     // Constructors
     Wagon();
     Wagon(TreasureChest contentDown, TreasureChest contentUp);
-    Wagon(const Wagon&other);
-    //this is a copy constructor
+    //this is not safe
+    //Wagon(const Wagon&other);
+
+    //this is a safe copy constructor
     Wagon(TreasureChest&upt,TreasureChest&downt,PlayerGroup&upp,PlayerGroup&downp);
 
     // Destructor

@@ -8,12 +8,12 @@ Hand::Hand():QGraphicsObject()
 
 }
 
-Hand::Hand(const Hand &h)
-    :QGraphicsObject()
-{
-    for(Card*c:h.m_cards)
-        this->push_back(c->Copy());
-}
+//Hand::Hand(const Hand &h)
+//    :QGraphicsObject()
+//{
+//    for(Card*c:h.m_cards)
+//        this->push_back(c->Copy());
+//}
 
 Hand::Hand(CardColection &cc)
 {
