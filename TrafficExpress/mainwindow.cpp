@@ -191,7 +191,7 @@ void MainWindow::onStart()
 
     Game*game=new Game(players);
     game->initialize();
-    std::cout<<game->players().size()<<std::endl;
+    std::cout<<game->rounds().size()<<std::endl;
 
 //    PlayerPerspective*pp=new PlayerPerspective(game,1);
 //    pp->addGameToScene();

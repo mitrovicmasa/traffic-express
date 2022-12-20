@@ -371,9 +371,9 @@ void Game::initialize()
     // Neutral Bullets
     setNeutralBulletDeck(generateNeutralBullets(13));
 
-    Player*tmp=m_players[0];
-    auto p=new Player(tmp->isItMyMove(),tmp->id(),tmp->hand(),
-                      tmp->deck(),std::vector<BulletCard*>(),tmp->positionInTrain(),tmp->roof(),tmp->treasure());
+//    Player*tmp=m_players[0];
+//    auto p=new Player(tmp->isItMyMove(),tmp->id(),tmp->hand(),
+//                      tmp->deck(),std::vector<BulletCard*>(),tmp->positionInTrain(),tmp->roof(),tmp->treasure());
     //m_wagons->getWagons()[0]->addPlayerDown(p);
     m_indexOfPlayerToMove=0;
 }

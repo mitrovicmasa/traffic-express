@@ -5,7 +5,9 @@ RoundCard::RoundCard(RoundCardType type, EventType event, const std::vector<Mini
     :QGraphicsObject(),std::vector<MiniRound*>(miniRound), m_type(type),
       m_event(event)
 
-{}
+{
+    setFlags(GraphicsItemFlag::ItemIsSelectable);
+}
 
 RoundCard::RoundCard(RoundCardType type, EventType event, const std::vector<MiniRoundType> &miniRound)
     :QGraphicsObject(),std::vector<MiniRound*>(), m_type(type),
@@ -14,6 +16,7 @@ RoundCard::RoundCard(RoundCardType type, EventType event, const std::vector<Mini
     for(auto x:miniRound){
         this->push_back(new MiniRound(x));
     }
+    setFlags(GraphicsItemFlag::ItemIsSelectable);
 }
 
 RoundCard::RoundCard(const RoundCard &other)
@@ -24,7 +27,7 @@ RoundCard::RoundCard(const RoundCard &other)
     for(MiniRound*mr:other)
         this->push_back(new MiniRound(*mr));
 
-
+setFlags(GraphicsItemFlag::ItemIsSelectable);
 }
 
 // Get methods

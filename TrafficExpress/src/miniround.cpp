@@ -5,19 +5,19 @@
 MiniRound::MiniRound()
     :QGraphicsObject(),m_type(MiniRoundType::FACE_UP)
 {
-
+setFlags(GraphicsItemFlag::ItemIsSelectable);
 }
 
 MiniRound::MiniRound(MiniRoundType t)
     :QGraphicsObject(),m_type(t)
 {
-
+setFlags(GraphicsItemFlag::ItemIsSelectable);
 }
 
 MiniRound::MiniRound(const MiniRound &other)
     :QGraphicsObject(),m_type(other.m_type)
 {
-
+setFlags(GraphicsItemFlag::ItemIsSelectable);
 }
 
 // Other methods
