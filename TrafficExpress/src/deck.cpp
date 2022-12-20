@@ -1,6 +1,7 @@
 #include "deck.h"
 #include <qgraphicsscene.h>
 #include <iostream>
+#include <random>
 
 Deck::Deck():QGraphicsObject()
 {
@@ -85,6 +86,22 @@ void Deck::pop_front()
     disconnect(m_cards.front(),&Card::clicked,this,&Deck::test);
     m_cards.front()->setParentItem(nullptr);
     m_cards.erase(m_cards.begin());
+}
+
+void Deck::schufleDeck()
+{
+    //TODO
+        unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+        std::shuffle (m_cards.begin(),m_cards.end(), std::default_random_engine(seed));
+        repositionCards();
+
+
+}
+
+void Deck::repositionCards()
+{
+    for(Card*c:m_cards)
+        c->setPos(5,20);
 }
 
 QRectF Deck::boundingRect() const

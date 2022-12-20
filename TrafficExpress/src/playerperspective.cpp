@@ -1,5 +1,7 @@
 #include "../headers/playerperspective.h"
 
+
+#include <QDebug>
 #include <table.h>
 
 PlayerPerspective::PlayerPerspective(Game *game, int playerIndex, QObject *parent)
@@ -118,9 +120,26 @@ void PlayerPerspective::onClickedCardInHandInPlayer(Card *c, Hand *h, Player *p)
     }
 }
 
-void PlayerPerspective::onClickedTreasureInPlayerStatsInTable(Treasure *, PlayerStats *, Table *)
+void PlayerPerspective::onClickedTreasureInPlayerStatsInTable(Treasure *t, PlayerStats *ps, Table *p)
 {
     std::cout<<"signal recieved in player perspective"<<std::endl;
+
+    for(PlayerStats*tmp:(*m_table)){
+
+        if(m_player==tmp->getPlayer() && tmp!=ps)
+            tmp->addTreasureToPlayer(ps->takeTreasureFromPlayer(t));
+
+//        if(ps->takeTreasureFromPlayer(t))
+//            qDebug()<<"notNull";
+    }
+
+
+
+
+
+
+
+
 }
 
 void PlayerPerspective::onClickedPlayerInWagonInTrain(Player *p, Wagon *w, Train *t)

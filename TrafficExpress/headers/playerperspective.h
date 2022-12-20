@@ -29,6 +29,7 @@ public slots:
 
 private:
     void setMyMove(bool);
+
     Player*m_player;
     Game*m_game;
     Table*m_table;

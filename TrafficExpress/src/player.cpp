@@ -156,8 +156,7 @@ void Player::returnCardsToDeck()
 
 void Player::shuffleDeck()
 {
-//    unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
-//    std::shuffle (this->m_deck->begin(),this->m_deck->end(), std::default_random_engine(seed));
+    m_deck->schufleDeck();
 
 }
 

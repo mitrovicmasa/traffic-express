@@ -16,6 +16,8 @@ public:
     void addTreasureToPlayer(Treasure*);
     Treasure* takeTreasureFromPlayer(Treasure*);
 
+    Player* getPlayer();
+
     // GUI
     QRectF boundingRect() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
