@@ -23,6 +23,7 @@ public:
 public slots:
     void onClickedTreasureInWagonInTrainInTran(Treasure*t,Wagon*w,Train*train);
     void onClickedCardInHandInPlayer(Card*c,Hand*h,Player*p);
+    void onClickedTreasureInPlayerStatsInTable(Treasure*,PlayerStats*,Table*);
     void onClickedWagonInTrain(Wagon*w,Train*train);
 
 private:

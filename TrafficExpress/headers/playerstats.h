@@ -19,6 +19,10 @@ public:
     QRectF boundingRect() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
     void test();
+public slots:
+    void onTreasureClicked(Treasure*);
+signals:
+    void clickedTreasueInPlayeStats(Treasure*,PlayerStats*);
 
 private:
     Player *m_player;

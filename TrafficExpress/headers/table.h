@@ -31,6 +31,10 @@ public:
     QRectF boundingRect() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
     void test();
+public slots:
+    void onClickedTreasureInPlayerStats(Treasure*,PlayerStats*);
+signals:
+    void clickedTreasureInPlayerStatsnTable(Treasure*,PlayerStats*,Table*);
 private:
     std::vector<Treasure*> m_content;
 

@@ -24,7 +24,7 @@ PlayerStats::PlayerStats(Player *t)
         t->setParentItem(this);
         t->setPos(i*30+80, 20);
         i++;
-        connect(t, &Treasure::clicked, this, &PlayerStats::test);
+        connect(t, &Treasure::clickedTreasure, this, &PlayerStats::onTreasureClicked);
     }
 }
 
@@ -34,7 +34,7 @@ void PlayerStats::addTreasureToPlayer(Treasure *t)
     t->setParentItem(this);
     t->setPos((m_player->treasure().size()-1)*30+80, 20);
 
-    connect(t, &Treasure::clicked, this, &PlayerStats::test);
+    connect(t, &Treasure::clickedTreasure, this, &PlayerStats::onTreasureClicked);
 }
 
 // GUI
@@ -61,4 +61,10 @@ void PlayerStats::paint(QPainter *painter, const QStyleOptionGraphicsItem *optio
 void PlayerStats::test()
 {
     std::cout<<"Clicked treasure!"<<std::endl;
+}
+
+void PlayerStats::onTreasureClicked(Treasure *t)
+{
+    //std::cout<<" treasure clicked in player stats"<<std::endl;
+    emit clickedTreasueInPlayeStats(t,this);
 }

@@ -23,6 +23,7 @@ void Table::push_back(PlayerStats *p)
     std::vector<PlayerStats*>::push_back(p);
     p->setParentItem(this);
     p->setPos(0,(this->size()-1)*70+1);
+    connect(p,&PlayerStats::clickedTreasueInPlayeStats,this,&Table::onClickedTreasureInPlayerStats);
 }
 
 
@@ -49,4 +50,10 @@ void Table::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWi
     Q_UNUSED(widget)
 
     painter->fillRect(boundingRect(),QColor::fromRgb(204,229,255));
+}
+
+void Table::onClickedTreasureInPlayerStats(Treasure *t, PlayerStats *ps)
+{
+    //std::cout<<"signal recieved in Table"<<std::endl;
+    emit clickedTreasureInPlayerStatsnTable(t,ps,this);
 }

@@ -12,7 +12,9 @@ PlayerPerspective::PlayerPerspective(Game *game, int playerIndex, QObject *paren
     //m_table= new Table();
     for (Player* p:m_game->players()){
         m_table->push_back(new PlayerStats(p));
+
     }
+    connect(m_table,&Table::clickedTreasureInPlayerStatsnTable,this,&PlayerPerspective::onClickedTreasureInPlayerStatsInTable);
     connect(m_player,&Player::clickedCardInHandInPlayer,this,&PlayerPerspective::onClickedCardInHandInPlayer);
 }
 
@@ -120,6 +122,11 @@ void PlayerPerspective::onClickedCardInHandInPlayer(Card *c, Hand *h, Player *p)
 
 
     }
+}
+
+void PlayerPerspective::onClickedTreasureInPlayerStatsInTable(Treasure *, PlayerStats *, Table *)
+{
+    std::cout<<"signal recieved in player perspective"<<std::endl;
 }
 
 void PlayerPerspective::onClickedWagonInTrain(Wagon *w, Train *train)
