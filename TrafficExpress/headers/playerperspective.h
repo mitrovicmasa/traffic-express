@@ -13,10 +13,12 @@ public:
     PlayerPerspective(Game*game,int playerIndex,QObject*parent=nullptr);
     void addGameToScene();
     void removeGameFromScene();
+
     void drawCards(int n);
     void setNextPlayerToToMove();
-    int getPlayerToMoveIndex()const;
 
+    int getPlayerToMoveIndex()const;
+    int getPlayerSize();
 
 public slots:
     void onClickedTreasureInWagonInTrainInTran(Treasure*t,Wagon*w,Train*train);

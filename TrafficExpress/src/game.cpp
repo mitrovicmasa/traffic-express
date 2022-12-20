@@ -9,11 +9,12 @@
 Game::Game( std::vector<Player*> &players)
     : m_players(players),m_indexOfPlayerToMove(0)
 {
+
     m_players[m_indexOfPlayerToMove]->setMyMove(true);
 }
 
 Game::Game(const Game &other)
-    :m_players(PlayerGroup(other.players())),
+    :m_players(PlayerGroup(other.m_players)),
       m_wagons(new Train(other.wagons()->getWagons())),
       m_sheriffPosition(other.m_sheriffPosition),
       m_rounds(std::vector<RoundCard*>()),
@@ -30,8 +31,8 @@ Game::Game(const Game &other)
 {
     //Danger players in train and in game are different
     //Only use when train has no players inside
-    for(Player*p:other.m_players)
-        m_players.push_back(new Player(*p));
+//    for(Player*p:other.m_players)
+//        m_players.push_back(new Player(*p));
 
     for(RoundCard*rc:other.m_rounds)
         m_rounds.push_back(new RoundCard(*rc));
@@ -373,7 +374,7 @@ void Game::initialize()
     Player*tmp=m_players[0];
     auto p=new Player(tmp->isItMyMove(),tmp->id(),tmp->hand(),
                       tmp->deck(),std::vector<BulletCard*>(),tmp->positionInTrain(),tmp->roof(),tmp->treasure());
-    m_wagons->getWagons()[0]->addPlayerDown(p);
+    //m_wagons->getWagons()[0]->addPlayerDown(p);
     m_indexOfPlayerToMove=0;
 }
 

@@ -191,6 +191,7 @@ void MainWindow::onStart()
 
     Game*game=new Game(players);
     game->initialize();
+    std::cout<<game->players().size()<<std::endl;
 
 //    PlayerPerspective*pp=new PlayerPerspective(game,1);
 //    pp->addGameToScene();
@@ -198,6 +199,7 @@ void MainWindow::onStart()
     this->pps=std::vector<PlayerPerspective*>();
     for(int i=0;i<players.size();i++){
         this->pps.push_back(new PlayerPerspective(new Game(*game),i));
+        //std::cout<<pps.back()->getPlayerSize()<<std::endl;
         pps.back()->addGameToScene();
         pps.back()->drawCards(6);
     }
@@ -260,14 +262,14 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
         dialog->show();
     }
     if(event->key()==Qt::Key_G){
-//        indexOfPlayerToMove=(indexOfPlayerToMove+1)%(pps.size());
-//        pps[indexOfPlayerToMove]->setSceneRect(ui->graphicsView->rect());
-//        ui->graphicsView->setScene(pps[indexOfPlayerToMove]);
+
+
         for(PlayerPerspective*pp:pps){
             pp->setNextPlayerToToMove();
 
         }
         int pToMove=pps[0]->getPlayerToMoveIndex();
+//        std::cout<<pToMove<<std::endl;
         pps[pToMove]->setSceneRect(ui->graphicsView->rect());
         ui->graphicsView->setScene(pps[pToMove]);
 
