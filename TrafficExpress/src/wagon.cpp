@@ -133,7 +133,7 @@ void Wagon::addContentDown(Treasure *t)
 
 void Wagon::addPlayerUp(Player *p)
 {
-    connect(p, &Player::clicked, this, &Wagon::testPlayers);
+    connect(p, &Player::clickedPlayer, this, &Wagon::onClickedPlayer);
     m_playersUp.push_back(p);
     p->setParentItem(this);
     p->setPos(5+(p->width()+5)*(m_playersUp.size()-1),70-p->height()-25);
@@ -141,7 +141,7 @@ void Wagon::addPlayerUp(Player *p)
 
 void Wagon::addPlayerDown(Player *p)
 {
-    connect(p, &Player::clicked, this, &Wagon::testPlayers);
+    connect(p, &Player::clickedPlayer, this, &Wagon::onClickedPlayer);
     m_playersDown.push_back(p);
     p->setParentItem(this);
     p->setPos(5+(p->width()+5)*(m_playersDown.size()-1),+80);
@@ -159,6 +159,8 @@ Treasure *Wagon::takeContentUp(TreasureType t)
         int index=QRandomGenerator::global()->bounded((int)tmp.size());
         r=tmp[index];
         m_contentDown.erase(std::find(m_contentDown.begin(),m_contentDown.end(),r));
+        disconnect(r, &Treasure::clicked, this, &Wagon::testTreasure);
+        disconnect(r, &Treasure::clickedTreasure, this, &Wagon::OnCickedTreasuere);
         return r;
     }
     return new Treasure(0,TreasureType::MONEYBAG);
@@ -178,6 +180,8 @@ Treasure *Wagon::takeContentDown(TreasureType t)
         r=tmp[index];
         m_contentDown.erase(std::find(m_contentDown.begin(),m_contentDown.end(),r));
         r->setParentItem(nullptr);
+        disconnect(r, &Treasure::clicked, this, &Wagon::testTreasure);
+        disconnect(r, &Treasure::clickedTreasure, this, &Wagon::OnCickedTreasuere);
         return r;
     }
     return new Treasure(0,TreasureType::MONEYBAG);
@@ -194,6 +198,7 @@ Player *Wagon::takePlayerUp(BanditType bandit)
             playerToRemove=*x;
             (*x)->setParentItem(nullptr);
             m_playersUp.erase(x);
+            disconnect(playerToRemove, &Player::clickedPlayer, this, &Wagon::onClickedPlayer);
             break;
         }
     }
@@ -213,6 +218,7 @@ Player *Wagon::takePlayerDown(BanditType bandit)
             playerToRemove=*x;
             (*x)->setParentItem(nullptr);
             m_playersDown.erase(x);
+            disconnect(playerToRemove, &Player::clickedPlayer, this, &Wagon::onClickedPlayer);
             break;
         }
     }
@@ -287,6 +293,12 @@ void Wagon::repositionTreasure()
 void Wagon::OnCickedTreasuere(Treasure *t)
 {   //std::cout<<"Treasure signals wagon"<<std::endl;
     emit clickedTreasureInWagon(t,this);
+}
+
+void Wagon::onClickedPlayer(Player *p)
+{
+
+    emit clickedPlayerInWagon(p,this);
 }
 
 

@@ -247,7 +247,7 @@ int Player::height() const
 void Player::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
     QGraphicsObject::mousePressEvent(event);
-    emit clicked();
+    emit clickedPlayer(this);
 }
 
 void Player::onClickedCardInHand(Card *c, Hand *h)

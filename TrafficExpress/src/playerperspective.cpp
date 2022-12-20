@@ -8,6 +8,7 @@ PlayerPerspective::PlayerPerspective(Game *game, int playerIndex, QObject *paren
 {
     Train*train=m_game->wagons();
     connect(train,&Train::clickedTreasureInWagonInTrain,this,&PlayerPerspective::onClickedTreasureInWagonInTrainInTran);
+    connect(train,&Train::clickedPlayerInWagonInTrain,this,&PlayerPerspective::onClickedPlayerInWagonInTrain);
     connect(train,&Train::clickedWagonInTrain,this,&PlayerPerspective::onClickedWagonInTrain);
     //m_table= new Table();
     for (Player* p:m_game->players()){
@@ -127,6 +128,11 @@ void PlayerPerspective::onClickedCardInHandInPlayer(Card *c, Hand *h, Player *p)
 void PlayerPerspective::onClickedTreasureInPlayerStatsInTable(Treasure *, PlayerStats *, Table *)
 {
     std::cout<<"signal recieved in player perspective"<<std::endl;
+}
+
+void PlayerPerspective::onClickedPlayerInWagonInTrain(Player *, Wagon *, Train *)
+{
+    std::cout<<"Player is clicked"<<std::endl;
 }
 
 void PlayerPerspective::onClickedWagonInTrain(Wagon *w, Train *train)

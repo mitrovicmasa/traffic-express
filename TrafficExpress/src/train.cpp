@@ -48,7 +48,7 @@ void Train::addTrainToScene(QGraphicsScene *sc)
 
 void Train::push_back(Wagon*w)
 {
-    //connect(w, &Wagon::clicked, this, &Train::test);
+    connect(w, &Wagon::clickedPlayerInWagon, this, &Train::onClickedPlayerInWagon);
     connect(w, &Wagon::clickedTreasureInWagon, this, &Train::onClickedTreasureInWagon);
     connect(w,&Wagon::clickedWagon,this,&Train::onClickedWagon);
     m_wagons.push_back(w);
@@ -68,11 +68,11 @@ Wagon *Train::front()
 
 void Train::pop_back()
 {
-    //disconnect(m_wagons.back(), &Wagon::clicked, this, &Train::test);
+    disconnect(m_wagons.back(), &Wagon::clickedPlayerInWagon, this, &Train::onClickedPlayerInWagon);
     disconnect(m_wagons.back(), &Wagon::clickedTreasureInWagon, this, &Train::onClickedTreasureInWagon);
     disconnect(m_wagons.back(),&Wagon::clickedWagon,this,&Train::onClickedWagon);
     m_wagons.back()->setParentItem(nullptr);
-    m_wagons.erase(m_wagons.begin());
+    m_wagons.pop_back();
 
 }
 
@@ -88,12 +88,21 @@ bool Train::empty()
 
 void Train::push_front(Wagon *w)
 {
-    //connect(w, &Wagon::clicked, this, &Train::test);
+    connect(w, &Wagon::clickedPlayerInWagon, this, &Train::onClickedPlayerInWagon);
     connect(w, &Wagon::clickedTreasureInWagon, this, &Train::onClickedTreasureInWagon);
     connect(w,&Wagon::clickedWagon,this,&Train::onClickedWagon);
     m_wagons.insert(m_wagons.begin(),w);
     w->setParentItem(this);
     w->setPos((m_wagons.size()-1)*200,10);
+}
+
+void Train::pop_front()
+{
+    disconnect(m_wagons.front(), &Wagon::clickedPlayerInWagon, this, &Train::onClickedPlayerInWagon);
+    disconnect(m_wagons.front(), &Wagon::clickedTreasureInWagon, this, &Train::onClickedTreasureInWagon);
+    disconnect(m_wagons.front(),&Wagon::clickedWagon,this,&Train::onClickedWagon);
+    m_wagons.front()->setParentItem(nullptr);
+    m_wagons.erase(m_wagons.begin());
 }
 
 Wagon *Train::operator[](int i)
@@ -126,6 +135,12 @@ void Train::test()
 void Train::onClickedTreasureInWagon(Treasure *t, Wagon *w)
 {
     emit clickedTreasureInWagonInTrain(t,w,this);
+}
+
+void Train::onClickedPlayerInWagon(Player *p, Wagon *w)
+{
+
+    emit clickedPlayerInWagonInTrain(p,w,this);
 }
 
 void Train::onClickedWagon(Wagon *w)

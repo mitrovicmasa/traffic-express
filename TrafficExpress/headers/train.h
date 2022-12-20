@@ -42,9 +42,11 @@ public:
     void test();
 signals:
     void clickedTreasureInWagonInTrain(Treasure*t,Wagon*w,Train*train);
+    void clickedPlayerInWagonInTrain(Player*,Wagon*,Train*);
     void clickedWagonInTrain(Wagon*w,Train*train);
 public slots:
     void onClickedTreasureInWagon(Treasure*t,Wagon*w);
+    void onClickedPlayerInWagon(Player*,Wagon*);
     void onClickedWagon(Wagon*);
 
 private:

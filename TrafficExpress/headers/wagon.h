@@ -64,10 +64,12 @@ public:
 signals:
     void clicked();
     void clickedTreasureInWagon(Treasure*t,Wagon*w);
+    void clickedPlayerInWagon(Player*,Wagon*);
     void clickedWagon(Wagon*w);
 
 public slots:
     void OnCickedTreasuere(Treasure*t);
+    void onClickedPlayer(Player*);
 private:
 
     TreasureChest m_contentUp;

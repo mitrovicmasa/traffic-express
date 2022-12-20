@@ -74,6 +74,7 @@ public:
 signals:
     void clicked();
     void clickedCardInHandInPlayer(Card*c,Hand*h,Player*p);
+    void clickedPlayer(Player*);
 public slots:
     void onClickedCardInHand(Card*c,Hand*h);
 
