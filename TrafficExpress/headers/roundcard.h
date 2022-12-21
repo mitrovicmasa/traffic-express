@@ -69,7 +69,7 @@ public:
 
     void push_back(MiniRound*);
     int size() const;
-    MiniRound*operator[](int);
+    MiniRound* operator[](int);
     MiniRound*back();
     MiniRound*front();
 

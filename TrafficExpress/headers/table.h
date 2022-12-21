@@ -8,8 +8,9 @@
 #include <string>
 #include <vector>
 #include <signal.h>
+#include <playerstatscollection.h>
 
-class Table: public QGraphicsObject, public std::vector<PlayerStats*>
+class Table: public QGraphicsObject
 {
     Q_OBJECT
 
@@ -21,8 +22,13 @@ public:
 
     // Other methods
     void addTableToScene(QGraphicsScene *sc);
-    void push_back(PlayerStats* p);
 
+    // vector
+    void push_back(PlayerStats* p);
+    int size();
+    PlayerStats*operator[](int);
+
+    PlayerStatsCollection&getPlayerStats();
 
     // GUI
     int height() const;
@@ -37,6 +43,7 @@ signals:
     void clickedTreasureInPlayerStatsnTable(Treasure*,PlayerStats*,Table*);
 private:
     std::vector<Treasure*> m_content;
+    PlayerStatsCollection m_playerStats;
 
 };
 

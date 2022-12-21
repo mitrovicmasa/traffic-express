@@ -17,16 +17,32 @@ PlayerStats::PlayerStats()
        }
 }
 
-PlayerStats::PlayerStats(Player *t)
-    :QGraphicsObject(), m_player(t)
+PlayerStats::PlayerStats(Player *p, bool deepCopy)
+    :QGraphicsObject()
 {
-    int i=0;
-    for(Treasure *t :m_player->treasure()){
+    if(!deepCopy){//shalow copy
+        m_player=p;
+        int i=0;
+        for(Treasure *t :m_player->treasure()){
 
-        t->setParentItem(this);
-        t->setPos(i*30+80, 20);
-        i++;
-        connect(t, &Treasure::clickedTreasure, this, &PlayerStats::onTreasureClicked);
+            t->setParentItem(this);
+            t->setPos(i*30+80, 20);
+            i++;
+            connect(t, &Treasure::clickedTreasure, this, &PlayerStats::onTreasureClicked);
+        }
+    }else{//deepCopy
+        m_player=new Player(p->isItMyMove(),p->id(),p->hand(),p->deck(),p->bulletDeck(),p->positionInTrain(),
+                                       p->roof(),p->treasure());
+        int i=0;
+        for(Treasure *t :m_player->treasure()){
+
+            t->setParentItem(this);
+            t->setPos(i*30+80, 20);
+            i++;
+            connect(t, &Treasure::clickedTreasure, this, &PlayerStats::onTreasureClicked);
+        }
+
+
     }
 }
 

@@ -12,7 +12,9 @@ class PlayerStats: public QGraphicsObject
 public:
     // Constructors
     PlayerStats();
-    PlayerStats(Player*);
+    PlayerStats(Player*,bool deepCopy=false);
+
+
     void addTreasureToPlayer(Treasure*);
     Treasure* takeTreasureFromPlayer(Treasure*);
 

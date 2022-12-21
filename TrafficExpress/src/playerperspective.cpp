@@ -124,7 +124,7 @@ void PlayerPerspective::onClickedTreasureInPlayerStatsInTable(Treasure *t, Playe
 {
     std::cout<<"signal recieved in player perspective"<<std::endl;
 
-    for(PlayerStats*tmp:(*m_table)){
+    for(PlayerStats*tmp:m_table->getPlayerStats()){
 
         if(m_player==tmp->getPlayer() && tmp!=ps)
             tmp->addTreasureToPlayer(ps->takeTreasureFromPlayer(t));

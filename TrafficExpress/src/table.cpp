@@ -6,8 +6,7 @@
 
 
 Table::Table()
-   :QGraphicsObject(), std::vector<PlayerStats*>()
-{
+   :QGraphicsObject(){
 
 }
 
@@ -20,10 +19,25 @@ void Table::addTableToScene(QGraphicsScene *sc)
 
 void Table::push_back(PlayerStats *p)
 {
-    std::vector<PlayerStats*>::push_back(p);
+    m_playerStats.push_back(p);
     p->setParentItem(this);
     p->setPos(0,(this->size()-1)*70+1);
     connect(p,&PlayerStats::clickedTreasueInPlayeStats,this,&Table::onClickedTreasureInPlayerStats);
+}
+
+int Table::size()
+{
+    return m_playerStats.size();
+}
+
+PlayerStats *Table::operator[](int i)
+{
+    return m_playerStats[i];
+}
+
+PlayerStatsCollection &Table::getPlayerStats()
+{
+    return m_playerStats;
 }
 
 
