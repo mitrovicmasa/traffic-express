@@ -411,6 +411,14 @@ void Game::setPhase(Phase newPhase)
     m_phase = newPhase;
 }
 
+void Game::setNextPlayerToMove()
+{
+    int nextPlayer=(m_indexOfPlayerToMove+1)%m_players.size();
+    setIndexOfPlayerToMove(nextPlayer);
+}
+
+
+
 //// Other methods
 
 void Game::shuffleDecks() const
@@ -440,7 +448,7 @@ void Game::selectBanditPositions()
 
 unsigned Game::findPlayerById(BanditType banditId)
 {
-    unsigned position;
+    unsigned position=0;
     for (unsigned i = 0; i < m_players.size(); ++i)
         if (m_players[i]->id() == banditId)
             position = i;

@@ -145,10 +145,43 @@ void PlayerPerspective::onClickedPlayerInWagonInTrain(Player *p, Wagon *w, Train
 
 void PlayerPerspective::onClickedWagonInTrain(Wagon *w, Train *train)
 {
+//    if(m_player->isItMyMove() && m_game->phase()==Phase::WAGON_SELECTION){
+//            train->getWagonIndex(w);
+//            m_game->chnge state();
+//            m_game->setIndexOfPlayerToMove();
+//            if(...)
+//                m_game->setPhase();
+
+    //}
+    train->getWagonIndex(w);
     std::cout<<"Wagon clicked in train n player perspective!"<<std::endl;
-    if(m_player->isItMyMove() && m_game->phase()==Phase::WAGON_SELECTION){
+    if(m_player->isItMyMove() /*&& m_game->phase()==Phase::WAGON_SELECTION*/){
         w->addPlayerDown(m_player);
         //m_player->setPositionInTrain()
     }
 
+//    if(m_player->isItMyMove() && m_game->phase()==Phase::WAGON_SELECTION
+//            && (train->getWagonIndex(w)==0 || train->getWagonIndex(w)==1) ){
+//        w->addPlayerDown(m_player);
+//        m_game->setNextPlayerToMove();
+//        if(m_game->findPlayerById(m_player->id())==m_game->players().size()-1)
+//            m_game->setPhase(Phase::PHASE_1);
+//        emit movePlayed(this);
+
+
+
+
+
+    //}
+
+}
+
+void PlayerPerspective::onPlayerChoseWagon(int playerIndex, int wagonIndex)
+{
+    Player* playerToSet=m_game->players()[playerIndex];
+    Wagon* wagonToPutPlayer=(*m_game->wagons())[wagonIndex];
+    wagonToPutPlayer->addPlayerDown(playerToSet);
+    m_game->setNextPlayerToMove();
+    if(m_game->findPlayerById(playerToSet->id())==m_game->players().size()-1)
+        m_game->setPhase(Phase::PHASE_1);
 }

@@ -9,6 +9,7 @@
 #include <game.h>
 #include <table.h>
 #include <playerperspective.h>
+#include <singleplayerstatemachine.h>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -30,17 +31,22 @@ private slots:
     void onReady();
     void onStart();
 
+    //void onMovePlayed(int i);
+
     void connectButtons();
     void dialogInit();
     void setImages();
     //void initializeGameGUI(Game*);
 private:
     std::vector<PlayerPerspective*>pps;
+    QGraphicsScene*sc;
 
     void showMessageBox(QString content) const;
     void keyPressEvent(QKeyEvent*);
     Ui::MainWindow *ui;
     QDialog*dialog;
-    QGraphicsScene*sc;
+
+    SinglePlayerStateMachine *sp;
+
 };
 #endif // MAINWINDOW_H

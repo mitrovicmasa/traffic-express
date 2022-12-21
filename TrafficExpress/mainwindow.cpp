@@ -191,7 +191,6 @@ void MainWindow::onStart()
 
     Game*game=new Game(players);
     game->initialize();
-    game->setPhase(Phase::WAGON_SELECTION);
     std::cout<<game->rounds().size()<<std::endl;
 
 //    PlayerPerspective*pp=new PlayerPerspective(game,1);

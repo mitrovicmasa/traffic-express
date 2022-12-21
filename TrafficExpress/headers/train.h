@@ -36,6 +36,8 @@ public:
     //geters
     WagonArray&getWagons();
 
+    int getWagonIndex(Wagon*);
+
     // GUI
     QRectF boundingRect() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);

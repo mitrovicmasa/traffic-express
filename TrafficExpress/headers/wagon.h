@@ -52,6 +52,7 @@ public:
 
 
 
+
     int numberOfTreasureInWagonDown(TreasureType) const;
 
     std::string toString();
