@@ -76,6 +76,8 @@ set(PROJECT_SOURCES
         src/collections/cardcolection.cpp
         src/collections/wagonarray.cpp
         src/collections/playergroup.cpp
+        src/collections/miniroundcollection.cpp
+        src/collections/roundcardcollection.cpp
         )
 
 set(PROJECT_HEADERS
@@ -101,6 +103,9 @@ set(PROJECT_HEADERS
         headers/collections/cardcolection.h
         headers/collections/wagonarray.h
         headers/collections/playergroup.h
+        headers/collections/miniroundcollection.h
+        headers/collections/roundcardcollection.h
+
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)

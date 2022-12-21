@@ -17,7 +17,12 @@ setFlags(GraphicsItemFlag::ItemIsSelectable);
 MiniRound::MiniRound(const MiniRound &other)
     :QGraphicsObject(),m_type(other.m_type)
 {
-setFlags(GraphicsItemFlag::ItemIsSelectable);
+    setFlags(GraphicsItemFlag::ItemIsSelectable);
+}
+
+MiniRoundType MiniRound::getMiniRoundType()
+{
+    return m_type;
 }
 
 // Other methods

@@ -7,6 +7,7 @@
 #include <QGraphicsObject>
 #include <qpainter.h>
 #include<miniround.h>
+#include <miniroundcollection.h>
 
 enum class RoundCardType {
     
@@ -43,23 +44,36 @@ std::string toStringRoundCardType(const RoundCardType &card);
 std::string toStringEventType(const EventType &event);
 std::string toStringMiniRoundType(const MiniRoundType &miniRound);
 
-class RoundCard:public QGraphicsObject,public std::vector<MiniRound*>
+class RoundCard:public QGraphicsObject
 {
     Q_OBJECT
 public:
 
     // Constructors
-    RoundCard(RoundCardType type, EventType event, const std::vector<MiniRound*> &miniRound);
+
     RoundCard(RoundCardType type, EventType event, const std::vector<MiniRoundType> &miniRound);
-    RoundCard(const RoundCard&);
+    RoundCard(RoundCardType type, EventType event, const std::vector<MiniRound*> &miniRound);
+    //this is a safe copy constructor
+    RoundCard(RoundCardType type, EventType event, const MiniRoundCollection &miniRound);
+//    RoundCard(const RoundCard&);
 
     // Destructor
     ~RoundCard() = default;
 
     // Get methods
     RoundCardType typeOfRoundCard() const;
-
+    MiniRoundCollection& getMiniRounds();
     EventType event() const;
+
+    //vector methos
+
+    void push_back(MiniRound*);
+    int size() const;
+    MiniRound*operator[](int);
+    MiniRound*back();
+    MiniRound*front();
+
+
 
     // Set methods
     void setType(RoundCardType &newType);
@@ -69,7 +83,7 @@ public:
     // Other methods
 
     void pushBackMiniRound(MiniRoundType type);
-    void push_back(MiniRound*);
+
 
     std::string toString() const;
 
@@ -84,7 +98,7 @@ private:
 
     RoundCardType m_type;
     EventType m_event;
-    //std::vector<MiniRoundType> m_miniRound;
+    MiniRoundCollection m_miniRounds;
 };
 
 #endif //ROUNDCARDS_H

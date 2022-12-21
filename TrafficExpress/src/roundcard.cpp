@@ -1,16 +1,22 @@
 #include "../headers/roundcard.h"
 
 // Constructors
-RoundCard::RoundCard(RoundCardType type, EventType event, const std::vector<MiniRound*> &miniRound)
-    :QGraphicsObject(),std::vector<MiniRound*>(miniRound), m_type(type),
-      m_event(event)
+RoundCard::RoundCard(RoundCardType type, EventType event, const MiniRoundCollection &miniRounds)
+    :QGraphicsObject(), m_type(type),
+      m_event(event),m_miniRounds(miniRounds)
 
 {
+    for(int i=0;i<m_miniRounds.size();i++){
+        m_miniRounds[i]->setParentItem(this);
+
+        m_miniRounds[i]->setPos(i*(m_miniRounds[i]->width()+10),height()-m_miniRounds[i]->height());
+    }
+
     setFlags(GraphicsItemFlag::ItemIsSelectable);
 }
 
 RoundCard::RoundCard(RoundCardType type, EventType event, const std::vector<MiniRoundType> &miniRound)
-    :QGraphicsObject(),std::vector<MiniRound*>(), m_type(type),
+    :QGraphicsObject(), m_type(type),
       m_event(event)
 {
     for(auto x:miniRound){
@@ -19,21 +25,54 @@ RoundCard::RoundCard(RoundCardType type, EventType event, const std::vector<Mini
     setFlags(GraphicsItemFlag::ItemIsSelectable);
 }
 
-RoundCard::RoundCard(const RoundCard &other)
-    :QGraphicsObject(),std::vector<MiniRound*>(),
-    m_type(other.m_type),
-    m_event(other.m_event)
+RoundCard::RoundCard(RoundCardType type, EventType event, const std::vector<MiniRound *> &miniRound)
 {
-    for(MiniRound*mr:other)
-        this->push_back(new MiniRound(*mr));
-
-setFlags(GraphicsItemFlag::ItemIsSelectable);
+    for(auto x:miniRound){
+        this->push_back(x);
+    }
+    setFlags(GraphicsItemFlag::ItemIsSelectable);
 }
+
+//RoundCard::RoundCard(const RoundCard &other)
+//    :QGraphicsObject(),std::vector<MiniRound*>(),
+//    m_type(other.m_type),
+//    m_event(other.m_event)
+//{
+//    for(MiniRound*mr:other)
+//        this->push_back(new MiniRound(*mr));
+
+//setFlags(GraphicsItemFlag::ItemIsSelectable);
+//}
 
 // Get methods
 RoundCardType RoundCard::typeOfRoundCard() const
 {
     return m_type;
+}
+
+MiniRoundCollection &RoundCard::getMiniRounds()
+{
+    return m_miniRounds;
+}
+
+int RoundCard::size() const
+{
+    return m_miniRounds.size();
+}
+
+MiniRound *RoundCard::operator[](int i)
+{
+    return m_miniRounds[i];
+}
+
+MiniRound *RoundCard::back()
+{
+    return m_miniRounds.back();
+}
+
+MiniRound *RoundCard::front()
+{
+    return m_miniRounds.front();
 }
 
 EventType RoundCard::event() const
@@ -56,7 +95,8 @@ void RoundCard::setEvent(EventType &newEvent)
 
 void RoundCard::push_back(MiniRound*mr)
 {
-    std::vector<MiniRound*>::push_back(mr);
+
+    m_miniRounds.push_back(mr);
     mr->setParentItem(this);
     mr->setPos((size()-1)*(mr->width()+10),height()-mr->height());
 }
@@ -133,7 +173,7 @@ std::string RoundCard::toString() const
     output += toStringEventType(m_event);
     output += "\n--------------------------\n";
     for (unsigned i = 0; i <size(); ++i) {
-        output += (*this)[i]->toString();
+        output += m_miniRounds[i]->toString();
         output += "\n";
     }
     output += "--------------------------\n";

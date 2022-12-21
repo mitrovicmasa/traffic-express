@@ -80,7 +80,7 @@ int main(int argc, char *argv[])
     {
          //For every miniRound
 
-        for (auto *miniround :(*round) )
+        for (auto *miniround :(*round).getMiniRounds() )
         {
             // DRAW PHASE
 

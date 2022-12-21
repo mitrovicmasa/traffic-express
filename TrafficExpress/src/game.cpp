@@ -34,8 +34,8 @@ Game::Game(const Game &other)
 //    for(Player*p:other.m_players)
 //        m_players.push_back(new Player(*p));
 
-    for(RoundCard*rc:other.m_rounds)
-        m_rounds.push_back(new RoundCard(*rc));
+//    for(RoundCard*rc:other.m_rounds)
+//        m_rounds.push_back(new RoundCard(*rc));
 
 
 //    for(ActionCard*ac:other.m_cardsPlayed)
@@ -44,8 +44,8 @@ Game::Game(const Game &other)
     for(NeutralBullet*nb:other.m_neutralBulletDeck)
         m_neutralBulletDeck.push_back((NeutralBullet*)nb->Copy());
 
-    for(Treasure*t:other.m_unusedTreasure)
-        m_unusedTreasure.push_back(new Treasure(*t));
+//    for(Treasure*t:other.m_unusedTreasure)
+//        m_unusedTreasure.push_back(new Treasure(*t));
 
 
 
@@ -62,7 +62,7 @@ Train* Game::wagons() const
     return m_wagons;
 }
 
-const std::vector<RoundCard*> &Game::rounds() const
+const RoundCardCollection &Game::rounds() const
 {
     return m_rounds;
 }
@@ -116,9 +116,9 @@ void Game::setWagons(Train* newWagons)
     //connect(m_wagons,&Train::clickedTreasureInWagonInTrain,this,&Game::onClickedTreasureInWagonInTrainInTran);
 }
 
-void Game::setRounds(const std::vector<RoundCard*> &newRounds)
+void Game::setRounds( std::vector<RoundCard*> &newRounds)
 {
-    m_rounds = newRounds;
+    m_rounds = RoundCardCollection(newRounds);
 }
 
 //void Game::setCardsPlayed(std::vector<ActionCard*> newCardsPlayed)

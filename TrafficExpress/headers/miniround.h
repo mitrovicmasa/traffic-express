@@ -20,6 +20,8 @@ public:
     MiniRound(MiniRoundType);
     MiniRound(const MiniRound&);
 
+    MiniRoundType getMiniRoundType();
+
     // GUI
     QRectF boundingRect() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
