@@ -16,6 +16,12 @@
 #include <algorithm>
 #include <roundcardcollection.h>
 
+enum class Phase {
+    WAGON_SELECTION,
+    PHASE_1,
+    PHASE_2
+};
+
 class Game
 {
 public:
@@ -24,6 +30,7 @@ public:
     Game();
     Game(std::vector<Player*> &players);
     Game(const Game&);
+
     //Get methods
     const PlayerGroup &players() const;
     Train *wagons() const;
@@ -35,6 +42,9 @@ public:
     unsigned sheriffPosition() const;
     int getIndexOfPlayerToMove()const;
     Deck* getCardsPlayed();
+    int indexOfRound() const;
+    int indexOfMiniround() const;
+    Phase phase() const;
 
     //Set methods
     void setPlayers(const std::vector<Player*> &newPlayers);
@@ -47,6 +57,10 @@ public:
     void setRichestPlayer(BanditType newRichestPlayer);
     void setSeriffPosition(unsigned newSheriffPosition);
     void setIndexOfPlayerToMove(int);
+    void setCardsPlayed(Deck *newCardsPlayed);
+    void setIndexOfRound(int newIndexOfRound);
+    void setIndexOfMiniround(int newIndexOfMiniround);
+    void setPhase(Phase newPhase);
 
 
     // Initialization methods
@@ -67,22 +81,21 @@ public:
     void selectBanditPositions();
     unsigned findPlayerById(BanditType);
 
-
-
-    void setCardsPlayed(Deck *newCardsPlayed);
-
 private:
     int m_indexOfPlayerToMove;
+    int m_indexOfRound;
+    int m_indexOfMiniround;
+
     PlayerGroup m_players;
     Train* m_wagons;
     unsigned m_sheriffPosition;
     RoundCardCollection m_rounds;
     Deck* m_cardsPlayed;
-
     std::vector<NeutralBullet*> m_neutralBulletDeck;
     TreasureChest m_unusedTreasure;
     BanditType m_mostBulletsShot;
     BanditType m_richestPlayer;
+    Phase m_phase;
 };
 
 void generateAllTreasure(const int &count, const int &value, TreasureType type, std::vector<Treasure> &treasure);

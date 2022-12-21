@@ -7,9 +7,8 @@
 //}
 
 Game::Game( std::vector<Player*> &players)
-    : m_players(players),m_indexOfPlayerToMove(0)
+    : m_players(players),m_indexOfPlayerToMove(0),m_indexOfRound(0), m_indexOfMiniround(0)
 {
-
     m_players[m_indexOfPlayerToMove]->setMyMove(true);
 }
 
@@ -24,6 +23,9 @@ Game::Game(const Game &other)
       m_mostBulletsShot(other.m_mostBulletsShot),
       m_richestPlayer(other.m_richestPlayer),
       m_indexOfPlayerToMove(other.m_indexOfPlayerToMove),
+      m_indexOfRound(other.m_indexOfRound),
+      m_indexOfMiniround(other.m_indexOfMiniround),
+      m_phase(other.m_phase),
       m_cardsPlayed(new Deck((other.m_cardsPlayed->getCards())))
 
 
@@ -103,6 +105,21 @@ Deck *Game::getCardsPlayed()
 {
     return m_cardsPlayed;
 }
+int Game::indexOfRound() const
+{
+    return m_indexOfRound;
+}
+
+int Game::indexOfMiniround() const
+{
+    return m_indexOfMiniround;
+}
+
+Phase Game::phase() const
+{
+    return m_phase;
+}
+
 
 //// Set methods
 //void Game::setPlayers(const std::vector<Player> &newPlayers)
@@ -378,6 +395,22 @@ void Game::initialize()
     m_indexOfPlayerToMove=0;
 }
 
+void Game::setIndexOfRound(int newIndexOfRound)
+{
+    m_indexOfRound = newIndexOfRound;
+}
+
+void Game::setIndexOfMiniround(int newIndexOfMiniround)
+{
+    m_indexOfMiniround = newIndexOfMiniround;
+}
+
+
+void Game::setPhase(Phase newPhase)
+{
+    m_phase = newPhase;
+}
+
 //// Other methods
 
 void Game::shuffleDecks() const
@@ -419,6 +452,8 @@ void Game::setCardsPlayed(Deck *newCardsPlayed)
 {
     m_cardsPlayed = newCardsPlayed;
 }
+
+
 
 
 

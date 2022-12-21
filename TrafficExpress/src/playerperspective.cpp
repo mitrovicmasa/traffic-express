@@ -133,13 +133,6 @@ void PlayerPerspective::onClickedTreasureInPlayerStatsInTable(Treasure *t, Playe
 //            qDebug()<<"notNull";
     }
 
-
-
-
-
-
-
-
 }
 
 void PlayerPerspective::onClickedPlayerInWagonInTrain(Player *p, Wagon *w, Train *t)
@@ -153,11 +146,9 @@ void PlayerPerspective::onClickedPlayerInWagonInTrain(Player *p, Wagon *w, Train
 void PlayerPerspective::onClickedWagonInTrain(Wagon *w, Train *train)
 {
     std::cout<<"Wagon clicked in train n player perspective!"<<std::endl;
-    if(m_player->isItMyMove()){
+    if(m_player->isItMyMove() && m_game->phase()==Phase::WAGON_SELECTION){
         w->addPlayerDown(m_player);
-
-
-
+        //m_player->setPositionInTrain()
     }
 
 }
