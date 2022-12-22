@@ -177,6 +177,7 @@ void PlayerPerspective::onClickedWagonInTrain(Wagon *w, Train *train)
 
     if (m_player->isItMyMove() && m_game->phase() == Phase::PHASE_1) {
         m_game->actionFloorChange();
+        m_game->setNextPlayerToMove();
     }
 
 }

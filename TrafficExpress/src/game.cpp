@@ -476,14 +476,14 @@ void Game::actionFloorChange()
     unsigned positionInWagon = m_players[m_indexOfPlayerToMove]->positionInTrain();
 
     if (!isPlayerOnTheRoof) {
-        m_players[m_indexOfPlayerToMove]->setRoof(!isPlayerOnTheRoof);
-        m_wagons->getWagons()[positionInWagon]->addPlayerUp(m_players[m_indexOfPlayerToMove]);
+        m_players[m_indexOfPlayerToMove]->setRoof(!isPlayerOnTheRoof);       
         m_wagons->getWagons()[positionInWagon]->takePlayerDown(m_players[m_indexOfPlayerToMove]);
+        m_wagons->getWagons()[positionInWagon]->addPlayerUp(m_players[m_indexOfPlayerToMove]);
     } else {
         if (m_sheriffPosition != m_players[m_indexOfPlayerToMove]->positionInTrain()) {
-            m_players[m_indexOfPlayerToMove]->setRoof(!isPlayerOnTheRoof);
-            m_wagons->getWagons()[positionInWagon]->addPlayerDown(m_players[m_indexOfPlayerToMove]);
+            m_players[m_indexOfPlayerToMove]->setRoof(!isPlayerOnTheRoof);          
             m_wagons->getWagons()[positionInWagon]->takePlayerUp(m_players[m_indexOfPlayerToMove]);
+            m_wagons->getWagons()[positionInWagon]->addPlayerDown(m_players[m_indexOfPlayerToMove]);
         } else {
             m_players[m_indexOfPlayerToMove]->deck()->push_back(new NeutralBullet(banditId));
             m_neutralBulletDeck.pop_back();

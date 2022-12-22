@@ -137,6 +137,7 @@ void Wagon::addPlayerUp(Player *p)
     m_playersUp.push_back(p);
     p->setParentItem(this);
     p->setPos(5+(p->width()+5)*(m_playersUp.size()-1),70-p->height()-25);
+
 }
 
 void Wagon::addPlayerDown(Player *p)
