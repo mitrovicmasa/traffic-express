@@ -3,6 +3,7 @@
 //#include "ui_mainwindow.h"
 
 SinglePlayerStateMachine::SinglePlayerStateMachine()
+    :currPerspectiveIndex(0)
 {
 
 }
@@ -43,7 +44,19 @@ int SinglePlayerStateMachine::size()
 
 void SinglePlayerStateMachine::push_back(PlayerPerspective *pp)
 {
+    for(int i=0;i<m_perspectives.size();i++){
+        connect(m_perspectives[i],&PlayerPerspective::playerChoseWagon,pp
+                ,&PlayerPerspective::onPlayerChoseWagon);
+        connect(pp,&PlayerPerspective::playerChoseWagon,m_perspectives[i]
+                ,&PlayerPerspective::onPlayerChoseWagon);
+
+    }
+
+
     m_perspectives.push_back((pp));
+    //Needs more conecting!! TODO
+    connect(pp,&PlayerPerspective::movePlayed,this,
+            &SinglePlayerStateMachine::onMovePlayed);
 }
 
 PlayerPerspective *SinglePlayerStateMachine::back()
@@ -53,7 +66,9 @@ PlayerPerspective *SinglePlayerStateMachine::back()
 
 void SinglePlayerStateMachine::onMovePlayed(PlayerPerspective *p)
 {
+    qDebug()<<currPerspectiveIndex;
     currPerspectiveIndex=(currPerspectiveIndex+1)%m_perspectives.size();
+
 
     emit movePlayed(currPerspectiveIndex);
 

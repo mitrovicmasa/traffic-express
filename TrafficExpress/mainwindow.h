@@ -31,7 +31,7 @@ private slots:
     void onReady();
     void onStart();
 
-    //void onMovePlayed(int i);
+    void onMovePlayed(int i);
 
     void connectButtons();
     void dialogInit();
@@ -40,13 +40,14 @@ private slots:
 private:
     std::vector<PlayerPerspective*>pps;
     QGraphicsScene*sc;
+    SinglePlayerStateMachine*m_sp;
 
     void showMessageBox(QString content) const;
     void keyPressEvent(QKeyEvent*);
     Ui::MainWindow *ui;
     QDialog*dialog;
 
-    SinglePlayerStateMachine *sp;
+    //SinglePlayerStateMachine *sp;
 
 };
 #endif // MAINWINDOW_H
