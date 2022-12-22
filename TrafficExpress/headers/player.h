@@ -41,7 +41,7 @@ public:
 
     // Get methods
     BanditType id() const;
-    Hand *hand() const;
+    Hand *hand();
     Deck *deck() const;
     const std::vector<BulletCard*> &bulletDeck() const;
     int positionInTrain() const;

@@ -102,18 +102,31 @@ void PlayerPerspective::onClickedTreasureInWagonInTrainInTran(Treasure *t, Wagon
 void PlayerPerspective::onClickedCardInHandInPlayer(Card *c, Hand *h, Player *p)
 {
     std::cout<<"Player perspective recieved signal"<<std::endl;
+    if(!p->isItMyMove())
+        qDebug()<<"not my move";
 
-    if(p->isItMyMove() && c->Type()==CardType::ACTION_CARD){
+    if(p->isItMyMove() && c->Type()==CardType::ACTION_CARD &&
+            m_game->phase()==Phase::PHASE_1){
         std::cout<<"It is my move!"<<std::endl;
         ActionCard*ac=static_cast<ActionCard*>(c);
-        for(auto it=h->getCards().begin();it!=h->getCards().end();it++){
-            Card*tmp=*it;
-            if(tmp->Type()==CardType::ACTION_CARD && tmp==c){
-                m_game->getCardsPlayed()->push_back(h->takeCard(c));
-                h->repositionCards();
-                break;
-            }
-        }
+        int playerIndex=m_game->findPlayerById(m_player->id());
+        int cardIndex=(h->getCardIndex(c));
+
+        //h[cardIndex];
+        m_game->getCardsPlayed()->push_back(h->takeCard(c));
+        h->repositionCards();
+        m_game->setNextPlayerToMove();
+        emit playerPlayedCard(playerIndex,cardIndex);
+        emit movePlayed(this);
+
+//        for(auto it=h->getCards().begin();it!=h->getCards().end();it++){
+//            Card*tmp=*it;
+//            if(tmp->Type()==CardType::ACTION_CARD && tmp==c){
+//                m_game->getCardsPlayed()->push_back(h->takeCard(c));
+//                h->repositionCards();
+//                break;
+//            }
+//        }
 
 
 
@@ -194,4 +207,15 @@ void PlayerPerspective::onPlayerChoseWagon(int playerIndex, int wagonIndex)
         m_game->setPhase(Phase::PHASE_1);
 
 
+}
+
+void PlayerPerspective::onPlayerPlayedCard(int playerIndex, int cardIndex)
+{
+//    qDebug()<<"recieved signal when card clicked";
+    Hand* h=m_game->players()[playerIndex]->hand();
+    Card*c=h->takeCard(cardIndex);
+    Deck*d=m_game->getCardsPlayed();
+
+    d->push_back(c);
+    m_game->setNextPlayerToMove();
 }

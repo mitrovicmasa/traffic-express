@@ -192,6 +192,7 @@ void MainWindow::onStart()
     Game*game=new Game(players);
     game->initialize();
     game->setPhase(Phase::WAGON_SELECTION);
+    game->allPlayersDrawCards(6);
     std::cout<<game->rounds().size()<<std::endl;
 
 //    PlayerPerspective*pp=new PlayerPerspective(game,1);
@@ -216,7 +217,7 @@ void MainWindow::onStart()
             this->m_sp->push_back(new PlayerPerspective(new Game(*game),i));
             //std::cout<<pps.back()->getPlayerSize()<<std::endl;
             m_sp->back()->addGameToScene();
-            m_sp->back()->drawCards(6);
+            //m_sp->back()->drawCards(6);
         }
         connect(m_sp,&SinglePlayerStateMachine::movePlayed,
                 this,&MainWindow::onMovePlayed);

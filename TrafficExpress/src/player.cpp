@@ -84,7 +84,7 @@ BanditType Player::id() const
     return m_id;
 }
 
-Hand *Player::hand() const
+Hand *Player::hand()
 {
     return m_hand;
 }

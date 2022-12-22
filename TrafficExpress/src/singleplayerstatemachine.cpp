@@ -50,6 +50,12 @@ void SinglePlayerStateMachine::push_back(PlayerPerspective *pp)
         connect(pp,&PlayerPerspective::playerChoseWagon,m_perspectives[i]
                 ,&PlayerPerspective::onPlayerChoseWagon);
 
+
+        connect(m_perspectives[i],&PlayerPerspective::playerPlayedCard,pp
+                ,&PlayerPerspective::onPlayerPlayedCard);
+        connect(pp,&PlayerPerspective::playerPlayedCard,m_perspectives[i]
+                ,&PlayerPerspective::onPlayerPlayedCard);
+
     }
 
 

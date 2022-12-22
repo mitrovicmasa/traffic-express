@@ -99,6 +99,19 @@ Card *Hand::takeCard(Card *c)
     return nullptr;
 }
 
+Card *Hand::takeCard(int indexofCard)
+{
+//    qDebug()<<"indexofCard"<<indexofCard;
+//    qDebug()<<"size of hand"<<m_cards.size();
+    Card* c=m_cards[indexofCard];
+    disconnect(c, &Card::clickedCard, this, &Hand::onClickedCard);
+    c->setParentItem(nullptr);
+    m_cards.erase(m_cards.begin()+indexofCard);
+    repositionCards();
+    return c;
+
+}
+
 void Hand::repositionCards()
 {
     for(int i=0;i<m_cards.size();i++){
@@ -106,6 +119,17 @@ void Hand::repositionCards()
 
 
     }
+}
+
+int Hand::getCardIndex(Card *c)
+{
+    for(int i=0;i<m_cards.size();i++){
+        if(m_cards[i]==c){
+            return i;
+
+        }
+    }
+    return -1;
 }
 
 QRectF Hand::boundingRect() const

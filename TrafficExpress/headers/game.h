@@ -63,6 +63,7 @@ public:
     void setPhase(Phase newPhase);
 
     void setNextPlayerToMove();
+    void allPlayersDrawCards(int n);
     // Initialization methods
 
     const std::vector<Card*> &drawCards(unsigned) const;

@@ -30,10 +30,14 @@ public:
     void pop_front();
 
     Card* takeCard(Card*);
+    Card* takeCard(int indexofCard);
 
     void repositionCards();
 
     Card* operator[] (int ind) {return m_cards[ind];}
+
+
+    int getCardIndex(Card*);
 
     // GUI
     QRectF boundingRect() const;

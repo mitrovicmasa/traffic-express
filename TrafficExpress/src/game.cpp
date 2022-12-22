@@ -417,6 +417,13 @@ void Game::setNextPlayerToMove()
     setIndexOfPlayerToMove(nextPlayer);
 }
 
+void Game::allPlayersDrawCards(int n)
+{
+    for(Player*p:m_players){
+        p->drawCards(n);
+    }
+}
+
 
 
 //// Other methods

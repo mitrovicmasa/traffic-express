@@ -31,10 +31,12 @@ public slots:
 
     //reacting to external signals
     void onPlayerChoseWagon(int playerIndex,int wagonIndex);
+    void onPlayerPlayedCard(int playerIndex,int CardIndex);
 
 
 signals:
     void playerChoseWagon(int playerIndex,int wagonIndex);
+    void playerPlayedCard(int playerIndex,int CardIndex);
     void movePlayed(PlayerPerspective*);
 
 private:
