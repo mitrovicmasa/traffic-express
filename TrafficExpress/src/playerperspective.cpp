@@ -162,9 +162,12 @@ void PlayerPerspective::onClickedWagonInTrain(Wagon *w, Train *train)
 
 //     emit movePlayed(this);
 
-
+//    qDebug()<<"im in it!";
+//    qDebug()<<m_player->isItMyMove();
+//    qDebug()<<(m_game->phase()==Phase::WAGON_SELECTION);
     if(m_player->isItMyMove() && m_game->phase()==Phase::WAGON_SELECTION
             && (train->getWagonIndex(w)==0 || train->getWagonIndex(w)==1) ){
+//        qDebug()<<"im in it!";
         w->addPlayerDown(m_player);
         emit playerChoseWagon(m_game->findPlayerById(m_player->id()),train->getWagonIndex(w));
         m_game->setNextPlayerToMove();
