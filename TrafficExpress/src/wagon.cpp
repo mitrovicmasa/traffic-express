@@ -298,6 +298,8 @@ Player *Wagon::takePlayerDown(Player *p)
     return nullptr;
 }
 
+
+
 int Wagon::numberOfTreasureInWagonDown(TreasureType type) const
 {
     return std::count_if(m_contentDown.begin(), m_contentDown.end(), [type](auto treasure) { return treasure->getType() == type; });

@@ -62,7 +62,7 @@ public:
     void setIndexOfMiniround(int newIndexOfMiniround);
     void setPhase(Phase newPhase);
 
-
+    void setNextPlayerToMove();
     // Initialization methods
 
     const std::vector<Card*> &drawCards(unsigned) const;

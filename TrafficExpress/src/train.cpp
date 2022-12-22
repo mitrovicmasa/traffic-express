@@ -115,6 +115,18 @@ WagonArray &Train::getWagons()
     return m_wagons;
 }
 
+int Train::getWagonIndex(Wagon *w)
+{
+    int i=0;
+    for(auto it=m_wagons.begin();it!=m_wagons.end();it++){
+        if((*it)==w){
+            return i;
+        }
+        i++;
+    }
+    return -1;
+}
+
 // GUI
 QRectF Train::boundingRect() const
 {

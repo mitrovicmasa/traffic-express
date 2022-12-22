@@ -79,6 +79,8 @@ set(PROJECT_SOURCES
         src/collections/miniroundcollection.cpp
         src/collections/roundcardcollection.cpp
         src/collections/playerstatscollection.cpp
+        src/collections/playerperspectivecollection.cpp
+        src/singleplayerstatemachine.cpp
         )
 
 set(PROJECT_HEADERS
@@ -107,6 +109,8 @@ set(PROJECT_HEADERS
         headers/collections/miniroundcollection.h
         headers/collections/roundcardcollection.h
         headers/collections/playerstatscollection.h
+        headers/collections/playerperspectivecollection.h
+        headers/singleplayerstatemachine.h
 
 )
 

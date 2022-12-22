@@ -197,20 +197,45 @@ void MainWindow::onStart()
 //    PlayerPerspective*pp=new PlayerPerspective(game,1);
 //    pp->addGameToScene();
 //    pp->drawCards(6);
-    this->pps=std::vector<PlayerPerspective*>();
-    for(int i=0;i<players.size();i++){
-        this->pps.push_back(new PlayerPerspective(new Game(*game),i));
-        //std::cout<<pps.back()->getPlayerSize()<<std::endl;
-        pps.back()->addGameToScene();
-        pps.back()->drawCards(6);
-    }
+//    this->pps=std::vector<PlayerPerspective*>();
+//    for(int i=0;i<players.size();i++){
+//        this->pps.push_back(new PlayerPerspective(new Game(*game),i));
+//        //std::cout<<pps.back()->getPlayerSize()<<std::endl;
+//        pps.back()->addGameToScene();
+//        pps.back()->drawCards(6);
+//    }
 
-
-
-    pps[0]->setSceneRect(ui->graphicsView->rect());
-    ui->graphicsView->setScene(pps[0]);
+//    pps[0]->setSceneRect(ui->graphicsView->rect());
+//    ui->graphicsView->setScene(pps[0]);
 //    pp->setSceneRect(ui->graphicsView->rect());
 //    ui->graphicsView->setScene(pp);
+
+
+        this->m_sp=new SinglePlayerStateMachine();
+        for(int i=0;i<players.size();i++){
+            this->m_sp->push_back(new PlayerPerspective(new Game(*game),i));
+            //std::cout<<pps.back()->getPlayerSize()<<std::endl;
+            m_sp->back()->addGameToScene();
+            m_sp->back()->drawCards(6);
+        }
+        connect(m_sp,&SinglePlayerStateMachine::movePlayed,
+                this,&MainWindow::onMovePlayed);
+
+        (*m_sp)[0]->setSceneRect(ui->graphicsView->rect());
+        ui->graphicsView->setScene((*m_sp)[0]);
+
+
+
+
+
+
+
+
+
+
+
+
+
     ui->graphicsView->setBackgroundBrush(QPixmap("://clouds.png"));
     ui->graphicsView->setRenderHint(QPainter::Antialiasing);
     ui->graphicsView->setAlignment(Qt::AlignTop | Qt::AlignLeft);
@@ -218,6 +243,16 @@ void MainWindow::onStart()
 
 
     ui->stackedWidget->setCurrentIndex(4);
+}
+
+void MainWindow::onMovePlayed(int i)
+{
+    //qDebug()<<"MainWindow stigao";
+    //qDebug()<<m_sp;
+
+    (*m_sp)[i]->setSceneRect(ui->graphicsView->rect());
+    ui->graphicsView->setScene((*m_sp)[i]);
+
 }
 
 
