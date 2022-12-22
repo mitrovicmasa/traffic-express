@@ -41,7 +41,6 @@ std::string MiniRound::toString()
         default:
             return "";
         }
-
 }
 
 
@@ -53,23 +52,25 @@ QRectF MiniRound::boundingRect() const
 
 void MiniRound::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
-    painter->fillRect(boundingRect(),QColor::fromRgb(12,50,100));
     switch(m_type){
-        case MiniRoundType::HIDDEN:painter->drawText(boundingRect(), Qt::AlignHCenter | Qt::AlignVCenter, "?");break;
-    case MiniRoundType::DOUBLE_CARDS:painter->drawText(boundingRect(), Qt::AlignHCenter | Qt::AlignVCenter, "DOUBLE");break;
-    case MiniRoundType::OPPOSITE_DIRECTION:painter->drawText(boundingRect(), Qt::AlignHCenter | Qt::AlignVCenter, "REVERSE");break;
-    default:break;
-
-
+        case MiniRoundType::FACE_UP:
+            painter->drawPixmap(boundingRect(), QPixmap("://faceup.png"), QRectF(0,0,0,0));break;
+        case MiniRoundType::HIDDEN:
+            painter->drawPixmap(boundingRect(), QPixmap("://card_back.png"), QRectF(0,0,0,0));break;
+        case MiniRoundType::DOUBLE_CARDS:
+            painter->drawPixmap(boundingRect(), QPixmap("://double.png"), QRectF(0,0,0,0));break;
+        case MiniRoundType::OPPOSITE_DIRECTION:
+            painter->drawPixmap(boundingRect(), QPixmap("://opposite.png"), QRectF(0,0,0,0));break;
+        default:break;
     }
 }
 
 int MiniRound::height() const
 {
-    return 75;
+    return 60;
 }
 
 int MiniRound::width() const
 {
-    return 50;
+    return 60;
 }

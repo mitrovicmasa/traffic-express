@@ -92,5 +92,8 @@
         <file>box.jpg</file>
         <file>button.png</file>
         <file>rules_bg.jpg</file>
+        <file>opposite.png</file>
+        <file>faceup.png</file>
+        <file>double.png</file>
     </qresource>
 </RCC>

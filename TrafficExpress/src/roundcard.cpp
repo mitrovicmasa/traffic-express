@@ -9,7 +9,7 @@ RoundCard::RoundCard(RoundCardType type, EventType event, const MiniRoundCollect
     for(int i=0;i<m_miniRounds.size();i++){
         m_miniRounds[i]->setParentItem(this);
 
-        m_miniRounds[i]->setPos(i*(m_miniRounds[i]->width()+10),height()-m_miniRounds[i]->height());
+        m_miniRounds[i]->setPos(i*(m_miniRounds[i]->width()+10)*0.8,height()-m_miniRounds[i]->height()-10);
     }
 
     setFlags(GraphicsItemFlag::ItemIsSelectable);
@@ -189,7 +189,7 @@ int RoundCard::height() const
 
 int RoundCard::width() const
 {
-    return 250;
+    return 300;
 }
 
 QRectF RoundCard::boundingRect() const
@@ -200,6 +200,5 @@ QRectF RoundCard::boundingRect() const
 void RoundCard::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
     painter->fillRect(boundingRect(),QColor::fromRgb(200,200,170));
-
-
+    painter->drawText(boundingRect(), "ROUND CARD:");
 }
