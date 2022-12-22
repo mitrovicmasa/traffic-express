@@ -140,7 +140,6 @@ QRectF Hand::boundingRect() const
 void Hand::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
     painter->fillRect(boundingRect(),QColor(210,222,230));
-    painter->drawText(boundingRect(), "HAND:");
 }
 
 void Hand::test()

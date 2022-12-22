@@ -38,7 +38,7 @@ void Deck::push_back(Card *card)
     connect(card, &Card::clicked, this, &Deck::test);
     m_cards.push_back(card);
     card->setParentItem(this);
-    card->setPos(5,20);
+    card->setPos(10,20);
 }
 
 void Deck::pop_back()
@@ -111,8 +111,9 @@ QRectF Deck::boundingRect() const
 
 void Deck::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
-    painter->fillRect(boundingRect(),QColor(210,222,230));
-    painter->drawText(boundingRect(), "DECK:");
+//    painter->fillRect(boundingRect(),QColor(210,222,230));
+//    painter->drawText(boundingRect(), "DECK:");
+      painter->drawPixmap(boundingRect(), QPixmap("://deck.png"), QRectF(0,0,0,0));
 }
 
 void Deck::test()

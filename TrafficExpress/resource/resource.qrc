@@ -95,5 +95,11 @@
         <file>opposite.png</file>
         <file>faceup.png</file>
         <file>double.png</file>
+        <file>landscape.png</file>
+        <file>hand.png</file>
+        <file>deck.png</file>
+        <file>wagon2.png</file>
+        <file>locomotive.png</file>
+        <file>bluemoon.png</file>
     </qresource>
 </RCC>

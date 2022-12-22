@@ -22,6 +22,8 @@ Train::Train(std::vector<Wagon *>wagons)
     :QGraphicsObject()
 {
     for(Wagon*w :wagons){
+        if(this->getWagonIndex(w)==0)
+                w->setIsLocomotive(true);
         this->push_back(w);
     }
 }
@@ -94,6 +96,9 @@ void Train::push_front(Wagon *w)
     m_wagons.insert(m_wagons.begin(),w);
     w->setParentItem(this);
     w->setPos((m_wagons.size()-1)*200,10);
+    if(this->getWagonIndex(w)==0) {
+        w->setIsLocomotive(true);
+    }
 }
 
 void Train::pop_front()
@@ -135,8 +140,7 @@ QRectF Train::boundingRect() const
 
 void Train::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
-    painter->fillRect(boundingRect(),QColor(100,100,100));
-    painter->drawText(boundingRect(), "TRAIN:");
+    painter->drawPixmap(boundingRect(), QPixmap("://landscape.png"), QRectF(0,0,0,0));
 }
 
 void Train::test()

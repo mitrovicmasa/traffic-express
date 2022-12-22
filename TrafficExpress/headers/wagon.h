@@ -70,6 +70,9 @@ public:
     void repositionTreasure();
     void repositionPlayers();
 
+    bool isLocomotive() const;
+    void setIsLocomotive(bool newIsLocomotive);
+
 signals:
     void clicked();
     void clickedTreasureInWagon(Treasure*t,Wagon*w);
@@ -80,7 +83,7 @@ public slots:
     void OnCickedTreasuere(Treasure*t);
     void onClickedPlayer(Player*);
 private:
-
+    bool m_isLocomotive = false;
     TreasureChest m_contentUp;
     TreasureChest m_contentDown;
     PlayerGroup m_playersUp;

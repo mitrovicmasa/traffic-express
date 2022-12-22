@@ -119,7 +119,7 @@ void Wagon::addContentUp(Treasure *t)
     connect(t, &Treasure::clickedTreasure, this, &Wagon::OnCickedTreasuere);
     m_contentUp.push_back(t);
     t->setParentItem(this);
-    t->setPos(10+(m_contentUp.size()-1)*(2*t->sirina()),70-t->visina());
+    t->setPos(15+(m_contentUp.size()-1)*(1.2*t->sirina()),70-t->visina());
 }
 
 void Wagon::addContentDown(Treasure *t)
@@ -128,7 +128,7 @@ void Wagon::addContentDown(Treasure *t)
     connect(t, &Treasure::clickedTreasure, this, &Wagon::OnCickedTreasuere);
     m_contentDown.push_back(t);
     t->setParentItem(this);
-    t->setPos(10+(m_contentDown.size()-1)*(2*t->sirina()),-30+height()-t->visina());
+    t->setPos(15+(m_contentDown.size()-1)*(1.2*t->sirina()),-40+height()-t->visina());
 }
 
 void Wagon::addPlayerUp(Player *p)
@@ -336,7 +336,10 @@ QRectF Wagon::boundingRect() const
 
 void Wagon::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
-    painter->drawPixmap(boundingRect(), QPixmap("://wagon.png"), QRectF(0,0,0,0));
+    if(this->isLocomotive())
+        painter->drawPixmap(boundingRect(), QPixmap("://locomotive.png"), QRectF(0,0,0,0));
+    else
+        painter->drawPixmap(boundingRect(), QPixmap("://wagon2.png"), QRectF(0,0,0,0));
 }
 
 void Wagon::mousePressEvent(QGraphicsSceneMouseEvent *event)
@@ -359,8 +362,8 @@ void Wagon::testPlayers()
 void Wagon::repositionTreasure()
 {
     for(int i=0;i<m_contentDown.size();i++){
-        m_contentDown[i]->setPos(10+(i)*(2*(m_contentDown[i]->sirina())),
-                                 -30+height()-(m_contentDown[i]->visina()));
+        m_contentDown[i]->setPos(15+(i)*(2*(m_contentDown[i]->sirina())),
+                                 -40+height()-(m_contentDown[i]->visina()));
     }
 }
 
@@ -387,6 +390,16 @@ void Wagon::onClickedPlayer(Player *p)
 {
 
     emit clickedPlayerInWagon(p,this);
+}
+
+bool Wagon::isLocomotive() const
+{
+    return m_isLocomotive;
+}
+
+void Wagon::setIsLocomotive(bool newIsLocomotive)
+{
+    m_isLocomotive = newIsLocomotive;
 }
 
 

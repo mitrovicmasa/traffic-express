@@ -30,20 +30,24 @@ void PlayerPerspective::addGameToScene()
 
 
     this->addItem(m_table);
-    m_table->setPos(810,270);
+    m_table->setPos(850,300);
 
     RoundCard*roundcard = m_game->rounds()[0];
     this->addItem(roundcard);
-    roundcard->setPos(500,300);
+    roundcard->setPos(400,300);
 
     Deck*groupDeck = m_game->getCardsPlayed();
     this->addItem(groupDeck);
-    groupDeck->setPos(300,300);
+    groupDeck->setPos(200,300);
 
     Deck* playerDeck = m_player->deck();
     //m_player->deck()->setAllCardsFaceDown();
     this->addItem(playerDeck);
     playerDeck->setPos(50,300);
+
+//    Deck* bulletDeck = m_player->bulletDeck();
+//    this->addItem(bulletDeck);
+//    bulletDeck->setPos(300,300);
 
     Hand*hand = m_player->hand();
     this->addItem(hand);

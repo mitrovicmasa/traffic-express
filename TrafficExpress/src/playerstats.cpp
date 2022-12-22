@@ -89,15 +89,15 @@ void PlayerStats::paint(QPainter *painter, const QStyleOptionGraphicsItem *optio
     Q_UNUSED(option)
     Q_UNUSED(widget)
 
-    painter->fillRect(boundingRect(),QColor(210,222,230));
-
+    painter->drawPixmap(boundingRect(), QPixmap("://button.png"), QRectF(0,0,0,0));
+    painter->setPen(QColor(255,255,255));
     int num;
     for (BulletCard *b :m_player->bulletDeck()){
         num = b->numOfBullets();
 
     }
     QString bandit = QString::fromStdString(toString(m_player->id()));
-    painter->drawText(boundingRect(),  bandit + " - Number of bullets: " + QString::number(num));
+    painter->drawText(boundingRect(), "    "+ bandit + " - Number of bullets: " + QString::number(num));
 }
 
 void PlayerStats::test()

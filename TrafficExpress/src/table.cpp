@@ -45,7 +45,7 @@ PlayerStatsCollection &Table::getPlayerStats()
 
 int Table::height() const
 {
-    return 450;
+    return 350;
 }
 
 int Table::width() const
@@ -63,7 +63,7 @@ void Table::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWi
     Q_UNUSED(option)
     Q_UNUSED(widget)
 
-    painter->fillRect(boundingRect(),QColor::fromRgb(204,229,255));
+   // painter->fillRect(boundingRect(),QColor::fromRgb(204,229,255));
 }
 
 void Table::onClickedTreasureInPlayerStats(Treasure *t, PlayerStats *ps)

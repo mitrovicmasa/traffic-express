@@ -226,22 +226,9 @@ void MainWindow::onStart()
         ui->graphicsView->setScene((*m_sp)[0]);
 
 
-
-
-
-
-
-
-
-
-
-
-
-    ui->graphicsView->setBackgroundBrush(QPixmap("://clouds.png"));
+    ui->graphicsView->setBackgroundBrush(QPixmap("://bluemoon.png"));
     ui->graphicsView->setRenderHint(QPainter::Antialiasing);
     ui->graphicsView->setAlignment(Qt::AlignTop | Qt::AlignLeft);
-
-
 
     ui->stackedWidget->setCurrentIndex(4);
 }
