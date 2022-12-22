@@ -55,6 +55,8 @@ void Train::push_back(Wagon*w)
     connect(w,&Wagon::clickedWagon,this,&Train::onClickedWagon);
     m_wagons.push_back(w);
     w->setParentItem(this);
+    if (this->getWagonIndex(w) == 0)
+        w->setIsLocomotive(true);
     w->setPos((m_wagons.size()-1)*200,10);
 }
 

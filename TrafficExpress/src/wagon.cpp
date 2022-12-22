@@ -46,7 +46,6 @@ Wagon::Wagon(TreasureChest &upt, TreasureChest &downt, PlayerGroup &upp, PlayerG
 }
 
 
-
 Wagon::Wagon()
 {
 

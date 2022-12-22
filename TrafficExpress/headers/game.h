@@ -82,6 +82,8 @@ public:
     void selectBanditPositions();
     unsigned findPlayerById(BanditType);
 
+    void actionFloorChange();
+
 private:
     int m_indexOfPlayerToMove;
     int m_indexOfRound;

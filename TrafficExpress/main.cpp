@@ -207,23 +207,6 @@ int main(int argc, char *argv[])
 }
 
 // Actions
-void actionFloorChange(Game &game, unsigned position)
-{
-    bool isPlayerOnTheRoof = game.players()[position]->roof();
-    BanditType banditId = game.players()[position]->id();
-
-    if (!isPlayerOnTheRoof) {
-        game.players()[position]->setRoof(!isPlayerOnTheRoof);
-    } else {
-        if (game.sheriffPosition() != game.players()[position]->positionInTrain()) {
-            game.players()[position]->setRoof(!isPlayerOnTheRoof);
-        } else {
-            game.players()[position]->deck()->push_back(new NeutralBullet(banditId));
-            game.neutralBulletDeck().pop_back();
-        }
-    }
-}
-
 void actionMarshal(Game &game)
 {
     unsigned newMarshalPosition = chooseNewPositionForMarshal();
