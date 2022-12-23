@@ -1,6 +1,7 @@
 #ifndef WAGON_H
 #define WAGON_H
 
+#include <headers/sheriff.h>
 #include <player.h>
 #include <playergroup.h>
 #include <treasure.h>
@@ -34,11 +35,13 @@ public:
     void setContentDown(TreasureChest newContentDown);
 
     // Other methods
-
     void addContentUp(  Treasure* );
     void addContentDown(Treasure*);
     void addPlayerUp(Player*);
     void addPlayerDown(Player*);
+
+    void addSheriffDown(Sheriff*);
+    void takeSheriffDown(Sheriff*);
 
     Treasure* takeContentUp(TreasureType);
     Treasure* takeContentDown(TreasureType);
@@ -82,13 +85,13 @@ signals:
 public slots:
     void OnCickedTreasuere(Treasure*t);
     void onClickedPlayer(Player*);
+
 private:
     bool m_isLocomotive = false;
     TreasureChest m_contentUp;
     TreasureChest m_contentDown;
     PlayerGroup m_playersUp;
     PlayerGroup m_playersDown;
-
 };
 
 #endif // WAGON_H

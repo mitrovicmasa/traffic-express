@@ -28,7 +28,6 @@ void PlayerPerspective::addGameToScene()
     this->addItem(train);
     train->setPos(50,50);
 
-
     this->addItem(m_table);
     m_table->setPos(850,300);
 

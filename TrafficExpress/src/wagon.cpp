@@ -148,6 +148,22 @@ void Wagon::addPlayerDown(Player *p)
     p->setPos(5+(p->width()+5)*(m_playersDown.size()-1),+80);
 }
 
+void Wagon::addSheriffDown(Sheriff *s)
+{
+    s->setParentItem(this);
+    s->setPos(10,80);
+
+    for(Player* player: m_playersDown) {
+        takePlayerDown(player);
+        addPlayerUp(player);
+    }
+}
+
+void Wagon::takeSheriffDown(Sheriff *s)
+{
+    s->setParentItem(nullptr);
+}
+
 Treasure *Wagon::takeContentUp(TreasureType t)
 {
     Treasure* r;

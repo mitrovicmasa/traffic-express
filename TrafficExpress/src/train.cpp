@@ -10,8 +10,9 @@ Train::Train(WagonArray &wa)
     int i = 0;
     bool isLocomotive = false;
     for(Wagon*w:wa){
-        if(i==wa.size()-1)
+        if(i==wa.size()-1) {
             isLocomotive = true;
+        }
         i++;
         this->push_back(new Wagon(w->getContentUp(),w->getContentDown(),w->getPlayersUp(),w->getPlayersDown(), isLocomotive));
     }
@@ -28,9 +29,10 @@ Train::Train(std::vector<Wagon *>wagons)
 {
     int i=0;
     for(Wagon*w :wagons){
-        i++;
-        if(i==wagons.size())
+        if(i==wagons.size()-1) {
             w->setIsLocomotive(true);
+        }
+        i++;
         this->push_back(w);
     }
 }

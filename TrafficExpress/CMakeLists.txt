@@ -81,6 +81,7 @@ set(PROJECT_SOURCES
         src/collections/playerstatscollection.cpp
         src/collections/playerperspectivecollection.cpp
         src/singleplayerstatemachine.cpp
+        src/sheriff.cpp
         )
 
 set(PROJECT_HEADERS
@@ -111,7 +112,7 @@ set(PROJECT_HEADERS
         headers/collections/playerstatscollection.h
         headers/collections/playerperspectivecollection.h
         headers/singleplayerstatemachine.h
-
+        headers/sheriff.h
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)

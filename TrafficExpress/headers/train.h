@@ -11,13 +11,12 @@
 class Train:public QGraphicsObject
 {
     Q_OBJECT
-
 public:
     // Constructors
     Train();
     Train(std::vector<Wagon*>);
     //this is not safe
-//    Train(const Train&);
+    // Train(const Train&);
 
     //this is a safe copy constructor
     Train(WagonArray&wa);
@@ -33,15 +32,16 @@ public:
     void push_front(Wagon*);
     void pop_front();
     Wagon* operator[](int i);
+
     //geters
     WagonArray&getWagons();
-
     int getWagonIndex(Wagon*);
 
     // GUI
     QRectF boundingRect() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
     void test();
+
 signals:
     void clickedTreasureInWagonInTrain(Treasure*t,Wagon*w,Train*train);
     void clickedPlayerInWagonInTrain(Player*,Wagon*,Train*);
