@@ -134,12 +134,13 @@ int Hand::getCardIndex(Card *c)
 
 QRectF Hand::boundingRect() const
 {
-    return QRectF(0,0,520,120);
+    return QRectF(0,0,700,120);
 }
 
 void Hand::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
     painter->fillRect(boundingRect(),QColor(210,222,230));
+    painter->drawPixmap(boundingRect(), QPixmap("://hands.png"), QRectF(0,0,0,0));
 }
 
 void Hand::test()

@@ -149,21 +149,27 @@ void MainWindow::onBackToTheMenu()
 
 void MainWindow::onConnect()
 {
-    // auto const name = ui->leName;
-    // postaviti ime plejera na name, a ako polje nije popunjeno onda na Player1, Player2...
+    QString name;
+    if(ui->leName->isModified())
+        name = ui->leName->text();
+    else name = "Player";
 
-    // napraviti konekciju sa serverom :))))))
+    sc->setSceneRect(ui->gvWaitingRoom->rect());
+    ui->gvWaitingRoom->setScene(sc);
+    ui->gvWaitingRoom->setBackgroundBrush(QColor(100,100,100));
+    ui->gvWaitingRoom->setRenderHint(QPainter::Antialiasing);
+    ui->gvWaitingRoom->setAlignment(Qt::AlignTop | Qt::AlignLeft);
+    //TODO: napraviti Tabelu za ovaj gv koja ce da ispisuje ime i ready/not ready
 
-    //showMessageBox("Enter your username!");
-
+    //TODO: napraviti konekciju sa serverom :))))))
     ui->stackedWidget->setCurrentIndex(3);
 }
 
 void MainWindow::onReady()
 {
-    // obavestiti Game da je plejer spreman
+    //TODO: obavestiti server da je plejer spreman
 
-    // izmeniti graphics view da se u tabelu doda "ime_plejera - ready"
+    //TODO: izmeniti tabelu da bude ready
 }
 
 void MainWindow::onStart()
@@ -182,12 +188,6 @@ void MainWindow::onStart()
     //        new Player(BanditType::HOMELESS_MAN),
     //        new Player(BanditType::BUSINESS_WOMAN)
         };
-
-    // inicijalizacija partije s ovim plejerima
-    // i pocetni gui tj. samo one stvari koje svi vide
-
-
-
 
     Game*game=new Game(players);
     game->initialize();
