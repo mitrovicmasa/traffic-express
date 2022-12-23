@@ -19,7 +19,7 @@ public:
     //Wagon(const Wagon&other);
 
     //this is a safe copy constructor
-    Wagon(TreasureChest&upt,TreasureChest&downt,PlayerGroup&upp,PlayerGroup&downp);
+    Wagon(TreasureChest&upt,TreasureChest&downt,PlayerGroup&upp,PlayerGroup&downp, bool isLocomotive);
 
     // Destructor
 

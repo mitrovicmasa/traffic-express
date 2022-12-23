@@ -9,7 +9,7 @@
 ///
 ///
 
-Wagon::Wagon(TreasureChest &upt, TreasureChest &downt, PlayerGroup &upp, PlayerGroup &downp)
+Wagon::Wagon(TreasureChest &upt, TreasureChest &downt, PlayerGroup &upp, PlayerGroup &downp,bool isLocomotive)
     :QGraphicsObject()
 {
     setFlags(GraphicsItemFlag::ItemIsSelectable);
@@ -41,8 +41,7 @@ Wagon::Wagon(TreasureChest &upt, TreasureChest &downt, PlayerGroup &upp, PlayerG
 
     }
 
-
-
+    this->setIsLocomotive(isLocomotive);
 }
 
 

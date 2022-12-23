@@ -7,10 +7,15 @@
 Train::Train(WagonArray &wa)
     :QGraphicsObject()
 {
+    int i = 0;
+    bool isLocomotive = false;
     for(Wagon*w:wa){
-        this->push_back(new Wagon(w->getContentUp(),w->getContentDown(),w->getPlayersUp(),w->getPlayersDown()));
-
+        if(i==wa.size()-1)
+            isLocomotive = true;
+        i++;
+        this->push_back(new Wagon(w->getContentUp(),w->getContentDown(),w->getPlayersUp(),w->getPlayersDown(), isLocomotive));
     }
+
 }
 
 Train::Train()
@@ -21,9 +26,11 @@ Train::Train()
 Train::Train(std::vector<Wagon *>wagons)
     :QGraphicsObject()
 {
+    int i=0;
     for(Wagon*w :wagons){
-        if(this->getWagonIndex(w)==0)
-                w->setIsLocomotive(true);
+        i++;
+        if(i==wagons.size())
+            w->setIsLocomotive(true);
         this->push_back(w);
     }
 }
@@ -55,8 +62,6 @@ void Train::push_back(Wagon*w)
     connect(w,&Wagon::clickedWagon,this,&Train::onClickedWagon);
     m_wagons.push_back(w);
     w->setParentItem(this);
-    if (this->getWagonIndex(w) == 0)
-        w->setIsLocomotive(true);
     w->setPos((m_wagons.size()-1)*200,10);
 }
 
