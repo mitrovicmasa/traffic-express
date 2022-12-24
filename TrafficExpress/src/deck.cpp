@@ -135,7 +135,7 @@ void Deck::setAllCardsFaceUp()
 
 void Deck::onClickedCard(Card *c)
 {
-    std::cout<<"Card clicked from deck! signal"<<std::endl;
+    //std::cout<<"Card clicked from deck! signal"<<std::endl;
     emit clickedCardInDeck(c,this);
 
 }

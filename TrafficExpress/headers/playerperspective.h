@@ -24,21 +24,22 @@ public:
 public slots:
     //reacting to internal signals
     void onClickedTreasureInWagonInTrainInTran(Treasure*t,Wagon*w,Train*train);
-    void onClickedCardInHandInPlayer(Card*c,Hand*h,Player*p);
+    void onClickedCardInHandInPlayer(Card*c,Hand*h,Player*p);//*
     void onClickedCardInDeckInPlayer(Card*c,Deck*d,Player*p);
     void onClickedTreasureInPlayerStatsInTable(Treasure*,PlayerStats*,Table*);
     void onClickedPlayerInWagonInTrain(Player*,Wagon*,Train*);
-    void onClickedWagonInTrain(Wagon*w,Train*train);
+    void onClickedWagonInTrain(Wagon*w,Train*train);//*
 
     //reacting to external signals
     void onPlayerChoseWagon(int playerIndex,int wagonIndex);
     void onPlayerPlayedCard(int playerIndex,int CardIndex);
-
+    void onPlayerDrawCards(int playerIndex);
 
 signals:
     void playerChoseWagon(int playerIndex,int wagonIndex);
     void playerPlayedCard(int playerIndex,int CardIndex);
     void movePlayed(PlayerPerspective*);
+    void playerDrawCards(int playerIndex);
 
 private:
     void setMyMove(bool);

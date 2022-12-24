@@ -54,7 +54,7 @@ Game::Game(const Game &other)
 }
 
 //// Get methods
-const PlayerGroup &Game::players() const
+PlayerGroup &Game::players()
 {
     return m_players;
 }

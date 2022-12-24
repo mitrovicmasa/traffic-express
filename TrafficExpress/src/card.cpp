@@ -49,6 +49,7 @@ QRectF Card::boundingRect() const
 void Card::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
     QGraphicsObject::mousePressEvent(event);
+
     emit clicked();
     emit clickedCard(this);
 }

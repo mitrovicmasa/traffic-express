@@ -32,7 +32,7 @@ public:
     Game(const Game&);
 
     //Get methods
-    const PlayerGroup &players() const;
+    PlayerGroup &players();
     Train *wagons() const;
     const RoundCardCollection &rounds() const;
     std::vector<NeutralBullet*> neutralBulletDeck() const;

@@ -113,15 +113,15 @@ void PlayerPerspective::onClickedCardInHandInPlayer(Card *c, Hand *h, Player *p)
     if(p->isItMyMove() && c->Type()==CardType::ACTION_CARD &&
             m_game->phase()==Phase::PHASE_1){
         std::cout<<"It is my move!"<<std::endl;
-        ActionCard*ac=static_cast<ActionCard*>(c);
+//        ActionCard*ac=static_cast<ActionCard*>(c);
 
         int playerIndex=m_game->findPlayerById(m_player->id());
         int cardIndex=(h->getCardIndex(c));
 
         //h[cardIndex];
-        m_game->getCardsPlayed()->push_back(h->takeCard(c));
-        h->repositionCards();
-        m_game->setNextPlayerToMove();
+//        m_game->getCardsPlayed()->push_back(h->takeCard(c));
+//        h->repositionCards();
+//        m_game->setNextPlayerToMove();
         emit playerPlayedCard(playerIndex,cardIndex);
         emit movePlayed(this);
 
@@ -141,25 +141,22 @@ void PlayerPerspective::onClickedCardInHandInPlayer(Card *c, Hand *h, Player *p)
 
 void PlayerPerspective::onClickedCardInDeckInPlayer(Card *c, Deck *d, Player *p)
 {
-    std::cout<<"Player perspective recieved signal in onClickedCardInDeckInPlayer "<<std::endl;
+//    std::cout<<"Player perspective recieved signal in onClickedCardInDeckInPlayer "<<std::endl;
 
-    if(!p->isItMyMove())
+    if(!p->isItMyMove()){
         qDebug()<<"not my move";
+        int playerThatClicked =m_game->findPlayerById(p->id());
+        int indexOfPlayer=m_game->getIndexOfPlayerToMove();
+        qDebug()<<"Player to move:"<<indexOfPlayer;
+        qDebug()<<"Player that clicked:"<<indexOfPlayer;
 
+    }
     if(p->isItMyMove() && m_game->phase()==Phase::PHASE_1 && d->size() >= 3)
     {
 
-        for(unsigned i = 0; i < 3; i++ )
-        {
-            Card* takenCard = d->back();
-            takenCard->setFaceUp(true);
-            d->pop_back();
-            p->hand()->push_back(takenCard);
-        }
-
-//        m_game->setNextPlayerToMove();
-//        emit movePlayed(this);
-
+        int indexOfPlayer=m_game->findPlayerById(m_player->id());
+        emit playerDrawCards(indexOfPlayer);
+        emit movePlayed(this);
     }
 
 }
@@ -192,20 +189,12 @@ void PlayerPerspective::onClickedWagonInTrain(Wagon *w, Train *train)
 
     if(m_player->isItMyMove() && m_game->phase()==Phase::WAGON_SELECTION
             && (train->getWagonIndex(w)==0 || train->getWagonIndex(w)==1) ){
-//        qDebug()<<"im in it!";
-        w->addPlayerDown(m_player);
-        m_player->setPositionInTrain(train->getWagonIndex(w));
+
         emit playerChoseWagon(m_game->findPlayerById(m_player->id()),train->getWagonIndex(w));
-        m_game->setNextPlayerToMove();
-        if(m_game->findPlayerById(m_player->id())==m_game->players().size()-1)
-            m_game->setPhase(Phase::PHASE_1);
+
         emit movePlayed(this);
     }
 
-//    if (m_player->isItMyMove() && m_game->phase() == Phase::PHASE_1) {
-//        m_game->actionFloorChange();
-//        m_game->setNextPlayerToMove();
-//    }
 
 }
 
@@ -231,4 +220,27 @@ void PlayerPerspective::onPlayerPlayedCard(int playerIndex, int cardIndex)
 
     d->push_back(c);
     m_game->setNextPlayerToMove();
+}
+
+void PlayerPerspective::onPlayerDrawCards(int playerIndex)
+{
+    PlayerGroup pg;
+    pg=m_game->players();
+    Player*playerToMove=pg[playerIndex];
+    //qDebug()<<playerToMove;
+
+
+
+    Deck*d=playerToMove->deck();
+    for(unsigned i = 0; i < 3; i++ )
+    {
+        Card* takenCard = d->back();
+        takenCard->setFaceUp(true);
+        d->pop_back();
+        playerToMove->hand()->push_back(takenCard);
+    }
+
+
+    m_game->setNextPlayerToMove();
+
 }

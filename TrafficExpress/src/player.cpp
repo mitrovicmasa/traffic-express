@@ -90,7 +90,7 @@ Hand *Player::hand()
     return m_hand;
 }
 
-Deck *Player::deck() const
+Deck *Player::deck()
 {
     return m_deck;
 }
@@ -260,5 +260,6 @@ void Player::onClickedCardInHand(Card *c, Hand *h)
 
 void Player::onClickedCardInDeck(Card *c, Deck *d)
 {
+
     emit clickedCardInDeckInPlayer(c,d,this);
 }
