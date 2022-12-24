@@ -114,6 +114,7 @@ void PlayerPerspective::onClickedCardInHandInPlayer(Card *c, Hand *h, Player *p)
             m_game->phase()==Phase::PHASE_1){
         std::cout<<"It is my move!"<<std::endl;
         ActionCard*ac=static_cast<ActionCard*>(c);
+
         int playerIndex=m_game->findPlayerById(m_player->id());
         int cardIndex=(h->getCardIndex(c));
 
@@ -147,7 +148,18 @@ void PlayerPerspective::onClickedCardInDeckInPlayer(Card *c, Deck *d, Player *p)
 
     if(p->isItMyMove() && m_game->phase()==Phase::PHASE_1 && d->size() >= 3)
     {
-        //qDebug()<<"Clicked card in deck";
+
+        for(unsigned i = 0; i < 3; i++ )
+        {
+            Card* takenCard = d->back();
+            takenCard->setFaceUp(true);
+            d->pop_back();
+            p->hand()->push_back(takenCard);
+        }
+
+//        m_game->setNextPlayerToMove();
+//        emit movePlayed(this);
+
     }
 
 }
