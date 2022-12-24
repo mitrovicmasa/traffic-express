@@ -25,6 +25,7 @@ public slots:
     //reacting to internal signals
     void onClickedTreasureInWagonInTrainInTran(Treasure*t,Wagon*w,Train*train);
     void onClickedCardInHandInPlayer(Card*c,Hand*h,Player*p);
+    void onClickedCardInDeckInPlayer(Card*c,Deck*d,Player*p);
     void onClickedTreasureInPlayerStatsInTable(Treasure*,PlayerStats*,Table*);
     void onClickedPlayerInWagonInTrain(Player*,Wagon*,Train*);
     void onClickedWagonInTrain(Wagon*w,Train*train);

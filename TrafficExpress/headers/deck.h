@@ -42,6 +42,12 @@ public:
     void setAllCardsFaceDown();
     void setAllCardsFaceUp();
 
+signals:
+    void clickedCardInDeck(Card*c,Deck*d);
+
+public slots:
+    void onClickedCard(Card*c);
+
     // QGraphicsItem interface
 protected:
     void mousePressEvent(QGraphicsSceneMouseEvent *event);

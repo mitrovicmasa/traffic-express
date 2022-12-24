@@ -35,7 +35,7 @@ CardColection &Deck::getCards()
 
 void Deck::push_back(Card *card)
 {
-    connect(card, &Card::clicked, this, &Deck::test);
+    connect(card, &Card::clickedCard, this, &Deck::onClickedCard);
     m_cards.push_back(card);
     card->setParentItem(this);
     card->setPos(10,20);
@@ -43,7 +43,7 @@ void Deck::push_back(Card *card)
 
 void Deck::pop_back()
 {
-    disconnect(m_cards.back(),&Card::clicked,this,&Deck::test);
+    disconnect(m_cards.back(),&Card::clickedCard,this,&Deck::onClickedCard);
     m_cards.back()->setParentItem(nullptr);
     m_cards.pop_back();
 }
@@ -75,7 +75,7 @@ Card *Deck::operator[](int ind)
 
 void Deck::push_front(Card *card)
 {
-    connect(card, &Card::clicked, this, &Deck::test);
+    connect(card, &Card::clickedCard, this, &Deck::onClickedCard);
     m_cards.insert(m_cards.begin(),card);
     card->setParentItem(this);
     card->setPos(5,20);
@@ -83,7 +83,7 @@ void Deck::push_front(Card *card)
 
 void Deck::pop_front()
 {
-    disconnect(m_cards.front(),&Card::clicked,this,&Deck::test);
+    disconnect(m_cards.front(),&Card::clickedCard,this,&Deck::onClickedCard);
     m_cards.front()->setParentItem(nullptr);
     m_cards.erase(m_cards.begin());
 }
@@ -131,6 +131,13 @@ void Deck::setAllCardsFaceUp()
 {
     for(Card*x:m_cards)
         x->setFaceUp(true);
+}
+
+void Deck::onClickedCard(Card *c)
+{
+    std::cout<<"Card clicked from deck! signal"<<std::endl;
+    emit clickedCardInDeck(c,this);
+
 }
 
 void Deck::mousePressEvent(QGraphicsSceneMouseEvent *event)

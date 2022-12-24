@@ -19,6 +19,8 @@ PlayerPerspective::PlayerPerspective(Game *game, int playerIndex, QObject *paren
     }
     connect(m_table,&Table::clickedTreasureInPlayerStatsnTable,this,&PlayerPerspective::onClickedTreasureInPlayerStatsInTable);
     connect(m_player,&Player::clickedCardInHandInPlayer,this,&PlayerPerspective::onClickedCardInHandInPlayer);
+    connect(m_player,&Player::clickedCardInDeckInPlayer,this,&PlayerPerspective::onClickedCardInDeckInPlayer);
+
 }
 
 void PlayerPerspective::addGameToScene()
@@ -136,6 +138,20 @@ void PlayerPerspective::onClickedCardInHandInPlayer(Card *c, Hand *h, Player *p)
     }
 }
 
+void PlayerPerspective::onClickedCardInDeckInPlayer(Card *c, Deck *d, Player *p)
+{
+    std::cout<<"Player perspective recieved signal in onClickedCardInDeckInPlayer "<<std::endl;
+
+    if(!p->isItMyMove())
+        qDebug()<<"not my move";
+
+    if(p->isItMyMove() && m_game->phase()==Phase::PHASE_1 && d->size() >= 3)
+    {
+        //qDebug()<<"Clicked card in deck";
+    }
+
+}
+
 void PlayerPerspective::onClickedTreasureInPlayerStatsInTable(Treasure *t, PlayerStats *ps, Table *p)
 {
     std::cout<<"signal recieved in player perspective"<<std::endl;
@@ -174,10 +190,10 @@ void PlayerPerspective::onClickedWagonInTrain(Wagon *w, Train *train)
         emit movePlayed(this);
     }
 
-    if (m_player->isItMyMove() && m_game->phase() == Phase::PHASE_1) {
-        m_game->actionFloorChange();
-        m_game->setNextPlayerToMove();
-    }
+//    if (m_player->isItMyMove() && m_game->phase() == Phase::PHASE_1) {
+//        m_game->actionFloorChange();
+//        m_game->setNextPlayerToMove();
+//    }
 
 }
 

@@ -36,6 +36,7 @@ Player::Player(BanditType id)
 
     setFlags(GraphicsItemFlag::ItemIsSelectable);
     connect(m_hand,&Hand::clickedCardInHand,this,&Player::onClickedCardInHand);
+    connect(m_deck,&Deck::clickedCardInDeck,this,&Player::onClickedCardInDeck);
 }
 
 //Player::Player(const Player &other)
@@ -66,7 +67,7 @@ Player::Player(bool isItMyMove, BanditType id, Hand *h, Deck *d, std::vector<Bul
 
 //Todo bulletCardDeck
     connect(m_hand,&Hand::clickedCardInHand,this,&Player::onClickedCardInHand);
-
+    connect(m_deck,&Deck::clickedCardInDeck,this,&Player::onClickedCardInDeck);
     for(BulletCard*bc:bcd)
         m_bulletDeck.push_back((BulletCard*)bc->Copy());
 
@@ -255,4 +256,9 @@ void Player::onClickedCardInHand(Card *c, Hand *h)
 {
     //std::cout<<"signal recieved in player from card!"<<std::endl;
     emit clickedCardInHandInPlayer(c,h,this);
+}
+
+void Player::onClickedCardInDeck(Card *c, Deck *d)
+{
+    emit clickedCardInDeckInPlayer(c,d,this);
 }
