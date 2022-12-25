@@ -15,6 +15,7 @@ Train::Train(WagonArray &wa)
         }
         i++;
         this->push_back(new Wagon(w->getContentUp(),w->getContentDown(),w->getPlayersUp(),w->getPlayersDown(), isLocomotive));
+
     }
 
 }

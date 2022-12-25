@@ -40,8 +40,8 @@ public:
     void addPlayerUp(Player*);
     void addPlayerDown(Player*);
 
-    void addSheriffDown(Sheriff*);
-    void takeSheriffDown(Sheriff*);
+    void addSheriffDown();
+    void takeSheriffDown();
 
     Treasure* takeContentUp(TreasureType);
     Treasure* takeContentDown(TreasureType);
@@ -76,6 +76,9 @@ public:
     bool isLocomotive() const;
     void setIsLocomotive(bool newIsLocomotive);
 
+    Sheriff *sheriff() const;
+    void setSheriff(Sheriff *newSheriff);
+
 signals:
     void clicked();
     void clickedTreasureInWagon(Treasure*t,Wagon*w);
@@ -92,6 +95,7 @@ private:
     TreasureChest m_contentDown;
     PlayerGroup m_playersUp;
     PlayerGroup m_playersDown;
+    Sheriff* m_sheriff;
 };
 
 #endif // WAGON_H

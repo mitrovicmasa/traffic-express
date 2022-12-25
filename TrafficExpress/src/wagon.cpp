@@ -42,6 +42,10 @@ Wagon::Wagon(TreasureChest &upt, TreasureChest &downt, PlayerGroup &upp, PlayerG
     }
 
     this->setIsLocomotive(isLocomotive);
+
+    if(this->isLocomotive()) {
+        this->addSheriffDown();
+    }
 }
 
 
@@ -148,10 +152,11 @@ void Wagon::addPlayerDown(Player *p)
     p->setPos(5+(p->width()+5)*(m_playersDown.size()-1),+80);
 }
 
-void Wagon::addSheriffDown(Sheriff *s)
+void Wagon::addSheriffDown()
 {
-    s->setParentItem(this);
-    s->setPos(10,80);
+    m_sheriff = new Sheriff();
+    m_sheriff->setParentItem(this);
+    m_sheriff->setPos(10,80);
 
     for(Player* player: m_playersDown) {
         takePlayerDown(player);
@@ -159,9 +164,10 @@ void Wagon::addSheriffDown(Sheriff *s)
     }
 }
 
-void Wagon::takeSheriffDown(Sheriff *s)
+void Wagon::takeSheriffDown()
 {
-    s->setParentItem(nullptr);
+    m_sheriff->setParentItem(nullptr);
+    m_sheriff = nullptr;
 }
 
 Treasure *Wagon::takeContentUp(TreasureType t)
