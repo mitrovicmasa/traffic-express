@@ -120,6 +120,11 @@ bool Player::isItMyMove() const
     return m_isItMyMove;
 }
 
+DialogueBox *Player::dialog()
+{
+    return new DialogueBox(m_text);
+}
+
 // Set methods
 void Player::setPositionInTrain(int newPositionInTrain)
 {

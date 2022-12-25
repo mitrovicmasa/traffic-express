@@ -102,5 +102,6 @@
         <file>locomotive.png</file>
         <file>bluemoon.png</file>
         <file>hands.png</file>
+        <file>messageBox.png</file>
     </qresource>
 </RCC>

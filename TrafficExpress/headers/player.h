@@ -16,6 +16,7 @@
 #include <deck.h>
 #include <hand.h>
 #include <treasurechest.h>
+#include <dialoguebox.h>
 
 class Player : public QGraphicsObject
 {
@@ -60,6 +61,7 @@ public:
     void returnCardsToDeck();
     void shuffleDeck();
     void drawCards(unsigned n);
+    DialogueBox *dialog();
 
 
     std::string toString() const;
@@ -90,5 +92,6 @@ private:
     int m_positionInTrain;
     bool m_roof;
     TreasureChest m_treasure;
+    QString m_text;
 };
 #endif // PLAYER_H

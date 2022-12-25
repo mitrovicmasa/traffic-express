@@ -82,6 +82,7 @@ set(PROJECT_SOURCES
         src/collections/playerperspectivecollection.cpp
         src/singleplayerstatemachine.cpp
         src/sheriff.cpp
+        src/dialoguebox.cpp
         )
 
 set(PROJECT_HEADERS
@@ -113,6 +114,7 @@ set(PROJECT_HEADERS
         headers/collections/playerperspectivecollection.h
         headers/singleplayerstatemachine.h
         headers/sheriff.h
+        headers/dialoguebox.h
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)

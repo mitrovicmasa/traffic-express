@@ -53,6 +53,10 @@ void PlayerPerspective::addGameToScene()
     Hand*hand = m_player->hand();
     this->addItem(hand);
     hand->setPos(50,450);
+
+    DialogueBox *db = m_player->dialog();
+    this->addItem(db);
+    db->setPos(890,20);
 }
 
 void PlayerPerspective::removeGameFromScene()

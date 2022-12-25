@@ -4,6 +4,7 @@
 #include <game.h>
 #include <qgraphicsscene.h>
 #include <table.h>
+#include <dialoguebox.h>
 
 
 
