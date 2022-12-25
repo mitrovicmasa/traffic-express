@@ -88,6 +88,7 @@ public:
 
     //Actions
     void actionFloorChange();
+    void sheriffMove(Wagon* w1, Wagon*w2);
 
 private:
     int m_indexOfPlayerToMove;

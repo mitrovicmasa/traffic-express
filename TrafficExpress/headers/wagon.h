@@ -1,7 +1,7 @@
 #ifndef WAGON_H
 #define WAGON_H
 
-#include <headers/sheriff.h>
+#include <sheriff.h>
 #include <player.h>
 #include <playergroup.h>
 #include <treasure.h>
@@ -52,6 +52,7 @@ public:
     Treasure* takeContentDown(Treasure*);
     Player* takePlayerUp(Player* );
     Player* takePlayerDown(Player* );
+    Sheriff* sheriffActions(Sheriff*);
 
 
 

@@ -187,8 +187,10 @@ void PlayerPerspective::onClickedWagonInTrain(Wagon *w, Train *train)
         return;
     }
 
-//    if(m_game->phase()==Phase::PHASE_1){
-//        ...
+//    if(m_game->phase()==Phase::PHASE_1 && m_player->isItMyMove()){
+//        m_game->sheriffMove(train->front(), w);
+//        emit movePlayed(this);
+//        return;
 //    }
 
 }

@@ -3,12 +3,9 @@
 #include<QRandomGenerator>
 #include <qpainter.h>
 #include <iostream>
-//// Constructors
-///
-///
-///
-///
 
+
+// Constructors
 Wagon::Wagon(TreasureChest &upt, TreasureChest &downt, PlayerGroup &upp, PlayerGroup &downp,bool isLocomotive)
     :QGraphicsObject()
 {
@@ -158,10 +155,10 @@ void Wagon::addSheriffDown()
     m_sheriff->setParentItem(this);
     m_sheriff->setPos(10,80);
 
-    for(Player* player: m_playersDown) {
-        takePlayerDown(player);
-        addPlayerUp(player);
-    }
+//    for(Player* player: m_playersDown) {
+//        takePlayerDown(player);
+//        addPlayerUp(player);
+//    }
 }
 
 void Wagon::takeSheriffDown()
@@ -337,6 +334,18 @@ std::string Wagon::toString()
         return r;
 
 }
+
+//Sheriff *Wagon::sheriffActions(Sheriff *s) {
+
+//    for(Player* player: m_playersDown) {
+//        if (s->positionInTrain() == player->positionInTrain()) {
+//            takePlayerDown(player);
+             // addPlayerUp(player);
+//
+//        }
+//    }
+
+//}
 
 // GUI
 

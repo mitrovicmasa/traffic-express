@@ -531,6 +531,26 @@ void Game::actionFloorChange()
     }
 }
 
+void Game::sheriffMove(Wagon *w1, Wagon *w2)
+{
+   w1->takeSheriffDown();
+   w2->addSheriffDown();
+
+   m_sheriffPosition = 0;
+   for(Player* player: w2->getPlayersDown()) {
+       w2->takePlayerDown(player);
+       w2->addPlayerUp(player);
+
+       if (!m_neutralBulletDeck.empty()) {
+            NeutralBullet *b = m_neutralBulletDeck.back();
+            m_neutralBulletDeck.pop_back();
+
+            player->deck()->push_back(b);
+       }
+   }
+
+}
+
 
 
 
