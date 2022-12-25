@@ -13,7 +13,7 @@ PlayerPerspective::PlayerPerspective(Game *game, int playerIndex, QObject *paren
     connect(train,&Train::clickedTreasureInWagonInTrain,this,&PlayerPerspective::onClickedTreasureInWagonInTrainInTran);
     connect(train,&Train::clickedPlayerInWagonInTrain,this,&PlayerPerspective::onClickedPlayerInWagonInTrain);
     connect(train,&Train::clickedWagonInTrain,this,&PlayerPerspective::onClickedWagonInTrain);
-    //m_table= new Table();
+
     for (Player* p:m_game->players()){
         m_table->push_back(new PlayerStats(p));
 
@@ -47,7 +47,7 @@ void PlayerPerspective::addGameToScene()
     this->addItem(playerDeck);
     playerDeck->setPos(50,300);
 
-//    Deck* bulletDeck = m_player->bulletDeck();
+//    Deck* bulletDeck = m_player->bullet_deck();
 //    this->addItem(bulletDeck);
 //    bulletDeck->setPos(300,300);
 
@@ -186,12 +186,6 @@ void PlayerPerspective::onClickedWagonInTrain(Wagon *w, Train *train)
         emit movePlayed(this);
         return;
     }
-
-//    if(m_game->phase()==Phase::PHASE_1 && m_player->isItMyMove()){
-//        m_game->sheriffMove(train->front(), w);
-//        emit movePlayed(this);
-//        return;
-//    }
 
 }
 

@@ -531,24 +531,89 @@ void Game::actionFloorChange()
     }
 }
 
-void Game::sheriffMove(Wagon *w1, Wagon *w2)
+void Game::actionSheriffMove(Wagon* w)
 {
-   w1->takeSheriffDown();
-   w2->addSheriffDown();
+   // Taking sheriff off of wagon with m_sheriffPosition index
+   Wagon *w0 = m_wagons->getWagons()[m_sheriffPosition];
+   w0->takeSheriffDown();
 
-   m_sheriffPosition = 0;
-   for(Player* player: w2->getPlayersDown()) {
-       w2->takePlayerDown(player);
-       w2->addPlayerUp(player);
+   // Adding sheriff to wagon w and changing m_sheriffPosition to his index
+   w->addSheriffDown();
+   m_sheriffPosition = m_wagons->getWagonIndex(w);
 
+   // For every player that's in our wagon w, we push them to the roof
+   for(Player* player: w->getPlayersDown()) {
+       w->takePlayerDown(player);
+       w->addPlayerUp(player);
+       player->setRoof(true);
+
+       // If neutral bullet deck is not empty, player recieves a neutral bullet in his deck.
        if (!m_neutralBulletDeck.empty()) {
             NeutralBullet *b = m_neutralBulletDeck.back();
             m_neutralBulletDeck.pop_back();
-
             player->deck()->push_back(b);
        }
+
    }
 
+}
+
+// This method returns if current player can shoot player with index playerIndex.
+bool Game::actionFire(int playerIndex)
+{   // playerIndex is index of a player that's been CLICKED on
+
+    // Shooters' position in train
+    unsigned positionInTrain = players()[m_indexOfPlayerToMove]->positionInTrain();
+    bool roof = players()[m_indexOfPlayerToMove]->roof();
+
+    if(playerIndex == m_indexOfPlayerToMove) {
+        // You can't shoot yourself!
+        return false;
+    }
+
+    // All possible targets will be in this vector
+    std::vector<Player*> possibleTargets;
+
+    // If the shooter is not on the roof
+    if(!roof) {
+
+        // Wagon left from our shooter -> looking for possible targets
+        if(positionInTrain > 0) {
+            Wagon *left = m_wagons->getWagons()[positionInTrain-1];
+            for(Player* p: left->getPlayersDown()) {
+                possibleTargets.push_back(p);
+            }
+        }
+        // Wagon right from out shooter -> looking for possible targets
+        if(positionInTrain < m_wagons->size()-1) {
+            Wagon *right = m_wagons->getWagons()[positionInTrain+1];
+            for(Player* p: right->getPlayersDown()) {
+                possibleTargets.push_back(p);
+            }
+        }
+    }
+    else { // If the shooter is on the roof
+
+        // All players on the roof are possible targets (for now)
+        for(Player *p: m_players) {
+            if(p->roof()) {
+                possibleTargets.push_back(p);
+            }
+        }
+    }
+
+    // Now we check if CLICKED player is a possible target
+    for(Player* p: possibleTargets) {
+        if(findPlayerById(p->id()) == playerIndex) {
+            // player(playerIndex) recieves a BULLET CARD from playerToMove
+            Card *c = players()[m_indexOfPlayerToMove]->bullet_deck()->back();
+            players()[m_indexOfPlayerToMove]->bullet_deck()->pop_back();
+            players()[playerIndex]->deck()->push_back(c);
+            return true;
+        }
+    }
+
+    return false;
 }
 
 

@@ -88,7 +88,8 @@ public:
 
     //Actions
     void actionFloorChange();
-    void sheriffMove(Wagon* w1, Wagon*w2);
+    void actionSheriffMove(Wagon*w);
+    bool actionFire(int playerIndex);
 
 private:
     int m_indexOfPlayerToMove;

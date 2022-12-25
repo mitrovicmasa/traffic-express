@@ -31,7 +31,7 @@ PlayerStats::PlayerStats(Player *p, bool deepCopy)
             connect(t, &Treasure::clickedTreasure, this, &PlayerStats::onTreasureClicked);
         }
     }else{//deepCopy
-        m_player=new Player(p->isItMyMove(),p->id(),p->hand(),p->deck(),p->bulletDeck(),p->positionInTrain(),
+        m_player=new Player(p->isItMyMove(),p->id(),p->hand(),p->deck(),p->bullet_deck(),p->positionInTrain(),
                                        p->roof(),p->treasure());
         int i=0;
         for(Treasure *t :m_player->treasure()){
@@ -91,10 +91,9 @@ void PlayerStats::paint(QPainter *painter, const QStyleOptionGraphicsItem *optio
 
     painter->drawPixmap(boundingRect(), QPixmap("://button.png"), QRectF(0,0,0,0));
     painter->setPen(QColor(255,255,255));
-    int num;
-    for (BulletCard *b :m_player->bulletDeck()){
-        num = b->numOfBullets();
-
+    int num=0;
+    for (Card *b : m_player->bullet_deck()->getCards()){
+        num = ((BulletCard*)b)->numOfBullets();
     }
     QString bandit = QString::fromStdString(toString(m_player->id()));
     painter->drawText(boundingRect(), "    "+ bandit + " - Number of bullets: " + QString::number(num));

@@ -11,6 +11,7 @@ Player::Player(BanditType id)
 
     m_hand = new Hand();
     m_deck = new Deck();
+    m_bulletDeck = new Deck();
 
     m_deck->push_back(new ActionCard(ActionType::MOVE, id));
     m_deck->push_back(new ActionCard(ActionType::MOVE, id));
@@ -24,10 +25,8 @@ Player::Player(BanditType id)
     m_deck->push_back(new ActionCard(ActionType::TAKETREASURE, id));
     m_deck->setAllCardsFaceDown();
 
-
-    m_bulletDeck = std::vector<BulletCard*>();
     for(unsigned i = 1; i <= 6; i++){
-        m_bulletDeck.push_back(new BulletCard(id, i));
+        m_bulletDeck->push_back(new BulletCard(id, i));
     }
 
     m_roof = false;
@@ -60,18 +59,14 @@ Player::Player(BanditType id)
 //    connect(m_hand,&Hand::clickedCardInHand,this,&Player::onClickedCardInHand);
 //}
 
-Player::Player(bool isItMyMove, BanditType id, Hand *h, Deck *d, std::vector<BulletCard *> bcd, int pos, bool roof, TreasureChest tc)
+Player::Player(bool isItMyMove, BanditType id, Hand *h, Deck *d, Deck *bcd, int pos, bool roof, TreasureChest tc)
     :m_isItMyMove(isItMyMove),m_id(id),m_hand(new Hand(h->getCards())),m_deck(new Deck(d->getCards())),
-      m_bulletDeck(std::vector<BulletCard*>()),m_positionInTrain(pos),m_roof(roof),m_treasure(TreasureChest(tc))
+      m_bulletDeck(new Deck(bcd->getCards())),m_positionInTrain(pos),m_roof(roof),m_treasure(TreasureChest(tc))
 {
 
 //Todo bulletCardDeck
     connect(m_hand,&Hand::clickedCardInHand,this,&Player::onClickedCardInHand);
     connect(m_deck,&Deck::clickedCardInDeck,this,&Player::onClickedCardInDeck);
-    for(BulletCard*bc:bcd)
-        m_bulletDeck.push_back((BulletCard*)bc->Copy());
-
-
 
     setFlags(GraphicsItemFlag::ItemIsSelectable);
 }
@@ -95,10 +90,15 @@ Deck *Player::deck()
     return m_deck;
 }
 
-const std::vector<BulletCard*> &Player::bulletDeck() const
+Deck *Player::bullet_deck()
 {
     return m_bulletDeck;
 }
+
+//const std::vector<BulletCard*> &Player::bulletDeck() const
+//{
+//    return m_bulletDeck;
+//}
 
 int Player::positionInTrain() const
 {
@@ -145,7 +145,7 @@ void Player::setMyMove(bool v)
 
 bool Player::isBulletDeckEmpty() const
 {
-    return m_bulletDeck.empty();
+    return m_bulletDeck->empty();
 }
 
 int Player::countAmountOfTreasure() const
@@ -200,7 +200,7 @@ std::string Player::toString() const
          + "Position in train: " + std::to_string(m_positionInTrain) + "\n"
          + "Current amount of treasure: " + std::to_string(currentAmountOfTreasure) + "\n"
          + "Current number of cards in deck: " + std::to_string(m_deck->size()) + "\n"
-         + "Current number of bullets in bullet deck: " + std::to_string(m_bulletDeck.size()) + "\n"
+         + "Current number of bullets in bullet deck: " + std::to_string(m_bulletDeck->size()) + "\n"
             + positionInWagon +"\nCards in deck:\n"+cardsInDeck+ "\n"+"\nCards in hand:\n"+cardsInHand+ "\n";
 }
 

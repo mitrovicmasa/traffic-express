@@ -32,7 +32,7 @@ public:
 
     //this is a safe copy constructor
 
-    Player(bool isItMyMove,BanditType id,Hand*h,Deck*d,std::vector<BulletCard*> bcd,int pos,bool roof,TreasureChest tc);
+    Player(bool isItMyMove,BanditType id,Hand*h,Deck*d,Deck* bcd,int pos,bool roof,TreasureChest tc);
 
     // Destructor
     ~Player() = default;
@@ -44,7 +44,8 @@ public:
     BanditType id() const;
     Hand *hand();
     Deck *deck();
-    const std::vector<BulletCard*> &bulletDeck() const;
+    Deck *bullet_deck();
+    //const std::vector<BulletCard*> &bulletDeck() const;
     int positionInTrain() const;
     bool roof() const;
     TreasureChest& treasure();
@@ -88,7 +89,8 @@ private:
     BanditType m_id;
     Hand *m_hand;
     Deck *m_deck;
-    std::vector<BulletCard*> m_bulletDeck;
+    Deck *m_bulletDeck;
+    //std::vector<BulletCard*> m_bulletDeck;
     int m_positionInTrain;
     bool m_roof;
     TreasureChest m_treasure;
