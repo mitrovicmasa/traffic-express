@@ -83,6 +83,10 @@ public:
     void selectBanditPositions();
     unsigned findPlayerById(BanditType);
 
+    void updateRounds();
+    void flipGroupDeck(); //This is not working.
+
+    //Actions
     void actionFloorChange();
 
 private:
@@ -94,7 +98,7 @@ private:
     Train* m_wagons;
     unsigned m_sheriffPosition;
     RoundCardDeck* m_rounds;
-    Deck* m_cardsPlayed;
+    Deck* m_cardsPlayed; //flipujem ovaj deck i gledam na vrhu deka sta je
     std::vector<NeutralBullet*> m_neutralBulletDeck;
     TreasureChest m_unusedTreasure;
     BanditType m_mostBulletsShot;

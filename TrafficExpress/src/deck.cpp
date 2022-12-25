@@ -2,7 +2,7 @@
 #include <qgraphicsscene.h>
 #include <iostream>
 #include <random>
-
+#include <algorithm>
 Deck::Deck():QGraphicsObject()
 {
 
@@ -102,6 +102,17 @@ void Deck::repositionCards()
 {
     for(Card*c:m_cards)
         c->setPos(5,20);
+}
+
+void Deck::reverse()
+{
+    Deck* tmp;
+    int n = m_cards.size();
+    for(int i = 0; i < n; i++) {
+        tmp->push_front(m_cards.back());
+        m_cards.pop_back();
+    }
+    m_cards = tmp->m_cards;
 }
 
 QRectF Deck::boundingRect() const

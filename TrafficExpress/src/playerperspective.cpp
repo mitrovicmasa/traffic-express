@@ -34,10 +34,6 @@ void PlayerPerspective::addGameToScene()
     this->addItem(m_table);
     m_table->setPos(850,300);
 
-//    RoundCard*roundcard = m_game->rounds()[0];
-//    this->addItem(roundcard);
-//    roundcard->setPos(400,300);
-
     RoundCardDeck*rdc=m_game->rounds();
     this->addItem(rdc);
     rdc->setPos(400,300);
@@ -195,8 +191,10 @@ void PlayerPerspective::onClickedWagonInTrain(Wagon *w, Train *train)
 //        ...
 //    }
 
-
 }
+
+
+// PHASE WAGON SELECTION:
 
 void PlayerPerspective::onPlayerChoseWagon(int playerIndex, int wagonIndex)
 {
@@ -208,51 +206,31 @@ void PlayerPerspective::onPlayerChoseWagon(int playerIndex, int wagonIndex)
     if(m_game->findPlayerById(playerToSet->id())==m_game->players().size()-1)
         m_game->setPhase(Phase::PHASE_1);
 
-
-
 }
+
+// PHASE 1:
 
 void PlayerPerspective::onPlayerPlayedCard(int playerIndex, int cardIndex)
 {
-//    qDebug()<<"recieved signal when card clicked";
+    // Taking Card from the hand and putting it in the group deck
     Hand* h=m_game->players()[playerIndex]->hand();
     Card*c=h->takeCard(cardIndex);
     Deck*d=m_game->getCardsPlayed();
     d->push_back(c);
-    RoundCardDeck*rcd=m_game->rounds();
-    //Test
-    int iMiniRound=m_game->indexOfMiniround();
-    int iRound=m_game->indexOfRound();
-    qDebug()<<"Round"<<iRound;
-    qDebug()<<"MiniRound:"<<iMiniRound;
-    if(iMiniRound==((*rcd)[iRound]->getMiniRounds()).size()-1){
-        m_game->setIndexOfMiniround(0);
-        m_game->setPhase(Phase::PHASE_2);
 
+    // Checking the rounds and minirounds
+    m_game->updateRounds();
 
-        m_game->setNextPlayerToMove();
-        if(rcd->size()-1==iRound){
-            //Game gotov
-            return;
-        }
-
-         m_game->setIndexOfRound(iRound+1);
-        return;
-    }
-    if(playerIndex==m_game->players().size()-1)
-        m_game->setIndexOfMiniround(iMiniRound+1);
-    //End of test
+    // Setting next player to move
     m_game->setNextPlayerToMove();
 }
 
 void PlayerPerspective::onPlayerDrawCards(int playerIndex)
 {
+    // Taking 3 cards from the deck and putting it in the hand.
     PlayerGroup pg;
     pg=m_game->players();
     Player*playerToMove=pg[playerIndex];
-    //qDebug()<<playerToMove;
-
-
 
     Deck*d=playerToMove->deck();
     for(unsigned i = 0; i < 3; i++ )
@@ -262,8 +240,9 @@ void PlayerPerspective::onPlayerDrawCards(int playerIndex)
         d->pop_back();
         playerToMove->hand()->push_back(takenCard);
     }
+    // Checking the rounds and minirounds
+    m_game->updateRounds();
 
-
+    // Setting next player to move
     m_game->setNextPlayerToMove();
-
 }

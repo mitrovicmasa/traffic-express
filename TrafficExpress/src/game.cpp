@@ -468,6 +468,46 @@ void Game::setCardsPlayed(Deck *newCardsPlayed)
     m_cardsPlayed = newCardsPlayed;
 }
 
+void Game::updateRounds()
+{
+    RoundCardDeck*rcd=this->rounds();
+    int iMiniRound=this->indexOfMiniround();
+    int iRound=this->indexOfRound();
+    qDebug()<<"Round"<<iRound;
+    qDebug()<<"MiniRound:"<<iMiniRound;
+
+    // If this is the last miniround and the last player, then the round is over.
+    if(iMiniRound==((*rcd)[iRound]->getMiniRounds()).size()-1 &&
+            m_indexOfPlayerToMove==this->players().size()-1){
+
+        // Now it's phase 2.
+        this->setPhase(Phase::PHASE_2);
+        //this->flipGroupDeck(); Method not working.
+
+        // After phase 2:
+        // If this was the last round, then the game is over.
+        if(rcd->size()-1==iRound){
+            //Game over.
+
+        } else { // If this wasn't the last round, we are moving to the next round.
+            this->setIndexOfMiniround(0);
+            this->setIndexOfRound(iRound+1);
+            this->rounds()->setRoundOnScene(iRound+1);
+        }
+
+    } else { // If this isn't the last miniround and the last player
+
+        // If this is the last player, then the miniround is over. Moving to the next miniround.
+        if(m_indexOfPlayerToMove==this->players().size()-1)
+            this->setIndexOfMiniround(iMiniRound+1);
+    }
+}
+
+void Game::flipGroupDeck()
+{
+    m_cardsPlayed->reverse();
+}
+
 void Game::actionFloorChange()
 {
     bool isPlayerOnTheRoof = m_players[m_indexOfPlayerToMove]->roof();
