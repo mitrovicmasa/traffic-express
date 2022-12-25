@@ -131,24 +131,10 @@ void PlayerPerspective::onClickedCardInHandInPlayer(Card *c, Hand *h, Player *p)
         int playerIndex=m_game->findPlayerById(m_player->id());
         int cardIndex=(h->getCardIndex(c));
 
-        //h[cardIndex];
-//        m_game->getCardsPlayed()->push_back(h->takeCard(c));
-//        h->repositionCards();
-//        m_game->setNextPlayerToMove();
+
         emit playerPlayedCard(playerIndex,cardIndex);
         emit movePlayed(this);
-
-//        for(auto it=h->getCards().begin();it!=h->getCards().end();it++){
-//            Card*tmp=*it;
-//            if(tmp->Type()==CardType::ACTION_CARD && tmp==c){
-//                m_game->getCardsPlayed()->push_back(h->takeCard(c));
-//                h->repositionCards();
-//                break;
-//            }
-//        }
-
-
-
+        return;
     }
 }
 
@@ -206,7 +192,12 @@ void PlayerPerspective::onClickedWagonInTrain(Wagon *w, Train *train)
         emit playerChoseWagon(m_game->findPlayerById(m_player->id()),train->getWagonIndex(w));
 
         emit movePlayed(this);
+        return;
     }
+
+//    if(m_game->phase()==Phase::PHASE_1){
+//        ...
+//    }
 
 
 }
@@ -222,6 +213,7 @@ void PlayerPerspective::onPlayerChoseWagon(int playerIndex, int wagonIndex)
         m_game->setPhase(Phase::PHASE_1);
 
 
+
 }
 
 void PlayerPerspective::onPlayerPlayedCard(int playerIndex, int cardIndex)
@@ -230,8 +222,30 @@ void PlayerPerspective::onPlayerPlayedCard(int playerIndex, int cardIndex)
     Hand* h=m_game->players()[playerIndex]->hand();
     Card*c=h->takeCard(cardIndex);
     Deck*d=m_game->getCardsPlayed();
-
     d->push_back(c);
+    RoundCardDeck*rcd=m_game->rounds();
+    //Test
+    int iMiniRound=m_game->indexOfMiniround();
+    int iRound=m_game->indexOfRound();
+    qDebug()<<"Round"<<iRound;
+    qDebug()<<"MiniRound:"<<iMiniRound;
+    if(iMiniRound==((*rcd)[iRound]->getMiniRounds()).size()-1){
+        m_game->setIndexOfMiniround(0);
+        m_game->setPhase(Phase::PHASE_2);
+
+
+        m_game->setNextPlayerToMove();
+        if(rcd->size()-1==iRound){
+            //Game gotov
+            return;
+        }
+
+         m_game->setIndexOfRound(iRound+1);
+        return;
+    }
+    if(playerIndex==m_game->players().size()-1)
+        m_game->setIndexOfMiniround(iMiniRound+1);
+    //End of test
     m_game->setNextPlayerToMove();
 }
 
