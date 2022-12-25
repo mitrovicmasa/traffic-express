@@ -103,5 +103,6 @@
         <file>bluemoon.png</file>
         <file>hands.png</file>
         <file>messageBox.png</file>
+        <file>blue_db.png</file>
     </qresource>
 </RCC>
