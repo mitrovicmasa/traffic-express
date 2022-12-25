@@ -83,6 +83,7 @@ set(PROJECT_SOURCES
         src/singleplayerstatemachine.cpp
         src/sheriff.cpp
         src/dialoguebox.cpp
+        src/roundcarddeck.cpp
         )
 
 set(PROJECT_HEADERS
@@ -115,6 +116,7 @@ set(PROJECT_HEADERS
         headers/singleplayerstatemachine.h
         headers/sheriff.h
         headers/dialoguebox.h
+        headers/roundcarddeck.h
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)

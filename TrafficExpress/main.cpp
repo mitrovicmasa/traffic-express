@@ -76,7 +76,7 @@ int main(int argc, char *argv[])
 
 //    // For every roundcard  (round) :
 
-    for (auto round : game.rounds())
+    for (auto round : game.rounds()->getRoundCads())
     {
          //For every miniRound
 

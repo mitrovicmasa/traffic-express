@@ -193,7 +193,7 @@ void MainWindow::onStart()
     game->initialize();
     game->setPhase(Phase::WAGON_SELECTION);
     game->allPlayersDrawCards(6);
-    std::cout<<game->rounds().size()<<std::endl;
+    std::cout<<game->rounds()->size()<<std::endl;
 
 //    PlayerPerspective*pp=new PlayerPerspective(game,1);
 //    pp->addGameToScene();

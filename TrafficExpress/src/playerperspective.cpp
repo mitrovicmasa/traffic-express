@@ -2,6 +2,7 @@
 
 
 #include <QDebug>
+#include <roundcarddeck.h>
 #include <table.h>
 
 PlayerPerspective::PlayerPerspective(Game *game, int playerIndex, QObject *parent)
@@ -33,9 +34,13 @@ void PlayerPerspective::addGameToScene()
     this->addItem(m_table);
     m_table->setPos(850,300);
 
-    RoundCard*roundcard = m_game->rounds()[0];
-    this->addItem(roundcard);
-    roundcard->setPos(400,300);
+//    RoundCard*roundcard = m_game->rounds()[0];
+//    this->addItem(roundcard);
+//    roundcard->setPos(400,300);
+
+    RoundCardDeck*rdc=m_game->rounds();
+    this->addItem(rdc);
+    rdc->setPos(400,300);
 
     Deck*groupDeck = m_game->getCardsPlayed();
     this->addItem(groupDeck);

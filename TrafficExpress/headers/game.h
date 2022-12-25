@@ -15,6 +15,7 @@
 #include <chrono>
 #include <algorithm>
 #include <roundcardcollection.h>
+#include <roundcarddeck.h>
 
 enum class Phase {
     WAGON_SELECTION,
@@ -34,7 +35,7 @@ public:
     //Get methods
     PlayerGroup &players();
     Train *wagons() const;
-    const RoundCardCollection &rounds() const;
+    RoundCardDeck *rounds();
     std::vector<NeutralBullet*> neutralBulletDeck() const;
     const TreasureChest &unusedTreasure() const;
     BanditType mostBulletsShot() const;
@@ -92,7 +93,7 @@ private:
     PlayerGroup m_players;
     Train* m_wagons;
     unsigned m_sheriffPosition;
-    RoundCardCollection m_rounds;
+    RoundCardDeck* m_rounds;
     Deck* m_cardsPlayed;
     std::vector<NeutralBullet*> m_neutralBulletDeck;
     TreasureChest m_unusedTreasure;

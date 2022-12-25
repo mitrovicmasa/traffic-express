@@ -16,7 +16,7 @@ Game::Game(const Game &other)
     :m_players(PlayerGroup(other.m_players)),
       m_wagons(new Train(other.wagons()->getWagons())),
       m_sheriffPosition(other.m_sheriffPosition),
-      m_rounds(other.m_rounds),
+      m_rounds(new RoundCardDeck(other.m_rounds->getRoundCads())),
       //m_cardsPlayed(std::vector<ActionCard*>()),
       m_neutralBulletDeck(std::vector<NeutralBullet*>()),
       m_unusedTreasure(other.m_unusedTreasure),
@@ -64,7 +64,7 @@ Train* Game::wagons() const
     return m_wagons;
 }
 
-const RoundCardCollection &Game::rounds() const
+RoundCardDeck* Game::rounds()
 {
     return m_rounds;
 }
@@ -135,7 +135,7 @@ void Game::setWagons(Train* newWagons)
 
 void Game::setRounds( std::vector<RoundCard*> &newRounds)
 {
-    m_rounds = RoundCardCollection(newRounds);
+    m_rounds = new RoundCardDeck(newRounds);
 }
 
 //void Game::setCardsPlayed(std::vector<ActionCard*> newCardsPlayed)
