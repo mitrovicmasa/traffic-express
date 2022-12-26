@@ -482,7 +482,6 @@ void Game::updateRounds()
 
         // Now it's phase 2.
         this->setPhase(Phase::PHASE_2);
-        //this->flipGroupDeck(); Method not working.
 
         // After phase 2:
         // If this was the last round, then the game is over.
@@ -503,16 +502,9 @@ void Game::updateRounds()
     }
 }
 
-void Game::flipGroupDeck()
-{
-    m_cardsPlayed->reverse();
-}
-
 void Game::actionFloorChange()
 {
     bool isPlayerOnTheRoof = m_players[m_indexOfPlayerToMove]->roof();
-    BanditType banditId = m_players[m_indexOfPlayerToMove]->id();
-
     unsigned positionInWagon = m_players[m_indexOfPlayerToMove]->positionInTrain();
 
     if (!isPlayerOnTheRoof) {
@@ -525,8 +517,10 @@ void Game::actionFloorChange()
             m_wagons->getWagons()[positionInWagon]->takePlayerUp(m_players[m_indexOfPlayerToMove]);
             m_wagons->getWagons()[positionInWagon]->addPlayerDown(m_players[m_indexOfPlayerToMove]);
         } else {
-            m_players[m_indexOfPlayerToMove]->deck()->push_back(new NeutralBullet(banditId));
+            NeutralBullet *nb = m_neutralBulletDeck.back();
             m_neutralBulletDeck.pop_back();
+            nb->setFaceUp(false);
+            m_players[m_indexOfPlayerToMove]->deck()->push_back(nb);
         }
     }
 }
@@ -535,11 +529,15 @@ void Game::actionSheriffMove(Wagon* w)
 {
    // Taking sheriff off of wagon with m_sheriffPosition index
    Wagon *w0 = m_wagons->getWagons()[m_sheriffPosition];
-   w0->takeSheriffDown();
+   qDebug() << "Sheriff before moving:";
+   qDebug() << m_sheriffPosition;
+   Sheriff* s = w0->takeSheriffDown();
 
    // Adding sheriff to wagon w and changing m_sheriffPosition to his index
-   w->addSheriffDown();
+   w->addSheriffDown(s);
    m_sheriffPosition = m_wagons->getWagonIndex(w);
+   qDebug() << "Sheriff after moving:";
+   qDebug() << m_sheriffPosition;
 
    // For every player that's in our wagon w, we push them to the roof
    for(Player* player: w->getPlayersDown()) {
@@ -551,6 +549,7 @@ void Game::actionSheriffMove(Wagon* w)
        if (!m_neutralBulletDeck.empty()) {
             NeutralBullet *b = m_neutralBulletDeck.back();
             m_neutralBulletDeck.pop_back();
+            b->setFaceUp(false);
             player->deck()->push_back(b);
        }
 
@@ -613,6 +612,7 @@ bool Game::actionFire(int playerIndex)
             qDebug() << "Someone's been shot!";
             Card *c = players()[m_indexOfPlayerToMove]->bullet_deck()->back();
             players()[m_indexOfPlayerToMove]->bullet_deck()->pop_back();
+            c->setFaceUp(false);
             players()[playerIndex]->deck()->push_back(c);
             return true;
         }

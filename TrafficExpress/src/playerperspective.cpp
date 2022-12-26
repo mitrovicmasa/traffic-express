@@ -170,8 +170,8 @@ void PlayerPerspective::onClickedTreasureInPlayerStatsInTable(Treasure *t, Playe
 void PlayerPerspective::onClickedPlayerInWagonInTrain(Player *p, Wagon *w, Train *t)
 {
     std::cout<<"Player is clicked"<<std::endl;
-    //(*t)[0]->addPlayerDown(w->takePlayerDown(p));
 
+    // Ovde posle dodati uslov da je odigrana kartica Fire :)
     if(m_player->isItMyMove() && m_game->phase() == Phase::PHASE_2) {
         qDebug() << "we are in onClickedPlayerInWagonInTrain and it's phase_2 and my move";
 
@@ -271,6 +271,7 @@ void PlayerPerspective::onActionSheriffSignal(int wagonIndex)
 void PlayerPerspective::onActionFireSignal(int playerIndex)
 {
     qDebug() << "we are in onActionFireSignal";
+
     if(!m_game->actionFire(playerIndex)) {
         qDebug() << "You can't shoot him!";
     }

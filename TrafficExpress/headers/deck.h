@@ -34,7 +34,6 @@ public:
     void pop_front();
     void schufleDeck();
     void repositionCards();
-    void reverse();
     // GUI
     QRectF boundingRect() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);

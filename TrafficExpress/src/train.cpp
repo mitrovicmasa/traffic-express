@@ -151,6 +151,7 @@ QRectF Train::boundingRect() const
 void Train::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
     painter->drawPixmap(boundingRect(), QPixmap("://landscape.png"), QRectF(0,0,0,0));
+    //painter->fillRect(boundingRect(),QColor(210,222,230));
 }
 
 void Train::test()

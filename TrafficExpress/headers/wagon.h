@@ -40,8 +40,8 @@ public:
     void addPlayerUp(Player*);
     void addPlayerDown(Player*);
 
-    void addSheriffDown();
-    void takeSheriffDown();
+    void addSheriffDown(Sheriff*);
+    Sheriff* takeSheriffDown();
 
     Treasure* takeContentUp(TreasureType);
     Treasure* takeContentDown(TreasureType);

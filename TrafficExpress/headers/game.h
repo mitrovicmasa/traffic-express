@@ -84,7 +84,6 @@ public:
     unsigned findPlayerById(BanditType);
 
     void updateRounds();
-    void flipGroupDeck(); //This is not working.
 
     //Actions
     void actionFloorChange();
