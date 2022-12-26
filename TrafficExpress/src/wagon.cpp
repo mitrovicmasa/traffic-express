@@ -112,6 +112,22 @@ void Wagon::setContentDown(TreasureChest newContentDown)
     }
 }
 
+void Wagon::setContentUp(TreasureChest newContentUp)
+{
+    for(Treasure*x:m_contentUp){
+        delete x;
+    }
+    m_contentUp.clear();
+
+ //   m_contentDown = newContentDown;
+    for(Treasure* t: newContentUp) {
+        connect(t, &Treasure::clicked, this, &Wagon::testTreasure);
+        m_contentUp.push_back(t);
+        t->setParentItem(this);
+        t->setPos(10+(m_contentUp.size()-1)*(2*t->sirina()),-30+height()-t->visina());
+    }
+}
+
 void Wagon::addContentUp(Treasure *t)
 {
     connect(t, &Treasure::clicked, this, &Wagon::testTreasure);
@@ -319,6 +335,29 @@ Player *Wagon::takePlayerDown(Player *p)
 int Wagon::numberOfTreasureInWagonDown(TreasureType type) const
 {
     return std::count_if(m_contentDown.begin(), m_contentDown.end(), [type](auto treasure) { return treasure->getType() == type; });
+}
+
+int Wagon::getTreasureIndex(Treasure* t, bool roof) const
+{
+    int treasureIndex = -1;
+
+    if (!roof) {
+        for (auto it = m_contentDown.begin(); it != m_contentDown.end(); ++it) {
+            if (*it == t) {
+                treasureIndex = std::distance(m_contentDown.begin(), it);
+                break;
+            }
+        }
+    } else if (roof) {
+        for (auto it = m_contentUp.begin(); it != m_contentUp.end(); ++it) {
+            if (*it == t) {
+                treasureIndex = std::distance(m_contentUp.begin(), it);
+                break;
+            }
+        }
+    }
+
+    return treasureIndex;
 }
 
 std::string Wagon::toString()

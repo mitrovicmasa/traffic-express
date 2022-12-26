@@ -58,6 +58,9 @@ void SinglePlayerStateMachine::push_back(PlayerPerspective *pp)
     connect(pp,&PlayerPerspective::actionFireSignal,pp
             ,&PlayerPerspective::onActionFireSignal);
 
+    connect(pp,&PlayerPerspective::actionRobberySignal, pp
+            ,&PlayerPerspective::onActionRobberySignal);
+
     connect(pp,&PlayerPerspective::actionChangeFloorSignal,pp,&PlayerPerspective::onActionChangeFloorSignal);
 
     connect(pp,&PlayerPerspective::actionChangeWagonSignal,pp,&PlayerPerspective::onActionChangeWagonSignal);
@@ -81,6 +84,11 @@ void SinglePlayerStateMachine::push_back(PlayerPerspective *pp)
                 ,&PlayerPerspective::onActionFireSignal);
         connect(pp,&PlayerPerspective::actionFireSignal,m_perspectives[i]
                 ,&PlayerPerspective::onActionFireSignal);
+
+        connect(m_perspectives[i],&PlayerPerspective::actionRobberySignal,pp
+                ,&PlayerPerspective::onActionRobberySignal);
+                connect(pp,&PlayerPerspective::actionRobberySignal,m_perspectives[i]
+                ,&PlayerPerspective::onActionRobberySignal);
 
         connect(m_perspectives[i],&PlayerPerspective::playerChoseWagon,pp
                 ,&PlayerPerspective::onPlayerChoseWagon);

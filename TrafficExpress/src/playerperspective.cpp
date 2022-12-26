@@ -96,17 +96,24 @@ void PlayerPerspective::onClickedTreasureInWagonInTrainInTran(Treasure *t, Wagon
     std::cout<<"Treasure t from wagon w from train train signaled player perspective"<<std::endl;
     //std::cout<<<<std::endl;
 
-    if(m_player->isItMyMove()){
-        std::cout<<"It is my move"<<std::endl;
-       Treasure* selectedTreasure=w->takeContentDown(t);
+//    if(m_player->isItMyMove()){
+//        std::cout<<"It is my move"<<std::endl;
+//       Treasure* selectedTreasure=w->takeContentDown(t);
 
-       //disconnect(selectedTreasure,&Treasure::clickedTreasure,w,&Wagon::OnCickedTreasuere);
-       //m_player->treasure().push_back(selectedTreasure);
+//       //disconnect(selectedTreasure,&Treasure::clickedTreasure,w,&Wagon::OnCickedTreasuere);
+//       //m_player->treasure().push_back(selectedTreasure);
 
 
-       (*m_table)[m_game->getIndexOfPlayerToMove()]->addTreasureToPlayer(selectedTreasure);
-        w->repositionTreasure();
-    }
+//       (*m_table)[m_game->getIndexOfPlayerToMove()]->addTreasureToPlayer(selectedTreasure);
+//        w->repositionTreasure();
+//    }
+    if (m_player->isItMyMove() && m_game->phase() == Phase::PHASE_2 &&
+                m_player->positionInTrain() == train->getWagonIndex(w)) {
+            emit actionRobberySignal(w->getTreasureIndex(t, m_player->roof()),
+                                     train->getWagonIndex(w));
+            emit movePlayed(this);
+            return;
+        }
 
 
 }
@@ -296,4 +303,40 @@ void PlayerPerspective::onActionSheriffSignal(int wagonIndex)
 {
     qDebug() << "we are in onActionSherrifSignal";
     m_game->actionSheriffMove(m_game->wagons()->getWagons()[wagonIndex]);
+}
+
+void PlayerPerspective::onActionRobberySignal(int treasureIndex, int wagonIndex)
+{
+    PlayerStats *ps = m_table->getPlayerStats()[m_game->getIndexOfPlayerToMove()];
+    Wagon *wagonToTakeTreasure = (*m_game->wagons())[wagonIndex];
+    qDebug() << "Player index:" << m_game->getIndexOfPlayerToMove();
+    qDebug() << "Wagon: " << wagonIndex;
+    qDebug() << "Is on roof: " << m_player->roof();
+
+
+    if (!m_game->players()[m_game->getIndexOfPlayerToMove()]->roof()) {
+        if (wagonToTakeTreasure->getContentDown().empty()) {
+            qDebug() << "You can't take treasure from this wagon!";
+            m_game->setNextPlayerToMove();
+            return;
+        }
+
+        qDebug() << "Down!";
+        Treasure* treasureToTake = wagonToTakeTreasure->getContentDown()[treasureIndex];
+
+        ps->addTreasureToPlayer(wagonToTakeTreasure->takeContentDown(treasureToTake));
+    } else {
+        if (wagonToTakeTreasure->getContentUp().empty()) {
+            qDebug() << "You can't take treasure from this wagon!";
+            m_game->setNextPlayerToMove();
+            return;
+        }
+
+        qDebug() << "Up!";
+        Treasure* treasureToTake = wagonToTakeTreasure->getContentUp()[treasureIndex];
+
+        ps->addTreasureToPlayer(wagonToTakeTreasure->takeContentUp(treasureToTake));
+    }
+
+    m_game->setNextPlayerToMove();
 }

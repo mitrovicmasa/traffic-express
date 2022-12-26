@@ -33,6 +33,7 @@ public:
 
     // Set methods
     void setContentDown(TreasureChest newContentDown);
+    void setContentUp(TreasureChest newContentUp);
 
     // Other methods
     void addContentUp(  Treasure* );
@@ -58,6 +59,7 @@ public:
 
 
     int numberOfTreasureInWagonDown(TreasureType) const;
+    int getTreasureIndex(Treasure*, bool) const;
 
     std::string toString();
 
