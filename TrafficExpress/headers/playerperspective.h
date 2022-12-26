@@ -36,11 +36,14 @@ public slots:
     void onPlayerPlayedCard(int playerIndex,int CardIndex);
     void onPlayerDrawCards(int playerIndex);
 
+    void onActionSheriffSignal (int wagonIndex);
 signals:
     void playerChoseWagon(int playerIndex,int wagonIndex);
     void playerPlayedCard(int playerIndex,int CardIndex);
     void movePlayed(PlayerPerspective*);
     void playerDrawCards(int playerIndex);
+
+    void actionSheriffSignal (int wagonIndex);
 
 private:
     void setMyMove(bool);

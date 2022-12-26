@@ -178,6 +178,10 @@ void PlayerPerspective::onClickedPlayerInWagonInTrain(Player *p, Wagon *w, Train
 void PlayerPerspective::onClickedWagonInTrain(Wagon *w, Train *train)
 {
 
+    qDebug() << (m_game->phase() == Phase::PHASE_2 ? "PHASE 2 ACTIVE" : "NOT PHASE 2");
+    qDebug() << (m_game->phase() == Phase::PHASE_1 ? "PHASE 1 ACTIVE" : "NOT PHASE 1");
+    qDebug() << (m_game->phase() == Phase::WAGON_SELECTION ? "WS ACTIVE" : "NOT WS");
+
     if(m_player->isItMyMove() && m_game->phase()==Phase::WAGON_SELECTION
             && (train->getWagonIndex(w)==0 || train->getWagonIndex(w)==1) ){
 
@@ -186,6 +190,16 @@ void PlayerPerspective::onClickedWagonInTrain(Wagon *w, Train *train)
         emit movePlayed(this);
         return;
     }
+
+
+    if(m_game->phase()==Phase::PHASE_2)
+    {
+        qDebug() << "we are in onActionSherrifSignal";
+
+        emit actionSheriffSignal(train->getWagonIndex(w));
+        //emit movePlayed(this);
+
+            }
 
 }
 
@@ -241,4 +255,10 @@ void PlayerPerspective::onPlayerDrawCards(int playerIndex)
 
     // Setting next player to move
     m_game->setNextPlayerToMove();
+}
+
+void PlayerPerspective::onActionSheriffSignal(int wagonIndex)
+{
+    qDebug() << "we are in onActionSherrifSignal";
+    m_game->actionSheriffMove(m_game->wagons()->getWagons()[wagonIndex]);
 }
