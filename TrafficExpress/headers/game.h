@@ -84,6 +84,8 @@ public:
     void selectBanditPositions();
     unsigned findPlayerById(BanditType);
 
+    void checkNextActionCard();
+
     void updateRounds();
 
     //Actions
@@ -92,10 +94,14 @@ public:
     void actionSheriffMove(Wagon*w);
     bool actionFire(int playerIndex);
 
+    ActionType currentAction() const;
+    void setCurrentAction(ActionType newCurrentAction);
+
 private:
     int m_indexOfPlayerToMove;
     int m_indexOfRound;
     int m_indexOfMiniround;
+    ActionType m_currentAction; // MOZDA TRAEB DODATI U NEKI KONSUTRKTOR
 
     PlayerGroup m_players;
     Train* m_wagons;

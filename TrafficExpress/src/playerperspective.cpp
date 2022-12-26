@@ -107,13 +107,14 @@ void PlayerPerspective::onClickedTreasureInWagonInTrainInTran(Treasure *t, Wagon
 //       (*m_table)[m_game->getIndexOfPlayerToMove()]->addTreasureToPlayer(selectedTreasure);
 //        w->repositionTreasure();
 //    }
-    if (m_player->isItMyMove() && m_game->phase() == Phase::PHASE_2 &&
-                m_player->positionInTrain() == train->getWagonIndex(w)) {
-            emit actionRobberySignal(w->getTreasureIndex(t, m_player->roof()),
-                                     train->getWagonIndex(w));
+
+
+    if (m_game->currentAction() == ActionType::ROBBERY && m_player->isItMyMove() && m_game->phase() == Phase::PHASE_2 && m_player->positionInTrain() == train->getWagonIndex(w))
+    {
+            emit actionRobberySignal(w->getTreasureIndex(t, m_player->roof()),train->getWagonIndex(w));
             emit movePlayed(this);
             return;
-        }
+    }
 
 
 }
@@ -182,19 +183,30 @@ void PlayerPerspective::onClickedPlayerInWagonInTrain(Player *p, Wagon *w, Train
     std::cout<<"Player is clicked"<<std::endl;
 
     // Ovde posle dodati uslov da je odigrana kartica Fire :)
-    if(m_player->isItMyMove() && m_game->phase() == Phase::PHASE_2) {
+    if(m_game->currentAction() == ActionType::FIRE && m_player->isItMyMove() && m_game->phase() == Phase::PHASE_2) {
+
         qDebug() << "we are in onClickedPlayerInWagonInTrain and it's phase_2 and my move";
 
         emit actionFireSignal(m_game->findPlayerById(p->id()));
+        emit movePlayed(this);
     }
 }
 
 void PlayerPerspective::onClickedWagonInTrain(Wagon *w, Train *train)
 {
 
-//    qDebug() << (m_game->phase() == Phase::PHASE_2 ? "PHASE 2 ACTIVE" : "NOT PHASE 2");
-//    qDebug() << (m_game->phase() == Phase::PHASE_1 ? "PHASE 1 ACTIVE" : "NOT PHASE 1");
-//    qDebug() << (m_game->phase() == Phase::WAGON_SELECTION ? "WS ACTIVE" : "NOT WS");
+    qDebug() << (m_game->phase() == Phase::PHASE_2 ? "PHASE 2 ACTIVE" : "NOT PHASE 2");
+    qDebug() << (m_game->phase() == Phase::PHASE_1 ? "PHASE 1 ACTIVE" : "NOT PHASE 1");
+    qDebug() << (m_game->phase() == Phase::WAGON_SELECTION ? "WS ACTIVE" : "NOT WS");
+
+    qDebug() << (m_game->currentAction() == ActionType::FLOOR_CHANGE ? "FLOOR CHANGE" : ".");
+    qDebug() << (m_game->currentAction() == ActionType::MOVE ? "MOVE" : ".");
+    qDebug() << (m_game->currentAction() == ActionType::MARSHAL ? "MARSHALL" : ".");
+
+
+    qDebug() << m_game->getIndexOfPlayerToMove();
+
+
 
     if(m_player->isItMyMove() && m_game->phase()==Phase::WAGON_SELECTION
             && (train->getWagonIndex(w)==0 || train->getWagonIndex(w)==1) ){
@@ -206,16 +218,37 @@ void PlayerPerspective::onClickedWagonInTrain(Wagon *w, Train *train)
     }
 
 
-    if(m_game->phase()==Phase::PHASE_2)
+    if(m_game->currentAction() == ActionType::FLOOR_CHANGE && m_player->isItMyMove() && m_game->phase()==Phase::PHASE_2)
     {
-        // OVDE TESTIRAMO AKCIJE!!!
 
-        qDebug() << "we are in actionChangeWagonSignal";
+        qDebug() << "Floor Change time";
+
+        emit actionChangeFloorSignal(train->getWagonIndex(w));
+        emit movePlayed(this);
+
+    }
+
+    if(m_game->currentAction() == ActionType::MOVE && m_player->isItMyMove() && m_game->phase()==Phase::PHASE_2)
+    {
+
+        qDebug() << "Wagon changetime";
+
+        emit actionChangeWagonSignal(train->getWagonIndex(w));
+        emit movePlayed(this);
+
+    }
+
+    if(m_game->currentAction() == ActionType::MARSHAL && m_player->isItMyMove() && m_game->phase()==Phase::PHASE_2)
+    {
+
+        qDebug() << "Marshall time";
 
         emit actionSheriffSignal(train->getWagonIndex(w));
         emit movePlayed(this);
 
     }
+
+
 
 }
 
@@ -249,7 +282,8 @@ void PlayerPerspective::onPlayerPlayedCard(int playerIndex, int cardIndex)
     m_game->updateRounds();
 
     // Setting next player to move
-    m_game->setNextPlayerToMove();
+    if(m_game->phase() != Phase::PHASE_2)
+        m_game->setNextPlayerToMove();
 }
 
 void PlayerPerspective::onPlayerDrawCards(int playerIndex)
@@ -271,7 +305,8 @@ void PlayerPerspective::onPlayerDrawCards(int playerIndex)
     m_game->updateRounds();
 
     // Setting next player to move
-    m_game->setNextPlayerToMove();
+    if(m_game->phase() != Phase::PHASE_2)
+        m_game->setNextPlayerToMove();
 }
 
 
@@ -290,13 +325,13 @@ void PlayerPerspective::onActionFireSignal(int playerIndex)
 void PlayerPerspective::onActionChangeFloorSignal(int wagonIndex)
 {
     m_game->actionFloorChange();
-    m_game->setNextPlayerToMove();
+    //m_game->setNextPlayerToMove();
 }
 
 void PlayerPerspective::onActionChangeWagonSignal(int wagonIndex)
 {
     m_game->actionChangeWagon(wagonIndex);
-    m_game->setNextPlayerToMove();
+    //m_game->setNextPlayerToMove();
 }
 
 void PlayerPerspective::onActionSheriffSignal(int wagonIndex)
@@ -315,9 +350,11 @@ void PlayerPerspective::onActionRobberySignal(int treasureIndex, int wagonIndex)
 
 
     if (!m_game->players()[m_game->getIndexOfPlayerToMove()]->roof()) {
+
         if (wagonToTakeTreasure->getContentDown().empty()) {
+
             qDebug() << "You can't take treasure from this wagon!";
-            m_game->setNextPlayerToMove();
+            //m_game->setNextPlayerToMove();
             return;
         }
 
@@ -328,7 +365,7 @@ void PlayerPerspective::onActionRobberySignal(int treasureIndex, int wagonIndex)
     } else {
         if (wagonToTakeTreasure->getContentUp().empty()) {
             qDebug() << "You can't take treasure from this wagon!";
-            m_game->setNextPlayerToMove();
+            //->setNextPlayerToMove();
             return;
         }
 
@@ -338,5 +375,5 @@ void PlayerPerspective::onActionRobberySignal(int treasureIndex, int wagonIndex)
         ps->addTreasureToPlayer(wagonToTakeTreasure->takeContentUp(treasureToTake));
     }
 
-    m_game->setNextPlayerToMove();
+    //m_game->setNextPlayerToMove();
 }

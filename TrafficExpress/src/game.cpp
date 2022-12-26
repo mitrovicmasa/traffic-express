@@ -467,6 +467,32 @@ unsigned Game::findPlayerById(BanditType banditId)
     return position;
 }
 
+void Game::checkNextActionCard()
+{
+    if(this->getCardsPlayed()->empty())
+    {
+        qDebug()<<"Played Cards Deck is Empty \n";
+        return;
+    }
+
+    Card* nextCardForAction = this->getCardsPlayed()->front();
+    this->getCardsPlayed()->pop_front();
+
+
+    std::cout <<"Next card for actions is " << nextCardForAction->toString();
+
+    BanditType nextBandit = ((ActionCard*)nextCardForAction)->bandit();
+    ActionType nextAction = ((ActionCard*)nextCardForAction)->action();
+
+    this->setIndexOfPlayerToMove(this->findPlayerById(nextBandit));
+    this->setCurrentAction(nextAction);
+
+    std::cout << "SET INDEX JE: " << this->findPlayerById(nextBandit) << "\n";
+
+    this->players()[this->m_indexOfPlayerToMove]->deck()->push_back(nextCardForAction);
+    nextCardForAction->setFaceUp(false);
+}
+
 void Game::setCardsPlayed(Deck *newCardsPlayed)
 {
     m_cardsPlayed = newCardsPlayed;
@@ -475,8 +501,10 @@ void Game::setCardsPlayed(Deck *newCardsPlayed)
 void Game::updateRounds()
 {
     RoundCardDeck*rcd=this->rounds();
+
     int iMiniRound=this->indexOfMiniround();
     int iRound=this->indexOfRound();
+
     qDebug()<<"Round"<<iRound;
     qDebug()<<"MiniRound:"<<iMiniRound;
 
@@ -486,6 +514,9 @@ void Game::updateRounds()
 
         // Now it's phase 2.
         this->setPhase(Phase::PHASE_2);
+
+        this->checkNextActionCard();
+
 
         // After phase 2:
         // If this was the last round, then the game is over.
@@ -655,6 +686,16 @@ bool Game::actionFire(int playerIndex)
     }
 
     return false;
+}
+
+ActionType Game::currentAction() const
+{
+    return m_currentAction;
+}
+
+void Game::setCurrentAction(ActionType newCurrentAction)
+{
+    m_currentAction = newCurrentAction;
 }
 
 
