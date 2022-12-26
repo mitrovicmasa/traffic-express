@@ -39,7 +39,7 @@ public slots:
 
     void onActionSheriffSignal (int wagonIndex);
     void onActionFireSignal(int playerIndex);
-    //void onActionChangeFloor(int wagonIndex);
+    void onActionChangeFloorSignal(int wagonIndex);
 
 
 signals:
@@ -53,7 +53,7 @@ signals:
     void actionSheriffSignal (int wagonIndex);
     void actionFireSignal(int playerIndex);
     void actionChangeWagon(int playerIndex,int wagonIndex);
-    //void actionChangeFloor(int wagonIndex);
+    void actionChangeFloor(int wagonIndex);
 
 private:
     void setMyMove(bool);

@@ -47,16 +47,25 @@ void SinglePlayerStateMachine::push_back(PlayerPerspective *pp)
     connect(pp,&PlayerPerspective::playerChoseWagon,pp
             ,&PlayerPerspective::onPlayerChoseWagon);
 
+    connect(pp,&PlayerPerspective::playerDrawCards,pp,&PlayerPerspective::onPlayerDrawCards);
+
     connect(pp,&PlayerPerspective::playerPlayedCard,pp
             ,&PlayerPerspective::onPlayerPlayedCard);
 
     connect(pp,&PlayerPerspective::actionSheriffSignal,pp
             ,&PlayerPerspective::onActionSheriffSignal);
+
     connect(pp,&PlayerPerspective::actionFireSignal,pp
             ,&PlayerPerspective::onActionFireSignal);
 
-    connect(pp,&PlayerPerspective::playerDrawCards,pp,&PlayerPerspective::onPlayerDrawCards);
+    connect(pp,&PlayerPerspective::actionChangeFloor,pp,&PlayerPerspective::onActionChangeFloorSignal);
+
+
+
     for(int i=0;i<m_perspectives.size();i++){
+
+        connect(m_perspectives[i],&PlayerPerspective::actionChangeFloor,pp,&PlayerPerspective::onActionChangeFloorSignal);
+        connect(pp,&PlayerPerspective::actionChangeFloor,m_perspectives[i],&PlayerPerspective::onActionChangeFloorSignal);
 
         connect(m_perspectives[i],&PlayerPerspective::actionSheriffSignal,pp
                 ,&PlayerPerspective::onActionSheriffSignal);

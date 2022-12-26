@@ -198,10 +198,15 @@ void PlayerPerspective::onClickedWagonInTrain(Wagon *w, Train *train)
 
     if(m_game->phase()==Phase::PHASE_2)
     {
-        qDebug() << "we are in onActionSherrifSignal";
+        // OVDE TESTIRAMO AKCIJE!!!
 
-        emit actionSheriffSignal(train->getWagonIndex(w));
-        //emit movePlayed(this);
+
+
+        //emit actionSheriffSignal(train->getWagonIndex(w));
+
+        qDebug() << "we are in onActionChangeFloorSignal";
+        emit actionChangeFloor(train->getWagonIndex(w));
+        emit movePlayed(this);
 
     }
 
@@ -262,11 +267,7 @@ void PlayerPerspective::onPlayerDrawCards(int playerIndex)
     m_game->setNextPlayerToMove();
 }
 
-void PlayerPerspective::onActionSheriffSignal(int wagonIndex)
-{
-    qDebug() << "we are in onActionSherrifSignal";
-    m_game->actionSheriffMove(m_game->wagons()->getWagons()[wagonIndex]);
-}
+
 
 // PHASE 2:
 
@@ -277,4 +278,16 @@ void PlayerPerspective::onActionFireSignal(int playerIndex)
     if(!m_game->actionFire(playerIndex)) {
         qDebug() << "You can't shoot him!";
     }
+}
+
+void PlayerPerspective::onActionChangeFloorSignal(int wagonIndex)
+{
+    m_game->actionFloorChange();
+    m_game->setNextPlayerToMove();
+}
+
+void PlayerPerspective::onActionSheriffSignal(int wagonIndex)
+{
+    qDebug() << "we are in onActionSherrifSignal";
+    m_game->actionSheriffMove(m_game->wagons()->getWagons()[wagonIndex]);
 }
