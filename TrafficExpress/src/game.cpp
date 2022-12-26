@@ -565,6 +565,8 @@ bool Game::actionFire(int playerIndex)
     // Shooters' position in train
     unsigned positionInTrain = players()[m_indexOfPlayerToMove]->positionInTrain();
     bool roof = players()[m_indexOfPlayerToMove]->roof();
+    qDebug() << positionInTrain;
+    qDebug() << playerIndex;
 
     if(playerIndex == m_indexOfPlayerToMove) {
         // You can't shoot yourself!
@@ -579,6 +581,7 @@ bool Game::actionFire(int playerIndex)
 
         // Wagon left from our shooter -> looking for possible targets
         if(positionInTrain > 0) {
+
             Wagon *left = m_wagons->getWagons()[positionInTrain-1];
             for(Player* p: left->getPlayersDown()) {
                 possibleTargets.push_back(p);
@@ -586,6 +589,7 @@ bool Game::actionFire(int playerIndex)
         }
         // Wagon right from out shooter -> looking for possible targets
         if(positionInTrain < m_wagons->size()-1) {
+
             Wagon *right = m_wagons->getWagons()[positionInTrain+1];
             for(Player* p: right->getPlayersDown()) {
                 possibleTargets.push_back(p);
@@ -606,6 +610,7 @@ bool Game::actionFire(int playerIndex)
     for(Player* p: possibleTargets) {
         if(findPlayerById(p->id()) == playerIndex) {
             // player(playerIndex) recieves a BULLET CARD from playerToMove
+            qDebug() << "Someone's been shot!";
             Card *c = players()[m_indexOfPlayerToMove]->bullet_deck()->back();
             players()[m_indexOfPlayerToMove]->bullet_deck()->pop_back();
             players()[playerIndex]->deck()->push_back(c);

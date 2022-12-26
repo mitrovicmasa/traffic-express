@@ -170,9 +170,13 @@ void PlayerPerspective::onClickedTreasureInPlayerStatsInTable(Treasure *t, Playe
 void PlayerPerspective::onClickedPlayerInWagonInTrain(Player *p, Wagon *w, Train *t)
 {
     std::cout<<"Player is clicked"<<std::endl;
-    (*t)[0]->addPlayerDown(w->takePlayerDown(p));
+    //(*t)[0]->addPlayerDown(w->takePlayerDown(p));
 
+    if(m_player->isItMyMove() && m_game->phase() == Phase::PHASE_2) {
+        qDebug() << "we are in onClickedPlayerInWagonInTrain and it's phase_2 and my move";
 
+        emit actionFireSignal(m_game->findPlayerById(p->id()));
+    }
 }
 
 void PlayerPerspective::onClickedWagonInTrain(Wagon *w, Train *train)
@@ -199,7 +203,7 @@ void PlayerPerspective::onClickedWagonInTrain(Wagon *w, Train *train)
         emit actionSheriffSignal(train->getWagonIndex(w));
         //emit movePlayed(this);
 
-            }
+    }
 
 }
 
@@ -212,6 +216,7 @@ void PlayerPerspective::onPlayerChoseWagon(int playerIndex, int wagonIndex)
     Player* playerToSet=m_game->players()[playerIndex];
     Wagon* wagonToPutPlayer=(*m_game->wagons())[wagonIndex];
     wagonToPutPlayer->addPlayerDown(playerToSet);
+    m_game->players()[playerIndex]->setPositionInTrain(wagonIndex);
     m_game->setNextPlayerToMove();
     if(m_game->findPlayerById(playerToSet->id())==m_game->players().size()-1)
         m_game->setPhase(Phase::PHASE_1);
@@ -261,4 +266,12 @@ void PlayerPerspective::onActionSheriffSignal(int wagonIndex)
 {
     qDebug() << "we are in onActionSherrifSignal";
     m_game->actionSheriffMove(m_game->wagons()->getWagons()[wagonIndex]);
+}
+
+void PlayerPerspective::onActionFireSignal(int playerIndex)
+{
+    qDebug() << "we are in onActionFireSignal";
+    if(!m_game->actionFire(playerIndex)) {
+        qDebug() << "You can't shoot him!";
+    }
 }
