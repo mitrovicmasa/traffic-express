@@ -540,7 +540,8 @@ void Game::actionSheriffMove(Wagon* w)
    qDebug() << m_sheriffPosition;
 
    // For every player that's in our wagon w, we push them to the roof
-   for(Player* player: w->getPlayersDown()) {
+   std::vector<Player*> players = w->getPlayersDown();
+   for(Player* player: players) {
        w->takePlayerDown(player);
        w->addPlayerUp(player);
        player->setRoof(true);

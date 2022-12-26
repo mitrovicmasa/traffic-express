@@ -23,6 +23,7 @@ public:
     int getPlayerSize();
 
 public slots:
+
     //reacting to internal signals
     void onClickedTreasureInWagonInTrainInTran(Treasure*t,Wagon*w,Train*train);
     void onClickedCardInHandInPlayer(Card*c,Hand*h,Player*p);//*
@@ -38,7 +39,11 @@ public slots:
 
     void onActionSheriffSignal (int wagonIndex);
     void onActionFireSignal(int playerIndex);
+    //void onActionChangeFloor(int wagonIndex);
+
+
 signals:
+
     void playerChoseWagon(int playerIndex,int wagonIndex);
     void playerPlayedCard(int playerIndex,int CardIndex);
     void movePlayed(PlayerPerspective*);
@@ -47,6 +52,9 @@ signals:
 
     void actionSheriffSignal (int wagonIndex);
     void actionFireSignal(int playerIndex);
+    void actionChangeWagon(int playerIndex,int wagonIndex);
+    //void actionChangeFloor(int wagonIndex);
+
 private:
     void setMyMove(bool);
 
