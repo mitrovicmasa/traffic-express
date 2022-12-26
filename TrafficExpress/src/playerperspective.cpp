@@ -107,6 +107,8 @@ void PlayerPerspective::onClickedTreasureInWagonInTrainInTran(Treasure *t, Wagon
        (*m_table)[m_game->getIndexOfPlayerToMove()]->addTreasureToPlayer(selectedTreasure);
         w->repositionTreasure();
     }
+
+
 }
 
 void PlayerPerspective::onClickedCardInHandInPlayer(Card *c, Hand *h, Player *p)
@@ -149,6 +151,7 @@ void PlayerPerspective::onClickedCardInDeckInPlayer(Card *c, Deck *d, Player *p)
         emit playerDrawCards(indexOfPlayer);
         emit movePlayed(this);
     }
+
 
 }
 
@@ -200,12 +203,9 @@ void PlayerPerspective::onClickedWagonInTrain(Wagon *w, Train *train)
     {
         // OVDE TESTIRAMO AKCIJE!!!
 
+        qDebug() << "we are in actionChangeWagonSignal";
 
-
-        //emit actionSheriffSignal(train->getWagonIndex(w));
-
-        qDebug() << "we are in onActionChangeFloorSignal";
-        emit actionChangeFloor(train->getWagonIndex(w));
+        emit actionSheriffSignal(train->getWagonIndex(w));
         emit movePlayed(this);
 
     }
@@ -283,6 +283,12 @@ void PlayerPerspective::onActionFireSignal(int playerIndex)
 void PlayerPerspective::onActionChangeFloorSignal(int wagonIndex)
 {
     m_game->actionFloorChange();
+    m_game->setNextPlayerToMove();
+}
+
+void PlayerPerspective::onActionChangeWagonSignal(int wagonIndex)
+{
+    m_game->actionChangeWagon(wagonIndex);
     m_game->setNextPlayerToMove();
 }
 

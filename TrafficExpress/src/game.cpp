@@ -502,6 +502,37 @@ void Game::updateRounds()
     }
 }
 
+void Game::actionChangeWagon(int wagonIndex)
+{
+    bool isPlayerOnTheRoof = m_players[m_indexOfPlayerToMove]->roof();
+    unsigned positionInWagon = m_players[m_indexOfPlayerToMove]->positionInTrain();
+
+    //std::cout << "RELATIVNA UDALJENOST OD PLAYERA: " << std::abs(int(wagonIndex - positionInWagon)) <<"\n";
+
+    if (!isPlayerOnTheRoof && std::abs(int(wagonIndex - positionInWagon)) == 1 )
+    {
+
+        m_wagons->getWagons()[positionInWagon]->takePlayerDown(m_players[m_indexOfPlayerToMove]);
+        m_wagons->getWagons()[wagonIndex]->addPlayerDown(m_players[m_indexOfPlayerToMove]);
+
+        m_players[m_indexOfPlayerToMove]->setPositionInTrain(wagonIndex);
+
+        return;
+    }
+
+    if (isPlayerOnTheRoof && std::abs(int(wagonIndex - positionInWagon)) > 0 && std::abs(int(wagonIndex - positionInWagon)) < 4)
+    {
+        m_wagons->getWagons()[positionInWagon]->takePlayerUp(m_players[m_indexOfPlayerToMove]);
+        m_wagons->getWagons()[wagonIndex]->addPlayerUp(m_players[m_indexOfPlayerToMove]);
+
+        m_players[m_indexOfPlayerToMove]->setPositionInTrain(wagonIndex);
+
+        return;
+    }
+
+
+}
+
 void Game::actionFloorChange()
 {
     bool isPlayerOnTheRoof = m_players[m_indexOfPlayerToMove]->roof();

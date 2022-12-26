@@ -58,14 +58,19 @@ void SinglePlayerStateMachine::push_back(PlayerPerspective *pp)
     connect(pp,&PlayerPerspective::actionFireSignal,pp
             ,&PlayerPerspective::onActionFireSignal);
 
-    connect(pp,&PlayerPerspective::actionChangeFloor,pp,&PlayerPerspective::onActionChangeFloorSignal);
+    connect(pp,&PlayerPerspective::actionChangeFloorSignal,pp,&PlayerPerspective::onActionChangeFloorSignal);
+
+    connect(pp,&PlayerPerspective::actionChangeWagonSignal,pp,&PlayerPerspective::onActionChangeWagonSignal);
 
 
 
     for(int i=0;i<m_perspectives.size();i++){
 
-        connect(m_perspectives[i],&PlayerPerspective::actionChangeFloor,pp,&PlayerPerspective::onActionChangeFloorSignal);
-        connect(pp,&PlayerPerspective::actionChangeFloor,m_perspectives[i],&PlayerPerspective::onActionChangeFloorSignal);
+        connect(m_perspectives[i],&PlayerPerspective::actionChangeWagonSignal,pp,&PlayerPerspective::onActionChangeWagonSignal);
+        connect(pp,&PlayerPerspective::actionChangeWagonSignal,m_perspectives[i],&PlayerPerspective::onActionChangeWagonSignal);
+
+        connect(m_perspectives[i],&PlayerPerspective::actionChangeFloorSignal,pp,&PlayerPerspective::onActionChangeFloorSignal);
+        connect(pp,&PlayerPerspective::actionChangeFloorSignal,m_perspectives[i],&PlayerPerspective::onActionChangeFloorSignal);
 
         connect(m_perspectives[i],&PlayerPerspective::actionSheriffSignal,pp
                 ,&PlayerPerspective::onActionSheriffSignal);

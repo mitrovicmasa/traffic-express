@@ -16,6 +16,7 @@
 #include <algorithm>
 #include <roundcardcollection.h>
 #include <roundcarddeck.h>
+#include <cstdlib>
 
 enum class Phase {
     WAGON_SELECTION,
@@ -86,6 +87,7 @@ public:
     void updateRounds();
 
     //Actions
+    void actionChangeWagon(int wagonIndex);
     void actionFloorChange();
     void actionSheriffMove(Wagon*w);
     bool actionFire(int playerIndex);
