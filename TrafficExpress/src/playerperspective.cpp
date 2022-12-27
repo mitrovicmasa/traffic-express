@@ -358,6 +358,12 @@ void PlayerPerspective::onActionFireSignal(int playerIndex)
 
     if(!m_game->actionFire(playerIndex)) {
         qDebug() << "You can't shoot him!";
+    } else {
+        // Putting message in dialogue box
+        QString text = QString::fromStdString(::toString(m_game->players()[playerIndex]->id()));
+        text.append(" 's been shot by ");
+        text.append(QString::fromStdString(::toString(m_game->players()[m_game->getIndexOfPlayerToMove()]->id())));
+        m_game->dialogueBox()->setText(text);
     }
 }
 
@@ -365,18 +371,32 @@ void PlayerPerspective::onActionChangeFloorSignal(int wagonIndex)
 {
     m_game->actionFloorChange();
     //m_game->setNextPlayerToMove();
+
+    // Putting message in dialogue box
+    QString text = QString::fromStdString(::toString(m_game->players()[m_game->getIndexOfPlayerToMove()]->id()));
+    text.append(" changed floor!");
+    m_game->dialogueBox()->setText(text);
 }
 
 void PlayerPerspective::onActionChangeWagonSignal(int wagonIndex)
 {
     m_game->actionChangeWagon(wagonIndex);
     //m_game->setNextPlayerToMove();
+
+    // Putting message in dialogue box
+    QString text = QString::fromStdString(::toString(m_game->players()[m_game->getIndexOfPlayerToMove()]->id()));
+    text.append(" changed wagon!");
+    m_game->dialogueBox()->setText(text);
 }
 
 void PlayerPerspective::onActionSheriffSignal(int wagonIndex)
 {
-    qDebug() << "we are in onActionSherrifSignal";
     m_game->actionSheriffMove(m_game->wagons()->getWagons()[wagonIndex]);
+
+    // Putting message in dialogue box
+    QString text = QString::fromStdString(::toString(m_game->players()[m_game->getIndexOfPlayerToMove()]->id()));
+    text.append(" moved sheriff!");
+    m_game->dialogueBox()->setText(text);
 }
 
 void PlayerPerspective::onActionRobberySignal(int treasureIndex, int wagonIndex)
@@ -393,6 +413,10 @@ void PlayerPerspective::onActionRobberySignal(int treasureIndex, int wagonIndex)
     } else {
         ps->addTreasureToPlayer(wagonToTakeTreasure->takeContentDown(treasureToTake));
     }
+    // Putting message in dialogue box
+    QString text = QString::fromStdString(::toString(m_game->players()[m_game->getIndexOfPlayerToMove()]->id()));
+    text.append(" took treasure!");
+    m_game->dialogueBox()->setText(text);
 
 //    if (!m_game->players()[m_game->getIndexOfPlayerToMove()]->roof()) {
 
@@ -434,6 +458,12 @@ void PlayerPerspective::onActionPunchSignal(int treasureIndex, int playerIndex, 
         wagonToUpdate->addContentUp(ps->takeTreasureFromPlayer(treasure));
     else
         wagonToUpdate->addContentDown(ps->takeTreasureFromPlayer(treasure));
+
+    // Putting message in dialogue box
+    QString text = QString::fromStdString(::toString(m_game->players()[playerIndex]->id()));
+    text.append(" 's been punched by ");
+    text.append(QString::fromStdString(::toString(m_game->players()[m_game->getIndexOfPlayerToMove()]->id())));
+    m_game->dialogueBox()->setText(text);
 
     m_game->setNextPlayerToMove();
 }
