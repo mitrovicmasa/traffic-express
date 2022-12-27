@@ -119,6 +119,10 @@ Phase Game::phase() const
     return m_phase;
 }
 
+bool Game::actionPending() const
+{
+    return m_actionPending;
+}
 
 //// Set methods
 //void Game::setPlayers(const std::vector<Player> &newPlayers)
@@ -172,6 +176,11 @@ void Game::setIndexOfPlayerToMove(int nextPlayerIndex)
     m_players[m_indexOfPlayerToMove]->setMyMove(false);
     m_indexOfPlayerToMove=nextPlayerIndex;
     m_players[m_indexOfPlayerToMove]->setMyMove(true);
+}
+
+void Game::setActionPending(bool newActionPending)
+{
+    m_actionPending = newActionPending;
 }
 
 //// Initialization methods
@@ -469,6 +478,19 @@ unsigned Game::findPlayerById(BanditType banditId)
     return position;
 }
 
+int Game::findPlayersTreasureIndex(Treasure *t, unsigned playerIndex)
+{
+    int treasureIndex = -1;
+    for (auto it = m_players[playerIndex]->treasure().cbegin(); it != m_players[playerIndex]->treasure().end(); ++it) {
+        if (*it == t) {
+            treasureIndex = std::distance(m_players[playerIndex]->treasure().cbegin(), it);
+            break;
+        }
+    }
+
+    return treasureIndex;
+}
+
 void Game::checkNextActionCard()
 {
     if(this->getCardsPlayed()->empty())
@@ -735,4 +757,16 @@ std::pair<Wagon*, Treasure*> Game::actionRobbery(int treasureIndex, int wagonInd
     return {wagonToTakeTreasure, treasureToTake};
 }
 
+std::pair<Wagon*, Treasure*> Game::actionPunch(int treasureIndex, int wagonIndex, int playerIndex)
+{
+    if (m_players[playerIndex]->treasure().empty()) {
+        qDebug() << "Choose another player to punch!";
+        setNextPlayerToMove();
+    }
+
+    Treasure *treasure = m_players[playerIndex]->treasure()[treasureIndex];
+    Wagon *wagon = (*m_wagons)[wagonIndex];
+
+    return {wagon, treasure};
+}
 

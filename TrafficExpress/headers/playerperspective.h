@@ -42,7 +42,7 @@ public slots:
     void onActionChangeFloorSignal(int wagonIndex);
     void onActionChangeWagonSignal(int wagonIndex);
     void onActionRobberySignal(int treasureIndex, int wagonIndex);
-
+    void onActionPunchSignal(int treasureIndex, int playerIndex, int wagonIndex);
 
 signals:
 
@@ -57,6 +57,7 @@ signals:
     void actionChangeFloorSignal(int wagonIndex);
     void actionChangeWagonSignal(int wagonIndex);
     void actionRobberySignal(int treasureIndex, int wagonIndex);
+    void actionPunchSignal(int treasureIndex, int playerIndex, int wagonIndex);
 
 private:
     void setMyMove(bool);

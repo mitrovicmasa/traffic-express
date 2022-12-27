@@ -152,6 +152,7 @@ void PlayerPerspective::onClickedCardInDeckInPlayer(Card *c, Deck *d, Player *p)
         qDebug()<<"Player that clicked:"<<indexOfPlayer;
 
     }
+
     if(p->isItMyMove() && m_game->phase()==Phase::PHASE_1 && d->size() >= 3)
     {
 
@@ -167,20 +168,32 @@ void PlayerPerspective::onClickedTreasureInPlayerStatsInTable(Treasure *t, Playe
 {
     std::cout<<"signal recieved in player perspective"<<std::endl;
 
-    for(PlayerStats*tmp:m_table->getPlayerStats()){
+//    for(PlayerStats*tmp:m_table->getPlayerStats()){
 
-        if(m_player==tmp->getPlayer() && tmp!=ps)
-            tmp->addTreasureToPlayer(ps->takeTreasureFromPlayer(t));
+//        if(m_player==tmp->getPlayer() && tmp!=ps)
+//            tmp->addTreasureToPlayer(ps->takeTreasureFromPlayer(t));
 
 //        if(ps->takeTreasureFromPlayer(t))
 //            qDebug()<<"notNull";
-    }
+//    }
+
+    if (m_game->currentAction() == ActionType::PUNCH && m_player->isItMyMove() && m_game->phase() == Phase::PHASE_2 && m_game->actionPending()) {
+
+        m_game->setActionPending(false);
+        unsigned playerIndex = m_game->findPlayerById(ps->getPlayer()->id());
+        unsigned wagonIndex = m_player->positionInTrain();
+
+        emit actionPunchSignal(m_game->findPlayersTreasureIndex(t, playerIndex), playerIndex, wagonIndex);
+        emit movePlayed(this);
+        return;
+   }
 
 }
 
 void PlayerPerspective::onClickedPlayerInWagonInTrain(Player *p, Wagon *w, Train *t)
 {
-    std::cout<<"Player is clicked"<<std::endl;
+
+    std::cout<< ::toString(p->id()) + " is clicked" <<std::endl;
 
     // Ovde posle dodati uslov da je odigrana kartica Fire :)
     if(m_game->currentAction() == ActionType::FIRE && m_player->isItMyMove() && m_game->phase() == Phase::PHASE_2) {
@@ -189,6 +202,20 @@ void PlayerPerspective::onClickedPlayerInWagonInTrain(Player *p, Wagon *w, Train
 
         emit actionFireSignal(m_game->findPlayerById(p->id()));
         emit movePlayed(this);
+    }
+
+    if (m_game->currentAction() == ActionType::PUNCH && m_player->isItMyMove() && m_game->phase() == Phase::PHASE_2 &&
+        m_player->positionInTrain() == p->positionInTrain() && m_player->roof() == p->roof() && !p->treasure().empty())
+    {
+        m_game->setActionPending(true);
+        return;
+    } else if (m_game->currentAction() == ActionType::PUNCH && m_player->isItMyMove() && m_game->phase() == Phase::PHASE_2 &&
+               m_player->positionInTrain() == p->positionInTrain() && m_player->roof() == p->roof() && p->treasure().empty()) {
+        qDebug() << "Choose another player!";
+        return;
+    } else {
+        m_game->setNextPlayerToMove();
+        return;
     }
 }
 
@@ -392,6 +419,21 @@ void PlayerPerspective::onActionRobberySignal(int treasureIndex, int wagonIndex)
 
 //        ps->addTreasureToPlayer(wagonToTakeTreasure->takeContentUp(treasureToTake));
 //    }
+
+    m_game->setNextPlayerToMove();
+}
+
+void PlayerPerspective::onActionPunchSignal(int treasureIndex, int playerIndex, int wagonIndex)
+{
+    qDebug() << "we are in onActionPunchSignal";
+
+    PlayerStats *ps = m_table->getPlayerStats()[playerIndex];
+    auto[wagonToUpdate, treasure] = m_game->actionPunch(treasureIndex, wagonIndex, playerIndex);
+
+    if (m_player->roof())
+        wagonToUpdate->addContentUp(ps->takeTreasureFromPlayer(treasure));
+    else
+        wagonToUpdate->addContentDown(ps->takeTreasureFromPlayer(treasure));
 
     m_game->setNextPlayerToMove();
 }

@@ -49,6 +49,7 @@ public:
     Phase phase() const;
     ActionType currentAction() const;
     DialogueBox *dialogueBox() const;
+    bool actionPending() const;
 
     //Set methods
     void setPlayers(const std::vector<Player*> &newPlayers);
@@ -67,6 +68,7 @@ public:
     void setPhase(Phase newPhase);
     void setCurrentAction(ActionType newCurrentAction);
     void setDialogueBox(DialogueBox *newDialogueBox);
+    void setActionPending(bool newActionPending);
 
     // Initialization methods
 
@@ -90,12 +92,16 @@ public:
     void checkNextActionCard();
     void updateRounds();
 
+    int findPlayersTreasureIndex(Treasure*, unsigned);
+
+
     //Action methods
     void actionChangeWagon(int wagonIndex);
     void actionFloorChange();
     void actionSheriffMove(Wagon*w);
     bool actionFire(int playerIndex);
     std::pair<Wagon*, Treasure*> actionRobbery(int treasureIndex, int wagonIndex);
+    std::pair<Wagon*, Treasure*> actionPunch(int treasureIndex, int wagonIndex, int playerIndex);
 
 private:
     int m_indexOfPlayerToMove;
@@ -113,6 +119,7 @@ private:
     BanditType m_richestPlayer;
     Phase m_phase;
     DialogueBox* m_dialogueBox;
+    bool m_actionPending;
 };
 
 void generateAllTreasure(const int &count, const int &value, TreasureType type, std::vector<Treasure> &treasure);
