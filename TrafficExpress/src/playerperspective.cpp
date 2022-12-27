@@ -111,8 +111,8 @@ void PlayerPerspective::onClickedTreasureInWagonInTrainInTran(Treasure *t, Wagon
 
     if (m_game->currentAction() == ActionType::TAKETREASURE && m_player->isItMyMove() && m_game->phase() == Phase::PHASE_2 && m_player->positionInTrain() == train->getWagonIndex(w))
     {
-            emit actionRobberySignal(w->getTreasureIndex(t, m_player->roof()),train->getWagonIndex(w));
-            emit movePlayed(this);
+        emit actionRobberySignal(w->getTreasureIndex(t, m_player->roof()),train->getWagonIndex(w));
+        //emit movePlayed(this);
             return;
     }
 
@@ -135,7 +135,7 @@ void PlayerPerspective::onClickedCardInHandInPlayer(Card *c, Hand *h, Player *p)
 
 
         emit playerPlayedCard(playerIndex,cardIndex);
-        emit movePlayed(this);
+        emit movePlayed(this,-1);
         return;
     }
 }
@@ -157,7 +157,7 @@ void PlayerPerspective::onClickedCardInDeckInPlayer(Card *c, Deck *d, Player *p)
 
         int indexOfPlayer=m_game->findPlayerById(m_player->id());
         emit playerDrawCards(indexOfPlayer);
-        emit movePlayed(this);
+        emit movePlayed(this,-1);
     }
 
 
@@ -183,7 +183,7 @@ void PlayerPerspective::onClickedTreasureInPlayerStatsInTable(Treasure *t, Playe
         unsigned wagonIndex = m_player->positionInTrain();
 
         emit actionPunchSignal(m_game->findPlayersTreasureIndex(t, playerIndex), playerIndex, wagonIndex);
-        emit movePlayed(this);
+        //emit movePlayed(this);
         return;
    }
 
@@ -200,7 +200,7 @@ void PlayerPerspective::onClickedPlayerInWagonInTrain(Player *p, Wagon *w, Train
         qDebug() << "we are in onClickedPlayerInWagonInTrain and it's phase_2 and my move";
 
         emit actionFireSignal(m_game->findPlayerById(p->id()));
-        emit movePlayed(this);
+        //emit movePlayed(this);
     }
 
     if (m_game->currentAction() == ActionType::PUNCH && m_player->isItMyMove() && m_game->phase() == Phase::PHASE_2 &&
@@ -239,7 +239,7 @@ void PlayerPerspective::onClickedWagonInTrain(Wagon *w, Train *train)
 
         emit playerChoseWagon(m_game->findPlayerById(m_player->id()),train->getWagonIndex(w));
 
-        emit movePlayed(this);
+        emit movePlayed(this,-1);
         return;
     }
 
@@ -249,8 +249,8 @@ void PlayerPerspective::onClickedWagonInTrain(Wagon *w, Train *train)
 
         qDebug() << "Floor Change time";
 
+
         emit actionChangeFloorSignal(train->getWagonIndex(w));
-        emit movePlayed(this);
 
     }
 
@@ -260,7 +260,7 @@ void PlayerPerspective::onClickedWagonInTrain(Wagon *w, Train *train)
         qDebug() << "Wagon changetime";
 
         emit actionChangeWagonSignal(train->getWagonIndex(w));
-        emit movePlayed(this);
+
 
     }
 
@@ -270,7 +270,7 @@ void PlayerPerspective::onClickedWagonInTrain(Wagon *w, Train *train)
         qDebug() << "Marshall time";
 
         emit actionSheriffSignal(train->getWagonIndex(w));
-        emit movePlayed(this);
+
 
     }
 
@@ -367,6 +367,7 @@ void PlayerPerspective::onActionFireSignal(int playerIndex)
         m_game->dialogueBox()->setText(text);
 
         m_game->checkNextActionCard();
+        emit movePlayed(this, m_game->getIndexOfPlayerToMove());
     }
 }
 
@@ -381,6 +382,7 @@ void PlayerPerspective::onActionChangeFloorSignal(int wagonIndex)
     m_game->dialogueBox()->setText(text);
 
     m_game->checkNextActionCard();
+    emit movePlayed(this, m_game->getIndexOfPlayerToMove());
 }
 
 void PlayerPerspective::onActionChangeWagonSignal(int wagonIndex)
@@ -393,7 +395,10 @@ void PlayerPerspective::onActionChangeWagonSignal(int wagonIndex)
     text.append(" changed wagon!");
     m_game->dialogueBox()->setText(text);
 
+
     m_game->checkNextActionCard();
+    emit movePlayed(this, m_game->getIndexOfPlayerToMove());
+
 }
 
 void PlayerPerspective::onActionSheriffSignal(int wagonIndex)
@@ -406,6 +411,8 @@ void PlayerPerspective::onActionSheriffSignal(int wagonIndex)
     m_game->dialogueBox()->setText(text);
 
     m_game->checkNextActionCard();
+    emit movePlayed(this, m_game->getIndexOfPlayerToMove());
+
 }
 
 void PlayerPerspective::onActionRobberySignal(int treasureIndex, int wagonIndex)
@@ -428,6 +435,7 @@ void PlayerPerspective::onActionRobberySignal(int treasureIndex, int wagonIndex)
     m_game->dialogueBox()->setText(text);
 
     m_game->checkNextActionCard();
+    emit movePlayed(this, m_game->getIndexOfPlayerToMove());
 
 //    if (!m_game->players()[m_game->getIndexOfPlayerToMove()]->roof()) {
 
@@ -477,4 +485,5 @@ void PlayerPerspective::onActionPunchSignal(int treasureIndex, int playerIndex, 
     m_game->dialogueBox()->setText(text);
 
     m_game->setNextPlayerToMove();
+    emit movePlayed(this, m_game->getIndexOfPlayerToMove());
 }

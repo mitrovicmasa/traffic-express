@@ -21,7 +21,7 @@ public:
 
 
 public slots:
-    void onMovePlayed(PlayerPerspective*);
+    void onMovePlayed(PlayerPerspective*, int indexOfNextPerspective);
 
 signals:
     void movePlayed(int i);

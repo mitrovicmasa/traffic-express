@@ -48,7 +48,7 @@ signals:
 
     void playerChoseWagon(int playerIndex,int wagonIndex);
     void playerPlayedCard(int playerIndex,int CardIndex);
-    void movePlayed(PlayerPerspective*);
+    void movePlayed(PlayerPerspective*, int indexOfNextPerspective);
     void playerDrawCards(int playerIndex);
 
 

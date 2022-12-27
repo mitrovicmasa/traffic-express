@@ -122,13 +122,17 @@ PlayerPerspective *SinglePlayerStateMachine::back()
     return m_perspectives.back();
 }
 
-void SinglePlayerStateMachine::onMovePlayed(PlayerPerspective *p)
+void SinglePlayerStateMachine::onMovePlayed(PlayerPerspective *p, int indexOfNextPerspective)
 {
-    qDebug()<<currPerspectiveIndex;
-    currPerspectiveIndex=(currPerspectiveIndex+1)%m_perspectives.size();
-
+    // If it's PHASE 1 (We want to cycle between players)
+    if(indexOfNextPerspective == -1)
+    {
+        qDebug()<<currPerspectiveIndex;
+        currPerspectiveIndex=(currPerspectiveIndex+1)%m_perspectives.size();
+    }
+    else
+         currPerspectiveIndex = indexOfNextPerspective;
 
     emit movePlayed(currPerspectiveIndex);
-
 
 }
