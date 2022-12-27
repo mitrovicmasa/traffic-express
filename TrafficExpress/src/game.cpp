@@ -495,15 +495,51 @@ void Game::checkNextActionCard()
 {
     if(this->getCardsPlayed()->empty())
     {
-        qDebug()<<"Played Cards Deck is Empty \n";
+        QString msg = "No more ActionCards to play";
+        this->m_dialogueBox->setText(msg);
+
+        RoundCardDeck*rcd=this->rounds();
+
+        // If this was the last round, then the game is over.
+        if(rcd->size() - 1 == indexOfRound()){
+
+            QString msg = "GAME OVER";
+            this->m_dialogueBox->setText(msg);
+
+        } else { // If this wasn't the last round, we are moving to the next round.
+
+            this->setIndexOfMiniround(0);
+            this->setIndexOfRound(this->indexOfRound() +1);
+            this->rounds()->setRoundOnScene(this->indexOfRound() + 1);
+
+
+            QString msg = "Now it's PHASE 1";
+            this->m_dialogueBox->setText(msg);
+
+            for(Player* p : this->m_players)
+            {
+                p->returnCardsToDeck();
+                p->shuffleDeck();
+                p->drawCards(6);
+            }
+
+            this->setIndexOfPlayerToMove(0);
+
+            this->setPhase(Phase::PHASE_1);
+
+        }
+
+
         return;
     }
 
     Card* nextCardForAction = this->getCardsPlayed()->front();
     this->getCardsPlayed()->pop_front();
 
+    QString msg = "Next card for actions is ";
+    msg.append(QString::fromStdString(nextCardForAction->toString()));
+    this->m_dialogueBox->setText(msg);
 
-    std::cout <<"Next card for actions is " << nextCardForAction->toString();
 
     BanditType nextBandit = ((ActionCard*)nextCardForAction)->bandit();
     ActionType nextAction = ((ActionCard*)nextCardForAction)->action();
@@ -511,7 +547,7 @@ void Game::checkNextActionCard()
     this->setIndexOfPlayerToMove(this->findPlayerById(nextBandit));
     this->setCurrentAction(nextAction);
 
-    std::cout << "SET INDEX JE: " << this->findPlayerById(nextBandit) << "\n";
+    //std::cout << "SET INDEX JE: " << this->findPlayerById(nextBandit) << "\n";
 
     this->players()[this->m_indexOfPlayerToMove]->deck()->push_back(nextCardForAction);
     nextCardForAction->setFaceUp(false);
@@ -541,17 +577,6 @@ void Game::updateRounds()
 
         this->checkNextActionCard();
 
-
-        // After phase 2:
-        // If this was the last round, then the game is over.
-        if(rcd->size()-1==iRound){
-            //Game over.
-
-        } else { // If this wasn't the last round, we are moving to the next round.
-            this->setIndexOfMiniround(0);
-            this->setIndexOfRound(iRound+1);
-            this->rounds()->setRoundOnScene(iRound+1);
-        }
 
     } else { // If this isn't the last miniround and the last player
 

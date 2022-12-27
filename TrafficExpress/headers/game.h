@@ -18,6 +18,8 @@
 #include <roundcarddeck.h>
 #include <cstdlib>
 
+#include <QString>
+
 enum class Phase {
     WAGON_SELECTION,
     PHASE_1,
@@ -90,6 +92,8 @@ public:
     unsigned findPlayerById(BanditType);
 
     void checkNextActionCard();
+    void updateNextAction();
+
     void updateRounds();
 
     int findPlayersTreasureIndex(Treasure*, unsigned);

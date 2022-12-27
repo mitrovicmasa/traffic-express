@@ -146,7 +146,6 @@ void PlayerPerspective::onClickedCardInDeckInPlayer(Card *c, Deck *d, Player *p)
 
     if(!p->isItMyMove()){
         qDebug()<<"not my move";
-        int playerThatClicked =m_game->findPlayerById(p->id());
         int indexOfPlayer=m_game->getIndexOfPlayerToMove();
         qDebug()<<"Player to move:"<<indexOfPlayer;
         qDebug()<<"Player that clicked:"<<indexOfPlayer;
@@ -346,6 +345,8 @@ void PlayerPerspective::onPlayerDrawCards(int playerIndex)
     // Setting next player to move
     if(m_game->phase() != Phase::PHASE_2)
         m_game->setNextPlayerToMove();
+
+
 }
 
 
@@ -364,6 +365,8 @@ void PlayerPerspective::onActionFireSignal(int playerIndex)
         text.append(" 's been shot by ");
         text.append(QString::fromStdString(::toString(m_game->players()[m_game->getIndexOfPlayerToMove()]->id())));
         m_game->dialogueBox()->setText(text);
+
+        m_game->checkNextActionCard();
     }
 }
 
@@ -376,6 +379,8 @@ void PlayerPerspective::onActionChangeFloorSignal(int wagonIndex)
     QString text = QString::fromStdString(::toString(m_game->players()[m_game->getIndexOfPlayerToMove()]->id()));
     text.append(" changed floor!");
     m_game->dialogueBox()->setText(text);
+
+    m_game->checkNextActionCard();
 }
 
 void PlayerPerspective::onActionChangeWagonSignal(int wagonIndex)
@@ -387,6 +392,8 @@ void PlayerPerspective::onActionChangeWagonSignal(int wagonIndex)
     QString text = QString::fromStdString(::toString(m_game->players()[m_game->getIndexOfPlayerToMove()]->id()));
     text.append(" changed wagon!");
     m_game->dialogueBox()->setText(text);
+
+    m_game->checkNextActionCard();
 }
 
 void PlayerPerspective::onActionSheriffSignal(int wagonIndex)
@@ -397,6 +404,8 @@ void PlayerPerspective::onActionSheriffSignal(int wagonIndex)
     QString text = QString::fromStdString(::toString(m_game->players()[m_game->getIndexOfPlayerToMove()]->id()));
     text.append(" moved sheriff!");
     m_game->dialogueBox()->setText(text);
+
+    m_game->checkNextActionCard();
 }
 
 void PlayerPerspective::onActionRobberySignal(int treasureIndex, int wagonIndex)
@@ -417,6 +426,8 @@ void PlayerPerspective::onActionRobberySignal(int treasureIndex, int wagonIndex)
     QString text = QString::fromStdString(::toString(m_game->players()[m_game->getIndexOfPlayerToMove()]->id()));
     text.append(" took treasure!");
     m_game->dialogueBox()->setText(text);
+
+    m_game->checkNextActionCard();
 
 //    if (!m_game->players()[m_game->getIndexOfPlayerToMove()]->roof()) {
 
@@ -444,7 +455,7 @@ void PlayerPerspective::onActionRobberySignal(int treasureIndex, int wagonIndex)
 //        ps->addTreasureToPlayer(wagonToTakeTreasure->takeContentUp(treasureToTake));
 //    }
 
-    m_game->setNextPlayerToMove();
+    //m_game->setNextPlayerToMove(); // NE KORISTI SE OVO VISE U AKCIJAMA
 }
 
 void PlayerPerspective::onActionPunchSignal(int treasureIndex, int playerIndex, int wagonIndex)

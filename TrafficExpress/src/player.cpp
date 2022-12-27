@@ -125,11 +125,15 @@ int Player::countAmountOfTreasure() const
 
 void Player::returnCardsToDeck()
 {
-//    while(!m_hand->empty())
-//    {
-//        m_deck->push_back((m_hand->getCards());
-//        m_hand->erase(m_hand->begin());
-//    }
+    std::vector<Card*> cardsInHand = this->m_hand->getCards();
+
+    for(Card* c : cardsInHand)
+    {
+        c = m_hand->takeCard(c);
+        m_deck->push_back(c);
+        c->setFaceUp(false);
+    }
+
 }
 
 void Player::shuffleDeck()
