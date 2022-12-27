@@ -110,6 +110,22 @@ void Treasure::mousePressEvent(QGraphicsSceneMouseEvent *event)
     emit clickedTreasure(this);
 }
 
+QVariant Treasure::toVariant() const
+{
+    QVariantMap map;
+    map.insert("type",(int)m_type);
+    map.insert("value",m_value);
+
+    return map;
+}
+
+void Treasure::fromVariant(const QVariant &variant)
+{
+    QVariantMap map=variant.toMap();
+    m_type=static_cast<TreasureType>(map.value("type").toInt());
+    m_value=map.value("value").toInt();
+}
+
 
 
 

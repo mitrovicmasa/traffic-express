@@ -2,6 +2,7 @@
 #define ACTIONCARD_H
 
 #include <banditcard.h>
+#include <serializable.h>
 
 enum class ActionType {
     MOVE,
@@ -13,7 +14,7 @@ enum class ActionType {
     TAKETREASURE
 };
 
-class ActionCard : public BanditCard {
+class ActionCard : public BanditCard,public Serializable {
 
 public:
 
@@ -44,6 +45,11 @@ private:
     // Card interface
 public:
     Card *Copy() const override;
+
+    // Serializable interface
+public:
+    QVariant toVariant() const;
+    void fromVariant(const QVariant &variant);
 };
 
 #endif // ACTIONCARD_H

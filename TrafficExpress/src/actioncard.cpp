@@ -120,3 +120,21 @@ Card *ActionCard::Copy() const
      return tmp;
 }
 
+QVariant ActionCard::toVariant() const
+{
+    QVariantMap map;
+    map.insert("action",(int)m_action);
+    map.insert("bandit",(int)this->bandit());
+    map.insert("faceUp",this->faceUp());
+    return map;
+}
+
+void ActionCard::fromVariant(const QVariant &variant)
+{
+    QVariantMap map=variant.toMap();
+
+    m_action=static_cast<ActionType>(map.value("action").toInt());
+    this->setBandit(static_cast<BanditType>(map.value("bandit").toInt()));
+    this->setFaceUp(map.value("faceUp").toBool());
+}
+

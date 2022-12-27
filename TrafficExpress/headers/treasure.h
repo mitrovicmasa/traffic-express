@@ -4,12 +4,13 @@
 #include <QGraphicsObject>
 #include<string>
 #include <QMouseEvent>
+#include <serializable.h>
 
 enum class TreasureType{
    SUITCASE,DIAMOND,MONEYBAG
 };
 
-class Treasure:public QGraphicsObject
+class Treasure:public QGraphicsObject,public Serializable
 {
     Q_OBJECT
 public:
@@ -52,6 +53,11 @@ private:
     TreasureType m_type;
     unsigned m_value;
 
+
+    // Serializable interface
+public:
+    QVariant toVariant() const;
+    void fromVariant(const QVariant &variant);
 };
 
 #endif // TREASURE_H

@@ -8,7 +8,7 @@
 #include <treasurechest.h>
 #include <vector>
 
-class Wagon:public QGraphicsObject
+class Wagon:public QGraphicsObject,public Serializable
 {
     Q_OBJECT
 public:
@@ -99,6 +99,11 @@ private:
     PlayerGroup m_playersUp;
     PlayerGroup m_playersDown;
     Sheriff* m_sheriff;
+
+    // Serializable interface
+public:
+    QVariant toVariant() const;
+    void fromVariant(const QVariant &variant);
 };
 
 #endif // WAGON_H

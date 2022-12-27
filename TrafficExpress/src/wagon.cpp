@@ -459,6 +459,37 @@ void Wagon::onClickedPlayer(Player *p)
     emit clickedPlayerInWagon(p,this);
 }
 
+QVariant Wagon::toVariant() const
+{
+    QVariantMap map;
+    map.insert("isLocomotive",m_isLocomotive);
+    map.insert("containsSherif",m_sheriff!=nullptr);
+    QVariantList list;
+    for(Treasure*t:m_contentDown){
+        list.append(t->toVariant());
+    }
+    map.insert("contentDown",list);
+
+
+    return map;
+}
+
+void Wagon::fromVariant(const QVariant &variant)
+{
+    QVariantMap map=variant.toMap();
+    m_isLocomotive=map.value("isLocomotive").toBool();
+    m_sheriff=map.value("containsSherif").toBool()? new Sheriff() :nullptr;
+    QVariantList list=map.value("contentDown").toList();
+    for(auto t:list){
+
+        Treasure*tr=new Treasure();
+        tr->fromVariant(t);
+        m_contentDown.push_back(tr);
+    }
+
+
+}
+
 bool Wagon::isLocomotive() const
 {
     return m_isLocomotive;

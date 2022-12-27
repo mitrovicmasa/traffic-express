@@ -84,6 +84,7 @@ set(PROJECT_SOURCES
         src/sheriff.cpp
         src/dialoguebox.cpp
         src/roundcarddeck.cpp
+        src/serializable.cpp
         )
 
 set(PROJECT_HEADERS
@@ -117,6 +118,7 @@ set(PROJECT_HEADERS
         headers/sheriff.h
         headers/dialoguebox.h
         headers/roundcarddeck.h
+        headers/serializable.h
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
