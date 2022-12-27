@@ -28,7 +28,7 @@ void BanditCard::setBandit(BanditType newBandit)
 std::string BanditCard::toString() const
 {
     std::string banditName = ::toString(m_bandit);
-    return banditName + "'s bandit card ";
+    return banditName;
 }
 
 std::string toString(BanditType bandit)

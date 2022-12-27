@@ -47,6 +47,8 @@ public:
     int indexOfRound() const;
     int indexOfMiniround() const;
     Phase phase() const;
+    ActionType currentAction() const;
+    DialogueBox *dialogueBox() const;
 
     //Set methods
     void setPlayers(const std::vector<Player*> &newPlayers);
@@ -63,9 +65,9 @@ public:
     void setIndexOfRound(int newIndexOfRound);
     void setIndexOfMiniround(int newIndexOfMiniround);
     void setPhase(Phase newPhase);
+    void setCurrentAction(ActionType newCurrentAction);
+    void setDialogueBox(DialogueBox *newDialogueBox);
 
-    void setNextPlayerToMove();
-    void allPlayersDrawCards(int n);
     // Initialization methods
 
     const std::vector<Card*> &drawCards(unsigned) const;
@@ -79,40 +81,37 @@ public:
     void initialize();
 
     //Other methods
-
+    void setNextPlayerToMove();
+    void allPlayersDrawCards(int n);
     void shuffleDecks() const;
     void selectBanditPositions();
     unsigned findPlayerById(BanditType);
 
     void checkNextActionCard();
-
     void updateRounds();
 
-    //Actions
+    //Action methods
     void actionChangeWagon(int wagonIndex);
     void actionFloorChange();
     void actionSheriffMove(Wagon*w);
     bool actionFire(int playerIndex);
 
-    ActionType currentAction() const;
-    void setCurrentAction(ActionType newCurrentAction);
-
 private:
     int m_indexOfPlayerToMove;
     int m_indexOfRound;
     int m_indexOfMiniround;
-    ActionType m_currentAction; // MOZDA TRAEB DODATI U NEKI KONSUTRKTOR
-
+    ActionType m_currentAction;
     PlayerGroup m_players;
     Train* m_wagons;
     unsigned m_sheriffPosition;
     RoundCardDeck* m_rounds;
-    Deck* m_cardsPlayed; //flipujem ovaj deck i gledam na vrhu deka sta je
+    Deck* m_cardsPlayed;
     std::vector<NeutralBullet*> m_neutralBulletDeck;
     TreasureChest m_unusedTreasure;
     BanditType m_mostBulletsShot;
     BanditType m_richestPlayer;
     Phase m_phase;
+    DialogueBox* m_dialogueBox;
 };
 
 void generateAllTreasure(const int &count, const int &value, TreasureType type, std::vector<Treasure> &treasure);

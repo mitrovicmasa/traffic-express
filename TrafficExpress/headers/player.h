@@ -62,7 +62,6 @@ public:
     void returnCardsToDeck();
     void shuffleDeck();
     void drawCards(unsigned n);
-    DialogueBox *dialog();
 
 
     std::string toString() const;
@@ -90,10 +89,8 @@ private:
     Hand *m_hand;
     Deck *m_deck;
     Deck *m_bulletDeck;
-    //std::vector<BulletCard*> m_bulletDeck;
     int m_positionInTrain;
     bool m_roof;
     TreasureChest m_treasure;
-    QString m_text;
 };
 #endif // PLAYER_H

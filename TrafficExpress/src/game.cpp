@@ -26,10 +26,9 @@ Game::Game(const Game &other)
       m_indexOfRound(other.m_indexOfRound),
       m_indexOfMiniround(other.m_indexOfMiniround),
       m_phase(other.m_phase),
-      m_cardsPlayed(new Deck((other.m_cardsPlayed->getCards())))
-
-
-
+      m_cardsPlayed(new Deck((other.m_cardsPlayed->getCards()))),
+      m_currentAction(other.currentAction()),
+      m_dialogueBox(new DialogueBox(other.m_dialogueBox->text()))
 {
     //Danger players in train and in game are different
     //Only use when train has no players inside
@@ -397,6 +396,9 @@ void Game::initialize()
 //                      tmp->deck(),std::vector<BulletCard*>(),tmp->positionInTrain(),tmp->roof(),tmp->treasure());
     //m_wagons->getWagons()[0]->addPlayerDown(p);
     m_indexOfPlayerToMove=0;
+
+    QString text = "WAGON SELECTION PHASE!";
+    m_dialogueBox = new DialogueBox(text);
 }
 
 void Game::setIndexOfRound(int newIndexOfRound)
@@ -696,6 +698,16 @@ ActionType Game::currentAction() const
 void Game::setCurrentAction(ActionType newCurrentAction)
 {
     m_currentAction = newCurrentAction;
+}
+
+DialogueBox *Game::dialogueBox() const
+{
+    return m_dialogueBox;
+}
+
+void Game::setDialogueBox(DialogueBox *newDialogueBox)
+{
+    m_dialogueBox = newDialogueBox;
 }
 
 

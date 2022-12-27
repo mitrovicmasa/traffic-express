@@ -7,23 +7,24 @@
 #include <QPixmap>
 #include <QString>
 
-
-
-
 class DialogueBox :  public QGraphicsObject
 {
     Q_OBJECT
 
 public:
+    //Constructor
     DialogueBox(QString &text);
+    DialogueBox(DialogueBox&db);
+
+    //Getter and setter
+    QString &text();
+    void setText(QString &newText);
 
     // GUI
     QRectF boundingRect() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
-
 private:
     QString m_text;
-
 };
 
 #endif // DIALOGUEBOX_H

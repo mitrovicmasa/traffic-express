@@ -38,27 +38,6 @@ Player::Player(BanditType id)
     connect(m_deck,&Deck::clickedCardInDeck,this,&Player::onClickedCardInDeck);
 }
 
-//Player::Player(const Player &other)
-//    :QGraphicsObject(),
-//      m_id(other.m_id),
-//      m_hand(new Hand(*(other.m_hand))),
-//      m_deck(new Deck(*(other.m_deck))),
-//      m_bulletDeck(std::vector<BulletCard*>()),
-//      m_positionInTrain(other.m_positionInTrain),
-//      m_roof(other.m_roof),
-//      m_treasure(std::vector<Treasure*>()),
-//      m_isItMyMove(other.m_isItMyMove)
-//{
-
-//    for(BulletCard*bc:other.m_bulletDeck)
-//        m_bulletDeck.push_back((BulletCard*)bc->Copy());
-
-
-//    for(Treasure*t:other.m_treasure)
-//        m_treasure.push_back(new Treasure(*t));
-//    connect(m_hand,&Hand::clickedCardInHand,this,&Player::onClickedCardInHand);
-//}
-
 Player::Player(bool isItMyMove, BanditType id, Hand *h, Deck *d, Deck *bcd, int pos, bool roof, TreasureChest tc)
     :m_isItMyMove(isItMyMove),m_id(id),m_hand(new Hand(h->getCards())),m_deck(new Deck(d->getCards())),
       m_bulletDeck(new Deck(bcd->getCards())),m_positionInTrain(pos),m_roof(roof),m_treasure(TreasureChest(tc))
@@ -95,10 +74,6 @@ Deck *Player::bullet_deck()
     return m_bulletDeck;
 }
 
-//const std::vector<BulletCard*> &Player::bulletDeck() const
-//{
-//    return m_bulletDeck;
-//}
 
 int Player::positionInTrain() const
 {
@@ -118,11 +93,6 @@ TreasureChest& Player::treasure()
 bool Player::isItMyMove() const
 {
     return m_isItMyMove;
-}
-
-DialogueBox *Player::dialog()
-{
-    return new DialogueBox(m_text);
 }
 
 // Set methods

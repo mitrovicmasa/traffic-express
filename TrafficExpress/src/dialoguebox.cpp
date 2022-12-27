@@ -13,11 +13,29 @@ DialogueBox::DialogueBox(QString &text)
 
 }
 
+DialogueBox::DialogueBox(DialogueBox &db):
+    m_text(QString(db.text()))
+{
+
+}
+
+//Getter
+QString &DialogueBox::text()
+{
+    return m_text;
+}
+
+//Setter
+void DialogueBox::setText( QString &newText)
+{
+    m_text = newText;
+}
+
 
 //GUI
 QRectF DialogueBox::boundingRect() const
 {
-    return QRectF(0,0,200,200);
+    return QRectF(0,0,525,70);
 }
 
 void DialogueBox::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) {
@@ -25,10 +43,10 @@ void DialogueBox::paint(QPainter *painter, const QStyleOptionGraphicsItem *optio
     Q_UNUSED(option)
     Q_UNUSED(widget)
 
-    painter->drawPixmap(boundingRect(), QPixmap("://blue_db.png"), QRectF(0,0,0,0));
-    painter->drawText(QPoint(50,90), "MessageBox");
+    painter->drawPixmap(boundingRect(), QPixmap("://message.png"), QRectF(0,0,0,0));
+    painter->drawText(QPoint(25,35), m_text);
     painter->setFont( QFont("Magnolia Sky") );
     painter->setPen(QColor(255,255,255));
-    //painter->setPen(Qt::white);
 
 }
+

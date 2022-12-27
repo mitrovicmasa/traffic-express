@@ -32,21 +32,19 @@ std::string ActionCard::toString() const
         case ActionType::MOVE:
             actionName = "move";break;
         case ActionType::FLOOR_CHANGE:
-            actionName = "floor_change";break;
+            actionName = "floor change";break;
         case ActionType::FIRE:
             actionName = "fire";break;
         case ActionType::PUNCH:
             actionName = "punch";break;
         case ActionType::MARSHAL:
-            actionName = "marshal";break;
+            actionName = "sheriff move";break;
         case ActionType::ROBBERY:
             actionName = "robbery";break;
-        case ActionType::TAKETREASURE:
-            actionName="take treasure";break;
         default:
             break;
     }
-    return BanditCard::toString() + " doing action: " + actionName;
+    return BanditCard::toString() + " played action card " + actionName + ". ";
 }
 
 CardType ActionCard::Type() const

@@ -55,9 +55,9 @@ void PlayerPerspective::addGameToScene()
     this->addItem(hand);
     hand->setPos(50,450);
 
-    DialogueBox *db = m_player->dialog();
+    DialogueBox *db = m_game->dialogueBox();
     this->addItem(db);
-    db->setPos(890,20);
+    db->setPos(300,10);
 }
 
 void PlayerPerspective::removeGameFromScene()
@@ -263,8 +263,11 @@ void PlayerPerspective::onPlayerChoseWagon(int playerIndex, int wagonIndex)
     wagonToPutPlayer->addPlayerDown(playerToSet);
     m_game->players()[playerIndex]->setPositionInTrain(wagonIndex);
     m_game->setNextPlayerToMove();
-    if(m_game->findPlayerById(playerToSet->id())==m_game->players().size()-1)
+    if(m_game->findPlayerById(playerToSet->id())==m_game->players().size()-1) {
         m_game->setPhase(Phase::PHASE_1);
+        QString text = "PHASE 1: PICK A CARD FROM YOUR HAND OR DRAW 3 FROM DECK. ";
+        m_game->dialogueBox()->setText(text);
+    }
 
 }
 
@@ -277,6 +280,10 @@ void PlayerPerspective::onPlayerPlayedCard(int playerIndex, int cardIndex)
     Card*c=h->takeCard(cardIndex);
     Deck*d=m_game->getCardsPlayed();
     d->push_back(c);
+
+    // Putting message in dialogue box
+    QString text = QString::fromStdString(((ActionCard*)c)->toString());
+    m_game->dialogueBox()->setText(text);
 
     // Checking the rounds and minirounds
     m_game->updateRounds();
@@ -301,6 +308,11 @@ void PlayerPerspective::onPlayerDrawCards(int playerIndex)
         d->pop_back();
         playerToMove->hand()->push_back(takenCard);
     }
+    // Putting message in dialogue box
+    QString text = QString::fromStdString(::toString(playerToMove->id()));
+    text.append(" draw 3 cards from his deck. ");
+    m_game->dialogueBox()->setText(text);
+
     // Checking the rounds and minirounds
     m_game->updateRounds();
 
