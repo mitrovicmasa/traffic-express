@@ -711,28 +711,28 @@ void Game::setDialogueBox(DialogueBox *newDialogueBox)
 }
 
 
-//std::pair<Wagon*, Treasure*> Game::actionRobbery(int treasureIndex, int wagonIndex)
-//{
-//    Wagon* wagonToTakeTreasure = (*m_wagons)[wagonIndex];
-//    Treasure* treasureToTake;
+std::pair<Wagon*, Treasure*> Game::actionRobbery(int treasureIndex, int wagonIndex)
+{
+    Wagon* wagonToTakeTreasure = (*m_wagons)[wagonIndex];
+    Treasure* treasureToTake;
 
-//    if (!m_players[m_indexOfPlayerToMove]->roof()) {
-//        if (wagonToTakeTreasure->getContentDown().empty()) {
-//            qDebug() << "You can't take treasure from this wagon!";
-//            setNextPlayerToMove();
-//        }
+    if (!m_players[m_indexOfPlayerToMove]->roof()) {
+        if (wagonToTakeTreasure->getContentDown().empty()) {
+            qDebug() << "You can't take treasure from this wagon!";
+            setNextPlayerToMove();
+        }
 
-//        treasureToTake = wagonToTakeTreasure->getContentDown()[treasureIndex];
-//    } else {
-//        if (wagonToTakeTreasure->getContentUp().empty()) {
-//            qDebug() << "You can't take treasure from this wagon!";
-//            setNextPlayerToMove();
-//        }
+        treasureToTake = wagonToTakeTreasure->getContentDown()[treasureIndex];
+    } else {
+        if (wagonToTakeTreasure->getContentUp().empty()) {
+            qDebug() << "You can't take treasure from this wagon!";
+            setNextPlayerToMove();
+        }
 
-//        treasureToTake = wagonToTakeTreasure->getContentUp()[treasureIndex];
-//    }
+        treasureToTake = wagonToTakeTreasure->getContentUp()[treasureIndex];
+    }
 
-//    return {wagonToTakeTreasure, treasureToTake};
-//}
+    return {wagonToTakeTreasure, treasureToTake};
+}
 
 

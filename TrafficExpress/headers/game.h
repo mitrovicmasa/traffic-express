@@ -95,6 +95,7 @@ public:
     void actionFloorChange();
     void actionSheriffMove(Wagon*w);
     bool actionFire(int playerIndex);
+    std::pair<Wagon*, Treasure*> actionRobbery(int treasureIndex, int wagonIndex);
 
 private:
     int m_indexOfPlayerToMove;
