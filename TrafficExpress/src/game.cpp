@@ -478,6 +478,7 @@ unsigned Game::findPlayerById(BanditType banditId)
     return position;
 }
 
+
 int Game::findPlayersTreasureIndex(Treasure *t, unsigned playerIndex)
 {
     int treasureIndex = -1;
@@ -501,7 +502,7 @@ void Game::checkNextActionCard()
         RoundCardDeck*rcd=this->rounds();
 
         // If this was the last round, then the game is over.
-        if(rcd->size() - 1 == indexOfRound()){
+        if(rcd->size() - 1 == indexOfRound()) {
 
             QString msg = "GAME OVER";
             this->m_dialogueBox->setText(msg);
@@ -510,8 +511,11 @@ void Game::checkNextActionCard()
 
             this->setIndexOfMiniround(0);
             this->setIndexOfRound(this->indexOfRound() +1);
-            this->rounds()->setRoundOnScene(this->indexOfRound() + 1);
-
+            RoundCard *rc = rounds()->getRoundCads()[m_indexOfRound];
+            //this->rounds()->pop_front();
+            delete rc;
+            rc = nullptr;
+            //this->rounds()->setRoundOnScene(m_indexOfRound);
 
             QString msg = "Now it's PHASE 1";
             this->m_dialogueBox->setText(msg);
@@ -519,7 +523,7 @@ void Game::checkNextActionCard()
             for(Player* p : this->m_players)
             {
                 p->returnCardsToDeck();
-                p->shuffleDeck();
+                //p->shuffleDeck(); THIS IS NOT WORKING !!!!!!!!!!!!!!!!!!!
                 p->drawCards(6);
             }
 
@@ -528,8 +532,6 @@ void Game::checkNextActionCard()
             this->setPhase(Phase::PHASE_1);
 
         }
-
-
         return;
     }
 
@@ -540,14 +542,11 @@ void Game::checkNextActionCard()
     msg.append(QString::fromStdString(nextCardForAction->toString()));
     this->m_dialogueBox->setText(msg);
 
-
     BanditType nextBandit = ((ActionCard*)nextCardForAction)->bandit();
     ActionType nextAction = ((ActionCard*)nextCardForAction)->action();
 
     this->setIndexOfPlayerToMove(this->findPlayerById(nextBandit));
     this->setCurrentAction(nextAction);
-
-    //std::cout << "SET INDEX JE: " << this->findPlayerById(nextBandit) << "\n";
 
     this->players()[this->m_indexOfPlayerToMove]->deck()->push_back(nextCardForAction);
     nextCardForAction->setFaceUp(false);

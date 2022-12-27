@@ -129,7 +129,7 @@ void Player::returnCardsToDeck()
 
     for(Card* c : cardsInHand)
     {
-        c = m_hand->takeCard(c);
+        m_hand->pop_front();
         m_deck->push_back(c);
         c->setFaceUp(false);
     }

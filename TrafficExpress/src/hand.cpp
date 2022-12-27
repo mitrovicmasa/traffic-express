@@ -87,7 +87,7 @@ void Hand::pop_front()
 Card *Hand::takeCard(Card *c)
 {
     for(auto it=m_cards.begin();it!=m_cards.end();it++){
-        if(c==*it){
+        if(c==*it) {
             disconnect(c, &Card::clickedCard, this, &Hand::onClickedCard);
             c->setParentItem(nullptr);
             m_cards.erase(it);
@@ -116,8 +116,6 @@ void Hand::repositionCards()
 {
     for(int i=0;i<m_cards.size();i++){
         m_cards[i]->setPos(i*70+5,20);
-
-
     }
 }
 

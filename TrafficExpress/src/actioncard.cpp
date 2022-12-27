@@ -41,6 +41,8 @@ std::string ActionCard::toString() const
             actionName = "sheriff move";break;
         case ActionType::ROBBERY:
             actionName = "robbery";break;
+        case ActionType::TAKETREASURE:
+            actionName = "take treasure";break;
         default:
             break;
     }

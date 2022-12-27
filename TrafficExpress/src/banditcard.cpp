@@ -34,18 +34,24 @@ std::string BanditCard::toString() const
 std::string toString(BanditType bandit)
 {
     switch (bandit) {
-        case BanditType::PICKPOCKET:
-            return "Pickpocket";
-        case BanditType::SEDUCTRESS:
-            return "Seductress";
-        case BanditType::STUDENT:
-            return "Student";
-        case BanditType::RETIREE:
-            return "Retiree";
-        case BanditType::HOMELESS_MAN:
-            return "Homeless man";
-        case BanditType::BUSINESS_WOMAN:
-            return "Business woman";
+    case BanditType::PICKPOCKET:
+        return "Green player";
+        break;
+    case BanditType::SEDUCTRESS:
+        return "Yellow player";
+        break;
+    case BanditType::STUDENT:
+        return "Blue player";
+        break;
+    case BanditType::RETIREE:
+        return "Red player";
+        break;
+    case BanditType::HOMELESS_MAN:
+        return "Orange player";
+        break;
+    case BanditType::BUSINESS_WOMAN:
+        return "Purple player";
+        break;
         default:
             return "";
     }

@@ -64,6 +64,7 @@ void RoundCardDeck::pop_front()
 void RoundCardDeck::setRoundOnScene(int i)
 {
     m_rounds[i]->setPos(0,0);
+    m_rounds[i]->topLevelItem();
 }
 
 RoundCardCollection& RoundCardDeck::getRoundCads()
