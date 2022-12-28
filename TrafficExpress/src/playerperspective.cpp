@@ -342,8 +342,6 @@ void PlayerPerspective::onPlayerDrawCards(int playerIndex)
 
 }
 
-
-
 // PHASE 2:
 
 void PlayerPerspective::onActionFireSignal(int playerIndex)

@@ -523,10 +523,26 @@ std::vector<Player *> Game::possiblePlayersToShot(int playerIndex)
 
         // All players on the roof are possible targets (for now)
         for(Player *p: m_players) {
-            if(p->roof() && (p->id() != p1->id())) {
+            if(p->roof() && (p->id() != p1->id()) && (p->positionInTrain() != p1->positionInTrain())) {
                 possibleTargets.push_back(p);
             }
         }
+    }
+
+    return possibleTargets;
+}
+
+std::vector<Player *> Game::possiblePlayersToPunch(int playerIndex)
+{
+    Player* p1 = m_players[playerIndex];
+    int positionInTrain = p1->positionInTrain();
+    int roof = p1->roof();
+
+    std::vector<Player*> possibleTargets;
+    for (auto possibleTarget : m_players) {
+        if (possibleTarget->positionInTrain() == positionInTrain && possibleTarget->roof() == roof
+            && possibleTarget->id() != p1->id() && !possibleTarget->treasure().empty())
+            possibleTargets.push_back(possibleTarget);
     }
 
     return possibleTargets;
@@ -594,6 +610,24 @@ void Game::checkNextActionCard()
         // If there are no possible targets, skip this turn & move on to the next ActionCard.
         if(possibleTargets.empty()) {
             qDebug() << "NO POSSIBLE PLAYERS TO SHOOT, SKIPPING THE MOVE!";
+            this->players()[findPlayerById(nextBandit)]->deck()->push_back(nextCardForAction);
+            nextCardForAction->setFaceUp(false);
+
+            checkNextActionCard();
+            return;
+        } else {
+            qDebug() << findPlayerById(possibleTargets[0]->id());
+            qDebug() << possibleTargets[0];
+        }
+    }
+
+    if(nextAction == ActionType::PUNCH) {
+        // All possible targets will be in this vector
+        std::vector<Player*> possibleTargets = possiblePlayersToPunch(findPlayerById(nextBandit));
+
+        // If there are no possible targets, skip this turn & move on to the next ActionCard.
+        if(possibleTargets.empty()) {
+            qDebug() << "NO POSSIBLE PLAYERS TO PUNCH, SKIPPING THE MOVE!";
             this->players()[findPlayerById(nextBandit)]->deck()->push_back(nextCardForAction);
             nextCardForAction->setFaceUp(false);
 
