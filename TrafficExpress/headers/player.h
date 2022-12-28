@@ -18,7 +18,7 @@
 #include <treasurechest.h>
 #include <dialoguebox.h>
 
-class Player : public QGraphicsObject
+class Player : public QGraphicsObject, public Serializable
 {
     Q_OBJECT
 

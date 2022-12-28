@@ -3,10 +3,11 @@
 
 #include "card.h"
 #include <cardcolection.h>
+#include <serializable.h>
 #include <vector>
 
 
-class Deck:public QGraphicsObject
+class Deck : public QGraphicsObject, public Serializable
 {
     Q_OBJECT
 public:

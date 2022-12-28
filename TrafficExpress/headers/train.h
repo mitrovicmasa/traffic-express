@@ -8,7 +8,7 @@
 
 
 
-class Train:public QGraphicsObject
+class Train:public QGraphicsObject, public Serializable
 {
     Q_OBJECT
 public:

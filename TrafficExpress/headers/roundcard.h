@@ -7,6 +7,7 @@
 #include <QGraphicsObject>
 #include <qpainter.h>
 #include<miniround.h>
+#include <serializable.h>
 #include <miniroundcollection.h>
 
 enum class RoundCardType {
@@ -44,7 +45,7 @@ std::string toStringRoundCardType(const RoundCardType &card);
 std::string toStringEventType(const EventType &event);
 std::string toStringMiniRoundType(const MiniRoundType &miniRound);
 
-class RoundCard:public QGraphicsObject
+class RoundCard:public QGraphicsObject, public Serializable
 {
     Q_OBJECT
 public:
