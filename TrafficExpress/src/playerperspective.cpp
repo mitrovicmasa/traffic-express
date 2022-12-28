@@ -32,7 +32,7 @@ void PlayerPerspective::addGameToScene()
     train->setPos(50,50);
 
     this->addItem(m_table);
-    m_table->setPos(850,300);
+    m_table->setPos(770,300);
 
     RoundCardDeck*rdc=m_game->rounds();
     this->addItem(rdc);

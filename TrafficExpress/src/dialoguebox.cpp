@@ -35,7 +35,7 @@ void DialogueBox::setText( QString &newText)
 //GUI
 QRectF DialogueBox::boundingRect() const
 {
-    return QRectF(0,0,525,70);
+    return QRectF(0,0,590,70);
 }
 
 void DialogueBox::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) {

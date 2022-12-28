@@ -81,7 +81,7 @@ Player *PlayerStats::getPlayer()
 // GUI
 QRectF PlayerStats::boundingRect() const
 {
-    return QRectF(0,0,300,70);
+    return QRectF(0,0,380,70);
 }
 
 void PlayerStats::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
@@ -90,13 +90,27 @@ void PlayerStats::paint(QPainter *painter, const QStyleOptionGraphicsItem *optio
     Q_UNUSED(widget)
 
     painter->drawPixmap(boundingRect(), QPixmap("://button.png"), QRectF(0,0,0,0));
-    painter->setPen(QColor(255,255,255));
+    //painter->setPen(QColor(255,255,255));
     int num=0;
     for (Card *b : m_player->bullet_deck()->getCards()){
         num = ((BulletCard*)b)->numOfBullets();
     }
+
     QString bandit = QString::fromStdString(toString(m_player->id()));
+
+    if (m_player->id() == BanditType::PICKPOCKET)
+        painter->setPen(Qt::green);
+    else if (m_player->id() == BanditType::STUDENT)
+        painter->setPen(QColor(51,153,255));
+    else if (m_player->id() == BanditType::SEDUCTRESS)
+            painter->setPen(QColor(255,255,102));
+    else if (m_player->id() == BanditType::RETIREE)
+            painter->setPen(Qt::red);
+    else if (m_player->id() == BanditType::HOMELESS_MAN)
+            painter->setPen(QColor(204,0,204));
+
     painter->drawText(boundingRect(), "    "+ bandit + " - Number of bullets: " + QString::number(num));
+
 }
 
 void PlayerStats::test()
