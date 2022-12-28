@@ -52,6 +52,10 @@ protected:
     void mousePressEvent(QGraphicsSceneMouseEvent *event);
 private:
     CardColection m_cards;
+
+public:
+    QVariant toVariant() const;
+    void fromVariant(const QVariant &variant);
 };
 
 #endif // DECK_H

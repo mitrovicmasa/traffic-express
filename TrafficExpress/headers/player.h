@@ -92,5 +92,9 @@ private:
     int m_positionInTrain;
     bool m_roof;
     TreasureChest m_treasure;
+
+public:
+    QVariant toVariant() const;
+    void fromVariant(const QVariant &variant);
 };
 #endif // PLAYER_H

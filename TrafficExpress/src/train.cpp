@@ -142,6 +142,29 @@ int Train::getWagonIndex(Wagon *w)
     return -1;
 }
 
+QVariant Train::toVariant() const
+{
+    QVariantMap map;
+
+    QVariantList wagons;
+    for (auto *wagon : m_wagons)
+        wagons.append(wagon->toVariant());
+
+    map.insert("wagons", wagons);
+    return map;
+}
+
+void Train::fromVariant(const QVariant &variant)
+{
+    QVariantList list = variant.toMap().value("wagons").toList();
+
+    for (auto &wagon : list) {
+        Wagon *newWagon = new Wagon();
+        newWagon->fromVariant(wagon);
+        m_wagons.push_back(newWagon);
+    }
+}
+
 // GUI
 QRectF Train::boundingRect() const
 {

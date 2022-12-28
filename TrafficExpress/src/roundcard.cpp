@@ -180,6 +180,36 @@ std::string RoundCard::toString() const
 
     return output;
 }
+
+QVariant RoundCard::toVariant() const
+{
+    QVariantMap map;
+    map.insert("type", (int)m_type);
+    map.insert("event", (int)m_event);
+    QVariantList list;
+
+    for (MiniRound* miniRound : m_miniRounds) {
+        list.append((int)miniRound->getMiniRoundType());
+    }
+
+    map.insert("miniRounds", list);
+    return map;
+}
+
+void RoundCard::fromVariant(const QVariant &variant)
+{
+    QVariantMap map = variant.toMap();
+    m_type = static_cast<RoundCardType>(map.value("type").toInt());
+    m_event = static_cast<EventType>(map.value("event").toInt());
+
+    QVariantList list = map.value("miniRounds").toList();
+
+    for (auto &e : list) {
+        MiniRound *miniRound = new MiniRound(static_cast<MiniRoundType>(e.toInt()));
+        m_miniRounds.push_back(miniRound);
+    }
+}
+
 // GUI
 
 int RoundCard::height() const

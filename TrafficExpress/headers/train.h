@@ -53,6 +53,10 @@ public slots:
 
 private:
     WagonArray m_wagons;
+
+public:
+    QVariant toVariant() const;
+    void fromVariant(const QVariant &variant);
 };
 
 #endif // TRAIN_H

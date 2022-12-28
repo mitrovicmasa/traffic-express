@@ -98,6 +98,30 @@ void Deck::schufleDeck()
 
 }
 
+QVariant Deck::toVariant() const
+{
+    QVariantList list;
+    for (auto *card : m_cards) {
+        list.append(((ActionCard*)(card))->toVariant());
+    }
+
+    QVariantMap map;
+    map.insert("cards", list);
+
+    return map;
+}
+
+void Deck::fromVariant(const QVariant &variant)
+{
+    QVariantList list = variant.toMap().value("cards").toList();
+    for (auto &card : list) {
+        ActionCard *newCard;
+        newCard->fromVariant(card);
+        m_cards.push_back(newCard);
+    }
+}
+
+
 void Deck::repositionCards()
 {
     for(Card*c:m_cards)

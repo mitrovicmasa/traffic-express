@@ -99,6 +99,10 @@ private:
     RoundCardType m_type;
     EventType m_event;
     MiniRoundCollection m_miniRounds;
+
+public:
+    QVariant toVariant() const;
+    void fromVariant(const QVariant &variant);
 };
 
 #endif //ROUNDCARDS_H

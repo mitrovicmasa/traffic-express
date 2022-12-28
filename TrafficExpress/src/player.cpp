@@ -156,6 +156,48 @@ void Player::drawCards(unsigned n)
 
 }
 
+QVariant Player::toVariant() const
+{
+    QVariantMap map;
+
+    map.insert("isItMyMove", m_isItMyMove);
+    map.insert("id", (int)m_id);
+    map.insert("positionInTrain", m_positionInTrain);
+    map.insert("deck", m_deck->toVariant());
+    map.insert("roof", m_roof);
+
+    QVariantList list;
+    for (auto *treasure : m_treasure) {
+        list.append(treasure->toVariant());
+    }
+
+    map.insert("treasure", list);
+    return map;
+}
+
+void Player::fromVariant(const QVariant &variant)
+{
+    QVariantMap map = variant.toMap();
+    m_isItMyMove = map.value("isItMyMove").toBool();
+    m_id = static_cast<BanditType>(map.value("id").toInt());
+    m_positionInTrain = map.value("positionInTrain").toInt();
+
+    QVariantList cards = map.value("deck").toList();
+    for (auto &card : cards) {
+        ActionCard *actionCard;
+        actionCard->fromVariant(card);
+        m_deck->push_back(actionCard);
+    }
+
+    QVariantList content = map.value("treasure").toList();
+    for (auto &treasure : content) {
+        Treasure *t = new Treasure();
+        t->fromVariant(treasure);
+        m_treasure.push_back(t);
+    }
+}
+
+
 std::string Player::toString() const
 {
     std::string positionInWagon = m_roof ? "Bandit is on the roof" : "Bandit is in the wagon";
