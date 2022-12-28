@@ -493,6 +493,45 @@ int Game::findPlayersTreasureIndex(Treasure *t, unsigned playerIndex)
     return treasureIndex;
 }
 
+std::vector<Player *> Game::possiblePlayersToShot(int playerIndex)
+{
+    Player* p1 = m_players[playerIndex];
+    int positionInTrain = p1->positionInTrain();
+    int roof = p1->roof();
+
+    std::vector<Player*> possibleTargets;
+    // If the shooter is not on the roof
+    if(!roof) {
+        // Wagon left from our shooter -> looking for possible targets
+        if(positionInTrain > 0) {
+
+            Wagon *left = m_wagons->getWagons()[positionInTrain-1];
+            for(Player* p: left->getPlayersDown()) {
+                possibleTargets.push_back(p);
+            }
+        }
+        // Wagon right from out shooter -> looking for possible targets
+        if(positionInTrain < m_wagons->size()-1) {
+
+            Wagon *right = m_wagons->getWagons()[positionInTrain+1];
+            for(Player* p: right->getPlayersDown()) {
+                possibleTargets.push_back(p);
+            }
+        }
+    }
+    else { // If the shooter is on the roof
+
+        // All players on the roof are possible targets (for now)
+        for(Player *p: m_players) {
+            if(p->roof() && (p->id() != p1->id())) {
+                possibleTargets.push_back(p);
+            }
+        }
+    }
+
+    return possibleTargets;
+}
+
 void Game::checkNextActionCard()
 {
     if(this->getCardsPlayed()->empty())
@@ -546,6 +585,24 @@ void Game::checkNextActionCard()
 
     BanditType nextBandit = ((ActionCard*)nextCardForAction)->bandit();
     ActionType nextAction = ((ActionCard*)nextCardForAction)->action();
+
+    // IF IT'S A FIRE CARD AND THERE IS NO ONE TO SHOOT, NEXT CARD.
+    if(nextAction == ActionType::FIRE) {
+        // All possible targets will be in this vector
+        std::vector<Player*> possibleTargets = possiblePlayersToShot(findPlayerById(nextBandit));
+
+        // If there are no possible targets, skip this turn & move on to the next ActionCard.
+        if(possibleTargets.empty()) {
+            qDebug() << "NO POSSIBLE PLAYERS TO SHOOT, SKIPPING THE MOVE!";
+            this->players()[findPlayerById(nextBandit)]->deck()->push_back(nextCardForAction);
+            nextCardForAction->setFaceUp(false);
+
+            checkNextActionCard();
+            return;
+        } else {
+            qDebug() << findPlayerById(possibleTargets[0]->id());
+        }
+    }
 
     this->setIndexOfPlayerToMove(this->findPlayerById(nextBandit));
     this->setCurrentAction(nextAction);
@@ -642,7 +699,7 @@ void Game::actionFloorChange()
     unsigned positionInWagon = m_players[m_indexOfPlayerToMove]->positionInTrain();
 
     if (!isPlayerOnTheRoof) {
-        m_players[m_indexOfPlayerToMove]->setRoof(!isPlayerOnTheRoof);       
+        m_players[m_indexOfPlayerToMove]->setRoof(isPlayerOnTheRoof);
         m_wagons->getWagons()[positionInWagon]->takePlayerDown(m_players[m_indexOfPlayerToMove]);
         m_wagons->getWagons()[positionInWagon]->addPlayerUp(m_players[m_indexOfPlayerToMove]);
     } else {
@@ -699,49 +756,32 @@ bool Game::actionFire(int playerIndex)
     // Shooters' position in train
     unsigned positionInTrain = players()[m_indexOfPlayerToMove]->positionInTrain();
     bool roof = players()[m_indexOfPlayerToMove]->roof();
-    qDebug() << positionInTrain;
-    qDebug() << playerIndex;
 
-    if(playerIndex == m_indexOfPlayerToMove) {
-        // You can't shoot yourself!
+    // Clicked players' position in train
+    unsigned positionInTrain2 = players()[playerIndex]->positionInTrain();
+    bool roof2 = players()[playerIndex]->roof();
+
+    qDebug() << positionInTrain << roof;
+    qDebug() << positionInTrain2 << roof2;
+
+    if(roof != roof2) {
+        qDebug() << "Cant shot this guy1";
+        // You can't shoot yourself someone who is not on the same floor!
         return false;
     }
 
+    if(positionInTrain == positionInTrain2) {
+        qDebug() << "Cant shot this guy2";
+        // You can't shoot yourself someone who is in the same wagon!
+        return false;
+    }
     // All possible targets will be in this vector
-    std::vector<Player*> possibleTargets;
+    std::vector<Player*> possibleTargets = possiblePlayersToShot(m_indexOfPlayerToMove);
 
-    // If the shooter is not on the roof
-    if(!roof) {
-
-        // Wagon left from our shooter -> looking for possible targets
-        if(positionInTrain > 0) {
-
-            Wagon *left = m_wagons->getWagons()[positionInTrain-1];
-            for(Player* p: left->getPlayersDown()) {
-                possibleTargets.push_back(p);
-            }
-        }
-        // Wagon right from out shooter -> looking for possible targets
-        if(positionInTrain < m_wagons->size()-1) {
-
-            Wagon *right = m_wagons->getWagons()[positionInTrain+1];
-            for(Player* p: right->getPlayersDown()) {
-                possibleTargets.push_back(p);
-            }
-        }
-    }
-    else { // If the shooter is on the roof
-
-        // All players on the roof are possible targets (for now)
-        for(Player *p: m_players) {
-            if(p->roof()) {
-                possibleTargets.push_back(p);
-            }
-        }
-    }
-
-    // Now we check if CLICKED player is a possible target
+    // Now we check if clicked player is a possible target
     for(Player* p: possibleTargets) {
+        qDebug() << "Moguci targeti je: ";
+        qDebug() << this->findPlayerById(p->id());
         if(findPlayerById(p->id()) == playerIndex) {
             // player(playerIndex) recieves a BULLET CARD from playerToMove
             qDebug() << "Someone's been shot!";
@@ -753,6 +793,7 @@ bool Game::actionFire(int playerIndex)
         }
     }
 
+    qDebug() << "Cant shot this guy3";
     return false;
 }
 

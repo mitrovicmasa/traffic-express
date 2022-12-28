@@ -194,13 +194,11 @@ void PlayerPerspective::onClickedPlayerInWagonInTrain(Player *p, Wagon *w, Train
 
     std::cout<< ::toString(p->id()) + " is clicked" <<std::endl;
 
-    // Ovde posle dodati uslov da je odigrana kartica Fire :)
     if(m_game->currentAction() == ActionType::FIRE && m_player->isItMyMove() && m_game->phase() == Phase::PHASE_2) {
 
         qDebug() << "we are in onClickedPlayerInWagonInTrain and it's phase_2 and my move";
 
         emit actionFireSignal(m_game->findPlayerById(p->id()));
-        //emit movePlayed(this);
     }
 
     if (m_game->currentAction() == ActionType::PUNCH && m_player->isItMyMove() && m_game->phase() == Phase::PHASE_2 &&
@@ -213,7 +211,7 @@ void PlayerPerspective::onClickedPlayerInWagonInTrain(Player *p, Wagon *w, Train
         qDebug() << "Choose another player!";
         return;
     } else {
-        m_game->setNextPlayerToMove();
+        //m_game->setNextPlayerToMove();
         return;
     }
 }
@@ -231,8 +229,6 @@ void PlayerPerspective::onClickedWagonInTrain(Wagon *w, Train *train)
 
 
     qDebug() << m_game->getIndexOfPlayerToMove();
-
-
 
     if(m_player->isItMyMove() && m_game->phase()==Phase::WAGON_SELECTION
             && (train->getWagonIndex(w)==0 || train->getWagonIndex(w)==1) ){
@@ -355,10 +351,11 @@ void PlayerPerspective::onPlayerDrawCards(int playerIndex)
 
 void PlayerPerspective::onActionFireSignal(int playerIndex)
 {
-    qDebug() << "we are in onActionFireSignal";
-
     if(!m_game->actionFire(playerIndex)) {
-        qDebug() << "You can't shoot him!";
+
+        QString text = "Can't shoot that player!";
+        m_game->dialogueBox()->setText(text);
+
     } else {
         // Putting message in dialogue box
         QString text = QString::fromStdString(::toString(m_game->players()[playerIndex]->id()));

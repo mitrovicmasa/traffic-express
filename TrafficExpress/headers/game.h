@@ -100,6 +100,7 @@ public:
 
     int findPlayersTreasureIndex(Treasure*, unsigned);
 
+    std::vector<Player*> possiblePlayersToShot(int playerIndex);
 
     //Action methods
     bool actionChangeWagon(int wagonIndex);
