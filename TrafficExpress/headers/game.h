@@ -51,6 +51,7 @@ public:
     Phase phase() const;
     ActionType currentAction() const;
     DialogueBox *dialogueBox() const;
+    const unsigned &seed() const;
     bool actionPending() const;
 
     //Set methods
@@ -71,6 +72,7 @@ public:
     void setCurrentAction(ActionType newCurrentAction);
     void setDialogueBox(DialogueBox *newDialogueBox);
     void setActionPending(bool newActionPending);
+    void setSeed(const unsigned &newSeed);
 
     // Initialization methods
 
@@ -124,6 +126,7 @@ private:
     Phase m_phase;
     DialogueBox* m_dialogueBox;
     bool m_actionPending;
+    unsigned m_seed;
 };
 
 void generateAllTreasure(const int &count, const int &value, TreasureType type, std::vector<Treasure> &treasure);

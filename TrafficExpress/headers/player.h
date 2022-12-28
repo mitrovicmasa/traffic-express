@@ -60,7 +60,7 @@ public:
     bool isBulletDeckEmpty() const;
     int countAmountOfTreasure() const;
     void returnCardsToDeck();
-    void shuffleDeck();
+    void shuffleDeck(int);
     void drawCards(unsigned n);
 
 

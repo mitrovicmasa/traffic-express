@@ -88,14 +88,11 @@ void Deck::pop_front()
     m_cards.erase(m_cards.begin());
 }
 
-void Deck::schufleDeck()
+void Deck::schufleDeck(int seed)
 {
     //TODO
-        unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+        //unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
         std::shuffle (m_cards.begin(),m_cards.end(), std::default_random_engine(seed));
-       // repositionCards();
-
-
 }
 
 QVariant Deck::toVariant() const

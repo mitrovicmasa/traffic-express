@@ -33,7 +33,7 @@ public:
     Card* operator[] (int ind);
     void push_front(Card*);
     void pop_front();
-    void schufleDeck();
+    void schufleDeck(int seed);
     void repositionCards();
     // GUI
     QRectF boundingRect() const;

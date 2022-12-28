@@ -28,8 +28,10 @@ Game::Game(const Game &other)
       m_phase(other.m_phase),
       m_cardsPlayed(new Deck((other.m_cardsPlayed->getCards()))),
       m_currentAction(other.currentAction()),
-      m_dialogueBox(new DialogueBox(other.m_dialogueBox->text()))
+      m_dialogueBox(new DialogueBox(other.m_dialogueBox->text())),
+      m_seed(other.m_seed)
 {
+    srand(m_seed);
     //Danger players in train and in game are different
     //Only use when train has no players inside
 //    for(Player*p:other.m_players)
@@ -280,6 +282,9 @@ std::vector<NeutralBullet*> Game::generateNeutralBullets(unsigned numberOfNeutra
 
 void Game::initialize()
 {
+    m_seed = std::chrono::system_clock::now().time_since_epoch().count();
+    srand(m_seed);
+
     m_cardsPlayed=new Deck();
     unsigned numberOfPlayers = m_players.size();
     shuffleDecks();
@@ -400,10 +405,6 @@ void Game::initialize()
     // Neutral Bullets
     setNeutralBulletDeck(generateNeutralBullets(13));
 
-//    Player*tmp=m_players[0];
-//    auto p=new Player(tmp->isItMyMove(),tmp->id(),tmp->hand(),
-//                      tmp->deck(),std::vector<BulletCard*>(),tmp->positionInTrain(),tmp->roof(),tmp->treasure());
-    //m_wagons->getWagons()[0]->addPlayerDown(p);
     m_indexOfPlayerToMove=0;
 
     QString text = "WAGON SELECTION PHASE!";
@@ -445,8 +446,8 @@ void Game::allPlayersDrawCards(int n)
 
 void Game::shuffleDecks() const
 {
-    for (Player *player : m_players)
-        player->shuffleDeck();
+    for(Player *player : m_players)
+        player->shuffleDeck(rand());
 }
 
 void Game::selectBanditPositions()
@@ -499,22 +500,23 @@ void Game::checkNextActionCard()
         QString msg = "No more ActionCards to play";
         this->m_dialogueBox->setText(msg);
 
-        RoundCardDeck*rcd=this->rounds();
-
         // If this was the last round, then the game is over.
-        if(rcd->size() - 1 == indexOfRound()) {
+        if(indexOfRound()==4) {
 
             QString msg = "GAME OVER";
             this->m_dialogueBox->setText(msg);
+            this->setIndexOfPlayerToMove(0);
+            this->setPhase(Phase::WAGON_SELECTION);
 
         } else { // If this wasn't the last round, we are moving to the next round.
 
             this->setIndexOfMiniround(0);
-            this->setIndexOfRound(this->indexOfRound() +1);
-            RoundCard *rc = rounds()->getRoundCads()[m_indexOfRound];
-            //this->rounds()->pop_front();
-            delete rc;
-            rc = nullptr;
+            RoundCard* rc = m_rounds->getRoundCads()[m_indexOfRound];
+            rc->setZValue(-1);
+            qDebug() << m_indexOfRound;
+            this->setIndexOfRound(m_indexOfRound + 1);
+            qDebug() << m_indexOfRound;
+
             //this->rounds()->setRoundOnScene(m_indexOfRound);
 
             QString msg = "Now it's PHASE 1";
@@ -523,7 +525,7 @@ void Game::checkNextActionCard()
             for(Player* p : this->m_players)
             {
                 p->returnCardsToDeck();
-                //p->shuffleDeck(); THIS IS NOT WORKING !!!!!!!!!!!!!!!!!!!
+                p->shuffleDeck(this->m_seed); //THIS IS NOT WORKING !!!!!!!!!!!!!!!!!!!
                 p->drawCards(6);
             }
 
@@ -792,5 +794,15 @@ std::pair<Wagon*, Treasure*> Game::actionPunch(int treasureIndex, int wagonIndex
     Wagon *wagon = (*m_wagons)[wagonIndex];
 
     return {wagon, treasure};
+}
+
+const unsigned &Game::seed() const
+{
+    return m_seed;
+}
+
+void Game::setSeed(const unsigned &newSeed)
+{
+    m_seed = newSeed;
 }
 

@@ -136,9 +136,9 @@ void Player::returnCardsToDeck()
 
 }
 
-void Player::shuffleDeck()
+void Player::shuffleDeck(int seed)
 {
-    m_deck->schufleDeck();
+    m_deck->schufleDeck(seed);
 
 }
 

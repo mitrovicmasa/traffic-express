@@ -85,10 +85,10 @@ int main(int argc, char *argv[])
             // DRAW PHASE
 
             for (auto player: game.players())
-            {
+            {/*
                 player->returnCardsToDeck();
                 player->shuffleDeck();
-                player->drawCards(6);
+                player->drawCards(6);*/
 
             }
 
