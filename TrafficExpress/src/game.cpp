@@ -587,7 +587,7 @@ void Game::updateRounds()
     }
 }
 
-void Game::actionChangeWagon(int wagonIndex)
+bool Game::actionChangeWagon(int wagonIndex)
 {
     bool isPlayerOnTheRoof = m_players[m_indexOfPlayerToMove]->roof();
     unsigned positionInWagon = m_players[m_indexOfPlayerToMove]->positionInTrain();
@@ -598,12 +598,29 @@ void Game::actionChangeWagon(int wagonIndex)
     {
 
         m_wagons->getWagons()[positionInWagon]->takePlayerDown(m_players[m_indexOfPlayerToMove]);
-        m_wagons->getWagons()[wagonIndex]->addPlayerDown(m_players[m_indexOfPlayerToMove]);
 
-        m_players[m_indexOfPlayerToMove]->setPositionInTrain(wagonIndex);
+        if (m_sheriffPosition == wagonIndex)
+        {
+            NeutralBullet *nb = m_neutralBulletDeck.back();
+            m_neutralBulletDeck.pop_back();
+            nb->setFaceUp(false);
+            m_players[m_indexOfPlayerToMove]->deck()->push_back(nb);
 
-        return;
+
+            m_wagons->getWagons()[wagonIndex]->addPlayerUp(m_players[m_indexOfPlayerToMove]);
+
+            m_players[m_indexOfPlayerToMove]->setPositionInTrain(wagonIndex);
+
+        }
+        else
+        {
+            m_wagons->getWagons()[wagonIndex]->addPlayerDown(m_players[m_indexOfPlayerToMove]);
+            m_players[m_indexOfPlayerToMove]->setPositionInTrain(wagonIndex);
+        }
+
+        return true;
     }
+
 
     if (isPlayerOnTheRoof && std::abs(int(wagonIndex - positionInWagon)) > 0 && std::abs(int(wagonIndex - positionInWagon)) < 4)
     {
@@ -612,9 +629,10 @@ void Game::actionChangeWagon(int wagonIndex)
 
         m_players[m_indexOfPlayerToMove]->setPositionInTrain(wagonIndex);
 
-        return;
+        return true;
     }
 
+    return false;
 
 }
 

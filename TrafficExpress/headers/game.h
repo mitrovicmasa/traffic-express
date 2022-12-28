@@ -102,7 +102,7 @@ public:
 
 
     //Action methods
-    void actionChangeWagon(int wagonIndex);
+    bool actionChangeWagon(int wagonIndex);
     void actionFloorChange();
     void actionSheriffMove(Wagon*w);
     bool actionFire(int playerIndex);

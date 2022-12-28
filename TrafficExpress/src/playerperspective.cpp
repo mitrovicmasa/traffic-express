@@ -387,17 +387,23 @@ void PlayerPerspective::onActionChangeFloorSignal(int wagonIndex)
 
 void PlayerPerspective::onActionChangeWagonSignal(int wagonIndex)
 {
-    m_game->actionChangeWagon(wagonIndex);
-    //m_game->setNextPlayerToMove();
+    if (!m_game->actionChangeWagon(wagonIndex))
+    {
+        QString text = "Can't move there!";
+        m_game->dialogueBox()->setText(text);
 
-    // Putting message in dialogue box
-    QString text = QString::fromStdString(::toString(m_game->players()[m_game->getIndexOfPlayerToMove()]->id()));
-    text.append(" changed wagon!");
-    m_game->dialogueBox()->setText(text);
+    }
+    else
+    {
+        // Putting message in dialogue box
+        QString text = QString::fromStdString(::toString(m_game->players()[m_game->getIndexOfPlayerToMove()]->id()));
+        text.append(" changed wagon!");
+        m_game->dialogueBox()->setText(text);
 
+        m_game->checkNextActionCard();
+        emit movePlayed(this, m_game->getIndexOfPlayerToMove());
 
-    m_game->checkNextActionCard();
-    emit movePlayed(this, m_game->getIndexOfPlayerToMove());
+    }
 
 }
 
