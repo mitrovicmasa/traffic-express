@@ -548,6 +548,27 @@ std::vector<Player *> Game::possiblePlayersToPunch(int playerIndex)
     return possibleTargets;
 }
 
+std::vector<Treasure *> Game::possibleTreasure(int playerIndex)
+{
+    Player* p1 = m_players[playerIndex];
+    int positionInTrain = p1->positionInTrain();
+    int roof = p1->roof();
+    Wagon *wagon = (*m_wagons)[positionInTrain];
+
+    std::vector<Treasure*> treasure = {};
+    if (roof) {
+        for (auto content : wagon->getContentUp()) {
+            treasure.push_back(content);
+        }
+    } else {
+        for (auto content : wagon->getContentDown()) {
+            treasure.push_back(content);
+        }
+    }
+
+    return treasure;
+}
+
 void Game::checkNextActionCard()
 {
     if(this->getCardsPlayed()->empty())
@@ -636,6 +657,23 @@ void Game::checkNextActionCard()
         } else {
             qDebug() << findPlayerById(possibleTargets[0]->id());
         }
+    }
+
+    if(nextAction == ActionType::TAKETREASURE) {
+            // All possible targets will be in this vector
+            std::vector<Treasure*> treasure = possibleTreasure(findPlayerById(nextBandit));
+
+            // If there are no possible targets, skip this turn & move on to the next ActionCard.
+            if(treasure.empty()) {
+                qDebug() << "NO POSSIBLE TREASURE TO TAKE, SKIPPING THE MOVE!";
+                this->players()[findPlayerById(nextBandit)]->deck()->push_back(nextCardForAction);
+                nextCardForAction->setFaceUp(false);
+
+                checkNextActionCard();
+                return;
+            } else {
+                qDebug() << treasure[0];
+            }
     }
 
     this->setIndexOfPlayerToMove(this->findPlayerById(nextBandit));

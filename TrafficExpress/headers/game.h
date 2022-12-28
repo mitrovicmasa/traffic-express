@@ -102,6 +102,7 @@ public:
 
     std::vector<Player*> possiblePlayersToShot(int playerIndex);
     std::vector<Player*> possiblePlayersToPunch(int playerIndex);
+    std::vector<Treasure*> possibleTreasure(int playerIndex);
 
     //Action methods
     bool actionChangeWagon(int wagonIndex);
