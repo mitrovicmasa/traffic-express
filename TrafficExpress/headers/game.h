@@ -110,6 +110,9 @@ public:
     std::pair<Wagon*, Treasure*> actionRobbery(int treasureIndex, int wagonIndex);
     std::pair<Wagon*, Treasure*> actionPunch(int treasureIndex, int wagonIndex, int playerIndex);
 
+    int playerClicked() const;
+    void setPlayerClicked(int newPlayerClicked);
+
 private:
     int m_indexOfPlayerToMove;
     int m_indexOfRound;
@@ -127,6 +130,7 @@ private:
     Phase m_phase;
     DialogueBox* m_dialogueBox;
     bool m_actionPending;
+    int m_playerClicked;
     unsigned m_seed;
 };
 

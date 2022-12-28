@@ -855,6 +855,16 @@ std::pair<Wagon*, Treasure*> Game::actionPunch(int treasureIndex, int wagonIndex
     return {wagon, treasure};
 }
 
+int Game::playerClicked() const
+{
+    return m_playerClicked;
+}
+
+void Game::setPlayerClicked(int newPlayerClicked)
+{
+    m_playerClicked = newPlayerClicked;
+}
+
 const unsigned &Game::seed() const
 {
     return m_seed;

@@ -109,13 +109,12 @@ void PlayerPerspective::onClickedTreasureInWagonInTrainInTran(Treasure *t, Wagon
 //    }
 
 
-    if (m_game->currentAction() == ActionType::TAKETREASURE && m_player->isItMyMove() && m_game->phase() == Phase::PHASE_2 && m_player->positionInTrain() == train->getWagonIndex(w))
+    if (m_game->currentAction() == ActionType::TAKETREASURE && m_player->isItMyMove() && m_game->phase() == Phase::PHASE_2
+            && m_player->positionInTrain() == train->getWagonIndex(w))
     {
-        emit actionRobberySignal(w->getTreasureIndex(t, m_player->roof()),train->getWagonIndex(w));
-        //emit movePlayed(this);
+            emit actionRobberySignal(w->getTreasureIndex(t, m_player->roof()),train->getWagonIndex(w));
             return;
     }
-
 
 }
 
@@ -202,16 +201,17 @@ void PlayerPerspective::onClickedPlayerInWagonInTrain(Player *p, Wagon *w, Train
     }
 
     if (m_game->currentAction() == ActionType::PUNCH && m_player->isItMyMove() && m_game->phase() == Phase::PHASE_2 &&
-        m_player->positionInTrain() == p->positionInTrain() && m_player->roof() == p->roof() && !p->treasure().empty())
-    {
+            p->positionInTrain() == m_player->positionInTrain() && p->roof() == m_player->roof()) {
+
         m_game->setActionPending(true);
+        m_game->setPlayerClicked(m_game->findPlayerById(p->id()));
         return;
     } else if (m_game->currentAction() == ActionType::PUNCH && m_player->isItMyMove() && m_game->phase() == Phase::PHASE_2 &&
-               m_player->positionInTrain() == p->positionInTrain() && m_player->roof() == p->roof() && p->treasure().empty()) {
-        qDebug() << "Choose another player!";
-        return;
-    } else {
-        //m_game->setNextPlayerToMove();
+               (p->positionInTrain() != m_player->positionInTrain() || p->roof() != m_player->roof()))
+    {
+        qDebug() << "Can't punch!";
+
+//        m_game->checkNextActionCard();
         return;
     }
 }
@@ -269,9 +269,6 @@ void PlayerPerspective::onClickedWagonInTrain(Wagon *w, Train *train)
 
 
     }
-
-
-
 }
 
 
@@ -427,11 +424,12 @@ void PlayerPerspective::onActionRobberySignal(int treasureIndex, int wagonIndex)
     qDebug() << "Wagon: " << wagonIndex;
     qDebug() << "Is on roof: " << m_player->roof();
 
-    if (m_player->roof()) {
+    if (m_game->players()[m_game->getIndexOfPlayerToMove()]->roof()) {
         ps->addTreasureToPlayer(wagonToTakeTreasure->takeContentUp(treasureToTake));
     } else {
         ps->addTreasureToPlayer(wagonToTakeTreasure->takeContentDown(treasureToTake));
     }
+
     // Putting message in dialogue box
     QString text = QString::fromStdString(::toString(m_game->players()[m_game->getIndexOfPlayerToMove()]->id()));
     text.append(" took treasure!");
@@ -439,34 +437,6 @@ void PlayerPerspective::onActionRobberySignal(int treasureIndex, int wagonIndex)
 
     m_game->checkNextActionCard();
     emit movePlayed(this, m_game->getIndexOfPlayerToMove());
-
-//    if (!m_game->players()[m_game->getIndexOfPlayerToMove()]->roof()) {
-
-//        if (wagonToTakeTreasure->getContentDown().empty()) {
-
-//            qDebug() << "You can't take treasure from this wagon!";
-//            //m_game->setNextPlayerToMove();
-//            return;
-//        }
-
-//        qDebug() << "Down!";
-//        Treasure* treasureToTake = wagonToTakeTreasure->getContentDown()[treasureIndex];
-
-//        ps->addTreasureToPlayer(wagonToTakeTreasure->takeContentDown(treasureToTake));
-//    } else {
-//        if (wagonToTakeTreasure->getContentUp().empty()) {
-//            qDebug() << "You can't take treasure from this wagon!";
-//            //->setNextPlayerToMove();
-//            return;
-//        }
-
-//        qDebug() << "Up!";
-//        Treasure* treasureToTake = wagonToTakeTreasure->getContentUp()[treasureIndex];
-
-//        ps->addTreasureToPlayer(wagonToTakeTreasure->takeContentUp(treasureToTake));
-//    }
-
-    //m_game->setNextPlayerToMove(); // NE KORISTI SE OVO VISE U AKCIJAMA
 }
 
 void PlayerPerspective::onActionPunchSignal(int treasureIndex, int playerIndex, int wagonIndex)
@@ -476,7 +446,7 @@ void PlayerPerspective::onActionPunchSignal(int treasureIndex, int playerIndex, 
     PlayerStats *ps = m_table->getPlayerStats()[playerIndex];
     auto[wagonToUpdate, treasure] = m_game->actionPunch(treasureIndex, wagonIndex, playerIndex);
 
-    if (m_player->roof())
+    if (m_game->players()[m_game->getIndexOfPlayerToMove()]->roof())
         wagonToUpdate->addContentUp(ps->takeTreasureFromPlayer(treasure));
     else
         wagonToUpdate->addContentDown(ps->takeTreasureFromPlayer(treasure));
@@ -487,6 +457,6 @@ void PlayerPerspective::onActionPunchSignal(int treasureIndex, int playerIndex, 
     text.append(QString::fromStdString(::toString(m_game->players()[m_game->getIndexOfPlayerToMove()]->id())));
     m_game->dialogueBox()->setText(text);
 
-    m_game->setNextPlayerToMove();
+    m_game->checkNextActionCard();
     emit movePlayed(this, m_game->getIndexOfPlayerToMove());
 }
