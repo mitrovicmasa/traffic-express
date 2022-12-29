@@ -139,7 +139,12 @@ void PlayerPerspective::onClickedCardInHandInPlayer(Card *c, Hand *h, Player *p)
 
 
         emit playerPlayedCard(playerIndex,cardIndex);
-        emit movePlayed(this,-1);
+
+        if(m_game->phase() != Phase::PHASE_2)
+            emit movePlayed(this,-1);
+        else
+            emit movePlayed(this, m_game->getIndexOfPlayerToMove());
+
         return;
     }
 }
