@@ -86,6 +86,8 @@ set(PROJECT_SOURCES
         src/roundcarddeck.cpp
         src/serializable.cpp
         ../tests/player.cpp
+        ../tests/wagon.cpp
+        ../tests/train.cpp
         ../tests/catch.cpp
         )
 
