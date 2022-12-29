@@ -1,6 +1,7 @@
 //#define CATCH_CONFIG_MAIN
 #include <catch.hpp>
 
+#include "../TrafficExpress/headers/game.h"
 #include "../TrafficExpress/headers/hand.h"
 #include "../TrafficExpress/headers/deck.h"
 #include "../TrafficExpress/headers/card.h"
@@ -552,4 +553,251 @@ TEST_CASE("Testing correctness of methods in class RoundCardDeck", "[roundcardde
         minirounds.clear();
         delete deck;
     }
+}
+
+
+TEST_CASE("Testing correctness of methods in class Game", "[game]")
+{
+    SECTION("Method setNextPlayerToMove should set next player to move")
+    {
+        // arrange
+        std::vector<Player*> players;
+            players = {
+                new Player(BanditType::PICKPOCKET),
+                new Player(BanditType::SEDUCTRESS),
+                new Player(BanditType::STUDENT),
+            };
+
+        Game* game = new Game(players);
+        game->setIndexOfPlayerToMove(2);
+        const auto expectedOutput1 = 0;
+
+        // act
+        game->setNextPlayerToMove();
+        const auto actualOutput1 = game->getIndexOfPlayerToMove();
+
+        // assert
+        REQUIRE(expectedOutput1 == actualOutput1);
+
+        delete game;
+        for(Player* p: players)
+                delete p;
+    }
+
+    SECTION("Method allPlayersDrawCards should draw n cards for all players")
+    {
+        // arrange
+        std::vector<Player*> players;
+            players = {
+                new Player(BanditType::PICKPOCKET),
+                new Player(BanditType::SEDUCTRESS),
+                new Player(BanditType::STUDENT),
+            };
+        for(Player* p: players)
+                p->deck()->push_back(new NeutralBullet());
+        Game* game = new Game(players);
+        const auto expectedOutput1 = true;
+        const auto expectedOutput2 = false;
+        const auto expectedOutput3 = true;
+        const auto expectedOutput4 = false;
+        const auto expectedOutput5 = true;
+        const auto expectedOutput6 = false;
+
+        // act
+        const auto actualOutput1 = game->players()[0]->hand()->empty();
+        const auto actualOutput3 = game->players()[1]->hand()->empty();
+        const auto actualOutput5 = game->players()[2]->hand()->empty();
+        game->allPlayersDrawCards(1);
+        const auto actualOutput2 = game->players()[0]->hand()->empty();
+        const auto actualOutput4 = game->players()[1]->hand()->empty();
+        const auto actualOutput6 = game->players()[2]->hand()->empty();
+
+        // assert
+        REQUIRE(expectedOutput1 == actualOutput1);
+        REQUIRE(expectedOutput2 == actualOutput2);
+        REQUIRE(expectedOutput3 == actualOutput3);
+        REQUIRE(expectedOutput4 == actualOutput4);
+        REQUIRE(expectedOutput5 == actualOutput5);
+        REQUIRE(expectedOutput6 == actualOutput6);
+
+        delete game;
+        for(Player* p: players)
+                delete p;
+    }
+
+    SECTION("Method findPlayerById returns index of player using his id")
+    {
+        // arrange
+        std::vector<Player*> players;
+            players = {
+                new Player(BanditType::PICKPOCKET),
+                new Player(BanditType::SEDUCTRESS),
+                new Player(BanditType::STUDENT),
+            };
+        for(Player* p: players)
+                p->deck()->push_back(new NeutralBullet());
+        Game* game = new Game(players);
+        const auto expectedOutput1 = 0;
+        const auto expectedOutput2 = 1;
+        const auto expectedOutput3 = 2;
+
+        // act
+        const auto actualOutput1 = game->findPlayerById(BanditType::PICKPOCKET);
+        const auto actualOutput2 = game->findPlayerById(BanditType::SEDUCTRESS);
+        const auto actualOutput3 = game->findPlayerById(BanditType::STUDENT);
+
+        // assert
+        REQUIRE(expectedOutput1 == actualOutput1);
+        REQUIRE(expectedOutput2 == actualOutput2);
+        REQUIRE(expectedOutput3 == actualOutput3);
+
+        delete game;
+        for(Player* p: players)
+            delete p;
+    }
+
+    SECTION("Method findPlayersTreasureIndex returns index of player's treasure")
+    {
+        // arrange
+        std::vector<Player*> players;
+            players = {
+                new Player(BanditType::PICKPOCKET),
+            };
+        Treasure* t1 = new Treasure();
+        Treasure* t2 = new Treasure();
+        players[0]->treasure().push_back(t1);
+        players[0]->treasure().push_back(t2);
+        Game* game = new Game(players);
+        const auto expectedOutput1 = 1;
+        const auto expectedOutput2 = 2;
+
+        // act
+        const auto actualOutput1 = game->findPlayersTreasureIndex(t1,0);
+        const auto actualOutput2 = game->findPlayersTreasureIndex(t2,0);
+        // assert
+        REQUIRE(expectedOutput1 == actualOutput1);
+        REQUIRE(expectedOutput2 == actualOutput2);
+
+        delete game;
+        delete t1;
+        delete t2;
+        for(Player* p: players)
+            delete p;
+
+    }
+
+    SECTION("Method possiblePlayersToShot returns vector of players that playerIndex can shoot")
+    {
+        // arrange
+        std::vector<Player*> players;
+            players = {
+                new Player(BanditType::PICKPOCKET),
+                new Player(BanditType::SEDUCTRESS),
+                new Player(BanditType::STUDENT),
+            };
+        Game* game = new Game(players);
+
+        game->initialize();
+        Wagon* w1 = game->wagons()->getWagons()[0];
+        for(Player* p: players) {
+            w1->addPlayerDown(p);
+            p->setPositionInTrain(0);
+            p->setRoof(false);
+        }
+        const auto expectedOutput1 = true;
+        const auto expectedOutput2 = game->players()[0]->id();
+
+        // act
+        const auto actualOutput1 = game->possiblePlayersToShot(0).empty();
+        game->wagons()->getWagons()[0]->takePlayerDown(game->players()[0]);
+        game->wagons()->getWagons()[1]->addPlayerDown(game->players()[0]);
+        const auto actualOutput2 = game->possiblePlayersToShot(1)[0]->id();
+
+        // assert
+        REQUIRE(expectedOutput1 == actualOutput1);
+        REQUIRE(expectedOutput2 == actualOutput2);
+
+        delete game;
+        for(Player* p: players)
+            delete p;
+
+    }
+
+
+    SECTION("Method possiblePlayersToPunch returns vector of players that playerIndex can punch")
+    {
+        // arrange
+        std::vector<Player*> players;
+            players = {
+                new Player(BanditType::PICKPOCKET),
+                new Player(BanditType::SEDUCTRESS),
+                new Player(BanditType::STUDENT),
+            };
+        Game* game = new Game(players);
+
+        game->initialize();
+        Wagon* w1 = game->wagons()->getWagons()[0];
+        for(Player* p: players) {
+            w1->addPlayerDown(p);
+            p->setPositionInTrain(0);
+            p->setRoof(false);
+        }
+        const auto expectedOutput1 = 2;
+        const auto expectedOutput2 = game->players()[0]->id();
+
+        // act
+        const auto actualOutput1 = game->possiblePlayersToPunch(0).size();
+        game->wagons()->getWagons()[0]->takePlayerDown(game->players()[2]);
+        game->wagons()->getWagons()[1]->addPlayerDown(game->players()[2]);
+        const auto actualOutput2 = game->possiblePlayersToPunch(1)[0]->id();
+
+        // assert
+        REQUIRE(expectedOutput1 == actualOutput1);
+        REQUIRE(expectedOutput2 == actualOutput2);
+
+        delete game;
+        for(Player* p: players)
+            delete p;
+
+    }
+
+    SECTION("Method possibleTreasure returns vector of treasure that playerIndex can take")
+    {
+        // arrange
+        std::vector<Player*> players;
+            players = {
+                new Player(BanditType::PICKPOCKET),
+                new Player(BanditType::SEDUCTRESS),
+                new Player(BanditType::STUDENT),
+            };
+        Game* game = new Game(players);
+
+        game->initialize();
+        Wagon* w1 = game->wagons()->getWagons()[0];
+        for(Player* p: players) {
+            w1->addPlayerDown(p);
+            p->setPositionInTrain(0);
+            p->setRoof(false);
+        }
+        std::vector<Treasure*> treasures = w1->getContentDown();
+
+        const auto expectedOutput1 = treasures.size();
+        const auto expectedOutput2 = true;
+
+        // act
+        const auto actualOutput1 = game->possibleTreasure(0).size();
+        for(Treasure* t: treasures)
+            w1->takeContentDown(t);
+        const auto actualOutput2 = game->possibleTreasure(0).empty();
+
+        // assert
+        REQUIRE(expectedOutput1 == actualOutput1);
+        REQUIRE(expectedOutput2 == actualOutput2);
+
+        delete game;
+        for(Player* p: players)
+            delete p;
+
+    }
+
 }
