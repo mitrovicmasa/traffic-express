@@ -214,9 +214,14 @@ void MainWindow::onStart()
 
         this->m_sp=new SinglePlayerStateMachine();
         for(int i=0;i<players.size();i++){
-//            Game*g=new Game();
-//            g->fromVariant(game->toVariant());
+            Game*g=new Game();
+            g->fromVariant(game->toVariant());
+            //Ovo sada koristimo
+//            this->m_sp->push_back(new PlayerPerspective(g,i));
+            //Ovo smo ranije koristili
             this->m_sp->push_back(new PlayerPerspective(new Game(*game),i));
+
+
             //std::cout<<pps.back()->getPlayerSize()<<std::endl;
             m_sp->back()->addGameToScene();
             //m_sp->back()->drawCards(6);

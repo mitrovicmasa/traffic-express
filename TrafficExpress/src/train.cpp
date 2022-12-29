@@ -161,8 +161,11 @@ void Train::fromVariant(const QVariant &variant)
     for (auto &wagon : list) {
         Wagon *newWagon = new Wagon();
         newWagon->fromVariant(wagon);
+        newWagon->setIsLocomotive(false);
         push_back(newWagon);
     }
+    this->back()->setIsLocomotive(true);
+    this->back()->addSheriffDown(new Sheriff());
 }
 
 // GUI

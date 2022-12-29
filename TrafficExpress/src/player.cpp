@@ -202,6 +202,10 @@ void Player::fromVariant(const QVariant &variant)
         m_treasure.push_back(t);
     }
 
+    m_bulletDeck=new Deck();
+    for(int i=1;i<=6;i++)
+        m_bulletDeck->push_back(new BulletCard(m_id,i));
+
 
     connect(m_hand,&Hand::clickedCardInHand,this,&Player::onClickedCardInHand);
     connect(m_deck,&Deck::clickedCardInDeck,this,&Player::onClickedCardInDeck);

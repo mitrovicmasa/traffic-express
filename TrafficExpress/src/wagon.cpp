@@ -480,7 +480,7 @@ void Wagon::fromVariant(const QVariant &variant)
     m_isLocomotive=map.value("isLocomotive").toBool();
     m_sheriff=map.value("containsSherif").toBool()? new Sheriff() :nullptr;
     QVariantList list=map.value("contentDown").toList();
-    for(auto t:list){
+    for(auto &t:list){
 
         Treasure*tr=new Treasure();
         tr->fromVariant(t);
@@ -499,6 +499,8 @@ void Wagon::setIsLocomotive(bool newIsLocomotive)
 {
     m_isLocomotive = newIsLocomotive;
 }
+
+
 
 
 
