@@ -87,6 +87,7 @@ set(PROJECT_SOURCES
         src/serializable.cpp
         ../tests/player.cpp
         ../tests/catch.cpp
+        ../tests/card.cpp
         )
 
 set(PROJECT_HEADERS
