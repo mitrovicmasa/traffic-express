@@ -14,6 +14,8 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Gui)
+find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Network)
+
 
 set(RESOURCES ${CMAKE_CURRENT_SOURCE_DIR}/resource/resource.qrc)
 qt_add_resources(RES_SOURCES ${RESOURCES})
@@ -85,6 +87,7 @@ set(PROJECT_SOURCES
         src/dialoguebox.cpp
         src/roundcarddeck.cpp
         src/serializable.cpp
+        src/client/playerclient.cpp
         )
 
 set(PROJECT_HEADERS
@@ -119,6 +122,7 @@ set(PROJECT_HEADERS
         headers/dialoguebox.h
         headers/roundcarddeck.h
         headers/serializable.h
+        headers/client/playerclient.h
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
@@ -149,7 +153,7 @@ else()
     endif()
 endif()
 
-target_link_libraries(TrafficExpress PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
+target_link_libraries(TrafficExpress PRIVATE Qt${QT_VERSION_MAJOR}::Widgets Qt${QT_VERSION_MAJOR}::Network)
 
 set_target_properties(TrafficExpress PROPERTIES
     MACOSX_BUNDLE_GUI_IDENTIFIER my.example.com

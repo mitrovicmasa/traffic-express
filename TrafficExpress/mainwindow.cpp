@@ -21,7 +21,7 @@
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
-    , sc(new QGraphicsScene())
+
 {
     ui->setupUi(this);
     this->setWindowTitle("Traffic Express");
@@ -116,6 +116,34 @@ void MainWindow::setImages()
     ui->textEdit->setStyleSheet("border-image : url(://rules_bg.jpg);");
 }
 
+void MainWindow::onChangeReadyColor(bool condition)
+{
+    if(condition){
+        ui->pbReady->setStyleSheet("background-color:green");
+    }else{
+        ui->pbReady->setStyleSheet("background-color:red");
+    }
+}
+
+void MainWindow::onChangeStartColor()
+{
+    if(m_client->allReady() && m_client->getHost()){
+        ui->pbStart->setStyleSheet("background-color:green");
+        ui->pbStart->setDisabled(false);
+    }else if(m_client->getHost()){
+        ui->pbStart->setStyleSheet("background-color:yellow");
+        ui->pbStart->setDisabled(true);
+    }else{
+
+        ui->pbStart->setStyleSheet("background-color:red");
+        ui->pbStart->setDisabled(true);
+    }
+
+
+
+
+}
+
 
 // Message Box
 void MainWindow::showMessageBox(QString content) const {
@@ -132,6 +160,8 @@ void MainWindow::showMessageBox(QString content) const {
 
 void MainWindow::onPlay()
 {
+
+
     ui->stackedWidget->setCurrentIndex(2);
 }
 
@@ -154,12 +184,32 @@ void MainWindow::onConnect()
         name = ui->leName->text();
     else name = "Player";
 
-    sc->setSceneRect(ui->gvWaitingRoom->rect());
-    ui->gvWaitingRoom->setScene(sc);
-    ui->gvWaitingRoom->setBackgroundBrush(QColor(100,100,100));
-    ui->gvWaitingRoom->setRenderHint(QPainter::Antialiasing);
-    ui->gvWaitingRoom->setAlignment(Qt::AlignTop | Qt::AlignLeft);
-    //TODO: napraviti Tabelu za ovaj gv koja ce da ispisuje ime i ready/not ready
+
+
+    m_client=new PlayerClient();
+    m_client->setUsername(name);
+
+    connect(this,&MainWindow::readyClicked,m_client,&PlayerClient::onClickedReady);
+    connect(this,&MainWindow::startClicked,m_client,&PlayerClient::onClickedStart);
+
+    connect(m_client,&PlayerClient::changeReadyColor,this,&MainWindow::onChangeReadyColor);
+    connect(m_client,&PlayerClient::changeStartColor,this,&MainWindow::onChangeStartColor);
+    m_client->startClient();
+    if(m_client->getHost()){
+        ui->pbStart->setStyleSheet("background-color:yellow");
+        ui->pbStart->setDisabled(false);
+    }else{
+        ui->pbStart->setStyleSheet("background-color:red");
+        ui->pbStart->setDisabled(true);
+    }
+     ui->pbReady->setStyleSheet("background-color:red");
+
+//    sc->setSceneRect(ui->gvWaitingRoom->rect());
+//    ui->gvWaitingRoom->setScene(sc);
+//    ui->gvWaitingRoom->setBackgroundBrush(QColor(100,100,100));
+//    ui->gvWaitingRoom->setRenderHint(QPainter::Antialiasing);
+//    ui->gvWaitingRoom->setAlignment(Qt::AlignTop | Qt::AlignLeft);
+//    //TODO: napraviti Tabelu za ovaj gv koja ce da ispisuje ime i ready/not ready
 
     //TODO: napraviti konekciju sa serverom :))))))
     ui->stackedWidget->setCurrentIndex(3);
@@ -168,6 +218,9 @@ void MainWindow::onConnect()
 void MainWindow::onReady()
 {
     //TODO: obavestiti server da je plejer spreman
+    ui->pbReady->setStyleSheet("background-color:green");
+    emit readyClicked();
+
 
     //TODO: izmeniti tabelu da bude ready
 }
@@ -179,58 +232,49 @@ void MainWindow::onStart()
         nmp za pocetak cu staviti da svako moze da klikne  */
 
     // imaginarni plejeri u nasoj partiji
-    std::vector<Player*> players;
-        players = {
-            new Player(BanditType::PICKPOCKET),
-            new Player(BanditType::SEDUCTRESS),
-            new Player(BanditType::STUDENT),
-    //        new Player(BanditType::RETIREE),
-    //        new Player(BanditType::HOMELESS_MAN),
-    //        new Player(BanditType::BUSINESS_WOMAN)
-        };
+//    std::vector<Player*> players;
+//        players = {
+//            new Player(BanditType::PICKPOCKET),
+//            new Player(BanditType::SEDUCTRESS),
+//            new Player(BanditType::STUDENT),
+//    //        new Player(BanditType::RETIREE),
+//    //        new Player(BanditType::HOMELESS_MAN),
+//    //        new Player(BanditType::BUSINESS_WOMAN)
+//        };
+//    emit startClicked();
+//    Game*game=new Game(players);
+//    game->initialize();
+//    game->setPhase(Phase::WAGON_SELECTION);
+//    game->allPlayersDrawCards(6);
+//    std::cout<<game->rounds()->size()<<std::endl;
 
-    Game*game=new Game(players);
-    game->initialize();
-    game->setPhase(Phase::WAGON_SELECTION);
-    game->allPlayersDrawCards(6);
-    std::cout<<game->rounds()->size()<<std::endl;
-
-//    PlayerPerspective*pp=new PlayerPerspective(game,1);
-//    pp->addGameToScene();
-//    pp->drawCards(6);
-//    this->pps=std::vector<PlayerPerspective*>();
-//    for(int i=0;i<players.size();i++){
-//        this->pps.push_back(new PlayerPerspective(new Game(*game),i));
-//        //std::cout<<pps.back()->getPlayerSize()<<std::endl;
-//        pps.back()->addGameToScene();
-//        pps.back()->drawCards(6);
+//    if(m_client->getHost()){
+        //start game
 //    }
 
-//    pps[0]->setSceneRect(ui->graphicsView->rect());
-//    ui->graphicsView->setScene(pps[0]);
-//    pp->setSceneRect(ui->graphicsView->rect());
-//    ui->graphicsView->setScene(pp);
+
+//        this->m_sp=new SinglePlayerStateMachine();
+//        for(int i=0;i<players.size();i++){
+//            Game*g=new Game();
+//            g->fromVariant(game->toVariant());
+//            //Ovo sada koristimo
+////            this->m_sp->push_back(new PlayerPerspective(g,i));
+//            //Ovo smo ranije koristili
+//            this->m_sp->push_back(new PlayerPerspective(new Game(*game),i));
 
 
-        this->m_sp=new SinglePlayerStateMachine();
-        for(int i=0;i<players.size();i++){
-            Game*g=new Game();
-            g->fromVariant(game->toVariant());
-            //Ovo sada koristimo
-//            this->m_sp->push_back(new PlayerPerspective(g,i));
-            //Ovo smo ranije koristili
-            this->m_sp->push_back(new PlayerPerspective(new Game(*game),i));
+//            //std::cout<<pps.back()->getPlayerSize()<<std::endl;
+//            m_sp->back()->addGameToScene();
+//            //m_sp->back()->drawCards(6);
+//        }
+//        connect(m_sp,&SinglePlayerStateMachine::movePlayed,
+//                this,&MainWindow::onMovePlayed);
+
+//        (*m_sp)[0]->setSceneRect(ui->graphicsView->rect());
+//        ui->graphicsView->setScene((*m_sp)[0]);
 
 
-            //std::cout<<pps.back()->getPlayerSize()<<std::endl;
-            m_sp->back()->addGameToScene();
-            //m_sp->back()->drawCards(6);
-        }
-        connect(m_sp,&SinglePlayerStateMachine::movePlayed,
-                this,&MainWindow::onMovePlayed);
 
-        (*m_sp)[0]->setSceneRect(ui->graphicsView->rect());
-        ui->graphicsView->setScene((*m_sp)[0]);
 
 
     ui->graphicsView->setBackgroundBrush(QPixmap("://bluemoon.png"));
@@ -245,47 +289,13 @@ void MainWindow::onMovePlayed(int i)
     //qDebug()<<"MainWindow stigao";
     //qDebug()<<m_sp;
 
-    (*m_sp)[i]->setSceneRect(ui->graphicsView->rect());
-    ui->graphicsView->setScene((*m_sp)[i]);
+//    (*m_sp)[i]->setSceneRect(ui->graphicsView->rect());
+//    ui->graphicsView->setScene((*m_sp)[i]);
 
 }
 
 
-//void MainWindow::initializeGameGUI(Game *game)
-//{
-//    sc->setSceneRect(ui->graphicsView->rect());
-//    ui->graphicsView->setScene(sc);
-//    ui->graphicsView->setBackgroundBrush(QPixmap("://clouds.png"));
-//    ui->graphicsView->setRenderHint(QPainter::Antialiasing);
-//    ui->graphicsView->setAlignment(Qt::AlignTop | Qt::AlignLeft);
 
-//    train = game->wagons();
-//    sc->addItem(train);
-//    train->setPos(50,50);
-
-//    table = new Table();
-//    for (Player* p:game->players()){
-//        table->push_back(new PlayerStats(p));
-//    }
-//    sc->addItem(table);
-//    table->setPos(810,270);
-
-//    roundcard = game->rounds()[0];
-//    sc->addItem(roundcard);
-//    roundcard->setPos(500,300);
-
-//    groupDeck = new Deck();
-//    sc->addItem(groupDeck);
-//    groupDeck->setPos(300,300);
-
-//    playerDeck = new Deck();
-//    sc->addItem(playerDeck);
-//    playerDeck->setPos(50,300);
-
-//    hand = new Hand();
-//    sc->addItem(hand);
-//    hand->setPos(50,450);
-//}
 
 void MainWindow::keyPressEvent(QKeyEvent *event)
 {
@@ -295,21 +305,21 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
     if(event->key()==Qt::Key_G){
 
 
-        for(PlayerPerspective*pp:pps){
-            pp->setNextPlayerToToMove();
+//        for(PlayerPerspective*pp:pps){
+//            pp->setNextPlayerToToMove();
 
-        }
-        int pToMove=pps[0]->getPlayerToMoveIndex();
-//        std::cout<<pToMove<<std::endl;
-        pps[pToMove]->setSceneRect(ui->graphicsView->rect());
-        ui->graphicsView->setScene(pps[pToMove]);
+//        }
+//        int pToMove=pps[0]->getPlayerToMoveIndex();
+////        std::cout<<pToMove<<std::endl;
+//        pps[pToMove]->setSceneRect(ui->graphicsView->rect());
+//        ui->graphicsView->setScene(pps[pToMove]);
 
 
     }
     if(event->key()==Qt::Key_D){
-        //std::cout<<"im here"<<std::endl;
-        int pToMove=pps[0]->getPlayerToMoveIndex();
-        pps[pToMove]->drawCards(1);
+//        //std::cout<<"im here"<<std::endl;
+//        int pToMove=pps[0]->getPlayerToMoveIndex();
+//        pps[pToMove]->drawCards(1);
     }
 
 
