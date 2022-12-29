@@ -182,7 +182,7 @@ TEST_CASE("Testing correctnes of methods in class Train", "[train]")
         delete train;
     }
 
-    SECTION("Method size should return number of wagons in train")
+    SECTION("Method empty should checked if train has no wagons")
     {
         // arrange
         Train* train = new Train();
