@@ -85,6 +85,11 @@ void Hand::pop_front()
 
 }
 
+int Hand::size()
+{
+    return m_cards.size();
+}
+
 Card *Hand::takeCard(Card *c)
 {
     for(auto it=m_cards.begin();it!=m_cards.end();it++){

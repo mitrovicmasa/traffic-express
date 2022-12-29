@@ -28,6 +28,7 @@ public:
     bool empty();
     void push_front(Card*);
     void pop_front();
+    int size();
 
     Card* takeCard(Card*);
     Card* takeCard(int indexofCard);

@@ -161,7 +161,7 @@ void PlayerPerspective::onClickedCardInDeckInPlayer(Card *c, Deck *d, Player *p)
 
     }
 
-    if(p->isItMyMove() && m_game->phase()==Phase::PHASE_1 && d->size() >= 3)
+    if(p->isItMyMove() && m_game->phase()==Phase::PHASE_1 && d->size() >= 3 && p->hand()->size() <= 6)
     {
 
         int indexOfPlayer=m_game->findPlayerById(m_player->id());
