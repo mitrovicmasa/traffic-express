@@ -17,7 +17,7 @@ enum class ActionType {
 class ActionCard : public BanditCard,public Serializable {
 
 public:
-
+    ActionCard();
     // Constructors
     ActionCard(ActionType action, BanditType bandit);
     //Card *Copy() const override;

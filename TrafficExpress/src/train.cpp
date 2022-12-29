@@ -161,7 +161,7 @@ void Train::fromVariant(const QVariant &variant)
     for (auto &wagon : list) {
         Wagon *newWagon = new Wagon();
         newWagon->fromVariant(wagon);
-        m_wagons.push_back(newWagon);
+        push_back(newWagon);
     }
 }
 

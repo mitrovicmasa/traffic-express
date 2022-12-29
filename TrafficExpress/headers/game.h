@@ -26,7 +26,7 @@ enum class Phase {
     PHASE_2
 };
 
-class Game
+class Game:Serializable
 {
 public:
 
@@ -134,6 +134,11 @@ private:
     bool m_actionPending;
     int m_playerClicked;
     unsigned m_seed;
+
+    // Serializable interface
+public:
+    QVariant toVariant() const;
+    void fromVariant(const QVariant &variant);
 };
 
 void generateAllTreasure(const int &count, const int &value, TreasureType type, std::vector<Treasure> &treasure);

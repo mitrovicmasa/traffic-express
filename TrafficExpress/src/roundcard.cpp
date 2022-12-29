@@ -15,6 +15,11 @@ RoundCard::RoundCard(RoundCardType type, EventType event, const MiniRoundCollect
     setFlags(GraphicsItemFlag::ItemIsSelectable);
 }
 
+RoundCard::RoundCard()
+{
+
+}
+
 RoundCard::RoundCard(RoundCardType type, EventType event, const std::vector<MiniRoundType> &miniRound)
     :QGraphicsObject(), m_type(type),
       m_event(event)
@@ -206,7 +211,7 @@ void RoundCard::fromVariant(const QVariant &variant)
 
     for (auto &e : list) {
         MiniRound *miniRound = new MiniRound(static_cast<MiniRoundType>(e.toInt()));
-        m_miniRounds.push_back(miniRound);
+        this->push_back(miniRound);
     }
 }
 

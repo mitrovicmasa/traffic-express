@@ -91,3 +91,30 @@ void RoundCardDeck::paint(QPainter *painter, const QStyleOptionGraphicsItem *opt
 {
     painter->fillRect(boundingRect(),QColor::fromRgb(80,90,100));
 }
+
+QVariant RoundCardDeck::toVariant() const
+{
+    QVariantMap map;
+
+    QVariantList list;
+    for(RoundCard*rc:m_rounds){
+        list.append(rc->toVariant());
+    }
+    map.insert("rcdList",list);
+
+
+
+
+    return map;
+}
+
+void RoundCardDeck::fromVariant(const QVariant &variant)
+{
+    QVariantMap map=variant.toMap();
+    QVariantList list=map.value("rcdList").toList();
+    for( auto it=list.rbegin();it!=list.rend();it++){
+        RoundCard* rc=new RoundCard();
+        rc->fromVariant(*it);
+        this->push_front(rc);
+    }
+}

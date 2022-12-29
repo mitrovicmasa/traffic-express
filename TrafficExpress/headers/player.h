@@ -25,7 +25,7 @@ class Player : public QGraphicsObject, public Serializable
 public:
 
     // Constructors
-
+    Player();
     Player(BanditType id);
     //this is not safe
 //    Player(const Player&);

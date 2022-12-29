@@ -51,7 +51,7 @@ class RoundCard:public QGraphicsObject, public Serializable
 public:
 
     // Constructors
-
+    RoundCard();
     RoundCard(RoundCardType type, EventType event, const std::vector<MiniRoundType> &miniRound);
     RoundCard(RoundCardType type, EventType event, const std::vector<MiniRound*> &miniRound);
     //this is a safe copy constructor

@@ -5,7 +5,7 @@
 #include <vector>
 #include "card.h"
 
-class Hand:public QGraphicsObject
+class Hand:public QGraphicsObject,public Serializable
 {
     Q_OBJECT
 public:
@@ -56,6 +56,11 @@ protected:
     void mousePressEvent(QGraphicsSceneMouseEvent *event);
 private:
     CardColection m_cards;
+
+    // Serializable interface
+public:
+    QVariant toVariant() const;
+    void fromVariant(const QVariant &variant);
 };
 
 #endif // HAND_H

@@ -5,7 +5,7 @@
 #include <QObject>
 #include <roundcardcollection.h>
 
-class RoundCardDeck : public QGraphicsObject
+class RoundCardDeck : public QGraphicsObject,public Serializable
 {
     Q_OBJECT
 public:
@@ -38,6 +38,11 @@ public:
     QRectF boundingRect() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 
+
+    // Serializable interface
+public:
+    QVariant toVariant() const;
+    void fromVariant(const QVariant &variant);
 };
 
 #endif // ROUNDCARDDECK_H

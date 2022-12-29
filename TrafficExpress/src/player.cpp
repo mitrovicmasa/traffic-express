@@ -5,6 +5,11 @@
 #include <QPainter>
 
 // Constructors
+Player::Player()
+{
+setFlags(GraphicsItemFlag::ItemIsSelectable);
+}
+
 Player::Player(BanditType id)
     : QGraphicsObject(), m_id(id),m_isItMyMove(false)
 {
@@ -165,7 +170,7 @@ QVariant Player::toVariant() const
     map.insert("positionInTrain", m_positionInTrain);
     map.insert("deck", m_deck->toVariant());
     map.insert("roof", m_roof);
-
+    map.insert("hand",m_hand->toVariant());
     QVariantList list;
     for (auto *treasure : m_treasure) {
         list.append(treasure->toVariant());
@@ -182,12 +187,13 @@ void Player::fromVariant(const QVariant &variant)
     m_id = static_cast<BanditType>(map.value("id").toInt());
     m_positionInTrain = map.value("positionInTrain").toInt();
 
-    QVariantList cards = map.value("deck").toList();
-    for (auto &card : cards) {
-        ActionCard *actionCard;
-        actionCard->fromVariant(card);
-        m_deck->push_back(actionCard);
-    }
+
+
+        m_hand=new Hand();
+        m_hand->fromVariant(map.value("hand"));
+
+        m_deck=new Deck();
+        m_deck->fromVariant(map.value("deck"));
 
     QVariantList content = map.value("treasure").toList();
     for (auto &treasure : content) {
@@ -195,6 +201,10 @@ void Player::fromVariant(const QVariant &variant)
         t->fromVariant(treasure);
         m_treasure.push_back(t);
     }
+
+
+    connect(m_hand,&Hand::clickedCardInHand,this,&Player::onClickedCardInHand);
+    connect(m_deck,&Deck::clickedCardInDeck,this,&Player::onClickedCardInDeck);
 }
 
 

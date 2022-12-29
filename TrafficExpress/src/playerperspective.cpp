@@ -31,6 +31,11 @@ void PlayerPerspective::addGameToScene()
     this->addItem(train);
     train->setPos(50,50);
 
+//    if(m_table){
+//        qDebug()<<"table size:" <<m_table->size();
+//    }else{
+//        qDebug()<<"m_table NOT exists";
+//    }
     this->addItem(m_table);
     m_table->setPos(770,300);
 
@@ -47,9 +52,9 @@ void PlayerPerspective::addGameToScene()
     this->addItem(playerDeck);
     playerDeck->setPos(50,300);
 
-//    Deck* bulletDeck = m_player->bullet_deck();
-//    this->addItem(bulletDeck);
-//    bulletDeck->setPos(300,300);
+////    Deck* bulletDeck = m_player->bullet_deck();
+////    this->addItem(bulletDeck);
+////    bulletDeck->setPos(300,300);
 
     Hand*hand = m_player->hand();
     this->addItem(hand);

@@ -7,13 +7,14 @@
 
 Table::Table()
    :QGraphicsObject(){
-
+setFlags(GraphicsItemFlag::ItemIsSelectable);
 }
 
 void Table::addTableToScene(QGraphicsScene *sc)
 {
     sc->addItem(this);
     (this)->setPos(800,800);
+
 }
 
 

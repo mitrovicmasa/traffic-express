@@ -5,7 +5,7 @@
 #include <algorithm>
 Deck::Deck():QGraphicsObject()
 {
-
+setFlags(GraphicsItemFlag::ItemIsSelectable);
 }
 
 //Deck::Deck(const Deck &d)
@@ -23,7 +23,7 @@ Deck::Deck(CardColection cc)
         this->push_back(c);
 
     }
-
+setFlags(GraphicsItemFlag::ItemIsSelectable);
 }
 
 CardColection &Deck::getCards()
@@ -112,9 +112,9 @@ void Deck::fromVariant(const QVariant &variant)
 {
     QVariantList list = variant.toMap().value("cards").toList();
     for (auto &card : list) {
-        ActionCard *newCard;
+        ActionCard *newCard=new ActionCard();
         newCard->fromVariant(card);
-        m_cards.push_back(newCard);
+        this->push_back(newCard);
     }
 }
 

@@ -5,7 +5,7 @@
 
 Hand::Hand():QGraphicsObject()
 {
-
+setFlags(GraphicsItemFlag::ItemIsSelectable);
 }
 
 //Hand::Hand(const Hand &h)
@@ -22,6 +22,7 @@ Hand::Hand(CardColection &cc)
 
         this->push_back(c);
     }
+    setFlags(GraphicsItemFlag::ItemIsSelectable);
 }
 
 CardColection &Hand::getCards()
@@ -159,4 +160,30 @@ void Hand::mousePressEvent(QGraphicsSceneMouseEvent *event)
     for (Card*c:m_cards)
         std::cout<<"\t"<<c->toString()<<std::endl;
 
+}
+
+QVariant Hand::toVariant() const
+{
+    QVariantMap map;
+    QVariantList list;
+    for (auto *card : m_cards) {
+        list.append(((ActionCard*)(card))->toVariant());
+    }
+
+
+    map.insert("cards", list);
+
+
+
+    return map;
+}
+
+void Hand::fromVariant(const QVariant &variant)
+{
+    QVariantList list = variant.toMap().value("cards").toList();
+    for (auto &card : list) {
+        ActionCard *newCard=new ActionCard();
+        newCard->fromVariant(card);
+        this->push_back(newCard);
+    }
 }

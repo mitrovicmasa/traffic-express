@@ -2,6 +2,11 @@
 #include <qpainter.h>
 
 // Constructors
+ActionCard::ActionCard()
+    :BanditCard(BanditType::BUSINESS_WOMAN){
+
+}
+
 ActionCard::ActionCard(ActionType action, BanditType bandit) : m_action(action),
     BanditCard(bandit)
 {}

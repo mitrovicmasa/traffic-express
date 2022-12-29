@@ -484,7 +484,7 @@ void Wagon::fromVariant(const QVariant &variant)
 
         Treasure*tr=new Treasure();
         tr->fromVariant(t);
-        m_contentDown.push_back(tr);
+        addContentDown(tr);
     }
 
 

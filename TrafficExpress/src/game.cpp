@@ -1,10 +1,10 @@
 #include "../headers/game.h"
 
 //// Constructors
-//Game::Game()
-//{
+Game::Game()
+{
 
-//}
+}
 
 Game::Game( std::vector<Player*> &players)
     : m_players(players),m_indexOfPlayerToMove(0),m_indexOfRound(0), m_indexOfMiniround(0)
@@ -935,6 +935,103 @@ int Game::playerClicked() const
 void Game::setPlayerClicked(int newPlayerClicked)
 {
     m_playerClicked = newPlayerClicked;
+}
+
+QVariant Game::toVariant() const
+{
+        QVariantMap map;
+        map.insert("p2m",m_indexOfPlayerToMove);
+        map.insert("mri",m_indexOfMiniround);
+        map.insert("ri",m_indexOfRound);
+        map.insert("ca",(int)m_currentAction);
+
+        QVariantList playerList;
+        for(Player*p:m_players){
+            playerList.append(p->toVariant());
+        }
+        map.insert("pl",playerList);
+        map.insert("train",m_wagons->toVariant());
+        map.insert("sPos",m_sheriffPosition);
+        map.insert("rcd",m_rounds->toVariant());
+        map.insert("cPlayed",m_cardsPlayed->toVariant());
+
+        //std::vector<NeutralBullet*> m_neutralBulletDeck;
+        QVariantList treasureList;
+        for(Treasure*t:m_unusedTreasure){
+            treasureList.append(t->toVariant());
+        }
+        map.insert("uTreasure",treasureList);
+
+        map.insert("mBullets",(int)m_mostBulletsShot);
+        map.insert("richestPlayer",(int)m_richestPlayer);
+        map.insert("phase",(int)m_phase);
+
+
+        //DialogueBox* m_dialogueBox;
+        map.insert("aPending",m_actionPending);
+        map.insert("pClicked",m_playerClicked);
+        map.insert("seed",(int)m_seed);
+
+
+
+
+        return map;
+}
+
+void Game::fromVariant(const QVariant &variant)
+{
+        QVariantMap map=variant.toMap();
+
+        m_indexOfPlayerToMove=map.value("p2m").toInt();
+        m_indexOfMiniround=map.value("mri").toInt();
+        m_indexOfRound=map.value("ri").toInt();
+        m_currentAction=static_cast<ActionType>(map.value("ca").toInt());
+
+        QVariantList playerList=map.value("pl").toList();
+        for(auto&p:playerList){
+            Player*player=new Player();
+            player->fromVariant(p);
+            m_players.push_back(player);
+        }
+
+          m_wagons=new Train();
+          m_wagons->fromVariant(map.value("train"));
+          m_sheriffPosition=map.value("sPos").toInt();
+          m_rounds=new RoundCardDeck();
+          m_rounds->fromVariant(map.value("rcd"));
+          m_cardsPlayed=new Deck();
+          m_cardsPlayed->fromVariant(map.value("cPlayed"));
+
+        //std::vector<NeutralBullet*> m_neutralBulletDeck;
+        QVariantList treasureList=map.value("uTreasure").toList();
+        for(auto&t:treasureList){
+            Treasure*tr=new Treasure();
+            tr->fromVariant(t);
+            m_unusedTreasure.push_back(tr);
+        }
+
+
+        m_mostBulletsShot=static_cast<BanditType>(map.value("mBullets").toInt());
+        m_richestPlayer=static_cast<BanditType>(map.value("richestPlayer").toInt());
+        m_phase=static_cast<Phase>(map.value("phase").toInt());
+
+
+        //DialogueBox* m_dialogueBox;
+        m_actionPending=map.value("aPending").toBool();
+        m_playerClicked=map.value("pClicked").toInt();
+        m_seed=(unsigned)map.value("seed").toInt();
+
+        srand(m_seed);
+
+
+        setNeutralBulletDeck(generateNeutralBullets(13));
+
+        m_indexOfPlayerToMove=0;
+
+        QString text = "WAGON SELECTION PHASE!";
+        m_dialogueBox = new DialogueBox(text);
+
+
 }
 
 const unsigned &Game::seed() const
