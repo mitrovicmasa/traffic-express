@@ -85,6 +85,8 @@ set(PROJECT_SOURCES
         src/dialoguebox.cpp
         src/roundcarddeck.cpp
         src/serializable.cpp
+        ../tests/player.cpp
+        ../tests/catch.cpp
         )
 
 set(PROJECT_HEADERS
@@ -158,6 +160,9 @@ set_target_properties(TrafficExpress PROPERTIES
     MACOSX_BUNDLE TRUE
     WIN32_EXECUTABLE TRUE
 )
+
+
+target_include_directories(${PROJECT_NAME} PUBLIC headers/ src/ ../tests/)
 
 install(TARGETS TrafficExpress
     BUNDLE DESTINATION .
