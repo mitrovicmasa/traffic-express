@@ -8,6 +8,9 @@
 #include "../TrafficExpress/headers/actioncard.h"
 #include "../TrafficExpress/headers/neutralbullet.h"
 #include "../TrafficExpress/headers/bulletcard.h"
+#include "../TrafficExpress/headers/miniround.h"
+#include "../TrafficExpress/headers/roundcard.h"
+#include "../TrafficExpress/headers/roundcarddeck.h"
 
 TEST_CASE("Testing correctness of methods in class Card", "[card]")
 {
@@ -375,4 +378,178 @@ TEST_CASE("Testing correctness of methods in class Deck", "[deck]")
         delete deck;
     }
 
+}
+
+
+TEST_CASE("Testing correctness of methods in class Miniround", "[miniround]")
+{
+    SECTION("Method getMiniRoundType should return type of mini round")
+    {
+        // arrange
+        MiniRound* mr1 = new MiniRound(MiniRoundType::HIDDEN);
+        MiniRound* mr2 = new MiniRound(MiniRoundType::DOUBLE_CARDS);
+        MiniRound* mr3 = new MiniRound(MiniRoundType::FACE_UP);
+        MiniRound* mr4 = new MiniRound(MiniRoundType::OPPOSITE_DIRECTION);
+
+        const auto expectedOutput1 = MiniRoundType::HIDDEN;
+        const auto expectedOutput2 = MiniRoundType::DOUBLE_CARDS;
+        const auto expectedOutput3 = MiniRoundType::FACE_UP;
+        const auto expectedOutput4 = MiniRoundType::OPPOSITE_DIRECTION;
+
+        // act
+        const auto actualOutput1 = mr1->getMiniRoundType();
+        const auto actualOutput2 = mr2->getMiniRoundType();
+        const auto actualOutput3 = mr3->getMiniRoundType();
+        const auto actualOutput4 = mr4->getMiniRoundType();
+
+        // assert
+        REQUIRE(expectedOutput1 == actualOutput1);
+        REQUIRE(expectedOutput2 == actualOutput2);
+        REQUIRE(expectedOutput3 == actualOutput3);
+        REQUIRE(expectedOutput4 == actualOutput4);
+
+        delete mr1;
+        delete mr2;
+        delete mr3;
+        delete mr4;
+    }
+}
+
+TEST_CASE("Testing correctness of methods in class RoundCard", "[roundcard]")
+{
+    SECTION("Method back should return MiniRound at the back of m_minirounds")
+    {
+        // arrange
+        MiniRound* mr = new MiniRound(MiniRoundType::HIDDEN);
+        std::vector<MiniRound*> minirounds;
+        minirounds.push_back(mr);
+        RoundCard* rc = new RoundCard(RoundCardType::FIVE_TO_SIX_PLAYERS, EventType::NONE, minirounds);
+        const auto expectedOutput1 = mr;
+
+        // act
+        const auto actualOutput1 = rc->back();
+
+        // assert
+        REQUIRE(expectedOutput1 == actualOutput1);
+
+        delete rc;
+        minirounds.clear();
+    }
+
+    SECTION("Method front should return MiniRound at the front of m_minirounds")
+    {
+        // arrange
+        MiniRound* mr = new MiniRound(MiniRoundType::HIDDEN);
+        std::vector<MiniRound*> minirounds;
+        minirounds.push_back(mr);
+        RoundCard* rc = new RoundCard(RoundCardType::FIVE_TO_SIX_PLAYERS, EventType::NONE, minirounds);
+        const auto expectedOutput1 = mr;
+
+        // act
+        const auto actualOutput1 = rc->front();
+
+        // assert
+        REQUIRE(expectedOutput1 == actualOutput1);
+
+        delete rc;
+        minirounds.clear();
+    }
+}
+
+
+TEST_CASE("Testing correctness of methods in class RoundCardDeck", "[roundcarddeck]")
+{
+
+    SECTION("Method push_front should add RoundCard to the front of m_rounds")
+    {
+        // arrange
+        RoundCardDeck* deck = new RoundCardDeck();
+        MiniRound* mr = new MiniRound(MiniRoundType::HIDDEN);
+        std::vector<MiniRound*> minirounds;
+        minirounds.push_back(mr);
+        RoundCard* rc = new RoundCard(RoundCardType::FIVE_TO_SIX_PLAYERS, EventType::NONE, minirounds);
+        const auto expectedOutput1 = 1;
+        const auto expectedOutput2 = rc;
+
+        // act
+        deck->push_front(rc);
+        const auto actualOutput1 = deck->getRoundCads().size();
+        const auto actualOutput2 = deck->getRoundCads().front();
+
+        // assert
+        REQUIRE(expectedOutput1 == actualOutput1);
+        REQUIRE(expectedOutput2 == actualOutput2);
+
+        delete rc;
+        minirounds.clear();
+        delete deck;
+    }
+
+    SECTION("Method front should return roundcard in the front of m_rounds")
+    {
+        // arrange
+        RoundCardDeck* deck = new RoundCardDeck();
+        MiniRound* mr = new MiniRound(MiniRoundType::HIDDEN);
+        std::vector<MiniRound*> minirounds;
+        minirounds.push_back(mr);
+        RoundCard* rc = new RoundCard(RoundCardType::FIVE_TO_SIX_PLAYERS, EventType::NONE, minirounds);
+        deck->push_front(rc);
+        const auto expectedOutput1 = rc;
+
+        // act
+        const auto actualOutput1 = deck->front();
+
+        // assert
+        REQUIRE(expectedOutput1 == actualOutput1);
+
+
+        delete rc;
+        minirounds.clear();
+        delete deck;
+    }
+
+    SECTION("Method back should return roundcard in the back of m_rounds")
+    {
+        // arrange
+        RoundCardDeck* deck = new RoundCardDeck();
+        MiniRound* mr = new MiniRound(MiniRoundType::HIDDEN);
+        std::vector<MiniRound*> minirounds;
+        minirounds.push_back(mr);
+        RoundCard* rc = new RoundCard(RoundCardType::FIVE_TO_SIX_PLAYERS, EventType::NONE, minirounds);
+        deck->push_front(rc);
+        const auto expectedOutput1 = rc;
+
+        // act
+        const auto actualOutput1 = deck->back();
+
+        // assert
+        REQUIRE(expectedOutput1 == actualOutput1);
+
+
+        delete rc;
+        minirounds.clear();
+        delete deck;
+    }
+
+    SECTION("Method pop_front should pop roundcard from the front of m_rounds")
+    {
+        // arrange
+        RoundCardDeck* deck = new RoundCardDeck();
+        MiniRound* mr = new MiniRound(MiniRoundType::HIDDEN);
+        std::vector<MiniRound*> minirounds;
+        minirounds.push_back(mr);
+        RoundCard* rc = new RoundCard(RoundCardType::FIVE_TO_SIX_PLAYERS, EventType::NONE, minirounds);
+        deck->push_front(rc);
+        const auto expectedOutput1 = 0;
+        // act
+        deck->pop_front();
+        const auto actualOutput1 = deck->getRoundCads().size();
+
+        // assert
+        REQUIRE(expectedOutput1 == actualOutput1);
+
+        delete rc;
+        minirounds.clear();
+        delete deck;
+    }
 }
