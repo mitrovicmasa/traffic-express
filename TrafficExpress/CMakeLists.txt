@@ -89,6 +89,7 @@ set(PROJECT_SOURCES
         ../tests/wagon.cpp
         ../tests/train.cpp
         ../tests/catch.cpp
+        ../tests/card.cpp
         )
 
 set(PROJECT_HEADERS
