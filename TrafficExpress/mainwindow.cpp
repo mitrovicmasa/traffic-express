@@ -144,6 +144,22 @@ void MainWindow::onChangeStartColor()
 
 }
 
+void MainWindow::onGameLoaded()
+{
+    m_client->getPlayerPerspective()->setSceneRect(ui->graphicsView->rect());
+    ui->graphicsView->setScene(m_client->getPlayerPerspective());
+
+    m_client->getPlayerPerspective()->addGameToScene();
+
+
+
+    ui->graphicsView->setBackgroundBrush(QPixmap("://bluemoon.png"));
+    ui->graphicsView->setRenderHint(QPainter::Antialiasing);
+    ui->graphicsView->setAlignment(Qt::AlignTop | Qt::AlignLeft);
+
+    ui->stackedWidget->setCurrentIndex(4);
+}
+
 
 // Message Box
 void MainWindow::showMessageBox(QString content) const {
@@ -192,6 +208,7 @@ void MainWindow::onConnect()
     connect(this,&MainWindow::readyClicked,m_client,&PlayerClient::onClickedReady);
     connect(this,&MainWindow::startClicked,m_client,&PlayerClient::onClickedStart);
 
+    connect(m_client,&PlayerClient::gameLoaded,this,&MainWindow::onGameLoaded);
     connect(m_client,&PlayerClient::changeReadyColor,this,&MainWindow::onChangeReadyColor);
     connect(m_client,&PlayerClient::changeStartColor,this,&MainWindow::onChangeStartColor);
     m_client->startClient();
@@ -273,7 +290,12 @@ void MainWindow::onStart()
 //        (*m_sp)[0]->setSceneRect(ui->graphicsView->rect());
 //        ui->graphicsView->setScene((*m_sp)[0]);
 
+    emit startClicked();
 
+//    m_client->getPlayerPerspective()->setSceneRect(ui->graphicsView->rect());
+//    ui->graphicsView->setScene(m_client->getPlayerPerspective());
+
+//    m_client->getPlayerPerspective()->addGameToScene();
 
 
 

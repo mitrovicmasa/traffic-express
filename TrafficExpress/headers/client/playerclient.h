@@ -4,6 +4,10 @@
 #include <QObject>
 #include <QTcpSocket>
 #include <playerperspective.h>
+#include <QJsonDocument>
+#include <QJsonValue>
+#include <QJsonArray>
+#include <QJsonObject>
 
 class PlayerClient : public QObject
 {
@@ -16,6 +20,8 @@ public:
     bool getHost();
     int getIndex();
     QString getUsername();
+    PlayerPerspective*getPlayerPerspective();
+
     void setUsername(QString);
 
     bool allReady();
@@ -23,6 +29,8 @@ public:
 signals:
     void changeReadyColor(bool);
     void changeStartColor();
+
+    void gameLoaded();
 
 public slots:
     void onConnected();
@@ -40,6 +48,7 @@ private:
     std::vector<bool>m_ready;
     bool m_isHost;
     QString m_username;
+    bool m_gameIncoming;
 
 
 };

@@ -41,11 +41,13 @@ private slots:
 
     void onChangeReadyColor(bool);
     void onChangeStartColor();
+    void onGameLoaded();
 
 
 signals:
     void readyClicked();
     void startClicked();
+
 
 private:
     PlayerClient* m_client;

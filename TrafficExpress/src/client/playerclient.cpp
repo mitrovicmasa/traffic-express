@@ -10,6 +10,7 @@ PlayerClient::PlayerClient(QObject *parent)
 
 void PlayerClient::startClient()
 {
+    m_gameIncoming=false;
     m_clientSocket=new QTcpSocket();
     connect(m_clientSocket,&QTcpSocket::connected,this,&PlayerClient::onConnected);
     connect(m_clientSocket,&QTcpSocket::disconnected,this,&PlayerClient::onDisconnected);
@@ -40,6 +41,11 @@ QString PlayerClient::getUsername()
     return m_username;
 }
 
+PlayerPerspective *PlayerClient::getPlayerPerspective()
+{
+    return m_pp;
+}
+
 void PlayerClient::setUsername(QString name)
 {
     m_username=name;
@@ -60,11 +66,31 @@ void PlayerClient::onReadyRead()
 {
     qDebug()<<"onReadyRead";
 
-
     QString message(m_clientSocket->readAll());
-    qDebug()<<"my message:"<<message;
+         qDebug()<<"my message:"<<message;
+    ;
+
+    if(m_gameIncoming){
+        qDebug()<<"game loaded";
+        m_gameIncoming=false;
+        Game*g =new Game();
+        QJsonDocument doc=QJsonDocument::fromJson(message.toUtf8());
+
+        QVariant v(doc.toVariant());
+
+        g->fromVariant(v);
+        m_pp=new PlayerPerspective(g,m_index);
+        emit gameLoaded();
+        this->sendMessage(" ");
+        return;
+    }
+
+
+
+
+
     if(message.startsWith("host")){
-        qDebug()<<"host message:"<<message;
+
         m_isHost=true;
         emit changeStartColor();
     }else if(message.startsWith("!host")){
@@ -84,15 +110,21 @@ void PlayerClient::onReadyRead()
         m_ready.push_back((bool)ready.toInt());
         emit changeStartColor();
     }else if(message.startsWith("ready:")){
+        qDebug()<<"Ready in client!!!!!!!!!!!1";
         int indexOfReady=(message.split(":")[1]).toInt();
         m_ready[indexOfReady]=!m_ready[indexOfReady];
 
         emit changeStartColor();
 
 
+    }else if(message.startsWith("start:")){
+        qDebug()<<"GameIncomingRecieved";
+        qDebug()<<message;
+        m_gameIncoming=true;
+
     }
-    this->sendMessage("ok");
-    qDebug()<<message;
+    this->sendMessage(" ");
+
 }
 
 void PlayerClient::onDisconnected()
@@ -102,23 +134,52 @@ void PlayerClient::onDisconnected()
 
 void PlayerClient::onClickedReady()
 {
-    qDebug()<<"readyClicked";
-    qDebug()<<"all ready"<<this->allReady();
-    qDebug()<<"host:"<<m_isHost;
-
+//    qDebug()<<"readyClicked";
+//    qDebug()<<"all ready"<<this->allReady();
+//    qDebug()<<"host:"<<m_isHost;
+    qDebug()<<"Index:"<<m_index;
     m_ready[m_index]=!m_ready[m_index];
     emit changeReadyColor(m_ready[m_index]);
     emit changeStartColor();
 
-    qDebug()<<"readyClicked";
-    qDebug()<<"m_ready size:"<<m_ready.size();
-    qDebug()<<"host:"<<m_isHost;
+//    qDebug()<<"readyClicked";
+//    qDebug()<<"m_ready size:"<<m_ready.size();
+//    qDebug()<<"host:"<<m_isHost;
 
 
-    //this->sendMessage("ready:"+QString::number(m_index));
+    this->sendMessage("ready:"+QString::number(m_index));
 }
 
 void PlayerClient::onClickedStart()
 {
-     qDebug()<<"startClicked";
+     qDebug()<<"startClicked"<<m_index;
+     this->sendMessage("start:");
+
+         std::vector<Player*> players;
+             players = {
+                 new Player(BanditType::PICKPOCKET),
+                 new Player(BanditType::SEDUCTRESS),
+                 new Player(BanditType::STUDENT),
+         //        new Player(BanditType::RETIREE),
+         //        new Player(BanditType::HOMELESS_MAN),
+         //        new Player(BanditType::BUSINESS_WOMAN)
+             };
+
+    Game* game=new Game(players);
+    game->initialize();
+    game->setPhase(Phase::WAGON_SELECTION);
+    game->allPlayersDrawCards(6);
+         //std::cout<<game->rounds()->size()<<std::endl;
+    Game*copy=new Game(*game);
+    m_pp=new PlayerPerspective(copy,0);
+    emit gameLoaded();
+    auto tmp=copy->toVariant();
+
+    QJsonDocument doc=QJsonDocument::fromVariant(tmp);
+
+    qDebug()<<"QVaraint string"<<doc.toJson(QJsonDocument::JsonFormat::Indented);
+     m_clientSocket->write(doc.toJson(QJsonDocument::JsonFormat::Indented));
+     m_clientSocket->flush();
+
+
 }

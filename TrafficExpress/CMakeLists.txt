@@ -15,6 +15,7 @@ find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Gui)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Network)
+find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core)
 
 
 set(RESOURCES ${CMAKE_CURRENT_SOURCE_DIR}/resource/resource.qrc)
@@ -153,7 +154,7 @@ else()
     endif()
 endif()
 
-target_link_libraries(TrafficExpress PRIVATE Qt${QT_VERSION_MAJOR}::Widgets Qt${QT_VERSION_MAJOR}::Network)
+target_link_libraries(TrafficExpress PRIVATE Qt${QT_VERSION_MAJOR}::Widgets Qt${QT_VERSION_MAJOR}::Network Qt${QT_VERSION_MAJOR}::Core)
 
 set_target_properties(TrafficExpress PROPERTIES
     MACOSX_BUNDLE_GUI_IDENTIFIER my.example.com
