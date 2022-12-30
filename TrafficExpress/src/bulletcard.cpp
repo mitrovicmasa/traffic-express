@@ -3,12 +3,14 @@
 BulletCard::BulletCard(BanditType bandit, unsigned numOfBullets):
     BanditCard(bandit),
     m_numOfBullets(numOfBullets)
-{}
+{
 
-//Card *BulletCard::Copy() const
-//{
-//    return new BulletCard(*this);
-//}
+}
+
+Card *BulletCard::Copy() const
+{
+    return new BulletCard(bandit(), m_numOfBullets);
+}
 
 // Destructor
 BulletCard::~BulletCard()
@@ -74,9 +76,4 @@ void BulletCard::paint(QPainter *painter, const QStyleOptionGraphicsItem *option
     }
     QString path = "://bullet_" + color + "_" + number + ".png";
     painter->drawPixmap(boundingRect(), QPixmap(path), QRectF(0,0,0,0));
-}
-
-Card *BulletCard::Copy() const
-{
-    return new BulletCard(bandit(),m_numOfBullets);
 }

@@ -114,7 +114,7 @@ void PlayerPerspective::onClickedTreasureInWagonInTrainInTran(Treasure *t, Wagon
 //    }
 
 
-    if (m_game->currentAction() == ActionType::TAKETREASURE && m_player->isItMyMove() && m_game->phase() == Phase::PHASE_2
+    if (m_game->currentAction() == ActionType::ROBBERY && m_player->isItMyMove() && m_game->phase() == Phase::PHASE_2
             && m_player->positionInTrain() == train->getWagonIndex(w))
     {
             emit actionRobberySignal(w->getTreasureIndex(t, m_player->roof()),train->getWagonIndex(w));

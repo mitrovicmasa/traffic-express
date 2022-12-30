@@ -2,14 +2,26 @@
 #include <qpainter.h>
 
 // Constructors
-ActionCard::ActionCard()
-    :BanditCard(BanditType::BUSINESS_WOMAN){
+ActionCard::ActionCard():
+    BanditCard(BanditType::BUSINESS_WOMAN)
+{
 
 }
 
-ActionCard::ActionCard(ActionType action, BanditType bandit) : m_action(action),
+ActionCard::ActionCard(ActionType action, BanditType bandit):
+    m_action(action),
     BanditCard(bandit)
-{}
+{
+
+}
+
+Card *ActionCard::Copy() const
+{
+     auto tmp = new ActionCard(m_action,bandit());
+     tmp->setFaceUp(this->faceUp());
+     return tmp;
+}
+
 
 // Destructor
 ActionCard::~ActionCard()
@@ -46,8 +58,6 @@ std::string ActionCard::toString() const
             actionName = "sheriff move";break;
         case ActionType::ROBBERY:
             actionName = "robbery";break;
-        case ActionType::TAKETREASURE:
-            actionName = "take treasure";break;
         default:
             break;
     }
@@ -111,8 +121,6 @@ void ActionCard::paint(QPainter *painter, const QStyleOptionGraphicsItem *option
         case ActionType::ROBBERY:
             action = "robbery";
             break;
-        case ActionType::TAKETREASURE:
-            action="robbery";break;
         default:
             return;
     }
@@ -120,19 +128,13 @@ void ActionCard::paint(QPainter *painter, const QStyleOptionGraphicsItem *option
     painter->drawPixmap(boundingRect(), QPixmap(path), QRectF(0,0,0,0));
 }
 
-Card *ActionCard::Copy() const
-{
-     auto tmp=new ActionCard(m_action,bandit());
-     tmp->setFaceUp(this->faceUp());
-     return tmp;
-}
-
+// Serializable interface
 QVariant ActionCard::toVariant() const
 {
     QVariantMap map;
-    map.insert("action",(int)m_action);
-    map.insert("bandit",(int)this->bandit());
-    map.insert("faceUp",this->faceUp());
+    map.insert("action", (int)m_action);
+    map.insert("bandit", (int)this->bandit());
+    map.insert("faceUp", this->faceUp());
     return map;
 }
 
@@ -140,7 +142,7 @@ void ActionCard::fromVariant(const QVariant &variant)
 {
     QVariantMap map=variant.toMap();
 
-    m_action=static_cast<ActionType>(map.value("action").toInt());
+    m_action = static_cast<ActionType>(map.value("action").toInt());
     this->setBandit(static_cast<BanditType>(map.value("bandit").toInt()));
     this->setFaceUp(map.value("faceUp").toBool());
 }

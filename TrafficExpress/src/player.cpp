@@ -26,8 +26,8 @@ Player::Player(BanditType id)
     m_deck->push_back(new ActionCard(ActionType::FLOOR_CHANGE, id));
     m_deck->push_back(new ActionCard(ActionType::MARSHAL, id));
     m_deck->push_back(new ActionCard(ActionType::PUNCH, id));
-    m_deck->push_back(new ActionCard(ActionType::TAKETREASURE, id));
-    m_deck->push_back(new ActionCard(ActionType::TAKETREASURE, id));
+    m_deck->push_back(new ActionCard(ActionType::ROBBERY, id));
+    m_deck->push_back(new ActionCard(ActionType::ROBBERY, id));
     m_deck->setAllCardsFaceDown();
 
     for(unsigned i = 1; i <= 6; i++){
@@ -143,7 +143,7 @@ void Player::returnCardsToDeck()
 
 void Player::shuffleDeck(int seed)
 {
-    m_deck->schufleDeck(seed);
+    m_deck->shuffleDeck(seed);
 
 }
 

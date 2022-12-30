@@ -655,7 +655,7 @@ void Game::checkNextActionCard()
         }
     }
 
-    if(nextAction == ActionType::TAKETREASURE) {
+    if(nextAction == ActionType::ROBBERY) {
             // All possible targets will be in this vector
             std::vector<Treasure*> treasure = possibleTreasure(findPlayerById(nextBandit));
 

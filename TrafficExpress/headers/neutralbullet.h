@@ -10,7 +10,7 @@ public:
     // Constructors
     NeutralBullet();
     NeutralBullet(BanditType id);
-//    Card *Copy() const override;
+    Card *Copy() const override;
 
     // Destructor
     ~NeutralBullet() override;
@@ -27,13 +27,10 @@ public:
 
     // GUI
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
-private:
 
+private:
     BanditType m_id;
 
-    // Card interface
-public:
-    Card *Copy() const override;
 };
 
 #endif // NEUTRALBULLET_H
