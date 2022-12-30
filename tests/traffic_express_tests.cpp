@@ -564,17 +564,22 @@ TEST_CASE("Testing correctness of methods in class Player", "[player]")
     {
         // arrange
         Player *player = new Player(BanditType::PICKPOCKET);
+        player->treasure().pop_back();
+
+        const auto expectedOutput1 = 0;
+        const auto expectedOutput2 = 1750;
+
+        // act
+        const auto actualOutput1 = player->countAmountOfTreasure();
         player->treasure().push_back(new Treasure(500, TreasureType::DIAMOND));
         player->treasure().push_back(new Treasure(250, TreasureType::MONEYBAG));
         player->treasure().push_back(new Treasure(1000, TreasureType::SUITCASE));
 
-        const auto expectedOutput = 2000;
-
-        // act
-        const auto actualOutput = player->countAmountOfTreasure();
+        const auto actualOutput2 = player->countAmountOfTreasure();
 
         // assert
-        REQUIRE(expectedOutput == actualOutput);
+        REQUIRE(expectedOutput1 == actualOutput1);
+        REQUIRE(expectedOutput2 == actualOutput2);
 
         delete player;
     }
@@ -585,19 +590,13 @@ TEST_CASE("Testing correctness of methods in class Player", "[player]")
         Player* player = new Player(BanditType::STUDENT);
 
         const auto expectedOutput1 = false;
-
         const auto expectedOutput2 = true;
 
         // act
         const auto actualOutput1 = player->isBulletDeckEmpty();
 
-        player->bullet_deck()->pop_back();
-        player->bullet_deck()->pop_back();
-        player->bullet_deck()->pop_back();
-        player->bullet_deck()->pop_back();
-        player->bullet_deck()->pop_back();
-        player->bullet_deck()->pop_back();
-
+        for (unsigned i = 0; i < 6; ++i)
+            player->bullet_deck()->pop_back();
 
         const auto actualOutput2 = player->isBulletDeckEmpty();
 
@@ -635,6 +634,7 @@ TEST_CASE("Testing correctness of methods in class Player", "[player]")
 
         const auto expectedOutput1 = 4;
         const auto expectedOutput2 = 6;
+        const auto expectedOutput3 = 4;
 
         // act
 
@@ -643,15 +643,24 @@ TEST_CASE("Testing correctness of methods in class Player", "[player]")
         const auto actualOutput1 = player->hand()->getCards().size();
         const auto actualOutput2 = player->deck()->size();
 
+        while (!player->deck()->empty())
+            player->deck()->pop_back();
+
+
+        player->drawCards(2);
+
+        const auto actualOutput3 = player->hand()->getCards().size();
+
         // assert
         REQUIRE(expectedOutput1 == actualOutput1);
         REQUIRE(expectedOutput2 == actualOutput2);
+        REQUIRE(expectedOutput3 == actualOutput3);
 
     }
 
 }
 
-TEST_CASE("Testing addTreasureToPlayer of methods in class playerStats", "[playerStats]")
+TEST_CASE("Testing correctness of methods in class playerStats", "[playerStats]")
 {
 
     SECTION("Method addTreasureToPlayer should add treasure to player")
@@ -670,7 +679,6 @@ TEST_CASE("Testing addTreasureToPlayer of methods in class playerStats", "[playe
         ps->addTreasureToPlayer(t2);
 
         const auto actualOutput1 = ps->getPlayer()->treasure().size();
-
 
         // assert
         REQUIRE(expectedOutput1 == actualOutput1);
@@ -711,13 +719,10 @@ TEST_CASE("Testing addTreasureToPlayer of methods in class playerStats", "[playe
         REQUIRE(expectedOutput2 == actualOutput2);
 
 
-//        delete p;
-//        delete ps;
-//        delete t3;
-//        delete t4;
-//        delete t2;
-//        delete t1;
-
+        delete t4;
+        delete t2;
+        delete t1;
+        delete p;
     }
 
 }
@@ -750,7 +755,7 @@ TEST_CASE("Testing correctness of methods in class Table", "[table]")
         delete table;
     }
 
-    SECTION("Method empty should return information if the table is empty")
+    SECTION("Method size should return how many playerStats are in table")
     {
         // arrange
         Table* table = new Table();
@@ -761,16 +766,19 @@ TEST_CASE("Testing correctness of methods in class Table", "[table]")
         PlayerStats* ps = new PlayerStats(player1, true);
         PlayerStats* ps1 = new PlayerStats(player2, true);
 
-        const auto expectedOutput1 = 2;
+        const auto expectedOutput1 = 0;
+        const auto expectedOutput2 = 2;
 
         // act
+        const auto actualOutput1 = table->size();
+
         table->push_back(ps);
         table->push_back(ps1);
-        const auto actualOutput1 = table->getPlayerStats().size();
 
+        const auto actualOutput2 = table->size();
         // assert
-        REQUIRE(expectedOutput1 == actualOutput1);
-
+        REQUIRE(expectedOutput1 == actualOutput1);        
+        REQUIRE(expectedOutput2 == actualOutput2);
 
         delete player1;
         delete player2;
@@ -806,7 +814,7 @@ TEST_CASE("Testing correctnes of methods in class Train", "[train]")
 
     }
 
-    SECTION("Method back should return wagon from the back of the train")
+    SECTION("Method back should return wagon from the back of the train if train contains wagons")
     {
         // arrange
         Train* train = new Train();
@@ -917,13 +925,18 @@ TEST_CASE("Testing correctnes of methods in class Train", "[train]")
         train->push_back(wagon2);
 
         const auto expectedOutput1 = 1;
+        const auto expectedOutput2 = 0;
 
         // act
         train->pop_front();
         const auto actualOutput1 = train->size();
 
+        train->pop_front();
+        const auto actualOutput2 = train->size();
+
         // assert
         REQUIRE(expectedOutput1 == actualOutput1);
+        REQUIRE(expectedOutput2 == actualOutput2);
 
         delete wagon1;
         delete wagon2;
@@ -941,17 +954,21 @@ TEST_CASE("Testing correctnes of methods in class Train", "[train]")
         Wagon* wagon3 = new Wagon(TreasureChest({new Treasure(500, TreasureType::DIAMOND)}),
                                  TreasureChest(std::vector<Treasure*>()));
 
-        train->push_back(wagon1);
-        train->push_back(wagon2);
-        train->push_back(wagon3);
-
-        const auto expectedOutput1 = 3;
+        const auto expectedOutput1 = 0;
+        const auto expectedOutput2 = 3;
 
         // act
         const auto actualOutput1 = train->size();
 
+        train->push_back(wagon1);
+        train->push_back(wagon2);
+        train->push_back(wagon3);
+
+        const auto actualOutput2 = train->size();
+
         // assert
         REQUIRE(expectedOutput1 == actualOutput1);
+        REQUIRE(expectedOutput2 == actualOutput2);
 
         delete wagon1;
         delete wagon2;
@@ -1019,6 +1036,7 @@ TEST_CASE("Testing correctness of methods in class Wagon", "[wagon]")
         REQUIRE(expectedOutput2 == actualOutput2);
 
         delete wagon;
+        delete treasure;
     }
 
     SECTION("Method addContentDown should add treasure inside the wagon")
@@ -1045,6 +1063,7 @@ TEST_CASE("Testing correctness of methods in class Wagon", "[wagon]")
         REQUIRE(expectedOutput2 == actualOutput2);
 
         delete wagon;
+        delete treasure;
     }
 
     SECTION("Method addPlayerDown should move player inside the wagon")
@@ -1103,6 +1122,7 @@ TEST_CASE("Testing correctness of methods in class Wagon", "[wagon]")
 
         const auto expectedOutput1 = 2;
         const auto expectedOutput2 = treasure3;
+        const auto expectedOutput3 = nullptr;
 
         // act
         wagon->addContentDown(treasure1);
@@ -1110,17 +1130,21 @@ TEST_CASE("Testing correctness of methods in class Wagon", "[wagon]")
         wagon->addContentDown(treasure3);
 
         Treasure *treasure4 = wagon->takeContentDown(treasure3);
+        Treasure *treasure5 = wagon->takeContentDown(new Treasure(450, TreasureType::MONEYBAG));
 
         const auto actualOutput1 = wagon->getContentDown().size();
         const auto actualOutput2 = treasure4;
+        const auto actualOutput3 = treasure5;
 
         // assert
         REQUIRE(expectedOutput1 == actualOutput1);
         REQUIRE(expectedOutput2 == actualOutput2);
+        REQUIRE(expectedOutput3 == actualOutput3);
 
         delete treasure1;
         delete treasure2;
         delete treasure3;
+        delete treasure5;
         delete wagon;
     }
 
@@ -1134,6 +1158,7 @@ TEST_CASE("Testing correctness of methods in class Wagon", "[wagon]")
 
         const auto expectedOutput1 = 2;
         const auto expectedOutput2 = treasure3;
+        const auto expectedOutput3 = nullptr;
 
         // act
         wagon->addContentUp(treasure1);
@@ -1141,17 +1166,21 @@ TEST_CASE("Testing correctness of methods in class Wagon", "[wagon]")
         wagon->addContentUp(treasure3);
 
         Treasure *treasure4 = wagon->takeContentUp(treasure3);
+        Treasure *treasure5 = wagon->takeContentDown(new Treasure(450, TreasureType::MONEYBAG));
 
         const auto actualOutput1 = wagon->getContentUp().size();
         const auto actualOutput2 = treasure4;
+        const auto actualOutput3 = treasure5;
 
         // assert
         REQUIRE(expectedOutput1 == actualOutput1);
         REQUIRE(expectedOutput2 == actualOutput2);
+        REQUIRE(expectedOutput3 == actualOutput3);
 
         delete treasure1;
         delete treasure2;
         delete treasure3;
+        delete treasure5;
         delete wagon;
     }
 
@@ -1166,6 +1195,7 @@ TEST_CASE("Testing correctness of methods in class Wagon", "[wagon]")
 
         const auto expectedOutput1 = 3;
         const auto expectedOutput2 = player3;
+        const auto expectedOutput3 = nullptr;
 
         // act
         wagon->addPlayerUp(player1);
@@ -1173,19 +1203,23 @@ TEST_CASE("Testing correctness of methods in class Wagon", "[wagon]")
         wagon->addPlayerUp(player3);
         wagon->addPlayerUp(player4);
 
-        Player *player5 = wagon->takePlayerUp(player3);
+        Player *player5 = wagon->takePlayerUp(player3);        
+        Player *player6 = wagon->takePlayerUp(new Player(BanditType::STUDENT));
 
         const auto actualOutput1 = wagon->getPlayersUp().size();
         const auto actualOutput2 = player5;
+        const auto actualOutput3 = player6;
 
         // assert
         REQUIRE(expectedOutput1 == actualOutput1);
         REQUIRE(expectedOutput2 == actualOutput2);
+        REQUIRE(expectedOutput3 == actualOutput3);
 
         delete player1;
         delete player2;
-        delete player3;
         delete player4;
+        delete player5;
+        delete player6;
         delete wagon;
     }
 
@@ -1200,6 +1234,7 @@ TEST_CASE("Testing correctness of methods in class Wagon", "[wagon]")
 
         const auto expectedOutput1 = 3;
         const auto expectedOutput2 = player3;
+        const auto expectedOutput3 = nullptr;
 
         // act
         wagon->addPlayerDown(player1);
@@ -1208,18 +1243,22 @@ TEST_CASE("Testing correctness of methods in class Wagon", "[wagon]")
         wagon->addPlayerDown(player4);
 
         Player *player5 = wagon->takePlayerDown(player3);
+        Player *player6 = wagon->takePlayerDown(new Player(BanditType::STUDENT));
 
         const auto actualOutput1 = wagon->getPlayersDown().size();
         const auto actualOutput2 = player5;
+        const auto actualOutput3 = player6;
 
         // assert
         REQUIRE(expectedOutput1 == actualOutput1);
         REQUIRE(expectedOutput2 == actualOutput2);
+        REQUIRE(expectedOutput3 == actualOutput3);
 
         delete player1;
         delete player2;
-        delete player3;
         delete player4;
+        delete player5;
+        delete player6;
         delete wagon;
     }
 
@@ -1234,12 +1273,18 @@ TEST_CASE("Testing correctness of methods in class Wagon", "[wagon]")
         wagon->addContentDown(new Treasure(450, TreasureType::MONEYBAG));
 
         const auto expectedOutput1 = 3;
+        const auto expectedOutput2 = 0;
+        const auto expectedOutput3 = 1;
 
         // act
         const auto actualOutput1 = wagon->numberOfTreasureInWagonDown(TreasureType::MONEYBAG);
+        const auto actualOutput2 = wagon->numberOfTreasureInWagonDown(TreasureType::SUITCASE);
+        const auto actualOutput3 = wagon->numberOfTreasureInWagonDown(TreasureType::DIAMOND);
 
         // assert
         REQUIRE(expectedOutput1 == actualOutput1);
+        REQUIRE(expectedOutput2 == actualOutput2);
+        REQUIRE(expectedOutput3 == actualOutput3);
 
         delete wagon;
     }
@@ -1260,16 +1305,19 @@ TEST_CASE("Testing correctness of methods in class Wagon", "[wagon]")
 
         const auto expectedOutput1 = 3;
         const auto expectedOutput2 = -1;
+        const auto expectedOutput3 = -1;
 
         Treasure *treasure5 = new Treasure(500, TreasureType::DIAMOND);
 
         // act
         const auto actualOutput1 = wagon->getTreasureIndex(treasure4, false);
         const auto actualOutput2 = wagon->getTreasureIndex(treasure5, false);
+        const auto actualOutput3 = wagon->getTreasureIndex(treasure2, true);
 
         // assert
         REQUIRE(expectedOutput1 == actualOutput1);
         REQUIRE(expectedOutput2 == actualOutput2);
+        REQUIRE(expectedOutput3 == actualOutput3);
 
         delete wagon;
     }
@@ -1520,7 +1568,7 @@ TEST_CASE("Testing correctness of methods in class Game", "[game]")
 
     }
 
-    SECTION("Method actionChangeFloor should change player's setRoof field")
+    SECTION("Method actionChangeFloor should change player's setRoof field and put him on different floor if possible")
     {
         // arrange
         std::vector<Player*> players = {
