@@ -489,6 +489,29 @@ int Game::findPlayersTreasureIndex(Treasure *t, unsigned playerIndex)
     return treasureIndex;
 }
 
+void Game::showEndGameStats()
+{
+    QMessageBox msgBox;
+
+    std::vector<Player*> sortedPlayers = this->players();
+    std::sort(sortedPlayers.begin(),sortedPlayers.end(), [](Player* a, Player* b) { return a->countAmountOfTreasure() > b->countAmountOfTreasure(); } );
+
+    //QString bandit = QString::fromStdString(toString(this->richestPlayer()));
+
+    QString msg;
+    unsigned ind = 1;
+
+    for(Player* p : sortedPlayers)
+    {
+        msg.append(QString::number(ind) + ". " + QString::fromStdString(toString((*p).id())) + ": Amount of treasure: " + QString::number(p->countAmountOfTreasure()) );
+        msg.append('\n');
+        ind++;
+    }
+
+    msgBox.setText(msg);
+    msgBox.exec();
+}
+
 std::vector<Player *> Game::possiblePlayersToShot(int playerIndex)
 {
     Player* p1 = m_players[playerIndex];
@@ -581,6 +604,8 @@ void Game::checkNextActionCard()
             this->setPhase(Phase::WAGON_SELECTION);
 
         } else { // If this wasn't the last round, we are moving to the next round.
+
+            this->showEndGameStats();
 
             this->setIndexOfMiniround(0);
             RoundCard* rc = m_rounds->getRoundCads()[m_indexOfRound];
