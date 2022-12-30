@@ -1,10 +1,14 @@
-//#define CATCH_CONFIG_MAIN
 #include <catch.hpp>
 
 #include "../TrafficExpress/headers/game.h"
 #include "../TrafficExpress/headers/hand.h"
 #include "../TrafficExpress/headers/deck.h"
 #include "../TrafficExpress/headers/card.h"
+#include "../TrafficExpress/headers/table.h"
+#include "../TrafficExpress/headers/train.h"
+#include "../TrafficExpress/headers/wagon.h"
+#include "../TrafficExpress/headers/player.h"
+#include "../TrafficExpress/headers/playerstats.h"
 #include "../TrafficExpress/headers/banditcard.h"
 #include "../TrafficExpress/headers/actioncard.h"
 #include "../TrafficExpress/headers/neutralbullet.h"
@@ -381,7 +385,6 @@ TEST_CASE("Testing correctness of methods in class Deck", "[deck]")
 
 }
 
-
 TEST_CASE("Testing correctness of methods in class Miniround", "[miniround]")
 {
     SECTION("Method getMiniRoundType should return type of mini round")
@@ -555,6 +558,723 @@ TEST_CASE("Testing correctness of methods in class RoundCardDeck", "[roundcardde
     }
 }
 
+TEST_CASE("Testing correctness of methods in class Player", "[player]")
+{
+    SECTION("Method countAmountOfTreasure should return amount of treasure that player currently has")
+    {
+        // arrange
+        Player *player = new Player(BanditType::PICKPOCKET);
+        player->treasure().push_back(new Treasure(500, TreasureType::DIAMOND));
+        player->treasure().push_back(new Treasure(250, TreasureType::MONEYBAG));
+        player->treasure().push_back(new Treasure(1000, TreasureType::SUITCASE));
+
+        const auto expectedOutput = 2000;
+
+        // act
+        const auto actualOutput = player->countAmountOfTreasure();
+
+        // assert
+        REQUIRE(expectedOutput == actualOutput);
+
+        delete player;
+    }
+
+    SECTION("Method empty should checked if bullet deck has no cards")
+    {
+        // arrange
+        Player* player = new Player(BanditType::STUDENT);
+
+        const auto expectedOutput1 = false;
+
+        const auto expectedOutput2 = true;
+
+        // act
+        const auto actualOutput1 = player->isBulletDeckEmpty();
+
+        player->bullet_deck()->pop_back();
+        player->bullet_deck()->pop_back();
+        player->bullet_deck()->pop_back();
+        player->bullet_deck()->pop_back();
+        player->bullet_deck()->pop_back();
+        player->bullet_deck()->pop_back();
+
+
+        const auto actualOutput2 = player->isBulletDeckEmpty();
+
+        // assert
+        REQUIRE(expectedOutput1 == actualOutput1);
+        REQUIRE(expectedOutput2 == actualOutput2);
+
+        delete player;
+    }
+
+    SECTION("Method returnCardsToDeck should return cards from hand to deck ")
+    {
+        // arrange
+        Player *player = new Player(BanditType::BUSINESS_WOMAN);
+
+        player->hand()->push_back(new ActionCard(ActionType::FIRE, BanditType::BUSINESS_WOMAN));
+        player->hand()->push_back(new ActionCard(ActionType::PUNCH, BanditType::BUSINESS_WOMAN));
+        player->hand()->push_back(new ActionCard(ActionType::TAKETREASURE, BanditType::BUSINESS_WOMAN));
+
+        const auto expectedOutput1 = 13;
+        // act
+
+        player->returnCardsToDeck();
+        const auto actualOutput1 = player->deck()->size();
+
+        // assert
+        REQUIRE(expectedOutput1 == actualOutput1);
+
+    }
+
+    SECTION("Method drawCards should take n cards from deck ")
+    {
+        // arrange
+        Player *player = new Player(BanditType::BUSINESS_WOMAN);
+
+        const auto expectedOutput1 = 4;
+        const auto expectedOutput2 = 6;
+
+        // act
+
+        player->drawCards(4);
+
+        const auto actualOutput1 = player->hand()->getCards().size();
+        const auto actualOutput2 = player->deck()->size();
+
+        // assert
+        REQUIRE(expectedOutput1 == actualOutput1);
+        REQUIRE(expectedOutput2 == actualOutput2);
+
+    }
+
+}
+
+TEST_CASE("Testing addTreasureToPlayer of methods in class playerStats", "[playerStats]")
+{
+
+    SECTION("Method addTreasureToPlayer should add treasure to player")
+    {
+        // arrange
+        Player* p = new Player(BanditType::SEDUCTRESS);
+        PlayerStats* ps = new PlayerStats(p, true);
+
+        Treasure* t1 = new Treasure(250, TreasureType::MONEYBAG);
+        Treasure* t2 = new Treasure(500, TreasureType::DIAMOND);
+
+        const auto expectedOutput1 = 3; //Each player has one treasure at the beginning
+
+        // act
+        ps->addTreasureToPlayer(t1);
+        ps->addTreasureToPlayer(t2);
+
+        const auto actualOutput1 = ps->getPlayer()->treasure().size();
+
+
+        // assert
+        REQUIRE(expectedOutput1 == actualOutput1);
+
+
+        delete t2;
+        delete t1;
+        delete ps;
+        delete p;
+
+    }
+
+    SECTION("Method takeTreasureFromPlayer should remove treasure from the playerStats")
+    {
+        // arrange
+        Player* p = new Player(BanditType::SEDUCTRESS);
+        PlayerStats* ps = new PlayerStats(p, true);
+
+        Treasure* t1 = new Treasure(250, TreasureType::MONEYBAG);
+        Treasure* t2 = new Treasure(500, TreasureType::DIAMOND);
+        Treasure* t3 = new Treasure(1000, TreasureType::SUITCASE);
+
+        const auto expectedOutput1 = 3;
+        const auto expectedOutput2 = t3;
+
+        // act
+        ps->addTreasureToPlayer(t1);
+        ps->addTreasureToPlayer(t2);
+        ps->addTreasureToPlayer(t3);
+
+        Treasure* t4 = ps->takeTreasureFromPlayer(t3);
+
+        const auto actualOutput1 = ps->getPlayer()->treasure().size();
+        const auto actualOutput2 = t4;
+
+        // assert
+        REQUIRE(expectedOutput1 == actualOutput1);
+        REQUIRE(expectedOutput2 == actualOutput2);
+
+
+//        delete p;
+//        delete ps;
+//        delete t3;
+//        delete t4;
+//        delete t2;
+//        delete t1;
+
+    }
+
+}
+
+TEST_CASE("Testing correctness of methods in class Table", "[table]")
+{
+
+    SECTION("Method push_back should add playerStats to the back of table")
+    {
+        // arrange
+        Table* table = new Table();
+
+        Player* player = new Player(BanditType::BUSINESS_WOMAN);
+        PlayerStats* ps = new PlayerStats(player, true);
+        const auto expectedOutput1 = 1;
+        const auto expectedOutput2 = ps;
+
+        // act
+        table->push_back(ps);
+        const auto actualOutput1 = table->getPlayerStats().size();
+
+        const auto actualOutput2 = table->getPlayerStats().back();
+
+        // assert
+        REQUIRE(expectedOutput1 == actualOutput1);
+        REQUIRE(expectedOutput2 == actualOutput2);
+
+        delete player;
+        delete ps;
+        delete table;
+    }
+
+    SECTION("Method empty should return information if the table is empty")
+    {
+        // arrange
+        Table* table = new Table();
+
+        Player* player1 = new Player(BanditType::BUSINESS_WOMAN);
+        Player* player2 = new Player(BanditType::STUDENT);
+
+        PlayerStats* ps = new PlayerStats(player1, true);
+        PlayerStats* ps1 = new PlayerStats(player2, true);
+
+        const auto expectedOutput1 = 2;
+
+        // act
+        table->push_back(ps);
+        table->push_back(ps1);
+        const auto actualOutput1 = table->getPlayerStats().size();
+
+        // assert
+        REQUIRE(expectedOutput1 == actualOutput1);
+
+
+        delete player1;
+        delete player2;
+        delete ps;
+        delete ps1;
+        delete table;
+    }
+}
+
+TEST_CASE("Testing correctnes of methods in class Train", "[train]")
+{
+    SECTION("Method push_back should add wagon on the back of train")
+    {
+        // arrange
+        Train *train = new Train();
+        Wagon* wagon = new Wagon(TreasureChest({new Treasure(250, TreasureType::MONEYBAG)}),
+                                 TreasureChest(std::vector<Treasure*>()));
+
+        const auto expectedOutput1 = 1;
+        const auto expectedOutput2 = wagon;
+
+        // act
+        train->push_back(wagon);
+        const auto actualOutput1 = train->size();
+        const auto actualOutput2 = train->getWagons().back();
+
+        // assert
+        REQUIRE(expectedOutput1 == actualOutput1);
+        REQUIRE(expectedOutput2 == actualOutput2);
+
+        delete wagon;
+        delete train;
+
+    }
+
+    SECTION("Method back should return wagon from the back of the train")
+    {
+        // arrange
+        Train* train = new Train();
+        Wagon* wagon = new Wagon(TreasureChest({new Treasure(450, TreasureType::MONEYBAG)}),
+                                 TreasureChest(std::vector<Treasure*>()));
+
+        train->push_back(wagon);
+        const auto expectedOutput1 = wagon;
+
+        // act
+        const auto actualOutput1 = train->back();
+
+        // assert
+        REQUIRE(expectedOutput1 == actualOutput1);
+
+        delete wagon;
+        delete train;
+    }
+
+    SECTION("Method pop_back should remove wagon from the back of the train")
+    {
+        // arrange
+        Train* train = new Train();
+        Wagon* wagon = new Wagon(TreasureChest({new Treasure(450, TreasureType::MONEYBAG)}),
+                                 TreasureChest(std::vector<Treasure*>()));
+
+        train->push_back(wagon);
+        const auto expectedOutput1 = 0;
+
+        // act
+        train->pop_back();
+        const auto actualOutput1 = train->getWagons().size();
+
+        // assert
+        REQUIRE(expectedOutput1 == actualOutput1);
+
+        delete wagon;
+        delete train;
+    }
+
+    SECTION("Method push_front should add wagon on the front of train")
+    {
+        // arrange
+        Train *train = new Train();
+        Wagon* wagon1 = new Wagon(TreasureChest({new Treasure(250, TreasureType::MONEYBAG)}),
+                                 TreasureChest(std::vector<Treasure*>()));
+        Wagon* wagon2 = new Wagon(TreasureChest({new Treasure(450, TreasureType::MONEYBAG)}),
+                                 TreasureChest(std::vector<Treasure*>()));
+
+        const auto expectedOutput1 = 2;
+        const auto expectedOutput2 = wagon2;
+
+        // act
+        train->push_front(wagon1);
+        train->push_front(wagon2);
+
+        const auto actualOutput1 = train->getWagons().size();
+        const auto actualOutput2 = train->getWagons().front();
+
+        // assert
+        REQUIRE(expectedOutput1 == actualOutput1);
+        REQUIRE(expectedOutput2 == actualOutput2);
+
+        delete wagon1;
+        delete wagon2;
+        delete train;
+
+    }
+
+    SECTION("Method front should return wagon from the front of the train")
+    {
+        // arrange
+        Train* train = new Train();
+        Wagon* wagon1 = new Wagon(TreasureChest({new Treasure(500, TreasureType::DIAMOND)}),
+                                 TreasureChest(std::vector<Treasure*>()));
+        Wagon* wagon2 = new Wagon(TreasureChest({new Treasure(250, TreasureType::MONEYBAG)}),
+                                  TreasureChest(std::vector<Treasure*>()));
+
+        train->push_front(wagon1);
+        train->push_front(wagon2);
+
+        const auto expectedOutput1 = wagon2;
+        const auto expectedOutput2 = 2;
+
+        // act
+        const auto actualOutput1 = train->front();
+        const auto actualOutput2 = train->getWagons().size();
+
+        // assert
+        REQUIRE(expectedOutput1 == actualOutput1);
+        REQUIRE(expectedOutput2 == actualOutput2);
+
+        delete wagon1;
+        delete wagon2;
+        delete train;
+    }
+
+    SECTION("Method pop_front should remove wagon from the front of the train")
+    {
+        // arrange
+        Train* train = new Train();
+        Wagon* wagon1 = new Wagon(TreasureChest({new Treasure(450, TreasureType::MONEYBAG)}),
+                                 TreasureChest(std::vector<Treasure*>()));
+        Wagon* wagon2 = new Wagon(TreasureChest({new Treasure(250, TreasureType::MONEYBAG)}),
+                                 TreasureChest(std::vector<Treasure*>()));
+
+        train->push_back(wagon1);
+        train->push_back(wagon2);
+
+        const auto expectedOutput1 = 1;
+
+        // act
+        train->pop_front();
+        const auto actualOutput1 = train->size();
+
+        // assert
+        REQUIRE(expectedOutput1 == actualOutput1);
+
+        delete wagon1;
+        delete wagon2;
+        delete train;
+    }
+
+    SECTION("Method size should return number of wagons in train")
+    {
+        // arrange
+        Train* train = new Train();
+        Wagon* wagon1 = new Wagon(TreasureChest({new Treasure(450, TreasureType::MONEYBAG)}),
+                                 TreasureChest(std::vector<Treasure*>()));
+        Wagon* wagon2 = new Wagon(TreasureChest({new Treasure(250, TreasureType::MONEYBAG)}),
+                                 TreasureChest(std::vector<Treasure*>()));
+        Wagon* wagon3 = new Wagon(TreasureChest({new Treasure(500, TreasureType::DIAMOND)}),
+                                 TreasureChest(std::vector<Treasure*>()));
+
+        train->push_back(wagon1);
+        train->push_back(wagon2);
+        train->push_back(wagon3);
+
+        const auto expectedOutput1 = 3;
+
+        // act
+        const auto actualOutput1 = train->size();
+
+        // assert
+        REQUIRE(expectedOutput1 == actualOutput1);
+
+        delete wagon1;
+        delete wagon2;
+        delete wagon3;
+        delete train;
+    }
+
+    SECTION("Method empty should check if train has no wagons")
+    {
+        // arrange
+        Train* train = new Train();
+        Wagon* wagon1 = new Wagon(TreasureChest({new Treasure(450, TreasureType::MONEYBAG)}),
+                                 TreasureChest(std::vector<Treasure*>()));
+        Wagon* wagon2 = new Wagon(TreasureChest({new Treasure(500, TreasureType::DIAMOND)}),
+                                 TreasureChest(std::vector<Treasure*>()));
+        Wagon* wagon3 = new Wagon(TreasureChest({new Treasure(1000, TreasureType::SUITCASE)}),
+                                 TreasureChest(std::vector<Treasure*>()));
+
+        const auto expectedOutput1 = true;
+        const auto expectedOutput2 = false;
+
+        // act
+        const auto actualOutput1 = train->empty();
+
+        train->push_back(wagon1);
+        train->push_back(wagon2);
+        train->push_back(wagon3);
+
+        const auto actualOutput2 = train->empty();
+
+        // assert
+        REQUIRE(expectedOutput1 == actualOutput1);
+        REQUIRE(expectedOutput2 == actualOutput2);
+
+        delete wagon1;
+        delete wagon2;
+        delete wagon3;
+        delete train;
+    }
+}
+
+TEST_CASE("Testing correctness of methods in class Wagon", "[wagon]")
+{
+    SECTION("Method addContentUp should add treasure on the roof of the wagon")
+    {
+        // arrange
+        Wagon *wagon = new Wagon();
+        TreasureChest contentUp = TreasureChest();
+        contentUp.push_back(new Treasure(250, TreasureType::MONEYBAG));
+        wagon->setContentUp(contentUp);
+
+        Treasure *treasure = new Treasure(500, TreasureType::DIAMOND);
+
+        const auto expectedOutput1 = 2;
+        const auto expectedOutput2 = treasure;
+
+        // act
+        wagon->getContentUp().push_back(treasure);
+
+        const auto actualOutput1 = wagon->getContentUp().size();
+        const auto actualOutput2 = wagon->getContentUp().back();
+
+        // assert
+        REQUIRE(expectedOutput1 == actualOutput1);
+        REQUIRE(expectedOutput2 == actualOutput2);
+
+        delete wagon;
+    }
+
+    SECTION("Method addContentDown should add treasure inside the wagon")
+    {
+        // arrange
+        Wagon *wagon = new Wagon();
+        TreasureChest contentDown = TreasureChest();
+        contentDown.push_back(new Treasure(250, TreasureType::DIAMOND));
+        wagon->setContentDown(contentDown);
+
+        Treasure *treasure = new Treasure(1000, TreasureType::SUITCASE);
+
+        const auto expectedOutput1 = 2;
+        const auto expectedOutput2 = treasure;
+
+        // act
+        wagon->getContentDown().push_back(treasure);
+
+        const auto actualOutput1 = wagon->getContentDown().size();
+        const auto actualOutput2 = wagon->getContentDown().back();
+
+        // assert
+        REQUIRE(expectedOutput1 == actualOutput1);
+        REQUIRE(expectedOutput2 == actualOutput2);
+
+        delete wagon;
+    }
+
+    SECTION("Method addPlayerDown should move player inside the wagon")
+    {
+        // arrange
+        Wagon *wagon = new Wagon();
+        Player *player = new Player(BanditType::HOMELESS_MAN);
+
+        const auto expectedOutput1 = 1;
+        const auto expectedOutput2 = false;
+
+        // act
+        wagon->addPlayerDown(player);
+
+        const auto actualOutput1 = wagon->getPlayersDown().size();
+        const auto actualOutput2 = player->roof();
+
+        // assert
+        REQUIRE(expectedOutput1 == actualOutput1);
+        REQUIRE(expectedOutput2 == actualOutput2);
+
+        delete player;
+        delete wagon;
+    }
+
+    SECTION("Method addPlayerUp should move player on the roof of the wagon")
+    {
+        // arrange
+        Wagon *wagon = new Wagon();
+        Player *player = new Player(BanditType::PICKPOCKET);
+
+        const auto expectedOutput1 = 1;
+        const auto expectedOutput2 = true;
+
+        // act
+        wagon->addPlayerUp(player);
+
+        const auto actualOutput1 = wagon->getPlayersUp().size();
+        const auto actualOutput2 = player->roof();
+
+        // assert
+        REQUIRE(expectedOutput1 == actualOutput1);
+        REQUIRE(expectedOutput2 == actualOutput2);
+
+        delete player;
+        delete wagon;
+    }
+
+    SECTION("Method takeContentDown should take treasure that is inside the wagon")
+    {
+        // arrange
+        Wagon *wagon = new Wagon();
+        Treasure *treasure1 = new Treasure(250, TreasureType::MONEYBAG);
+        Treasure *treasure2 = new Treasure(500, TreasureType::DIAMOND);
+        Treasure *treasure3 = new Treasure(1000, TreasureType::SUITCASE);
+
+        const auto expectedOutput1 = 2;
+        const auto expectedOutput2 = treasure3;
+
+        // act
+        wagon->addContentDown(treasure1);
+        wagon->addContentDown(treasure2);
+        wagon->addContentDown(treasure3);
+
+        Treasure *treasure4 = wagon->takeContentDown(treasure3);
+
+        const auto actualOutput1 = wagon->getContentDown().size();
+        const auto actualOutput2 = treasure4;
+
+        // assert
+        REQUIRE(expectedOutput1 == actualOutput1);
+        REQUIRE(expectedOutput2 == actualOutput2);
+
+        delete treasure1;
+        delete treasure2;
+        delete treasure3;
+        delete wagon;
+    }
+
+    SECTION("Method takeContentUp should take treasure that is on the roof of the wagon")
+    {
+        // arrange
+        Wagon *wagon = new Wagon();
+        Treasure *treasure1 = new Treasure(250, TreasureType::MONEYBAG);
+        Treasure *treasure2 = new Treasure(500, TreasureType::DIAMOND);
+        Treasure *treasure3 = new Treasure(1000, TreasureType::SUITCASE);
+
+        const auto expectedOutput1 = 2;
+        const auto expectedOutput2 = treasure3;
+
+        // act
+        wagon->addContentUp(treasure1);
+        wagon->addContentUp(treasure2);
+        wagon->addContentUp(treasure3);
+
+        Treasure *treasure4 = wagon->takeContentUp(treasure3);
+
+        const auto actualOutput1 = wagon->getContentUp().size();
+        const auto actualOutput2 = treasure4;
+
+        // assert
+        REQUIRE(expectedOutput1 == actualOutput1);
+        REQUIRE(expectedOutput2 == actualOutput2);
+
+        delete treasure1;
+        delete treasure2;
+        delete treasure3;
+        delete wagon;
+    }
+
+    SECTION("Method takePlayerUp should remove player from the roof of the wagon")
+    {
+        // arrange
+        Wagon *wagon = new Wagon();
+        Player *player1 = new Player(BanditType::PICKPOCKET);
+        Player *player2 = new Player(BanditType::HOMELESS_MAN);
+        Player *player3 = new Player(BanditType::BUSINESS_WOMAN);
+        Player *player4 = new Player(BanditType::SEDUCTRESS);
+
+        const auto expectedOutput1 = 3;
+        const auto expectedOutput2 = player3;
+
+        // act
+        wagon->addPlayerUp(player1);
+        wagon->addPlayerUp(player2);
+        wagon->addPlayerUp(player3);
+        wagon->addPlayerUp(player4);
+
+        Player *player5 = wagon->takePlayerUp(player3);
+
+        const auto actualOutput1 = wagon->getPlayersUp().size();
+        const auto actualOutput2 = player5;
+
+        // assert
+        REQUIRE(expectedOutput1 == actualOutput1);
+        REQUIRE(expectedOutput2 == actualOutput2);
+
+        delete player1;
+        delete player2;
+        delete player3;
+        delete player4;
+        delete wagon;
+    }
+
+    SECTION("Method takePlayerDown should remove player from the roof of the wagon")
+    {
+        // arrange
+        Wagon *wagon = new Wagon();
+        Player *player1 = new Player(BanditType::PICKPOCKET);
+        Player *player2 = new Player(BanditType::HOMELESS_MAN);
+        Player *player3 = new Player(BanditType::BUSINESS_WOMAN);
+        Player *player4 = new Player(BanditType::SEDUCTRESS);
+
+        const auto expectedOutput1 = 3;
+        const auto expectedOutput2 = player3;
+
+        // act
+        wagon->addPlayerDown(player1);
+        wagon->addPlayerDown(player2);
+        wagon->addPlayerDown(player3);
+        wagon->addPlayerDown(player4);
+
+        Player *player5 = wagon->takePlayerDown(player3);
+
+        const auto actualOutput1 = wagon->getPlayersDown().size();
+        const auto actualOutput2 = player5;
+
+        // assert
+        REQUIRE(expectedOutput1 == actualOutput1);
+        REQUIRE(expectedOutput2 == actualOutput2);
+
+        delete player1;
+        delete player2;
+        delete player3;
+        delete player4;
+        delete wagon;
+    }
+
+    SECTION("Method numberOfTreasureInWagonDown returns number of treasure of required type from wagon")
+    {
+        // arrange
+
+        Wagon *wagon = new Wagon();
+        wagon->addContentDown(new Treasure(250, TreasureType::MONEYBAG));
+        wagon->addContentDown(new Treasure(500, TreasureType::DIAMOND));
+        wagon->addContentDown(new Treasure(450, TreasureType::MONEYBAG));
+        wagon->addContentDown(new Treasure(450, TreasureType::MONEYBAG));
+
+        const auto expectedOutput1 = 3;
+
+        // act
+        const auto actualOutput1 = wagon->numberOfTreasureInWagonDown(TreasureType::MONEYBAG);
+
+        // assert
+        REQUIRE(expectedOutput1 == actualOutput1);
+
+        delete wagon;
+    }
+
+    SECTION("Method getTreasureIndex should return index of given treasure in wagon")
+    {
+        // arrange
+        Wagon *wagon = new Wagon();
+        Treasure *treasure1 = new Treasure(250, TreasureType::MONEYBAG);
+        Treasure *treasure2 = new Treasure(250, TreasureType::MONEYBAG);
+        Treasure *treasure3 = new Treasure(450, TreasureType::MONEYBAG);
+        Treasure *treasure4 = new Treasure(1000, TreasureType::SUITCASE);
+
+        wagon->addContentDown(treasure1);
+        wagon->addContentDown(treasure2);
+        wagon->addContentDown(treasure3);
+        wagon->addContentDown(treasure4);
+
+        const auto expectedOutput1 = 3;
+        const auto expectedOutput2 = -1;
+
+        Treasure *treasure5 = new Treasure(500, TreasureType::DIAMOND);
+
+        // act
+        const auto actualOutput1 = wagon->getTreasureIndex(treasure4, false);
+        const auto actualOutput2 = wagon->getTreasureIndex(treasure5, false);
+
+        // assert
+        REQUIRE(expectedOutput1 == actualOutput1);
+        REQUIRE(expectedOutput2 == actualOutput2);
+
+        delete wagon;
+    }
+
+}
 
 TEST_CASE("Testing correctness of methods in class Game", "[game]")
 {
@@ -800,50 +1520,7 @@ TEST_CASE("Testing correctness of methods in class Game", "[game]")
 
     }
 
-//    SECTION("Method actionSheriffMove changes position of Sheriff and moves every player to the roof of wagon where Sheriff is placed")
-//    {
-//        // arrange
-//        std::vector<Player*> players = {
-//            new Player(BanditType::PICKPOCKET),
-//            new Player(BanditType::SEDUCTRESS),
-//            new Player(BanditType::RETIREE),
-//            new Player(BanditType::HOMELESS_MAN)
-//        };
-
-//        Game *game = new Game(players);
-//        game->initialize();
-
-//        Wagon *wagon1 = game->wagons()->getWagons()[0];
-//        Wagon *wagon2 = game->wagons()->getWagons()[1];
-
-//        for (unsigned i = 0; i < players.size(); ++i) {
-//            if (i % 2 == 0) {
-//                wagon1->addPlayerDown(players[i]);
-//                players[i]->setPositionInTrain(0);
-//                players[i]->setRoof(false);
-//            } else {
-//                wagon2->addPlayerDown(players[i]);
-//                players[i]->setPositionInTrain(1);
-//                players[i]->setRoof(false);
-//            }
-//        }
-
-//        const auto expectedOutput1 = 2;
-
-//        // act
-//        game->actionSheriffMove(wagon1);
-//        const auto actualOutput1 = wagon1->getPlayersUp().size();
-
-//        // assert
-//        REQUIRE(expectedOutput1 == actualOutput1);
-
-//        delete game;
-//        for(Player* p: players)
-//            delete p;
-
-//    }
-
-    SECTION("Action actionChangeFloor should change player's setRoof field")
+    SECTION("Method actionChangeFloor should change player's setRoof field")
     {
         // arrange
         std::vector<Player*> players = {
@@ -869,7 +1546,8 @@ TEST_CASE("Testing correctness of methods in class Game", "[game]")
         }
 
         const auto expectedOutput1 = 1;
-        const auto expectedOutput2 = 1;
+        const auto expectedOutput2 = true;
+        const auto expectedOutput3 = 1;
 
         game->setIndexOfPlayerToMove(0);
 
@@ -878,13 +1556,16 @@ TEST_CASE("Testing correctness of methods in class Game", "[game]")
         const auto actualOutput1 = game->wagons()->getWagons()[0]->getPlayersUp().size();
         game->setSeriffPosition(0);
 
+        const auto actualOutput2 = game->players()[0]->roof();
+
         game->setIndexOfPlayerToMove(0);
         game->actionFloorChange();
-        const auto actualOutput2 = game->wagons()->getWagons()[0]->getPlayersUp().size();
+        const auto actualOutput3 = game->wagons()->getWagons()[0]->getPlayersUp().size();
 
         // assert
         REQUIRE(expectedOutput1 == actualOutput1);
         REQUIRE(expectedOutput2 == actualOutput2);
+        REQUIRE(expectedOutput3 == actualOutput3);
 
         delete game;
         for(Player* p: players)
