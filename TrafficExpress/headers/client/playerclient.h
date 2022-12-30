@@ -20,6 +20,7 @@ public:
     bool getHost();
     int getIndex();
     QString getUsername();
+    int getPlayerCount();
     PlayerPerspective*getPlayerPerspective();
 
     void setUsername(QString);

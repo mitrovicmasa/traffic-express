@@ -341,6 +341,8 @@ void MainWindow::onStart()
 
 //        (*m_sp)[0]->setSceneRect(ui->graphicsView->rect());
 //        ui->graphicsView->setScene((*m_sp)[0]);
+    if(m_client->getPlayerCount()<3)
+        return;
 
     emit startClicked();
 

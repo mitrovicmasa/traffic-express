@@ -1,5 +1,7 @@
 #include "../../headers/client/playerclient.h"
 
+#include <QApplication>
+
 PlayerClient::PlayerClient(QObject *parent)
     : QObject{parent},m_index(0),m_isHost(false),m_gameOngoing(false)
 {
@@ -39,6 +41,11 @@ bool PlayerClient::getHost()
 QString PlayerClient::getUsername()
 {
     return m_username;
+}
+
+int PlayerClient::getPlayerCount()
+{
+    return m_ready.size();
 }
 
 PlayerPerspective *PlayerClient::getPlayerPerspective()
@@ -118,6 +125,9 @@ void PlayerClient::onReadyRead()
             int wagonIndex=message.split(":")[3].toInt();
             emit actionPunchSignal(treasureIndex,playerI,wagonIndex);
         }
+        if(message.startsWith("dc:")){
+            QApplication::quit();
+        }
 
         this->sendMessage(" ");
         return;
@@ -180,6 +190,15 @@ void PlayerClient::onReadyRead()
         m_ready.push_back(false);
         emit changeStartColor();
 
+    }else if(message.startsWith("dc:")){
+        int dcIndex=message.split(":")[1].toInt();
+        m_ready.erase(m_ready.begin()+dcIndex);
+        m_names.erase(m_names.begin()+dcIndex);
+        if(m_index>dcIndex)
+            m_index--;
+
+
+
     }
     this->sendMessage(" ");
 
@@ -187,7 +206,7 @@ void PlayerClient::onReadyRead()
 
 void PlayerClient::onDisconnected()
 {
-
+    QApplication::quit();
 }
 
 void PlayerClient::onClickedReady()
