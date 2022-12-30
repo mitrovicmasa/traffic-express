@@ -19,6 +19,7 @@
 #include <cstdlib>
 
 #include <QString>
+#include <QMessageBox>
 
 enum class Phase {
     WAGON_SELECTION,
@@ -97,6 +98,8 @@ public:
     void updateNextAction();
 
     void updateRounds();
+
+    void showEndGameStats();
 
     int findPlayersTreasureIndex(Treasure*, unsigned);
 
