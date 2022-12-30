@@ -232,15 +232,25 @@ void PlayerClient::onClickedStart()
      qDebug()<<"startClicked"<<m_index;
      this->sendMessage("start:");
     m_gameOngoing=true;
-         std::vector<Player*> players;
-             players = {
-                 new Player(BanditType::PICKPOCKET),
-                 new Player(BanditType::SEDUCTRESS),
-                 new Player(BanditType::STUDENT),
-         //        new Player(BanditType::RETIREE),
-         //        new Player(BanditType::HOMELESS_MAN),
-         //        new Player(BanditType::BUSINESS_WOMAN)
-             };
+    std::vector<BanditType>allPossibleBandits={
+        BanditType::PICKPOCKET,
+            BanditType::SEDUCTRESS,
+            BanditType::STUDENT,
+            BanditType::RETIREE,
+            BanditType::HOMELESS_MAN,
+            BanditType::BUSINESS_WOMAN
+    };
+    std::vector<BanditType>randomlySelectedBandits;
+    unsigned seed=std::chrono::system_clock::now().time_since_epoch().count();
+    std::sample(allPossibleBandits.begin(),allPossibleBandits.end(),
+                std::back_inserter(randomlySelectedBandits),this->getPlayerCount(),
+                std::default_random_engine(seed));
+
+
+
+    std::vector<Player*> players;
+   for(BanditType bt:randomlySelectedBandits)
+       players.push_back(new Player(bt));
 
     Game* game=new Game(players);
     game->initialize();
