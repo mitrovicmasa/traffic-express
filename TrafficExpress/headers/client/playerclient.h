@@ -32,6 +32,12 @@ signals:
 
     void gameLoaded();
 
+    //to pp
+    void playerChoseWagon(int playerIndex,int wagonIndex);
+    void playerPlayedCard(int playerIndex,int CardIndex);
+    void playerDrawCards(int playerIndex);
+
+
 public slots:
     void onConnected();
     void onReadyRead();
@@ -39,6 +45,14 @@ public slots:
 
     void onClickedReady();
     void onClickedStart();
+
+    //pp reacts
+    void onPlayerChoseWagon(int playerIndex,int wagonIndex);
+    void onPlayerPlayedCard(int playerIndex,int CardIndex);
+    void onPlayerDrawCards(int playerIndex);
+
+
+
 
 private:
     QTcpSocket *m_clientSocket;
@@ -49,6 +63,7 @@ private:
     bool m_isHost;
     QString m_username;
     bool m_gameIncoming;
+    bool m_gameOngoing;
 
 
 };

@@ -126,9 +126,9 @@ void PlayerPerspective::onClickedTreasureInWagonInTrainInTran(Treasure *t, Wagon
 void PlayerPerspective::onClickedCardInHandInPlayer(Card *c, Hand *h, Player *p)
 {
     std::cout<<"Player perspective recieved signal"<<std::endl;
-    if(!p->isItMyMove())
-        qDebug()<<"not my move";
-
+    if(!p->isItMyMove()){
+        qDebug()<<"not my move:playerToMove:"<<m_game->getIndexOfPlayerToMove();
+}
     if(p->isItMyMove() && c->Type()==CardType::ACTION_CARD &&
             m_game->phase()==Phase::PHASE_1){
         std::cout<<"It is my move!"<<std::endl;

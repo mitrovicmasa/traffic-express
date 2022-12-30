@@ -1,7 +1,7 @@
 #include "../../headers/client/playerclient.h"
 
 PlayerClient::PlayerClient(QObject *parent)
-    : QObject{parent},m_index(0),m_isHost(false)
+    : QObject{parent},m_index(0),m_isHost(false),m_gameOngoing(false)
 {
     m_ready=std::vector<bool>();
     m_names=std::vector<QString>();
@@ -69,10 +69,36 @@ void PlayerClient::onReadyRead()
     QString message(m_clientSocket->readAll());
          qDebug()<<"my message:"<<message;
     ;
+     qDebug()<<"gameOngoing:"<<m_gameOngoing;
+    if(m_gameOngoing){
+        if(message.startsWith("pcw:")){
+            qDebug()<<"pcvrecieved";
+            int playerPositioned=message.split(":")[1].toInt();
+            int wagonIndex=message.split(":")[2].toInt();
+            emit playerChoseWagon(playerPositioned,wagonIndex);
+
+
+        }
+        if(message.startsWith("ppc:")){
+            int playerPc=message.split(":")[1].toInt();
+            int cardIndex=message.split(":")[2].toInt();
+            emit playerPlayedCard(playerPc,cardIndex);
+
+        }
+        if(message.startsWith("pdc:")){
+            int playerToDraw=message.split(":")[1].toInt();
+            emit playerDrawCards(playerToDraw);
+
+        }
+
+        this->sendMessage(" ");
+        return;
+    }
 
     if(m_gameIncoming){
         qDebug()<<"game loaded";
         m_gameIncoming=false;
+        m_gameOngoing=true;
         Game*g =new Game();
         QJsonDocument doc=QJsonDocument::fromJson(message.toUtf8());
 
@@ -154,7 +180,7 @@ void PlayerClient::onClickedStart()
 {
      qDebug()<<"startClicked"<<m_index;
      this->sendMessage("start:");
-
+    m_gameOngoing=true;
          std::vector<Player*> players;
              players = {
                  new Player(BanditType::PICKPOCKET),
@@ -172,6 +198,10 @@ void PlayerClient::onClickedStart()
          //std::cout<<game->rounds()->size()<<std::endl;
     Game*copy=new Game(*game);
     m_pp=new PlayerPerspective(copy,0);
+
+
+
+
     emit gameLoaded();
     auto tmp=copy->toVariant();
 
@@ -183,3 +213,20 @@ void PlayerClient::onClickedStart()
 
 
 }
+
+void PlayerClient::onPlayerChoseWagon(int playerIndex, int wagonIndex)
+{
+    this->sendMessage("pcw:"+QString::number(playerIndex)+":"+QString::number(wagonIndex));
+}
+
+void PlayerClient::onPlayerPlayedCard(int playerIndex, int CardIndex)
+{
+    this->sendMessage("ppc:"+QString::number(playerIndex)+":"+QString::number(CardIndex));
+}
+
+void PlayerClient::onPlayerDrawCards(int playerIndex)
+{
+    this->sendMessage("pdc:"+QString::number(playerIndex));
+}
+
+

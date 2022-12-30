@@ -146,10 +146,43 @@ void MainWindow::onChangeStartColor()
 
 void MainWindow::onGameLoaded()
 {
-    m_client->getPlayerPerspective()->setSceneRect(ui->graphicsView->rect());
-    ui->graphicsView->setScene(m_client->getPlayerPerspective());
+    PlayerPerspective*pp=m_client->getPlayerPerspective();
+    connect(pp,&PlayerPerspective::playerChoseWagon,pp
+            ,&PlayerPerspective::onPlayerChoseWagon);
 
-    m_client->getPlayerPerspective()->addGameToScene();
+    connect(pp,&PlayerPerspective::playerDrawCards,pp,&PlayerPerspective::onPlayerDrawCards);
+
+    connect(pp,&PlayerPerspective::playerPlayedCard,pp
+            ,&PlayerPerspective::onPlayerPlayedCard);
+
+    connect(pp,&PlayerPerspective::actionSheriffSignal,pp
+            ,&PlayerPerspective::onActionSheriffSignal);
+
+    connect(pp,&PlayerPerspective::actionFireSignal,pp
+            ,&PlayerPerspective::onActionFireSignal);
+
+    connect(pp,&PlayerPerspective::actionRobberySignal, pp
+            ,&PlayerPerspective::onActionRobberySignal);
+
+    connect(pp,&PlayerPerspective::actionChangeFloorSignal,pp,&PlayerPerspective::onActionChangeFloorSignal);
+
+    connect(pp,&PlayerPerspective::actionChangeWagonSignal,pp,&PlayerPerspective::onActionChangeWagonSignal);
+
+    connect(pp,&PlayerPerspective::actionPunchSignal,pp,&PlayerPerspective::onActionPunchSignal);
+////
+    connect(pp,&PlayerPerspective::playerChoseWagon,m_client,&PlayerClient::onPlayerChoseWagon);
+    connect(m_client,&PlayerClient::playerChoseWagon,pp,&PlayerPerspective::onPlayerChoseWagon);
+
+    connect(pp,&PlayerPerspective::playerPlayedCard,m_client,&PlayerClient::onPlayerPlayedCard);
+    connect(m_client,&PlayerClient::playerPlayedCard,pp,&PlayerPerspective::onPlayerPlayedCard);
+
+    connect(pp,&PlayerPerspective::playerDrawCards,m_client,&PlayerClient::onPlayerDrawCards);
+    connect(m_client,&PlayerClient::playerDrawCards,pp,&PlayerPerspective::onPlayerDrawCards);
+
+    pp->setSceneRect(ui->graphicsView->rect());
+    ui->graphicsView->setScene(pp);
+
+    pp->addGameToScene();
 
 
 
