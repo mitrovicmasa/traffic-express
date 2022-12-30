@@ -16,7 +16,7 @@ Game::Game(const Game &other)
     :m_players(PlayerGroup(other.m_players)),
       m_wagons(new Train(other.wagons()->getWagons())),
       m_sheriffPosition(other.m_sheriffPosition),
-      m_rounds(new RoundCardDeck(other.m_rounds->getRoundCads())),
+      m_rounds(new RoundCardDeck(other.m_rounds->getRoundCards())),
       //m_cardsPlayed(std::vector<ActionCard*>()),
       m_neutralBulletDeck(std::vector<NeutralBullet*>()),
       m_unusedTreasure(other.m_unusedTreasure),
@@ -608,7 +608,7 @@ void Game::checkNextActionCard()
             this->showEndGameStats();
 
             this->setIndexOfMiniround(0);
-            RoundCard* rc = m_rounds->getRoundCads()[m_indexOfRound];
+            RoundCard* rc = m_rounds->getRoundCards()[m_indexOfRound];
             rc->setZValue(-1);
             qDebug() << m_indexOfRound;
             this->setIndexOfRound(m_indexOfRound + 1);

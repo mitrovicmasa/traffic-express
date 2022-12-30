@@ -5,44 +5,39 @@
 #include <QObject>
 #include <roundcardcollection.h>
 
-class RoundCardDeck : public QGraphicsObject,public Serializable
+class RoundCardDeck : public QGraphicsObject, public Serializable
 {
     Q_OBJECT
+
 public:
+    // Constructors
     RoundCardDeck();
     RoundCardDeck(std::vector<RoundCard*>);
-
     RoundCardDeck(const RoundCardCollection&);
 
+    // Get methods
+    RoundCardCollection& getRoundCards();
+
+    // Other methods
+    void push_front(RoundCard*);
+    void pop_front();
     RoundCard*operator[](int);
     RoundCard*back();
     RoundCard*front();
     int size();
 
-    void push_front(RoundCard*);
-    void pop_front();
-
-
-    void setRoundOnScene(int i);
-
-
-    RoundCardCollection& getRoundCads();
-
-    int width()const;
-    int height()const;
-private:
-    RoundCardCollection m_rounds;
-
-    // QGraphicsItem interface
-public:
+    // GUI
     QRectF boundingRect() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
-
+    int width() const;
+    int height() const;
 
     // Serializable interface
-public:
     QVariant toVariant() const;
     void fromVariant(const QVariant &variant);
+
+private:
+    RoundCardCollection m_rounds;
 };
 
 #endif // ROUNDCARDDECK_H

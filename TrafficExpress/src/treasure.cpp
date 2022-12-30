@@ -38,51 +38,53 @@ int Treasure::getValue()
     return m_value;
 }
 
-int Treasure::visina() const
-{
-    return 25;
-}
-
-int Treasure::sirina() const
-{
-    return 25;
-}
-
 // Other methods
 
 
 bool Treasure::operator==(const Treasure &t)
 {
-    return m_type==t.m_type && m_value==t.m_value;
+    return m_type == t.m_type && m_value == t.m_value;
 }
 
 bool Treasure::operator!=(const Treasure &t)
 {
-    return !(m_type==t.m_type && m_value==t.m_value);
+    return !(m_type == t.m_type && m_value == t.m_value);
 }
 
 std::string Treasure::toString()
 {
-    switch(m_type){
-                case TreasureType::MONEYBAG:return "MONEYBAG:"+std::to_string(m_value);
-                case TreasureType::DIAMOND:return "DIAMOND:"+std::to_string(m_value);;
-                case TreasureType::SUITCASE:return "SUITCASE:"+std::to_string(m_value);;
-                default:return "UNKNOWN TREASURE TYPE";
-
+    switch(m_type) {
+        case TreasureType::MONEYBAG:
+            return "MONEYBAG:" + std::to_string(m_value);
+        case TreasureType::DIAMOND:
+            return "DIAMOND:" + std::to_string(m_value);;
+        case TreasureType::SUITCASE:
+            return "SUITCASE:" + std::to_string(m_value);;
+        default:
+            return "UNKNOWN TREASURE TYPE";
     }
 }
 
 // GUI
+
+
+int Treasure::height() const
+{
+    return 25;
+}
+
+int Treasure::width() const
+{
+    return 25;
+}
+
 QRectF Treasure::boundingRect() const
 {
-    return QRectF(0,0,25,25);
+    return QRectF(0,0,width(), height());
 }
 
 void Treasure::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
-//    Q_UNUSED(option)
-//    Q_UNUSED(widget)
-
     QString type;
     switch(this->getType()){
         case TreasureType::MONEYBAG:
@@ -99,23 +101,21 @@ void Treasure::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, 
 
     QString path = "://" + type + ".png";
     painter->drawPixmap(boundingRect(), QPixmap(path), QRectF(0,0,0,0));
-
 }
 
 void Treasure::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
     QGraphicsObject::mousePressEvent(event);
-
     emit clicked();
     emit clickedTreasure(this);
 }
 
+// Serializable interface
 QVariant Treasure::toVariant() const
 {
     QVariantMap map;
     map.insert("type",(int)m_type);
     map.insert("value",m_value);
-
     return map;
 }
 

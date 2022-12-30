@@ -1,5 +1,6 @@
 #include "../headers/roundcarddeck.h"
 
+// Constructors
 RoundCardDeck::RoundCardDeck()
 {
 
@@ -7,24 +8,38 @@ RoundCardDeck::RoundCardDeck()
 
 RoundCardDeck::RoundCardDeck(std::vector<RoundCard *>rcs)
 {
-    for(auto it=rcs.crbegin();it!=rcs.crend();it++){
-        RoundCard*tmp=*it;
-
+    for(auto it = rcs.crbegin(); it != rcs.crend(); it++){
+        RoundCard* tmp= *it;
         this->push_front(new RoundCard(tmp->typeOfRoundCard(),tmp->event(),tmp->getMiniRounds()));
-
-
     }
 }
 
 RoundCardDeck::RoundCardDeck(const RoundCardCollection &rcd)
 {
-    for(auto it=rcd.crbegin();it!=rcd.crend();it++){
-        RoundCard*tmp=*it;
-
+    for(auto it = rcd.crbegin(); it != rcd.crend(); it++){
+        RoundCard* tmp= *it;
         this->push_front(new RoundCard(tmp->typeOfRoundCard(),tmp->event(),tmp->getMiniRounds()));
-
-
     }
+}
+
+// Get methods
+RoundCardCollection& RoundCardDeck::getRoundCards()
+{
+    return m_rounds;
+}
+
+// Other methods
+void RoundCardDeck::push_front(RoundCard*c)
+{
+    m_rounds.insert(m_rounds.begin(),c);
+    c->setParentItem(this);
+    c->setPos(0,0);
+}
+
+void RoundCardDeck::pop_front()
+{
+    m_rounds.front()->setParentItem(nullptr);
+    m_rounds.erase(m_rounds.begin());
 }
 
 RoundCard *RoundCardDeck::operator[](int i)
@@ -47,31 +62,7 @@ int RoundCardDeck::size()
     return m_rounds.size();
 }
 
-void RoundCardDeck::push_front(RoundCard*c)
-{
-    m_rounds.insert(m_rounds.begin(),c);
-    c->setParentItem(this);
-    c->setPos(0,0);
-
-}
-
-void RoundCardDeck::pop_front()
-{
-    m_rounds.front()->setParentItem(nullptr);
-    m_rounds.erase(m_rounds.begin());
-}
-
-void RoundCardDeck::setRoundOnScene(int i)
-{
-    m_rounds[i]->setPos(0,0);
-    m_rounds[i]->topLevelItem();
-}
-
-RoundCardCollection& RoundCardDeck::getRoundCads()
-{
-    return m_rounds;
-}
-
+// GUI
 int RoundCardDeck::width() const
 {
     return 300;
@@ -89,31 +80,28 @@ QRectF RoundCardDeck::boundingRect() const
 
 void RoundCardDeck::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
-   // painter->fillRect(boundingRect(),QColor::fromRgb(80,90,100));
+
 }
 
+// Serializable interface
 QVariant RoundCardDeck::toVariant() const
 {
     QVariantMap map;
 
     QVariantList list;
-    for(RoundCard*rc:m_rounds){
+    for(RoundCard* rc: m_rounds){
         list.append(rc->toVariant());
     }
     map.insert("rcdList",list);
-
-
-
-
     return map;
 }
 
 void RoundCardDeck::fromVariant(const QVariant &variant)
 {
-    QVariantMap map=variant.toMap();
-    QVariantList list=map.value("rcdList").toList();
-    for( auto it=list.rbegin();it!=list.rend();it++){
-        RoundCard* rc=new RoundCard();
+    QVariantMap map = variant.toMap();
+    QVariantList list = map.value("rcdList").toList();
+    for( auto it = list.rbegin(); it != list.rend(); it++){
+        RoundCard* rc = new RoundCard();
         rc->fromVariant(*it);
         this->push_front(rc);
     }

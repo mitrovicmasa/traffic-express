@@ -18,7 +18,7 @@ PlayerPerspective::PlayerPerspective(Game *game, int playerIndex, QObject *paren
         m_table->push_back(new PlayerStats(p));
 
     }
-    connect(m_table,&Table::clickedTreasureInPlayerStatsnTable,this,&PlayerPerspective::onClickedTreasureInPlayerStatsInTable);
+    connect(m_table,&Table::clickedTreasureInPlayerStatsInTable,this,&PlayerPerspective::onClickedTreasureInPlayerStatsInTable);
     connect(m_player,&Player::clickedCardInHandInPlayer,this,&PlayerPerspective::onClickedCardInHandInPlayer);
     connect(m_player,&Player::clickedCardInDeckInPlayer,this,&PlayerPerspective::onClickedCardInDeckInPlayer);
 
@@ -105,7 +105,7 @@ void PlayerPerspective::onClickedTreasureInWagonInTrainInTran(Treasure *t, Wagon
 //        std::cout<<"It is my move"<<std::endl;
 //       Treasure* selectedTreasure=w->takeContentDown(t);
 
-//       //disconnect(selectedTreasure,&Treasure::clickedTreasure,w,&Wagon::OnCickedTreasuere);
+//       //disconnect(selectedTreasure,&Treasure::clickedTreasure,w,&Wagon::onCickedTreasure);
 //       //m_player->treasure().push_back(selectedTreasure);
 
 

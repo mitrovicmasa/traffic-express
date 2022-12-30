@@ -2,16 +2,16 @@
 
 // Constructors
 RoundCard::RoundCard(RoundCardType type, EventType event, const MiniRoundCollection &miniRounds)
-    :QGraphicsObject(), m_type(type),
-      m_event(event),m_miniRounds(miniRounds)
-
+    : QGraphicsObject(),
+      m_type(type),
+      m_event(event),
+      m_miniRounds(miniRounds)
 {
     for(int i=0;i<m_miniRounds.size();i++){
         m_miniRounds[i]->setParentItem(this);
-
-        m_miniRounds[i]->setPos(i*(m_miniRounds[i]->width()+10)*0.8,height()-m_miniRounds[i]->height()-10);
+        m_miniRounds[i]->setPos(i*(m_miniRounds[i]->width()+10)*0.8,
+                                height()-m_miniRounds[i]->height()-10);
     }
-
     setFlags(GraphicsItemFlag::ItemIsSelectable);
 }
 
@@ -22,33 +22,15 @@ RoundCard::RoundCard()
 }
 
 RoundCard::RoundCard(RoundCardType type, EventType event, const std::vector<MiniRoundType> &miniRound)
-    :QGraphicsObject(), m_type(type),
+    :QGraphicsObject(),
+      m_type(type),
       m_event(event)
 {
-    for(auto x:miniRound){
+    for(auto x: miniRound) {
         this->push_back(new MiniRound(x));
     }
     setFlags(GraphicsItemFlag::ItemIsSelectable);
 }
-
-RoundCard::RoundCard(RoundCardType type, EventType event, const std::vector<MiniRound *> &miniRound)
-{
-    for(auto x:miniRound){
-        this->push_back(x);
-    }
-    setFlags(GraphicsItemFlag::ItemIsSelectable);
-}
-
-//RoundCard::RoundCard(const RoundCard &other)
-//    :QGraphicsObject(),std::vector<MiniRound*>(),
-//    m_type(other.m_type),
-//    m_event(other.m_event)
-//{
-//    for(MiniRound*mr:other)
-//        this->push_back(new MiniRound(*mr));
-
-//setFlags(GraphicsItemFlag::ItemIsSelectable);
-//}
 
 // Get methods
 RoundCardType RoundCard::typeOfRoundCard() const
@@ -59,6 +41,32 @@ RoundCardType RoundCard::typeOfRoundCard() const
 MiniRoundCollection &RoundCard::getMiniRounds()
 {
     return m_miniRounds;
+}
+
+EventType RoundCard::event() const
+{
+    return m_event;
+}
+
+
+// Set methods
+void RoundCard::setType(RoundCardType &newType)
+{
+    m_type = newType;
+}
+
+void RoundCard::setEvent(EventType &newEvent)
+{
+    m_event = newEvent;
+}
+
+// Other methods
+
+void RoundCard::push_back(MiniRound* mr)
+{
+    m_miniRounds.push_back(mr);
+    mr->setParentItem(this);
+    mr->setPos((size()-1)*(mr->width()+10)*0.8, height()-mr->height()-10);
 }
 
 int RoundCard::size() const
@@ -80,36 +88,6 @@ MiniRound *RoundCard::front()
 {
     return m_miniRounds.front();
 }
-
-EventType RoundCard::event() const
-{
-    return m_event;
-}
-
-
-
-// Set methods
-void RoundCard::setType(RoundCardType &newType)
-{
-    m_type = newType;
-}
-
-void RoundCard::setEvent(EventType &newEvent)
-{
-    m_event = newEvent;
-}
-
-void RoundCard::push_back(MiniRound*mr)
-{
-
-    m_miniRounds.push_back(mr);
-    mr->setParentItem(this);
-    mr->setPos((size()-1)*(mr->width()+10)*0.8,height()-mr->height()-10);
-}
-
-
-
-// Other methods
 
 
 std::string toStringRoundCardType(const RoundCardType &card)
@@ -187,6 +165,29 @@ std::string RoundCard::toString() const
     return output;
 }
 
+
+// GUI
+int RoundCard::height() const
+{
+    return 100;
+}
+
+int RoundCard::width() const
+{
+    return 300;
+}
+
+QRectF RoundCard::boundingRect() const
+{
+    return QRectF(0,0,width(),height());
+}
+
+void RoundCard::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
+{
+    painter->drawPixmap(boundingRect(), QPixmap("://rc.png"), QRectF(0,0,0,0));
+}
+
+// Serializable interface
 QVariant RoundCard::toVariant() const
 {
     QVariantMap map;
@@ -214,28 +215,4 @@ void RoundCard::fromVariant(const QVariant &variant)
         MiniRound *miniRound = new MiniRound(static_cast<MiniRoundType>(e.toInt()));
         this->push_back(miniRound);
     }
-}
-
-// GUI
-
-int RoundCard::height() const
-{
-    return 100;
-}
-
-int RoundCard::width() const
-{
-    return 300;
-}
-
-QRectF RoundCard::boundingRect() const
-{
-    return QRectF(0,0,width(),height());
-}
-
-void RoundCard::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
-{
-//    painter->fillRect(boundingRect(),QColor::fromRgb(200,200,170));
-//    painter->drawText(boundingRect(), "ROUND CARD:");
-    painter->drawPixmap(boundingRect(), QPixmap("://rc.png"), QRectF(0,0,0,0));
 }

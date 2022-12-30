@@ -5,35 +5,35 @@
 #include <bulletcard.h>
 #include <QGraphicsItem>
 
-
 class PlayerStats: public QGraphicsObject
 {
     Q_OBJECT
+
 public:
     // Constructors
     PlayerStats();
     PlayerStats(Player*,bool deepCopy=false);
 
+    // Get methods
+    Player* getPlayer();
 
+    // Other methods
     void addTreasureToPlayer(Treasure*);
     Treasure* takeTreasureFromPlayer(Treasure*);
-
-    Player* getPlayer();
 
     // GUI
     void repositionTreasure();
     QRectF boundingRect() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
-    void test();
+
 public slots:
     void onTreasureClicked(Treasure*);
+
 signals:
     void clickedTreasueInPlayeStats(Treasure*,PlayerStats*);
 
 private:
     Player *m_player;
 };
-
-
 
 #endif // PLAYERSTATS_H
