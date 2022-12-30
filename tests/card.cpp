@@ -800,4 +800,186 @@ TEST_CASE("Testing correctness of methods in class Game", "[game]")
 
     }
 
+//    SECTION("Method actionSheriffMove changes position of Sheriff and moves every player to the roof of wagon where Sheriff is placed")
+//    {
+//        // arrange
+//        std::vector<Player*> players = {
+//            new Player(BanditType::PICKPOCKET),
+//            new Player(BanditType::SEDUCTRESS),
+//            new Player(BanditType::RETIREE),
+//            new Player(BanditType::HOMELESS_MAN)
+//        };
+
+//        Game *game = new Game(players);
+//        game->initialize();
+
+//        Wagon *wagon1 = game->wagons()->getWagons()[0];
+//        Wagon *wagon2 = game->wagons()->getWagons()[1];
+
+//        for (unsigned i = 0; i < players.size(); ++i) {
+//            if (i % 2 == 0) {
+//                wagon1->addPlayerDown(players[i]);
+//                players[i]->setPositionInTrain(0);
+//                players[i]->setRoof(false);
+//            } else {
+//                wagon2->addPlayerDown(players[i]);
+//                players[i]->setPositionInTrain(1);
+//                players[i]->setRoof(false);
+//            }
+//        }
+
+//        const auto expectedOutput1 = 2;
+
+//        // act
+//        game->actionSheriffMove(wagon1);
+//        const auto actualOutput1 = wagon1->getPlayersUp().size();
+
+//        // assert
+//        REQUIRE(expectedOutput1 == actualOutput1);
+
+//        delete game;
+//        for(Player* p: players)
+//            delete p;
+
+//    }
+
+    SECTION("Action actionChangeFloor should change player's setRoof field")
+    {
+        // arrange
+        std::vector<Player*> players = {
+            new Player(BanditType::PICKPOCKET),
+            new Player(BanditType::SEDUCTRESS),
+            new Player(BanditType::RETIREE),
+            new Player(BanditType::HOMELESS_MAN)
+        };
+
+        Game *game = new Game(players);
+        game->initialize();
+
+        for (unsigned i = 0; i < players.size(); ++i) {
+            if (i % 2 == 0) {
+                game->wagons()->getWagons()[0]->addPlayerDown(players[i]);
+                players[i]->setPositionInTrain(0);
+                players[i]->setRoof(false);
+            } else {
+                game->wagons()->getWagons()[1]->addPlayerDown(players[i]);
+                players[i]->setPositionInTrain(1);
+                players[i]->setRoof(false);
+            }
+        }
+
+        const auto expectedOutput1 = 1;
+        const auto expectedOutput2 = 1;
+
+        game->setIndexOfPlayerToMove(0);
+
+        // act
+        game->actionFloorChange();
+        const auto actualOutput1 = game->wagons()->getWagons()[0]->getPlayersUp().size();
+        game->setSeriffPosition(0);
+
+        game->setIndexOfPlayerToMove(0);
+        game->actionFloorChange();
+        const auto actualOutput2 = game->wagons()->getWagons()[0]->getPlayersUp().size();
+
+        // assert
+        REQUIRE(expectedOutput1 == actualOutput1);
+        REQUIRE(expectedOutput2 == actualOutput2);
+
+        delete game;
+        for(Player* p: players)
+            delete p;
+    }
+
+    SECTION("Method actionChangeWagon should move player to different wagon")
+    {
+        // arrange
+        std::vector<Player*> players = {
+            new Player(BanditType::PICKPOCKET),
+            new Player(BanditType::STUDENT),
+            new Player(BanditType::RETIREE),
+            new Player(BanditType::HOMELESS_MAN)
+        };
+
+        Game *game = new Game(players);
+        game->initialize();
+
+        for (unsigned i = 0; i < players.size(); ++i) {
+            if (i % 2 == 0) {
+                game->wagons()->getWagons()[0]->addPlayerDown(players[i]);
+                players[i]->setPositionInTrain(0);
+                players[i]->setRoof(true);
+            } else {
+                game->wagons()->getWagons()[1]->addPlayerDown(players[i]);
+                players[i]->setPositionInTrain(1);
+                players[i]->setRoof(false);
+            }
+        }
+
+        const auto expectedOutput1 = true;
+        const auto expectedOutput2 = false;
+
+        game->setIndexOfPlayerToMove(0);
+
+        // act
+        const auto actualOutput1 = game->actionChangeWagon(3);;
+
+        game->setIndexOfPlayerToMove(3);
+
+        const auto actualOutput2 = game->actionChangeWagon(3);
+
+        // assert
+        REQUIRE(expectedOutput1 == actualOutput1);
+        REQUIRE(expectedOutput2 == actualOutput2);
+
+        delete game;
+        for(Player* p: players)
+            delete p;
+    }
+
+    SECTION("Method actionFire should add bullet to deck of player that is shot")
+    {
+        // arrange
+        std::vector<Player*> players = {
+            new Player(BanditType::PICKPOCKET),
+            new Player(BanditType::STUDENT),
+            new Player(BanditType::RETIREE),
+            new Player(BanditType::HOMELESS_MAN)
+        };
+
+        Game *game = new Game(players);
+        game->initialize();
+
+        for (unsigned i = 0; i < players.size(); ++i) {
+            if (i % 2 == 0) {
+                game->wagons()->getWagons()[0]->addPlayerDown(players[i]);
+                players[i]->setPositionInTrain(0);
+                players[i]->setRoof(false);
+            } else {
+                game->wagons()->getWagons()[1]->addPlayerDown(players[i]);
+                players[i]->setPositionInTrain(1);
+                players[i]->setRoof(false);
+            }
+        }
+
+        const auto expectedOutput1 = false;
+        const auto expectedOutput2 = true;
+        const auto expectedOutput3 = game->players()[0]->bullet_deck()->back();
+
+        game->setIndexOfPlayerToMove(0);
+
+        // act
+        const auto actualOutput1 = game->actionFire(2);
+        const auto actualOutput2 = game->actionFire(1);
+        const auto actualOutput3 = game->players()[1]->deck()->back();
+
+        // assert
+        REQUIRE(expectedOutput1 == actualOutput1);
+        REQUIRE(expectedOutput2 == actualOutput2);
+        REQUIRE(expectedOutput3 == actualOutput3);
+
+        delete game;
+        for(Player* p: players)
+            delete p;
+    }
 }
