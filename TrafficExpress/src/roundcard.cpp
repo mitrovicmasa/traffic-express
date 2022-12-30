@@ -17,6 +17,7 @@ RoundCard::RoundCard(RoundCardType type, EventType event, const MiniRoundCollect
 
 RoundCard::RoundCard()
 {
+    setFlags(GraphicsItemFlag::ItemIsSelectable);
 
 }
 
@@ -103,7 +104,7 @@ void RoundCard::push_back(MiniRound*mr)
 
     m_miniRounds.push_back(mr);
     mr->setParentItem(this);
-    mr->setPos((size()-1)*(mr->width()+10),height()-mr->height());
+    mr->setPos((size()-1)*(mr->width()+10)*0.8,height()-mr->height()-10);
 }
 
 
@@ -234,6 +235,7 @@ QRectF RoundCard::boundingRect() const
 
 void RoundCard::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
-    painter->fillRect(boundingRect(),QColor::fromRgb(200,200,170));
-    painter->drawText(boundingRect(), "ROUND CARD:");
+//    painter->fillRect(boundingRect(),QColor::fromRgb(200,200,170));
+//    painter->drawText(boundingRect(), "ROUND CARD:");
+    painter->drawPixmap(boundingRect(), QPixmap("://rc.png"), QRectF(0,0,0,0));
 }

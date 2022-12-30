@@ -44,6 +44,7 @@ PlayerStats::PlayerStats(Player *p, bool deepCopy)
 
 
     }
+    repositionTreasure();
 }
 
 void PlayerStats::addTreasureToPlayer(Treasure *t)
@@ -51,8 +52,9 @@ void PlayerStats::addTreasureToPlayer(Treasure *t)
     m_player->treasure().push_back(t);
     t->setParentItem(this);
     t->setPos((m_player->treasure().size()-1)*30+80, 20);
-
     connect(t, &Treasure::clickedTreasure, this, &PlayerStats::onTreasureClicked);
+    repositionTreasure();
+
 }
 
 Treasure *PlayerStats::takeTreasureFromPlayer(Treasure *t)
@@ -67,6 +69,7 @@ Treasure *PlayerStats::takeTreasureFromPlayer(Treasure *t)
             disconnect(t, &Treasure::clickedTreasure, this, &PlayerStats::onTreasureClicked);
             t->setParentItem(nullptr);
             this->getPlayer()->treasure().erase(it);
+            repositionTreasure();
             return t;
         }
     }
@@ -76,6 +79,14 @@ Treasure *PlayerStats::takeTreasureFromPlayer(Treasure *t)
 Player *PlayerStats::getPlayer()
 {
     return m_player;
+}
+
+void PlayerStats::repositionTreasure()
+{
+
+    for(int i=0;i<m_player->treasure().size();i++){
+        m_player->treasure()[i]->setPos(15+(i)*(1.2*(m_player->treasure()[i]->sirina())),20);
+    }
 }
 
 // GUI

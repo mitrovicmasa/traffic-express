@@ -21,6 +21,7 @@ public:
     Player* getPlayer();
 
     // GUI
+    void repositionTreasure();
     QRectF boundingRect() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
     void test();

@@ -345,10 +345,6 @@ void Game::initialize()
     // Set wagons for current game
     setWagons(selectedWagons);
 
-    //Treasure test
-    (*m_wagons)[0]->setContentUp(std::vector<Treasure*>());
-    (*m_wagons)[0]->addContentUp(new Treasure(250, TreasureType::MONEYBAG));
-
     // Unused treasure init??
     //setUnusedTreasure(::remainingTreasure(remainingMoneybags, remainingDiamonds, remainingSuitcases));
 

@@ -65,7 +65,7 @@ void Train::push_back(Wagon*w)
     connect(w,&Wagon::clickedWagon,this,&Train::onClickedWagon);
     m_wagons.push_back(w);
     w->setParentItem(this);
-    w->setPos((m_wagons.size()-1)*200,10);
+    w->setPos((m_wagons.size()-1)*180,10);
 }
 
 Wagon *Train::back()
@@ -105,7 +105,7 @@ void Train::push_front(Wagon *w)
     connect(w,&Wagon::clickedWagon,this,&Train::onClickedWagon);
     m_wagons.insert(m_wagons.begin(),w);
     w->setParentItem(this);
-    w->setPos((m_wagons.size()-1)*200,10);
+    w->setPos((m_wagons.size()-1)*180,10);
     if(this->getWagonIndex(w)==0) {
         w->setIsLocomotive(true);
     }

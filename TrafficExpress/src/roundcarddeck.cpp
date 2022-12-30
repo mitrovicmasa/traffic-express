@@ -89,7 +89,7 @@ QRectF RoundCardDeck::boundingRect() const
 
 void RoundCardDeck::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
-    painter->fillRect(boundingRect(),QColor::fromRgb(80,90,100));
+   // painter->fillRect(boundingRect(),QColor::fromRgb(80,90,100));
 }
 
 QVariant RoundCardDeck::toVariant() const

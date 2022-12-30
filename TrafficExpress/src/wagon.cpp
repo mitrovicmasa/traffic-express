@@ -126,6 +126,7 @@ void Wagon::setContentUp(TreasureChest newContentUp)
         t->setParentItem(this);
         t->setPos(10+(m_contentUp.size()-1)*(2*t->sirina()),-30+height()-t->visina());
     }
+    repositionTreasure();
 }
 
 void Wagon::addContentUp(Treasure *t)
@@ -135,6 +136,7 @@ void Wagon::addContentUp(Treasure *t)
     m_contentUp.push_back(t);
     t->setParentItem(this);
     t->setPos(15+(m_contentUp.size()-1)*(1.2*t->sirina()),70-t->visina());
+    repositionTreasure();
 }
 
 void Wagon::addContentDown(Treasure *t)
@@ -144,6 +146,7 @@ void Wagon::addContentDown(Treasure *t)
     m_contentDown.push_back(t);
     t->setParentItem(this);
     t->setPos(15+(m_contentDown.size()-1)*(1.2*t->sirina()),-40+height()-t->visina());
+    repositionTreasure();
 }
 
 void Wagon::addPlayerUp(Player *p)
@@ -404,9 +407,9 @@ QRectF Wagon::boundingRect() const
 void Wagon::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
     if(this->isLocomotive())
-        painter->drawPixmap(boundingRect(), QPixmap("://locomotive.png"), QRectF(0,0,0,0));
+        painter->drawPixmap(boundingRect(), QPixmap("://locomotive2.png"), QRectF(0,0,0,0));
     else
-        painter->drawPixmap(boundingRect(), QPixmap("://wagon2.png"), QRectF(0,0,0,0));
+        painter->drawPixmap(boundingRect(), QPixmap("://wagon3.png"), QRectF(0,0,0,0));
 }
 
 void Wagon::mousePressEvent(QGraphicsSceneMouseEvent *event)
@@ -429,8 +432,13 @@ void Wagon::testPlayers()
 void Wagon::repositionTreasure()
 {
     for(int i=0;i<m_contentDown.size();i++){
-        m_contentDown[i]->setPos(15+(i)*(2*(m_contentDown[i]->sirina())),
+        m_contentDown[i]->setPos(15+(i)*(1.2*(m_contentDown[i]->sirina())),
                                  -40+height()-(m_contentDown[i]->visina()));
+    }
+
+    for(int i=0;i<m_contentUp.size();i++){
+        m_contentUp[i]->setPos(15+(i)*(1.2*(m_contentUp[i]->sirina())),
+                                 70-m_contentUp[i]->visina());
     }
 }
 

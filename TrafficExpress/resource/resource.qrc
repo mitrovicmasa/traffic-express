@@ -105,5 +105,8 @@
         <file>messageBox.png</file>
         <file>blue_db.png</file>
         <file>message.png</file>
+        <file>wagon3.png</file>
+        <file>locomotive2.png</file>
+        <file>rc.png</file>
     </qresource>
 </RCC>
