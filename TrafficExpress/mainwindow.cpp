@@ -179,6 +179,25 @@ void MainWindow::onGameLoaded()
     connect(pp,&PlayerPerspective::playerDrawCards,m_client,&PlayerClient::onPlayerDrawCards);
     connect(m_client,&PlayerClient::playerDrawCards,pp,&PlayerPerspective::onPlayerDrawCards);
 
+    connect(pp,&PlayerPerspective::actionSheriffSignal,m_client,&PlayerClient::onActionSheriffSignal);
+    connect(m_client,&PlayerClient::actionSheriffSignal,pp,&PlayerPerspective::onActionSheriffSignal);
+
+    connect(pp,&PlayerPerspective::actionFireSignal,m_client,&PlayerClient::onActionFireSignal);
+    connect(m_client,&PlayerClient::actionFireSignal,pp,&PlayerPerspective::onActionFireSignal);
+
+    connect(pp,&PlayerPerspective::actionChangeFloorSignal,m_client,&PlayerClient::onActionChangeFloorSignal);
+    connect(m_client,&PlayerClient::actionChangeFloorSignal,pp,&PlayerPerspective::onActionChangeFloorSignal);
+
+    connect(pp,&PlayerPerspective::actionChangeWagonSignal,m_client,&PlayerClient::onActionChangeWagonSignal);
+    connect(m_client,&PlayerClient::actionChangeWagonSignal,pp,&PlayerPerspective::onActionChangeWagonSignal);
+
+    connect(pp,&PlayerPerspective::actionRobberySignal,m_client,&PlayerClient::onActionRobberySignal);
+    connect(m_client,&PlayerClient::actionRobberySignal,pp,&PlayerPerspective::onActionRobberySignal);
+
+    connect(pp,&PlayerPerspective::actionPunchSignal,m_client,&PlayerClient::onActionPunchSignal);
+    connect(m_client,&PlayerClient::actionPunchSignal,pp,&PlayerPerspective::onActionPunchSignal);
+
+
     pp->setSceneRect(ui->graphicsView->rect());
     ui->graphicsView->setScene(pp);
 

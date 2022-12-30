@@ -90,6 +90,34 @@ void PlayerClient::onReadyRead()
             emit playerDrawCards(playerToDraw);
 
         }
+        if(message.startsWith("ass:")){
+            int wagonToMoveSherif=message.split(":")[1].toInt();
+            emit actionSheriffSignal(wagonToMoveSherif);
+        }
+        if(message.startsWith("afs:")){
+            int playerToShot=message.split(":")[1].toInt();
+            emit actionFireSignal(playerToShot);
+        }
+        if(message.startsWith("acf:")){
+            int wagonIndex=message.split(":")[1].toInt();
+            emit actionChangeFloorSignal(wagonIndex);
+        }
+        if(message.startsWith("acw:")){
+            int wagonIndex=message.split(":")[1].toInt();
+            emit actionChangeWagonSignal(wagonIndex);
+        }
+        if(message.startsWith("ars:")){
+            int treasureIndex=message.split(":")[1].toInt();
+            int wagonIndex=message.split(":")[2].toInt();
+            emit actionRobberySignal(treasureIndex,wagonIndex);
+        }
+        if(message.startsWith("aps:")){
+
+            int treasureIndex=message.split(":")[1].toInt();
+            int playerI=message.split(":")[2].toInt();
+            int wagonIndex=message.split(":")[3].toInt();
+            emit actionPunchSignal(treasureIndex,playerI,wagonIndex);
+        }
 
         this->sendMessage(" ");
         return;
@@ -227,6 +255,37 @@ void PlayerClient::onPlayerPlayedCard(int playerIndex, int CardIndex)
 void PlayerClient::onPlayerDrawCards(int playerIndex)
 {
     this->sendMessage("pdc:"+QString::number(playerIndex));
+}
+
+void PlayerClient::onActionSheriffSignal(int wagonIndex)
+{
+    this->sendMessage("ass:"+QString::number(wagonIndex));
+}
+
+void PlayerClient::onActionFireSignal(int playerIndex)
+{
+    this->sendMessage("afs:"+QString::number(playerIndex));
+}
+
+void PlayerClient::onActionChangeFloorSignal(int wagonIndex)
+{
+    this->sendMessage("acf:"+QString::number(wagonIndex));
+}
+
+void PlayerClient::onActionChangeWagonSignal(int wagonIndex)
+{
+    this->sendMessage("acw:"+QString::number(wagonIndex));
+}
+
+void PlayerClient::onActionRobberySignal(int treasureIndex, int wagonIndex)
+{
+    this->sendMessage("ars:"+QString::number(treasureIndex)+":"+QString::number(wagonIndex));
+}
+
+void PlayerClient::onActionPunchSignal(int treasureIndex, int playerIndex, int wagonIndex)
+{
+    this->sendMessage("aps:"+QString::number(treasureIndex)+":"+QString::number(playerIndex)
+                      +":"+QString::number(wagonIndex));
 }
 
 
