@@ -90,6 +90,8 @@ set(PROJECT_SOURCES
         ../tests/train.cpp
         ../tests/catch.cpp
         ../tests/card.cpp
+        ../tests/playerStats.cpp
+        ../tests/table.cpp
         )
 
 set(PROJECT_HEADERS
