@@ -58,7 +58,7 @@ bool PlayerClient::allReady()
 
 void PlayerClient::onConnected()
 {
-    m_ready.push_back(false);
+    //m_ready.push_back(false);
     this->sendMessage(m_username);
 }
 
@@ -175,6 +175,10 @@ void PlayerClient::onReadyRead()
         qDebug()<<"GameIncomingRecieved";
         qDebug()<<message;
         m_gameIncoming=true;
+
+    }else if(message.startsWith("nomoreac:")){
+        m_ready.push_back(false);
+        emit changeStartColor();
 
     }
     this->sendMessage(" ");
