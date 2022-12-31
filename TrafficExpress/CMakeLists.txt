@@ -164,6 +164,9 @@ set_target_properties(TrafficExpress PROPERTIES
     WIN32_EXECUTABLE TRUE
 )
 
+
+target_include_directories(${PROJECT_NAME} PUBLIC headers/ src/ ../tests/)
+
 install(TARGETS TrafficExpress
     BUNDLE DESTINATION .
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR})
