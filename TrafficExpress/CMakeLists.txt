@@ -85,8 +85,8 @@ set(PROJECT_SOURCES
         src/dialoguebox.cpp
         src/roundcarddeck.cpp
         src/serializable.cpp
-        ../tests/catch.cpp
-        ../tests/traffic_express_tests.cpp
+        #../tests/catch.cpp
+        #../tests/traffic_express_tests.cpp
         )
 
 set(PROJECT_HEADERS
