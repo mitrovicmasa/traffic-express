@@ -159,8 +159,6 @@ void MainWindow::onChangeStartColor()
             ui->listWidget->item(i)->setBackground(Qt::green);
         else
             ui->listWidget->item(i)->setBackground(Qt::red);
-
-
     }
 
 
