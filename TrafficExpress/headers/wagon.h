@@ -15,7 +15,7 @@ public:
 
     // Constructors
     Wagon();
-    Wagon(TreasureChest contentDown, TreasureChest contentUp);
+    Wagon(TreasureChest& contentDown, TreasureChest& contentUp);
     Wagon(TreasureChest&upt,TreasureChest&downt,PlayerGroup&upp,PlayerGroup&downp, bool isLocomotive);
 
     // Get methods

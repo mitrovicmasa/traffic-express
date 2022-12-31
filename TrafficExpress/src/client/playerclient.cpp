@@ -275,7 +275,9 @@ void PlayerClient::onClickedStart()
     game->allPlayersDrawCards(6);
          //std::cout<<game->rounds()->size()<<std::endl;
     Game*copy=new Game(*game);
-    m_pp=new PlayerPerspective(game,0);
+    m_pp=new PlayerPerspective(copy,0);
+
+    PlayerPerspective(game,0);
 
 
 

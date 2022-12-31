@@ -35,10 +35,11 @@ public:
     Game();
     Game(std::vector<Player*> &players);
     Game(const Game&);
+    ~Game();
 
     //Get methods
     PlayerGroup &players();
-    Train *wagons() const;
+    Train *wagons() ;
     RoundCardDeck *rounds();
     std::vector<NeutralBullet*> neutralBulletDeck() const;
     const TreasureChest &unusedTreasure() const;

@@ -24,6 +24,13 @@ PlayerPerspective::PlayerPerspective(Game *game, int playerIndex, QObject *paren
 
 }
 
+PlayerPerspective::PlayerPerspective()
+{
+    for(Player*p:m_game->players())
+        m_game->wagons()->getWagons()[0]->addPlayerDown(p);
+    delete m_game;
+}
+
 void PlayerPerspective::addGameToScene()
 {
 

@@ -42,7 +42,7 @@ Wagon::Wagon()
     setFlags(GraphicsItemFlag::ItemIsSelectable);
 }
 
-Wagon::Wagon(TreasureChest contentDown, TreasureChest contentUp)
+Wagon::Wagon(TreasureChest& contentDown, TreasureChest& contentUp)
     :QGraphicsObject()
 {
     setFlags(GraphicsItemFlag::ItemIsSelectable);

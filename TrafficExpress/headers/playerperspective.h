@@ -13,6 +13,7 @@ class PlayerPerspective:public QGraphicsScene
     Q_OBJECT
 public:
     PlayerPerspective(Game*game,int playerIndex,QObject*parent=nullptr);
+    PlayerPerspective();
     void addGameToScene();
     void removeGameFromScene();
 

@@ -17,7 +17,7 @@ Game::Game( std::vector<Player*> &players)
 
 Game::Game(const Game &other)
     :m_players(PlayerGroup(other.m_players)),
-      m_wagons(new Train(other.wagons()->getWagons())),
+      m_wagons(new Train(other.m_wagons->getWagons())),
       m_sheriffPosition(other.m_sheriffPosition),
       m_rounds(new RoundCardDeck(other.m_rounds->getRoundCards())),
       //m_cardsPlayed(std::vector<ActionCard*>()),
@@ -57,13 +57,20 @@ Game::Game(const Game &other)
 
 }
 
+Game::~Game()
+{
+    for(NeutralBullet*nb:m_neutralBulletDeck){
+        delete nb;
+    }
+}
+
 //// Get methods
 PlayerGroup &Game::players()
 {
     return m_players;
 }
 
-Train* Game::wagons() const
+Train* Game::wagons()
 {
     return m_wagons;
 }
@@ -195,6 +202,20 @@ Train* Game::selectWagons(std::vector<Wagon*> allPossibleWagons, unsigned number
     std::vector<Wagon*> selectedWagons ;
     std::sample(allPossibleWagons.begin(), allPossibleWagons.end(), std::back_inserter(selectedWagons),
                numberOfPlayers, std::mt19937_64{std::random_device{}()});
+    for(Wagon*w:allPossibleWagons){
+        if(std::find(selectedWagons.begin(),selectedWagons.end(),w)==allPossibleWagons.end()){
+            delete w;
+
+        }
+
+    }
+
+
+//    for(Wagon*w:unwantedTreasure){
+//        delete w;
+//    }
+
+
     return new Train(selectedWagons);
 }
 
@@ -206,6 +227,14 @@ std::vector<RoundCard*> Game::selectRoundCards(RoundCardType cardType, std::vect
                  [cardType](RoundCard *card) { return card->typeOfRoundCard() == cardType; });
 
     std::sample(cards.cbegin(), cards.cend(), std::back_inserter(result), 4, std::mt19937_64{std::random_device{}()});
+
+//    for(RoundCard*rc:allRoundCards){
+//        if(std::find(result.begin(),result.end(),rc)==result.end()){
+//            delete rc;
+
+//        }
+
+//    }
 
     return result;
 }
@@ -305,12 +334,25 @@ void Game::initialize()
 
     // Wagons
     std::vector<Wagon*> allPossibleWagons = std::vector<Wagon*>();
-    allPossibleWagons.push_back(new Wagon(TreasureChest({new Treasure(TreasureType::MONEYBAG), new Treasure(TreasureType::MONEYBAG), new Treasure(TreasureType::MONEYBAG), new Treasure(TreasureType::DIAMOND)}), TreasureChest()));
-    allPossibleWagons.push_back(new Wagon(TreasureChest({new Treasure(TreasureType::MONEYBAG), new Treasure(TreasureType::MONEYBAG), new Treasure(TreasureType::MONEYBAG), new Treasure(TreasureType::MONEYBAG), new Treasure(TreasureType::DIAMOND)}), TreasureChest()));
-    allPossibleWagons.push_back(new Wagon(TreasureChest({new Treasure(TreasureType::MONEYBAG), new Treasure(TreasureType::MONEYBAG), new Treasure(TreasureType::MONEYBAG)}), TreasureChest()));
-    allPossibleWagons.push_back(new Wagon(TreasureChest({new Treasure(TreasureType::MONEYBAG)}), TreasureChest()));
-    allPossibleWagons.push_back(new Wagon(TreasureChest({new Treasure(TreasureType::MONEYBAG), new Treasure(TreasureType::DIAMOND)}), TreasureChest()));
-    allPossibleWagons.push_back(new Wagon(TreasureChest({new Treasure(TreasureType::DIAMOND), new Treasure(TreasureType::DIAMOND), new Treasure(TreasureType::DIAMOND)}), TreasureChest()));
+    auto tc1=TreasureChest({new Treasure(TreasureType::MONEYBAG), new Treasure(TreasureType::MONEYBAG), new Treasure(TreasureType::MONEYBAG), new Treasure(TreasureType::DIAMOND)});
+    auto tc2=TreasureChest();
+    auto tc3=TreasureChest({new Treasure(TreasureType::MONEYBAG), new Treasure(TreasureType::MONEYBAG), new Treasure(TreasureType::MONEYBAG), new Treasure(TreasureType::MONEYBAG), new Treasure(TreasureType::DIAMOND)});
+    auto tc4=TreasureChest();
+    auto tc5=TreasureChest({new Treasure(TreasureType::MONEYBAG), new Treasure(TreasureType::MONEYBAG), new Treasure(TreasureType::MONEYBAG)});
+    auto tc6=TreasureChest();
+    auto tc7=TreasureChest({new Treasure(TreasureType::MONEYBAG)});
+    auto tc8=TreasureChest();
+    auto tc9=TreasureChest({new Treasure(TreasureType::MONEYBAG), new Treasure(TreasureType::DIAMOND)});
+    auto tc10=TreasureChest();
+    auto tc11=TreasureChest({new Treasure(TreasureType::DIAMOND), new Treasure(TreasureType::DIAMOND), new Treasure(TreasureType::DIAMOND)});
+    auto tc12=TreasureChest();
+
+    allPossibleWagons.push_back(new Wagon(tc1, tc2));
+    allPossibleWagons.push_back(new Wagon(tc3, tc4));
+    allPossibleWagons.push_back(new Wagon(tc5,tc6 ));
+    allPossibleWagons.push_back(new Wagon(tc7,tc8 ));
+    allPossibleWagons.push_back(new Wagon(tc9,tc10 ));
+    allPossibleWagons.push_back(new Wagon(tc11,tc12 ));
 
     Train* selectedWagons = selectWagons(allPossibleWagons, numberOfPlayers);
 
@@ -346,8 +388,10 @@ void Game::initialize()
         w->repositionTreasure();
     }
 
+    auto tc13=TreasureChest({new Treasure(1000, TreasureType::SUITCASE)});
+    auto tc14=TreasureChest();
     // Place Marshal and suitcase in Locomotive
-    selectedWagons->push_back(new Wagon(TreasureChest({new Treasure(1000, TreasureType::SUITCASE)}),TreasureChest()));
+    selectedWagons->push_back(new Wagon(tc13,tc14));
     selectedWagons->back()->setIsLocomotive(true);
     selectedWagons->back()->addSheriffDown(new Sheriff());
     m_sheriffPosition = selectedWagons->size() - 1;
@@ -407,6 +451,14 @@ void Game::initialize()
     roundCards.push_back(selectOneTrainStationCard(allRoundCards));
 
     setRounds(roundCards);
+    for(RoundCard*rc:allRoundCards){
+        if(std::find(m_rounds->getRoundCards().begin(),m_rounds->getRoundCards().end(),rc)==m_rounds->getRoundCards().end()){
+            delete rc;
+
+        }
+
+    }
+
 
     // Neutral Bullets
     setNeutralBulletDeck(generateNeutralBullets(13));
