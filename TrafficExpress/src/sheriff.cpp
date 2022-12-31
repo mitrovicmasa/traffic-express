@@ -1,5 +1,7 @@
 #include "headers/sheriff.h"
 #include <QPainter>
+
+// Constructors
 Sheriff::Sheriff()
 {
 
@@ -10,16 +12,19 @@ Sheriff::Sheriff(int positionInTrain)
     m_positionInTrain = positionInTrain;
 }
 
+// Get methods
 int Sheriff::positionInTrain() const
 {
     return m_positionInTrain;
 }
 
+// Set methods
 void Sheriff::setPositionInTrain(int newPositionInTrain)
 {
     m_positionInTrain = newPositionInTrain;
 }
 
+// GUI
 int Sheriff::width() const
 {
     return 50;

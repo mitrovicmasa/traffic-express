@@ -11,6 +11,8 @@
 #include <playerperspective.h>
 #include <singleplayerstatemachine.h>
 
+#include <client/playerclient.h>
+
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
@@ -36,11 +38,19 @@ private slots:
     void connectButtons();
     void dialogInit();
     void setImages();
-    //void initializeGameGUI(Game*);
+
+    void onChangeReadyColor(bool);
+    void onChangeStartColor();
+    void onGameLoaded();
+
+
+signals:
+    void readyClicked();
+    void startClicked();
+
+
 private:
-    std::vector<PlayerPerspective*>pps;
-    QGraphicsScene*sc;
-    SinglePlayerStateMachine*m_sp;
+    PlayerClient* m_client;
 
     void showMessageBox(QString content) const;
     void keyPressEvent(QKeyEvent*);

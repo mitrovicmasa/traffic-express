@@ -4,26 +4,25 @@
 #include <QPainter>
 #include <QGraphicsScene>
 
-
-Table::Table()
-   :QGraphicsObject(){
-setFlags(GraphicsItemFlag::ItemIsSelectable);
-}
-
-void Table::addTableToScene(QGraphicsScene *sc)
+// Constructors
+Table::Table(): QGraphicsObject()
 {
-    sc->addItem(this);
-    (this)->setPos(800,800);
-
+    setFlags(GraphicsItemFlag::ItemIsSelectable);
 }
 
+// Get methods
+PlayerStatsCollection &Table::getPlayerStats()
+{
+    return m_playerStats;
+}
 
+// Other methods
 void Table::push_back(PlayerStats *p)
 {
     m_playerStats.push_back(p);
     p->setParentItem(this);
-    p->setPos(0,(this->size()-1)*70+1);
-    connect(p,&PlayerStats::clickedTreasueInPlayeStats,this,&Table::onClickedTreasureInPlayerStats);
+    p->setPos(0, (this->size()-1)*70 + 1);
+    connect(p, &PlayerStats::clickedTreasueInPlayeStats, this, &Table::onClickedTreasureInPlayerStats);
 }
 
 int Table::size()
@@ -36,14 +35,8 @@ PlayerStats *Table::operator[](int i)
     return m_playerStats[i];
 }
 
-PlayerStatsCollection &Table::getPlayerStats()
-{
-    return m_playerStats;
-}
-
 
 // GUI
-
 int Table::height() const
 {
     return 350;
@@ -63,12 +56,9 @@ void Table::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWi
 {
     Q_UNUSED(option)
     Q_UNUSED(widget)
-
-   // painter->fillRect(boundingRect(),QColor::fromRgb(204,229,255));
 }
 
 void Table::onClickedTreasureInPlayerStats(Treasure *t, PlayerStats *ps)
 {
-    //std::cout<<"signal recieved in Table"<<std::endl;
-    emit clickedTreasureInPlayerStatsnTable(t,ps,this);
+    emit clickedTreasureInPlayerStatsInTable(t,ps,this);
 }

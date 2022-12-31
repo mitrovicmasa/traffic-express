@@ -19,6 +19,7 @@
 #include <cstdlib>
 
 #include <QString>
+#include <QMessageBox>
 
 enum class Phase {
     WAGON_SELECTION,
@@ -34,10 +35,11 @@ public:
     Game();
     Game(std::vector<Player*> &players);
     Game(const Game&);
+    ~Game();
 
     //Get methods
     PlayerGroup &players();
-    Train *wagons() const;
+    Train *wagons() ;
     RoundCardDeck *rounds();
     std::vector<NeutralBullet*> neutralBulletDeck() const;
     const TreasureChest &unusedTreasure() const;
@@ -98,6 +100,8 @@ public:
 
     void updateRounds();
 
+    void showEndGameStats();
+
     int findPlayersTreasureIndex(Treasure*, unsigned);
 
     std::vector<Player*> possiblePlayersToShot(int playerIndex);
@@ -114,6 +118,9 @@ public:
 
     int playerClicked() const;
     void setPlayerClicked(int newPlayerClicked);
+
+    QVariant toVariant() const;
+    void fromVariant(const QVariant &variant);
 
 private:
     int m_indexOfPlayerToMove;
@@ -135,10 +142,7 @@ private:
     int m_playerClicked;
     unsigned m_seed;
 
-    // Serializable interface
-public:
-    QVariant toVariant() const;
-    void fromVariant(const QVariant &variant);
+
 };
 
 void generateAllTreasure(const int &count, const int &value, TreasureType type, std::vector<Treasure> &treasure);

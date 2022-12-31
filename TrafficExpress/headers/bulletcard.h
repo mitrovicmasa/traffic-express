@@ -9,7 +9,7 @@ public:
 
     // Constructors
     BulletCard(BanditType bandit, unsigned numOfBullets);
-//    Card *Copy() const override;
+    Card *Copy() const override;
 
     // Destructor
     ~BulletCard();
@@ -30,10 +30,6 @@ public:
 private:
 
     unsigned m_numOfBullets;
-
-    // Card interface
-public:
-    Card *Copy() const override;
 };
 
 #endif // BULLETCARD_H

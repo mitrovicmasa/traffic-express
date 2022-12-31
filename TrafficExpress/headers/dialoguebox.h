@@ -16,8 +16,10 @@ public:
     DialogueBox(QString &text);
     DialogueBox(DialogueBox&db);
 
-    //Getter and setter
+    //Get methods
     QString &text();
+
+    //Set methods
     void setText(QString &newText);
 
     // GUI

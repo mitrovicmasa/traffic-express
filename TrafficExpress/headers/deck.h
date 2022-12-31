@@ -13,34 +13,34 @@ class Deck : public QGraphicsObject, public Serializable
 public:
     // Constructors
     Deck();
-    //copy constructor dangerous
-    //Deck(const Deck&);
-
-    //this is a safe copy constructor
     Deck(CardColection cc);
 
-
-    //geters
+    // Get methods
     CardColection& getCards();
 
     // Other methods
     void push_back(Card*);
+    void push_front(Card*);
     void pop_back();
+    void pop_front();
+    Card* back();
+    Card* front();
+    Card* operator[] (int ind);
     int size();
     bool empty();
-    Card*back();
-    Card*front();
-    Card* operator[] (int ind);
-    void push_front(Card*);
-    void pop_front();
-    void schufleDeck(int seed);
-    void repositionCards();
+
+    void shuffleDeck(int seed);
+    void setAllCardsFaceDown();
+    void setAllCardsFaceUp();
+
     // GUI
     QRectF boundingRect() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
-    void test();
-    void setAllCardsFaceDown();
-    void setAllCardsFaceUp();
+    void mousePressEvent(QGraphicsSceneMouseEvent *event);
+
+    // Serializable interface
+    QVariant toVariant() const;
+    void fromVariant(const QVariant &variant);
 
 signals:
     void clickedCardInDeck(Card*c,Deck*d);
@@ -48,15 +48,8 @@ signals:
 public slots:
     void onClickedCard(Card*c);
 
-    // QGraphicsItem interface
-protected:
-    void mousePressEvent(QGraphicsSceneMouseEvent *event);
 private:
     CardColection m_cards;
-
-public:
-    QVariant toVariant() const;
-    void fromVariant(const QVariant &variant);
 };
 
 #endif // DECK_H

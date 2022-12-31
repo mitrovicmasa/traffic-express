@@ -14,8 +14,8 @@ enum CardType {
 class Card:public QGraphicsObject
 {
     Q_OBJECT
-public:
 
+public:
     // Constructors
     Card();
     virtual Card *Copy() const = 0;
@@ -44,7 +44,6 @@ public:
 signals:
     void clicked();
     void clickedCard(Card*c);
-
 
 private:
     bool m_faceUp = true;

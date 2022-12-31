@@ -1,5 +1,8 @@
 #include "../headers/game.h"
-
+#include "qpushbutton.h"
+#include <QApplication>
+#include <QAbstractButton>
+#include <QObject>
 //// Constructors
 Game::Game()
 {
@@ -14,9 +17,9 @@ Game::Game( std::vector<Player*> &players)
 
 Game::Game(const Game &other)
     :m_players(PlayerGroup(other.m_players)),
-      m_wagons(new Train(other.wagons()->getWagons())),
+      m_wagons(new Train(other.m_wagons->getWagons())),
       m_sheriffPosition(other.m_sheriffPosition),
-      m_rounds(new RoundCardDeck(other.m_rounds->getRoundCads())),
+      m_rounds(new RoundCardDeck(other.m_rounds->getRoundCards())),
       //m_cardsPlayed(std::vector<ActionCard*>()),
       m_neutralBulletDeck(std::vector<NeutralBullet*>()),
       m_unusedTreasure(other.m_unusedTreasure),
@@ -54,13 +57,20 @@ Game::Game(const Game &other)
 
 }
 
+Game::~Game()
+{
+    for(NeutralBullet*nb:m_neutralBulletDeck){
+        delete nb;
+    }
+}
+
 //// Get methods
 PlayerGroup &Game::players()
 {
     return m_players;
 }
 
-Train* Game::wagons() const
+Train* Game::wagons()
 {
     return m_wagons;
 }
@@ -135,7 +145,7 @@ bool Game::actionPending() const
 void Game::setWagons(Train* newWagons)
 {
     m_wagons = newWagons;
-    //connect(m_wagons,&Train::clickedTreasureInWagonInTrain,this,&Game::onClickedTreasureInWagonInTrainInTran);
+    //connect(m_wagons,&Train::clickedTreasureInWagonInTrain,this,&Game::onClickedTreasureInWagonInTrain);
 }
 
 void Game::setRounds( std::vector<RoundCard*> &newRounds)
@@ -192,6 +202,20 @@ Train* Game::selectWagons(std::vector<Wagon*> allPossibleWagons, unsigned number
     std::vector<Wagon*> selectedWagons ;
     std::sample(allPossibleWagons.begin(), allPossibleWagons.end(), std::back_inserter(selectedWagons),
                numberOfPlayers, std::mt19937_64{std::random_device{}()});
+    for(Wagon*w:allPossibleWagons){
+        if(std::find(selectedWagons.begin(),selectedWagons.end(),w)==allPossibleWagons.end()){
+            delete w;
+
+        }
+
+    }
+
+
+//    for(Wagon*w:unwantedTreasure){
+//        delete w;
+//    }
+
+
     return new Train(selectedWagons);
 }
 
@@ -203,6 +227,14 @@ std::vector<RoundCard*> Game::selectRoundCards(RoundCardType cardType, std::vect
                  [cardType](RoundCard *card) { return card->typeOfRoundCard() == cardType; });
 
     std::sample(cards.cbegin(), cards.cend(), std::back_inserter(result), 4, std::mt19937_64{std::random_device{}()});
+
+//    for(RoundCard*rc:allRoundCards){
+//        if(std::find(result.begin(),result.end(),rc)==result.end()){
+//            delete rc;
+
+//        }
+
+//    }
 
     return result;
 }
@@ -302,12 +334,25 @@ void Game::initialize()
 
     // Wagons
     std::vector<Wagon*> allPossibleWagons = std::vector<Wagon*>();
-    allPossibleWagons.push_back(new Wagon(TreasureChest({new Treasure(TreasureType::MONEYBAG), new Treasure(TreasureType::MONEYBAG), new Treasure(TreasureType::MONEYBAG), new Treasure(TreasureType::DIAMOND)}), TreasureChest()));
-    allPossibleWagons.push_back(new Wagon(TreasureChest({new Treasure(TreasureType::MONEYBAG), new Treasure(TreasureType::MONEYBAG), new Treasure(TreasureType::MONEYBAG), new Treasure(TreasureType::MONEYBAG), new Treasure(TreasureType::DIAMOND)}), TreasureChest()));
-    allPossibleWagons.push_back(new Wagon(TreasureChest({new Treasure(TreasureType::MONEYBAG), new Treasure(TreasureType::MONEYBAG), new Treasure(TreasureType::MONEYBAG)}), TreasureChest()));
-    allPossibleWagons.push_back(new Wagon(TreasureChest({new Treasure(TreasureType::MONEYBAG)}), TreasureChest()));
-    allPossibleWagons.push_back(new Wagon(TreasureChest({new Treasure(TreasureType::MONEYBAG), new Treasure(TreasureType::DIAMOND)}), TreasureChest()));
-    allPossibleWagons.push_back(new Wagon(TreasureChest({new Treasure(TreasureType::DIAMOND), new Treasure(TreasureType::DIAMOND), new Treasure(TreasureType::DIAMOND)}), TreasureChest()));
+    auto tc1=TreasureChest({new Treasure(TreasureType::MONEYBAG), new Treasure(TreasureType::MONEYBAG), new Treasure(TreasureType::MONEYBAG), new Treasure(TreasureType::DIAMOND)});
+    auto tc2=TreasureChest();
+    auto tc3=TreasureChest({new Treasure(TreasureType::MONEYBAG), new Treasure(TreasureType::MONEYBAG), new Treasure(TreasureType::MONEYBAG), new Treasure(TreasureType::MONEYBAG), new Treasure(TreasureType::DIAMOND)});
+    auto tc4=TreasureChest();
+    auto tc5=TreasureChest({new Treasure(TreasureType::MONEYBAG), new Treasure(TreasureType::MONEYBAG), new Treasure(TreasureType::MONEYBAG)});
+    auto tc6=TreasureChest();
+    auto tc7=TreasureChest({new Treasure(TreasureType::MONEYBAG)});
+    auto tc8=TreasureChest();
+    auto tc9=TreasureChest({new Treasure(TreasureType::MONEYBAG), new Treasure(TreasureType::DIAMOND)});
+    auto tc10=TreasureChest();
+    auto tc11=TreasureChest({new Treasure(TreasureType::DIAMOND), new Treasure(TreasureType::DIAMOND), new Treasure(TreasureType::DIAMOND)});
+    auto tc12=TreasureChest();
+
+    allPossibleWagons.push_back(new Wagon(tc1, tc2));
+    allPossibleWagons.push_back(new Wagon(tc3, tc4));
+    allPossibleWagons.push_back(new Wagon(tc5,tc6 ));
+    allPossibleWagons.push_back(new Wagon(tc7,tc8 ));
+    allPossibleWagons.push_back(new Wagon(tc9,tc10 ));
+    allPossibleWagons.push_back(new Wagon(tc11,tc12 ));
 
     Train* selectedWagons = selectWagons(allPossibleWagons, numberOfPlayers);
 
@@ -338,16 +383,21 @@ void Game::initialize()
         selectedMoneybagsIndexes.clear();
     }
 
+    for(Wagon *w: selectedWagons->getWagons()) {
+        w->setIsLocomotive(false);
+        w->repositionTreasure();
+    }
+
+    auto tc13=TreasureChest({new Treasure(1000, TreasureType::SUITCASE)});
+    auto tc14=TreasureChest();
     // Place Marshal and suitcase in Locomotive
-    selectedWagons->push_back(new Wagon(TreasureChest({new Treasure(1000, TreasureType::SUITCASE)}),TreasureChest()));
+    selectedWagons->push_back(new Wagon(tc13,tc14));
+    selectedWagons->back()->setIsLocomotive(true);
+    selectedWagons->back()->addSheriffDown(new Sheriff());
     m_sheriffPosition = selectedWagons->size() - 1;
 
     // Set wagons for current game
     setWagons(selectedWagons);
-
-    //Treasure test
-    (*m_wagons)[0]->setContentUp(std::vector<Treasure*>());
-    (*m_wagons)[0]->addContentUp(new Treasure(250, TreasureType::MONEYBAG));
 
     // Unused treasure init??
     //setUnusedTreasure(::remainingTreasure(remainingMoneybags, remainingDiamonds, remainingSuitcases));
@@ -401,6 +451,14 @@ void Game::initialize()
     roundCards.push_back(selectOneTrainStationCard(allRoundCards));
 
     setRounds(roundCards);
+    for(RoundCard*rc:allRoundCards){
+        if(std::find(m_rounds->getRoundCards().begin(),m_rounds->getRoundCards().end(),rc)==m_rounds->getRoundCards().end()){
+            delete rc;
+
+        }
+
+    }
+
 
     // Neutral Bullets
     setNeutralBulletDeck(generateNeutralBullets(13));
@@ -493,6 +551,32 @@ int Game::findPlayersTreasureIndex(Treasure *t, unsigned playerIndex)
     return treasureIndex;
 }
 
+void Game::showEndGameStats()
+{
+    QMessageBox* msgBox = new QMessageBox();
+
+    std::vector<Player*> sortedPlayers = this->players();
+    std::sort(sortedPlayers.begin(),sortedPlayers.end(), [](Player* a, Player* b) { return a->countAmountOfTreasure() > b->countAmountOfTreasure(); } );
+
+    QString msg;
+    unsigned ind = 1;
+
+    for(Player* p : sortedPlayers)
+    {
+        msg.append(QString::number(ind) + ". " + QString::fromStdString(toString((*p).id())) + ": Amount of treasure: " + QString::number(p->countAmountOfTreasure()) );
+        msg.append('\n');
+        ind++;
+    }
+
+    msgBox->setText(msg);
+    msgBox->exec();
+    QAbstractButton * btn =  msgBox->clickedButton();
+    if(btn) {
+        QApplication::quit();
+    }
+    //QObject::connect(btn, &QAbstractButton::clicked,[](){QApplication::quit;});
+}
+
 std::vector<Player *> Game::possiblePlayersToShot(int playerIndex)
 {
     Player* p1 = m_players[playerIndex];
@@ -581,13 +665,13 @@ void Game::checkNextActionCard()
 
             QString msg = "GAME OVER";
             this->m_dialogueBox->setText(msg);
-            this->setIndexOfPlayerToMove(0);
-            this->setPhase(Phase::WAGON_SELECTION);
+            this->showEndGameStats();
 
         } else { // If this wasn't the last round, we are moving to the next round.
 
+
             this->setIndexOfMiniround(0);
-            RoundCard* rc = m_rounds->getRoundCads()[m_indexOfRound];
+            RoundCard* rc = m_rounds->getRoundCards()[m_indexOfRound];
             rc->setZValue(-1);
             qDebug() << m_indexOfRound;
             this->setIndexOfRound(m_indexOfRound + 1);
@@ -659,7 +743,7 @@ void Game::checkNextActionCard()
         }
     }
 
-    if(nextAction == ActionType::TAKETREASURE) {
+    if(nextAction == ActionType::ROBBERY) {
             // All possible targets will be in this vector
             std::vector<Treasure*> treasure = possibleTreasure(findPlayerById(nextBandit));
 
@@ -704,7 +788,6 @@ void Game::updateRounds()
 
         // Now it's phase 2.
         this->setPhase(Phase::PHASE_2);
-
         this->checkNextActionCard();
 
 

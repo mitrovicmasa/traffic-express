@@ -10,17 +10,17 @@ enum class ActionType {
     MARSHAL,
     FIRE,
     PUNCH,
-    ROBBERY,
-    TAKETREASURE
+    ROBBERY
 };
 
-class ActionCard : public BanditCard,public Serializable {
+class ActionCard : public BanditCard, public Serializable {
 
 public:
     ActionCard();
+
     // Constructors
     ActionCard(ActionType action, BanditType bandit);
-    //Card *Copy() const override;
+    Card *Copy() const override;
 
     // Destructor
     ~ActionCard();
@@ -38,18 +38,12 @@ public:
     // GUI
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
 
-private:
-
-    ActionType m_action;
-
-    // Card interface
-public:
-    Card *Copy() const override;
-
     // Serializable interface
-public:
-    QVariant toVariant() const;
-    void fromVariant(const QVariant &variant);
+    QVariant toVariant() const override;
+    void fromVariant(const QVariant &variant) override;
+
+private:
+    ActionType m_action;
 };
 
 #endif // ACTIONCARD_H

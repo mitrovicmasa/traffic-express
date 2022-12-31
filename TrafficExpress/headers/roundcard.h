@@ -32,15 +32,6 @@ enum class EventType {
 
 };
 
-//enum class MiniRoundType {
-
-//    FACE_UP,
-//    HIDDEN,
-//    DOUBLE_CARDS,
-//    OPPOSITE_DIRECTION
-
-//};
-
 std::string toStringRoundCardType(const RoundCardType &card);
 std::string toStringEventType(const EventType &event);
 std::string toStringMiniRoundType(const MiniRoundType &miniRound);
@@ -48,15 +39,12 @@ std::string toStringMiniRoundType(const MiniRoundType &miniRound);
 class RoundCard:public QGraphicsObject, public Serializable
 {
     Q_OBJECT
-public:
 
+public:
     // Constructors
     RoundCard();
     RoundCard(RoundCardType type, EventType event, const std::vector<MiniRoundType> &miniRound);
-    RoundCard(RoundCardType type, EventType event, const std::vector<MiniRound*> &miniRound);
-    //this is a safe copy constructor
     RoundCard(RoundCardType type, EventType event, const MiniRoundCollection &miniRound);
-//    RoundCard(const RoundCard&);
 
     // Destructor
     ~RoundCard() = default;
@@ -66,44 +54,32 @@ public:
     MiniRoundCollection& getMiniRounds();
     EventType event() const;
 
-    //vector methos
-
-    void push_back(MiniRound*);
-    int size() const;
-    MiniRound* operator[](int);
-    MiniRound*back();
-    MiniRound*front();
-
-
-
     // Set methods
     void setType(RoundCardType &newType);
     void setEvent(EventType &newEvent);
 
-
     // Other methods
-
-    void pushBackMiniRound(MiniRoundType type);
-
-
+    void push_back(MiniRound*);
+    MiniRound* back();
+    MiniRound* front();
+    int size() const;
+    MiniRound* operator[](int);
     std::string toString() const;
 
     // GUI
     int height()const;
     int width()const;
-
     QRectF boundingRect() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 
-private:
+    // Serializable interface
+    QVariant toVariant() const;
+    void fromVariant(const QVariant &variant);
 
+private:
     RoundCardType m_type;
     EventType m_event;
     MiniRoundCollection m_miniRounds;
-
-public:
-    QVariant toVariant() const;
-    void fromVariant(const QVariant &variant);
 };
 
 #endif //ROUNDCARDS_H

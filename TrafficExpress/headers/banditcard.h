@@ -17,7 +17,6 @@ std::string toString(BanditType bandit);
 class BanditCard : public Card {
 
 public:
-
     // Constructors
     BanditCard(BanditType bandit);
 
@@ -34,7 +33,6 @@ public:
     virtual std::string toString() const override;
 
 private:
-
     BanditType m_bandit;
 };
 

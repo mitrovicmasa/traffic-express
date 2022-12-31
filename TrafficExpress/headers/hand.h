@@ -11,40 +11,34 @@ class Hand:public QGraphicsObject,public Serializable
 public:
     // Constructors
     Hand();
-    //this is not safe
-    //Hand(const Hand&h);
-
-    //this is a safe copy constructor
     Hand(CardColection& cc);
 
-    //geters
-    CardColection&getCards();
+    // Get methods
+    CardColection& getCards();
 
     // Other methods
     void push_back(Card*);
-    void pop_back();
-    Card*back();
-    Card*front();
-    bool empty();
     void push_front(Card*);
+    void pop_back();
     void pop_front();
+    Card* back();
+    Card* front();
+    bool empty();
     int size();
+    Card* operator[] (int ind);
 
-    Card* takeCard(Card*);
     Card* takeCard(int indexofCard);
-
     void repositionCards();
-
-    Card* operator[] (int ind) {return m_cards[ind];}
-
-
     int getCardIndex(Card*);
 
     // GUI
     QRectF boundingRect() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
-    void test();
-private:
+    void mousePressEvent(QGraphicsSceneMouseEvent *event);
+
+    // Serializable interface
+    QVariant toVariant() const;
+    void fromVariant(const QVariant &variant);
 
 signals:
     void clickedCardInHand(Card*c,Hand*h);
@@ -52,16 +46,9 @@ signals:
 public slots:
     void onClickedCard(Card*c);
 
-    // QGraphicsItem interface
-protected:
-    void mousePressEvent(QGraphicsSceneMouseEvent *event);
 private:
     CardColection m_cards;
 
-    // Serializable interface
-public:
-    QVariant toVariant() const;
-    void fromVariant(const QVariant &variant);
 };
 
 #endif // HAND_H

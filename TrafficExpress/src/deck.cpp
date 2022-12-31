@@ -3,35 +3,30 @@
 #include <iostream>
 #include <random>
 #include <algorithm>
+
+// Constructors
 Deck::Deck():QGraphicsObject()
 {
 setFlags(GraphicsItemFlag::ItemIsSelectable);
 }
 
-//Deck::Deck(const Deck &d)
-//    :QGraphicsObject()
-//{
-//    //TODO
-//    for(Card* c:d.m_cards)
-//        this->push_back(c->Copy());
-//}
-
 Deck::Deck(CardColection cc)
 {
-    auto cpy=CardColection(cc);
-    for(Card*c:cpy){
+    auto cpy = CardColection(cc);
+    for(Card* c: cpy){
         this->push_back(c);
-
     }
-setFlags(GraphicsItemFlag::ItemIsSelectable);
+    setFlags(GraphicsItemFlag::ItemIsSelectable);
 }
+
+// Get methods
 
 CardColection &Deck::getCards()
 {
     return m_cards;
 }
 
-// GUI
+// Other methods
 
 void Deck::push_back(Card *card)
 {
@@ -41,6 +36,14 @@ void Deck::push_back(Card *card)
     card->setPos(10,20);
 }
 
+void Deck::push_front(Card *card)
+{
+    connect(card, &Card::clickedCard, this, &Deck::onClickedCard);
+    m_cards.insert(m_cards.begin(),card);
+    card->setParentItem(this);
+    card->setPos(5,20);
+}
+
 void Deck::pop_back()
 {
     disconnect(m_cards.back(),&Card::clickedCard,this,&Deck::onClickedCard);
@@ -48,14 +51,11 @@ void Deck::pop_back()
     m_cards.pop_back();
 }
 
-int Deck::size()
+void Deck::pop_front()
 {
-    return m_cards.size();
-}
-
-bool Deck::empty()
-{
-    return m_cards.empty();
+    disconnect(m_cards.front(),&Card::clickedCard,this,&Deck::onClickedCard);
+    m_cards.front()->setParentItem(nullptr);
+    m_cards.erase(m_cards.begin());
 }
 
 Card *Deck::back()
@@ -68,33 +68,61 @@ Card *Deck::front()
     return m_cards.front();
 }
 
+int Deck::size()
+{
+    return m_cards.size();
+}
+
+bool Deck::empty()
+{
+    return m_cards.empty();
+}
+
+
 Card *Deck::operator[](int ind)
 {
     return m_cards[ind];
 }
 
-void Deck::push_front(Card *card)
+void Deck::shuffleDeck(int seed)
 {
-    connect(card, &Card::clickedCard, this, &Deck::onClickedCard);
-    m_cards.insert(m_cards.begin(),card);
-    card->setParentItem(this);
-    card->setPos(5,20);
+   std::shuffle(m_cards.begin(),m_cards.end(), std::default_random_engine(seed));
 }
 
-void Deck::pop_front()
+void Deck::setAllCardsFaceDown()
 {
-    disconnect(m_cards.front(),&Card::clickedCard,this,&Deck::onClickedCard);
-    m_cards.front()->setParentItem(nullptr);
-    m_cards.erase(m_cards.begin());
+    for(Card* x: m_cards)
+        x->setFaceUp(false);
 }
 
-void Deck::schufleDeck(int seed)
+void Deck::setAllCardsFaceUp()
 {
-    //TODO
-        //unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
-        std::shuffle (m_cards.begin(),m_cards.end(), std::default_random_engine(seed));
+    for(Card* x: m_cards)
+        x->setFaceUp(true);
 }
 
+// GUI
+QRectF Deck::boundingRect() const
+{
+    return QRectF(0,0,100,120);
+}
+
+void Deck::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
+{
+      painter->drawPixmap(boundingRect(), QPixmap("://deck.png"), QRectF(0,0,0,0));
+}
+
+void Deck::mousePressEvent(QGraphicsSceneMouseEvent *event)
+{
+    QGraphicsObject::mousePressEvent(event);
+}
+
+void Deck::onClickedCard(Card *c)
+{
+    emit clickedCardInDeck(c,this);
+}
+
+// Serializable interface
 QVariant Deck::toVariant() const
 {
     QVariantList list;
@@ -112,58 +140,8 @@ void Deck::fromVariant(const QVariant &variant)
 {
     QVariantList list = variant.toMap().value("cards").toList();
     for (auto &card : list) {
-        ActionCard *newCard=new ActionCard();
+        ActionCard *newCard = new ActionCard();
         newCard->fromVariant(card);
         this->push_back(newCard);
     }
-}
-
-
-void Deck::repositionCards()
-{
-    for(Card*c:m_cards)
-        c->setPos(10,20);
-}
-
-
-QRectF Deck::boundingRect() const
-{
-    return QRectF(0,0,100,120);
-}
-
-void Deck::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
-{
-//    painter->fillRect(boundingRect(),QColor(210,222,230));
-//    painter->drawText(boundingRect(), "DECK:");
-      painter->drawPixmap(boundingRect(), QPixmap("://deck.png"), QRectF(0,0,0,0));
-}
-
-void Deck::test()
-{
-    std::cout<<"Card clicked from deck!"<<std::endl;
-}
-
-void Deck::setAllCardsFaceDown()
-{
-    for(Card*x:m_cards)
-        x->setFaceUp(false);
-}
-
-void Deck::setAllCardsFaceUp()
-{
-    for(Card*x:m_cards)
-        x->setFaceUp(true);
-}
-
-void Deck::onClickedCard(Card *c)
-{
-    //std::cout<<"Card clicked from deck! signal"<<std::endl;
-    emit clickedCardInDeck(c,this);
-
-}
-
-void Deck::mousePressEvent(QGraphicsSceneMouseEvent *event)
-{
-    QGraphicsObject::mousePressEvent(event);
-    std::cout<<"Deck clicked!Deck size:"<<m_cards.size()<<std::endl;
 }

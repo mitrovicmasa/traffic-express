@@ -15,48 +15,38 @@ public:
 
     // Constructors
     Wagon();
-    Wagon(TreasureChest contentDown, TreasureChest contentUp);
-    //this is not safe
-    //Wagon(const Wagon&other);
-
-    //this is a safe copy constructor
+    Wagon(TreasureChest& contentDown, TreasureChest& contentUp);
     Wagon(TreasureChest&upt,TreasureChest&downt,PlayerGroup&upp,PlayerGroup&downp, bool isLocomotive);
-
-    // Destructor
-
 
     // Get methods
     TreasureChest& getContentDown();
     TreasureChest& getContentUp();
     PlayerGroup& getPlayersUp();
     PlayerGroup& getPlayersDown();
+    bool isLocomotive() const;
 
     // Set methods
     void setContentDown(TreasureChest newContentDown);
     void setContentUp(TreasureChest newContentUp);
+    void setIsLocomotive(bool newIsLocomotive);
 
     // Other methods
     void addContentUp(  Treasure* );
     void addContentDown(Treasure*);
     void addPlayerUp(Player*);
     void addPlayerDown(Player*);
-
     void addSheriffDown(Sheriff*);
-    Sheriff* takeSheriffDown();
 
+    Sheriff* takeSheriffDown();
     Treasure* takeContentUp(TreasureType);
     Treasure* takeContentDown(TreasureType);
-    Player* takePlayerUp(BanditType );
-    Player *takePlayerDown(BanditType );
+    Player* takePlayerUp(BanditType);
+    Player *takePlayerDown(BanditType);
 
     Treasure* takeContentUp(Treasure*);
     Treasure* takeContentDown(Treasure*);
-    Player* takePlayerUp(Player* );
-    Player* takePlayerDown(Player* );
-    Sheriff* sheriffActions(Sheriff*);
-
-
-
+    Player* takePlayerUp(Player*);
+    Player* takePlayerDown(Player *);
 
     int numberOfTreasureInWagonDown(TreasureType) const;
     int getTreasureIndex(Treasure*, bool) const;
@@ -66,30 +56,23 @@ public:
     // GUI
     int height()const;
     int width()const;
-
     QRectF boundingRect() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
     void mousePressEvent(QGraphicsSceneMouseEvent *event);
-    void testTreasure();
-    void testPlayers();
-
     void repositionTreasure();
     void repositionPlayers();
 
-    bool isLocomotive() const;
-    void setIsLocomotive(bool newIsLocomotive);
-
-    Sheriff *sheriff() const;
-    void setSheriff(Sheriff *newSheriff);
+    // Serializable interface
+    QVariant toVariant() const;
+    void fromVariant(const QVariant &variant);
 
 signals:
-    void clicked();
-    void clickedTreasureInWagon(Treasure*t,Wagon*w);
+    void clickedTreasureInWagon(Treasure* t,Wagon* w);
     void clickedPlayerInWagon(Player*,Wagon*);
-    void clickedWagon(Wagon*w);
+    void clickedWagon(Wagon* w);
 
 public slots:
-    void OnCickedTreasuere(Treasure*t);
+    void onCickedTreasure(Treasure* t);
     void onClickedPlayer(Player*);
 
 private:
@@ -99,11 +82,6 @@ private:
     PlayerGroup m_playersUp;
     PlayerGroup m_playersDown;
     Sheriff* m_sheriff;
-
-    // Serializable interface
-public:
-    QVariant toVariant() const;
-    void fromVariant(const QVariant &variant);
 };
 
 #endif // WAGON_H

@@ -7,43 +7,41 @@
 #include <serializable.h>
 
 enum class TreasureType{
-   SUITCASE,DIAMOND,MONEYBAG
+   SUITCASE,
+   DIAMOND,
+   MONEYBAG
 };
 
 class Treasure:public QGraphicsObject,public Serializable
 {
     Q_OBJECT
-public:
 
+public:
     // Constructors
     Treasure();
     Treasure(int value,TreasureType type);
     Treasure(TreasureType type);
     Treasure(const Treasure&t);
 
-    // Destructor
-
-
-    // Operator overloading
-    bool operator==(const Treasure&t);
-    bool operator!=(const Treasure&t);
-
     // Get methods
     TreasureType getType();
     int getValue();
 
-    // Set methods
-
-
     // Other methods
-    int visina() const;
-    int sirina() const;
+    bool operator==(const Treasure&t);
+    bool operator!=(const Treasure&t);
     std::string toString();
 
     // GUI
+    int height() const;
+    int width() const;
     QRectF boundingRect() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
     void mousePressEvent(QGraphicsSceneMouseEvent *event);
+
+    // Serializable interface
+    QVariant toVariant() const;
+    void fromVariant(const QVariant &variant);
 
 signals:
     void clicked();
@@ -52,12 +50,6 @@ signals:
 private:
     TreasureType m_type;
     unsigned m_value;
-
-
-    // Serializable interface
-public:
-    QVariant toVariant() const;
-    void fromVariant(const QVariant &variant);
 };
 
 #endif // TREASURE_H
