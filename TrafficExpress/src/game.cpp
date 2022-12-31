@@ -1,5 +1,8 @@
 #include "../headers/game.h"
-
+#include "qpushbutton.h"
+#include <QApplication>
+#include <QAbstractButton>
+#include <QObject>
 //// Constructors
 Game::Game()
 {
@@ -491,12 +494,10 @@ int Game::findPlayersTreasureIndex(Treasure *t, unsigned playerIndex)
 
 void Game::showEndGameStats()
 {
-    QMessageBox msgBox;
+    QMessageBox* msgBox = new QMessageBox();
 
     std::vector<Player*> sortedPlayers = this->players();
     std::sort(sortedPlayers.begin(),sortedPlayers.end(), [](Player* a, Player* b) { return a->countAmountOfTreasure() > b->countAmountOfTreasure(); } );
-
-    //QString bandit = QString::fromStdString(toString(this->richestPlayer()));
 
     QString msg;
     unsigned ind = 1;
@@ -508,8 +509,13 @@ void Game::showEndGameStats()
         ind++;
     }
 
-    msgBox.setText(msg);
-    msgBox.exec();
+    msgBox->setText(msg);
+    msgBox->exec();
+    QAbstractButton * btn =  msgBox->clickedButton();
+    if(btn) {
+        QApplication::quit();
+    }
+    //QObject::connect(btn, &QAbstractButton::clicked,[](){QApplication::quit;});
 }
 
 std::vector<Player *> Game::possiblePlayersToShot(int playerIndex)
@@ -600,12 +606,10 @@ void Game::checkNextActionCard()
 
             QString msg = "GAME OVER";
             this->m_dialogueBox->setText(msg);
-            this->setIndexOfPlayerToMove(0);
-            this->setPhase(Phase::WAGON_SELECTION);
+            this->showEndGameStats();
 
         } else { // If this wasn't the last round, we are moving to the next round.
 
-            this->showEndGameStats();
 
             this->setIndexOfMiniround(0);
             RoundCard* rc = m_rounds->getRoundCards()[m_indexOfRound];
