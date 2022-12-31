@@ -66,7 +66,6 @@ void MainWindow::dialogInit()
     dialog=new QDialog();
 
     dialog->setWindowModality(Qt::WindowModality::ApplicationModal);
-    //dialog->setWindowTitle("")
     dialog->setMinimumWidth(640);
     dialog->setMinimumHeight(480);
 
@@ -83,8 +82,6 @@ void MainWindow::dialogInit()
     setFont(font);
     connect(pbBackToMainMenu,&QPushButton::clicked,this,&MainWindow::onBackToTheMenu);
     pbBackToMainMenu->setStyleSheet("border-image : url(://button.png); color: white; background: transparent;");
-
-
 
     QPushButton *pbQuit=new QPushButton();
     pbQuit->setPalette(QPalette("://buttonPaleta.xml"));
@@ -112,7 +109,6 @@ void MainWindow::setImages()
     ui->pbConnect->setStyleSheet("border-image : url(://button.png); color: white; background: transparent;");
     ui->pbStart->setStyleSheet("border-image : url(://button.png); color: white; background: transparent;");
     ui->pbReady->setStyleSheet("border-image : url(://button.png); color: white; background: transparent;");
-
     ui->scroll_rules->setStyleSheet("border-image : url(://rules_bg.jpg);");
     ui->textEdit->setStyleSheet("border-image : url(://rules_bg.jpg);");
 }
@@ -130,11 +126,7 @@ void MainWindow::onChangeReadyColor(bool condition)
 
     for(int i=0;i<names.size();i++){
         ui->listWidget->addItem(names[i]);
-
-
     }
-
-
 }
 
 void MainWindow::onChangeStartColor()
@@ -146,7 +138,6 @@ void MainWindow::onChangeStartColor()
         ui->pbStart->setStyleSheet("border-image : url(://button_dark.png); color: white; background: transparent;");
         ui->pbStart->setDisabled(true);
     }else{
-
         ui->pbStart->setStyleSheet("border-image : url(://button_dark.png); color: white; background: transparent;");
         ui->pbStart->setDisabled(true);
     }
@@ -161,20 +152,17 @@ void MainWindow::onChangeStartColor()
         else
             ui->listWidget->item(i)->setBackground(Qt::red);
     }
-
-
-
-
-
 }
 
 void MainWindow::onGameLoaded()
 {
     PlayerPerspective*pp=m_client->getPlayerPerspective();
+
     connect(pp,&PlayerPerspective::playerChoseWagon,pp
             ,&PlayerPerspective::onPlayerChoseWagon);
 
-    connect(pp,&PlayerPerspective::playerDrawCards,pp,&PlayerPerspective::onPlayerDrawCards);
+    connect(pp,&PlayerPerspective::playerDrawCards,pp,
+            &PlayerPerspective::onPlayerDrawCards);
 
     connect(pp,&PlayerPerspective::playerPlayedCard,pp
             ,&PlayerPerspective::onPlayerPlayedCard);
@@ -188,46 +176,73 @@ void MainWindow::onGameLoaded()
     connect(pp,&PlayerPerspective::actionRobberySignal, pp
             ,&PlayerPerspective::onActionRobberySignal);
 
-    connect(pp,&PlayerPerspective::actionChangeFloorSignal,pp,&PlayerPerspective::onActionChangeFloorSignal);
+    connect(pp,&PlayerPerspective::actionChangeFloorSignal,pp,
+            &PlayerPerspective::onActionChangeFloorSignal);
 
-    connect(pp,&PlayerPerspective::actionChangeWagonSignal,pp,&PlayerPerspective::onActionChangeWagonSignal);
+    connect(pp,&PlayerPerspective::actionChangeWagonSignal,pp,
+            &PlayerPerspective::onActionChangeWagonSignal);
 
-    connect(pp,&PlayerPerspective::actionPunchSignal,pp,&PlayerPerspective::onActionPunchSignal);
-////
-    connect(pp,&PlayerPerspective::playerChoseWagon,m_client,&PlayerClient::onPlayerChoseWagon);
-    connect(m_client,&PlayerClient::playerChoseWagon,pp,&PlayerPerspective::onPlayerChoseWagon);
+    connect(pp,&PlayerPerspective::actionPunchSignal,pp,
+            &PlayerPerspective::onActionPunchSignal);
 
-    connect(pp,&PlayerPerspective::playerPlayedCard,m_client,&PlayerClient::onPlayerPlayedCard);
-    connect(m_client,&PlayerClient::playerPlayedCard,pp,&PlayerPerspective::onPlayerPlayedCard);
+    connect(pp,&PlayerPerspective::playerChoseWagon,m_client,
+            &PlayerClient::onPlayerChoseWagon);
 
-    connect(pp,&PlayerPerspective::playerDrawCards,m_client,&PlayerClient::onPlayerDrawCards);
-    connect(m_client,&PlayerClient::playerDrawCards,pp,&PlayerPerspective::onPlayerDrawCards);
+    connect(m_client,&PlayerClient::playerChoseWagon,pp,
+            &PlayerPerspective::onPlayerChoseWagon);
 
-    connect(pp,&PlayerPerspective::actionSheriffSignal,m_client,&PlayerClient::onActionSheriffSignal);
-    connect(m_client,&PlayerClient::actionSheriffSignal,pp,&PlayerPerspective::onActionSheriffSignal);
+    connect(pp,&PlayerPerspective::playerPlayedCard,m_client,
+            &PlayerClient::onPlayerPlayedCard);
 
-    connect(pp,&PlayerPerspective::actionFireSignal,m_client,&PlayerClient::onActionFireSignal);
-    connect(m_client,&PlayerClient::actionFireSignal,pp,&PlayerPerspective::onActionFireSignal);
+    connect(m_client,&PlayerClient::playerPlayedCard,pp,
+            &PlayerPerspective::onPlayerPlayedCard);
 
-    connect(pp,&PlayerPerspective::actionChangeFloorSignal,m_client,&PlayerClient::onActionChangeFloorSignal);
-    connect(m_client,&PlayerClient::actionChangeFloorSignal,pp,&PlayerPerspective::onActionChangeFloorSignal);
+    connect(pp,&PlayerPerspective::playerDrawCards,m_client,
+            &PlayerClient::onPlayerDrawCards);
 
-    connect(pp,&PlayerPerspective::actionChangeWagonSignal,m_client,&PlayerClient::onActionChangeWagonSignal);
-    connect(m_client,&PlayerClient::actionChangeWagonSignal,pp,&PlayerPerspective::onActionChangeWagonSignal);
+    connect(m_client,&PlayerClient::playerDrawCards,pp,
+            &PlayerPerspective::onPlayerDrawCards);
 
-    connect(pp,&PlayerPerspective::actionRobberySignal,m_client,&PlayerClient::onActionRobberySignal);
-    connect(m_client,&PlayerClient::actionRobberySignal,pp,&PlayerPerspective::onActionRobberySignal);
+    connect(pp,&PlayerPerspective::actionSheriffSignal,m_client,
+            &PlayerClient::onActionSheriffSignal);
 
-    connect(pp,&PlayerPerspective::actionPunchSignal,m_client,&PlayerClient::onActionPunchSignal);
-    connect(m_client,&PlayerClient::actionPunchSignal,pp,&PlayerPerspective::onActionPunchSignal);
+    connect(m_client,&PlayerClient::actionSheriffSignal,pp,
+            &PlayerPerspective::onActionSheriffSignal);
 
+    connect(pp,&PlayerPerspective::actionFireSignal,m_client,
+            &PlayerClient::onActionFireSignal);
+
+    connect(m_client,&PlayerClient::actionFireSignal,pp,
+            &PlayerPerspective::onActionFireSignal);
+
+    connect(pp,&PlayerPerspective::actionChangeFloorSignal,m_client,
+            &PlayerClient::onActionChangeFloorSignal);
+
+    connect(m_client,&PlayerClient::actionChangeFloorSignal,pp,
+            &PlayerPerspective::onActionChangeFloorSignal);
+
+    connect(pp,&PlayerPerspective::actionChangeWagonSignal,m_client,
+            &PlayerClient::onActionChangeWagonSignal);
+
+    connect(m_client,&PlayerClient::actionChangeWagonSignal,pp,
+            &PlayerPerspective::onActionChangeWagonSignal);
+
+    connect(pp,&PlayerPerspective::actionRobberySignal,m_client,
+            &PlayerClient::onActionRobberySignal);
+
+    connect(m_client,&PlayerClient::actionRobberySignal,pp,
+            &PlayerPerspective::onActionRobberySignal);
+
+    connect(pp,&PlayerPerspective::actionPunchSignal,m_client,
+            &PlayerClient::onActionPunchSignal);
+
+    connect(m_client,&PlayerClient::actionPunchSignal,pp,
+            &PlayerPerspective::onActionPunchSignal);
 
     pp->setSceneRect(ui->graphicsView->rect());
     ui->graphicsView->setScene(pp);
 
     pp->addGameToScene();
-
-
 
     ui->graphicsView->setBackgroundBrush(QPixmap("://bluemoon.png"));
     ui->graphicsView->setRenderHint(QPainter::Antialiasing);
@@ -237,30 +252,14 @@ void MainWindow::onGameLoaded()
 }
 
 
-// Message Box
-void MainWindow::showMessageBox(QString content) const {
-  QMessageBox mb;
-
-  mb.setWindowTitle("Message: ");
-  mb.setIconPixmap(QPixmap("://box.jpg"));
-  mb.setInformativeText(content);
-  //mb.setIcon(QMessageBox::Question);
-  //mb.setTextInteractionFlags(QStyle::StandardPixmap);
-  mb.exec();
-}
-
-
 void MainWindow::onPlay()
 {
-
-
     ui->stackedWidget->setCurrentIndex(2);
 }
 
 void MainWindow::onGameRules()
 {
     ui->stackedWidget->setCurrentIndex(1);
-
 }
 
 void MainWindow::onBackToTheMenu()
@@ -275,8 +274,6 @@ void MainWindow::onConnect()
     if(ui->leName->isModified())
         name = ui->leName->text();
     else name = "Player";
-
-
 
     m_client=new PlayerClient();
     m_client->setUsername(name);
@@ -302,29 +299,19 @@ void MainWindow::onConnect()
 //    ui->gvWaitingRoom->setBackgroundBrush(QColor(100,100,100));
 //    ui->gvWaitingRoom->setRenderHint(QPainter::Antialiasing);
 //    ui->gvWaitingRoom->setAlignment(Qt::AlignTop | Qt::AlignLeft);
-//    //TODO: napraviti Tabelu za ovaj gv koja ce da ispisuje ime i ready/not ready
 
-    //TODO: napraviti konekciju sa serverom :))))))
     ui->stackedWidget->setCurrentIndex(3);
 }
 
 void MainWindow::onReady()
 {
-    //TODO: obavestiti server da je plejer spreman
     ui->pbReady->setStyleSheet("border-image : url(://button_pink.png); color: white; background: transparent;");
     emit readyClicked();
-
-
-    //TODO: izmeniti tabelu da bude ready
 }
 
 void MainWindow::onStart()
 {
-    /*  plejer moze da klikne ovo samo ako je HOST
-        a ako nije host, ne desi se nista...
-        nmp za pocetak cu staviti da svako moze da klikne  */
-
-    // imaginarni plejeri u nasoj partiji
+    //Plejeri za single player verziju:
 //    std::vector<Player*> players;
 //        players = {
 //            new Player(BanditType::PICKPOCKET),
@@ -365,17 +352,11 @@ void MainWindow::onStart()
 
 //        (*m_sp)[0]->setSceneRect(ui->graphicsView->rect());
 //        ui->graphicsView->setScene((*m_sp)[0]);
+
     if(m_client->getPlayerCount()<3)
         return;
 
     emit startClicked();
-
-//    m_client->getPlayerPerspective()->setSceneRect(ui->graphicsView->rect());
-//    ui->graphicsView->setScene(m_client->getPlayerPerspective());
-
-//    m_client->getPlayerPerspective()->addGameToScene();
-
-
 
     ui->graphicsView->setBackgroundBrush(QPixmap("://bluemoon.png"));
     ui->graphicsView->setRenderHint(QPainter::Antialiasing);
@@ -386,9 +367,6 @@ void MainWindow::onStart()
 
 void MainWindow::onMovePlayed(int i)
 {
-    //qDebug()<<"MainWindow stigao";
-    //qDebug()<<m_sp;
-
 //    (*m_sp)[i]->setSceneRect(ui->graphicsView->rect());
 //    ui->graphicsView->setScene((*m_sp)[i]);
 
@@ -402,27 +380,6 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
     if(ui->stackedWidget->currentIndex()==4 && event->key()==Qt::Key_Escape){
         dialog->show();
     }
-    if(event->key()==Qt::Key_G){
-
-
-//        for(PlayerPerspective*pp:pps){
-//            pp->setNextPlayerToToMove();
-
-//        }
-//        int pToMove=pps[0]->getPlayerToMoveIndex();
-////        std::cout<<pToMove<<std::endl;
-//        pps[pToMove]->setSceneRect(ui->graphicsView->rect());
-//        ui->graphicsView->setScene(pps[pToMove]);
-
-
-    }
-    if(event->key()==Qt::Key_D){
-//        //std::cout<<"im here"<<std::endl;
-//        int pToMove=pps[0]->getPlayerToMoveIndex();
-//        pps[pToMove]->drawCards(1);
-    }
-
-
 }
 
 
