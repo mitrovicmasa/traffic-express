@@ -262,7 +262,7 @@
        <bool>true</bool>
       </property>
       <property name="currentIndex">
-       <number>3</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="pageMainMenu">
        <property name="palette">
@@ -576,7 +576,7 @@
           <x>170</x>
           <y>60</y>
           <width>841</width>
-          <height>72</height>
+          <height>101</height>
          </rect>
         </property>
         <layout class="QVBoxLayout" name="verticalLayout_4">
@@ -591,7 +591,8 @@
 p, li { white-space: pre-wrap; }
 hr { height: 1px; border-width: 0; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Ubuntu'; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; line-height:100%;&quot;&gt;The Bandits can be inside the Train or on the roof of a Wagon. Thus there are always two possible locations for a Bandit: in or on a Wagon. At the start of the game, however, no Bandit can be on a roof&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:14pt; font-weight:700; color:#160202;&quot;&gt;🚂&lt;/span&gt;&lt;span style=&quot; font-size:12pt; font-weight:700; color:#160202;&quot;&gt; The Bandits can be inside the Train or on the roof of a Wagon. Thus there are always two possible locations for a Bandit: in or on a Wagon. At the start of the game, however, no Bandit can be on a roof.&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; line-height:100%;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:700; color:#160202;&quot;&gt;In every miniround, player can play one of action cards that has in his hand, or draw 3 cards. Your assignment is to be the richest bandit of them all! &lt;/span&gt;&lt;span style=&quot; font-size:14pt; font-weight:700; color:#160202;&quot;&gt;🚂&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
            </property>
           </widget>
          </item>
@@ -601,9 +602,9 @@ hr { height: 1px; border-width: 0; }
         <property name="geometry">
          <rect>
           <x>170</x>
-          <y>150</y>
+          <y>170</y>
           <width>841</width>
-          <height>341</height>
+          <height>321</height>
          </rect>
         </property>
         <property name="widgetResizable">
@@ -615,7 +616,7 @@ hr { height: 1px; border-width: 0; }
            <x>0</x>
            <y>0</y>
            <width>839</width>
-           <height>339</height>
+           <height>319</height>
           </rect>
          </property>
          <widget class="QTextEdit" name="scroll_rules">
@@ -624,7 +625,7 @@ hr { height: 1px; border-width: 0; }
             <x>0</x>
             <y>0</y>
             <width>841</width>
-            <height>341</height>
+            <height>321</height>
            </rect>
           </property>
           <property name="cursor" stdset="0">
@@ -632,6 +633,9 @@ hr { height: 1px; border-width: 0; }
           </property>
           <property name="autoFillBackground">
            <bool>false</bool>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">border-radius: 5px;</string>
           </property>
           <property name="frameShape">
            <enum>QFrame::Box</enum>
@@ -651,63 +655,30 @@ hr { height: 1px; border-width: 0; }
 p, li { white-space: pre-wrap; }
 hr { height: 1px; border-width: 0; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Ubuntu'; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-style:italic; text-decoration: underline;&quot;&gt;Possible action cards are: &lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700; color:#e01b24;&quot;&gt;MOVE:&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; color:#3584e4;&quot;&gt;I LEFT-RIGHT&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;1. If the bandit is inside the Tram, he can move one Wagon to the next adjacent Wagon, forwards or backwards.&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;2. If the bandit is on the roof of the Train, he can move up to three Wagons forwards or backwards.&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;If you have plotted this Action, your Bandit cannot stay where he is: you must move him!&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; color:#3584e4;&quot;&gt;II FLOOR CHANGE&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;1. If the Bandit is inside the Wagon, he can move to the roof.&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;2. If the Bandit is on the roof, he can move inside the Wagon.&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700; color:#e01b24;&quot;&gt;MARSHAL:&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Move the Marshal inside the train a distance of one Car in the direction of your choice. When a Bandit enters a Car where the Marshal is, or when the Marshal enters a Car where Bandits are, they must escape up to the roof of the Car (even if they have just come down from there). Each one of those Bandits immediately receives a Neutral Bullet card which must be placed on each player's personal deck.&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700; color:#e01b24;&quot;&gt;FIRE:&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Choose one of your opponents to be your target and give him one of your Bullet cards. The targeted player places the Bullet card he has received on his deck. You cannot target a Bandit who is on the same spot as you.&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;1. When you are inside the train, you can shoot a Bandit who is in the interior of an adjacent Car, either to the rear of your Car or ahead of it. Bandits who are more than one Car away cannot be shot.&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;2. When you are on the roof, however, you can shoot a Bandit who is in your Line of Sight and on the roof of any Car other than your own, regardless of the distance. A Bandit is in Line of Sight if there is no other Bandit between you and him. Two Bandits on the roof of the same Car are considered as being side by side, and not located one behind the other: you choose which one gets hit.&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; color:#3584e4;&quot;&gt;ROBBERY&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Take the Loot token of your choice from the Car where you are currently located and place it face-down on your Character card. If your Bandit is on the roof of a Car, he cannot rob inside it, and vice versa. If there is no Loot where your Bandit is, then the Robbery action has no effect.&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; color:#3584e4;&quot;&gt;PUNCH&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Choose a target among the Bandits who are on the same Car and same floor as you are. The targeted Bandit loses a Loot token if he has one: choose a Loot token from his Character card and place it on the floor where your Bandit pawn is located. If you choose a Moneybag token, you are not allowed to look at its value. &lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700; color:#e01b24;&quot;&gt;THE ROUND CARDS&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-weight:700; color:#e01b24;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;1. The Action cards must be played face-up during the current turn.&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;2. &lt;span style=&quot; font-weight:700; font-style:italic; color:#3584e4;&quot;&gt;Tunnel&lt;/span&gt;&lt;span style=&quot; color:#3584e4;&quot;&gt; &lt;/span&gt;- The Action cards must be played face-down during the current turn.&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;3. &lt;span style=&quot; font-weight:700; font-style:italic; color:#3584e4;&quot;&gt;Speeding up &lt;/span&gt;&lt;span style=&quot; color:#000000;&quot;&gt;- During the current turn, each player plays twice.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; color:#000000;&quot;&gt;4. &lt;/span&gt;&lt;span style=&quot; font-weight:700; font-style:italic; color:#3584e4;&quot;&gt;Switching&lt;/span&gt;&lt;span style=&quot; color:#000000;&quot;&gt; - &lt;/span&gt;The current turn is played counter-clockwise, starting with the First Player.&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700; color:#e01b24;&quot;&gt;THE EVENTS&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-weight:700; color:#e01b24;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700; font-style:italic; color:#3584e4;&quot;&gt;Angry Marshal&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;The Marshal shoots the Bandits who are on the roof of his Car. Those Bandits get a Neutral Bullet card each. &lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700; font-style:italic; color:#3584e4;&quot;&gt;Swivel Arm&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;All the Bandits that are on roofs move to the roof of the Caboose&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700; font-style:italic; color:#3584e4;&quot;&gt;Braking&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;All Bandits on roofs move one Car forward (towards the Locomotive).&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700; font-style:italic; color:#3584e4;&quot;&gt;Take It All!&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Place the second Strongbox inside the Car where the Marshal is currently.&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700; font-style:italic; color:#3584e4;&quot;&gt;Passengers' Rebellion&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;The Bandits who are inside the Cars get a Neutral Bullet each.&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700; font-style:italic; color:#3584e4;&quot;&gt;Pickpocketing&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Each Bandit who is alone in his spot can take one Purse token from that spot, if there are any Purses there.&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700; font-style:italic; color:#3584e4;&quot;&gt;Marshal's Revenge&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Each Bandit who is on the roof above the Marshal loses the least valuable Purse token he has on his Character card. If a Bandit has no Purse, he loses nothing.&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700; font-style:italic; color:#3584e4;&quot;&gt;Hostage-Taking of the Conductor&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Each Bandit who is either in the Locomotive or on its roof receives $250.&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-weight:700; font-style:italic; color:#3584e4;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-weight:700; font-style:italic; color:#3584e4;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-weight:700; font-style:italic; color:#3584e4;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:18pt; font-style:italic; text-decoration: underline; color:#160202;&quot;&gt;Possible action cards are: &lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:16pt; font-weight:700; color:#e01b24;&quot;&gt;MOVE:&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:16pt; color:#3584e4;&quot;&gt;I LEFT-RIGHT ↔️&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:16pt; color:#160202;&quot;&gt;   1. If the bandit is inside the Tram, he can move one Wagon to the next adjacent Wagon, forwards or backwards.&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:16pt; color:#160202;&quot;&gt;   2. If the bandit is on the roof of the Train, he can move up to three Wagons forwards or backwards.&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:16pt; color:#160202;&quot;&gt;If you have plotted this Action, your Bandit cannot stay where he is: you must move him!&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:16pt; color:#3584e4;&quot;&gt;II FLOOR CHANGE ↕️&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:16pt; color:#160202;&quot;&gt;   1. If the Bandit is inside the Wagon, he can move to the roof.&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:16pt; color:#160202;&quot;&gt;   2.&lt;/span&gt;&lt;span style=&quot; font-size:16pt;&quot;&gt; &lt;/span&gt;&lt;span style=&quot; font-size:16pt; color:#160202;&quot;&gt;If the Bandit is on the roof, he can move inside the Wagon.&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:16pt; font-weight:700; color:#e01b24;&quot;&gt;MARSHAL 👮:&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:16pt; color:#160202;&quot;&gt;Move the Marshal inside the train a distance of one Car in the direction of your choice. When a Bandit enters a Car where the Marshal is, or when the Marshal enters a Car where Bandits are, they must escape up to the roof of the Car (even if they have just come down from there). Each one of those Bandits immediately receives a Neutral Bullet card which must be placed on each player's personal deck.&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:16pt; font-weight:700; color:#e01b24;&quot;&gt;FIRE 🔫:&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:16pt; color:#160202;&quot;&gt;Choose one of your opponents to be your target and give him one of your Bullet cards. The targeted player places the Bullet card he has received on his deck. You cannot target a Bandit who is on the same spot as you.&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:16pt; color:#160202;&quot;&gt;   &lt;/span&gt;&lt;span style=&quot; font-size:16pt; color:#ffffff;&quot;&gt;1.&lt;/span&gt;&lt;span style=&quot; font-size:16pt; color:#160202;&quot;&gt; When you are inside the train, you can shoot a Bandit who is in the interior of an adjacent Car, either to the rear of your Car or ahead of it. Bandits who are more than one Car away cannot be shot.&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:16pt; color:#160202;&quot;&gt;   &lt;/span&gt;&lt;span style=&quot; font-size:16pt; color:#000000;&quot;&gt;2.&lt;/span&gt;&lt;span style=&quot; font-size:16pt; color:#160202;&quot;&gt; When you are on the roof, however, you can shoot a Bandit who is in your Line of Sight and on the roof of any Car other than your own, regardless of the distance. A Bandit is in Line of Sight if there is no other Bandit between you and him. Two Bandits on the roof of the same Car are considered as being side by side, and not located one behind the other: you choose which one gets hit.&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:16pt; font-weight:700; color:#e01b24;&quot;&gt;ROBBERY 💰:&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:16pt; color:#160202;&quot;&gt;Take the Loot token of your choice from the Car where you are currently located and place it face-down on your Character card. If your Bandit is on the roof of a Car, he cannot rob inside it, and vice versa. If there is no Loot where your Bandit is, then the Robbery action has no effect.&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:16pt; font-weight:700; color:#e01b24;&quot;&gt;PUNCH 👊:&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:16pt; color:#160202;&quot;&gt;Choose a target among the Bandits who are on the same Car and same floor as you are. The targeted Bandit loses a Loot token if he has one: choose a Loot token from his Character card and place it on the floor where your Bandit pawn is located. If you choose a Moneybag token, you are not allowed to look at its value. &lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:16pt; font-weight:700; color:#e01b24;&quot;&gt;THE ROUND CARDS&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:16pt; font-weight:700; color:#e01b24;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:16pt; color:#160202;&quot;&gt;1.&lt;/span&gt;&lt;span style=&quot; font-size:16pt;&quot;&gt; &lt;/span&gt;&lt;span style=&quot; font-size:16pt; font-weight:700; font-style:italic; color:#3584e4;&quot;&gt;Face up&lt;/span&gt;&lt;span style=&quot; font-size:16pt; color:#3584e4;&quot;&gt; &lt;/span&gt;&lt;span style=&quot; font-size:16pt; color:#160202;&quot;&gt;-&lt;/span&gt;&lt;span style=&quot; font-size:16pt;&quot;&gt; &lt;/span&gt;&lt;span style=&quot; font-size:16pt; color:#160202;&quot;&gt;The Action cards must be played face-up during the current turn.&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:16pt; color:#160202;&quot;&gt;2.&lt;/span&gt;&lt;span style=&quot; font-size:16pt;&quot;&gt; &lt;/span&gt;&lt;span style=&quot; font-size:16pt; font-weight:700; font-style:italic; color:#3584e4;&quot;&gt;Tunnel&lt;/span&gt;&lt;span style=&quot; font-size:16pt; color:#3584e4;&quot;&gt; &lt;/span&gt;&lt;span style=&quot; font-size:16pt;&quot;&gt;- &lt;/span&gt;&lt;span style=&quot; font-size:16pt; color:#160202;&quot;&gt;The Action cards must be played face-down during the current turn.&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:16pt; color:#160202;&quot;&gt;3.&lt;/span&gt;&lt;span style=&quot; font-size:16pt;&quot;&gt; &lt;/span&gt;&lt;span style=&quot; font-size:16pt; font-weight:700; font-style:italic; color:#3584e4;&quot;&gt;Speeding up &lt;/span&gt;&lt;span style=&quot; font-size:16pt; color:#000000;&quot;&gt;- During the current turn, each player plays twice.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
           </property>
          </widget>
         </widget>

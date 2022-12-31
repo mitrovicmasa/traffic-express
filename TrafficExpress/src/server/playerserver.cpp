@@ -13,7 +13,7 @@ void PlayerServer::startServer()
     m_gameToCome=false;
     m_server=new QTcpServer();
     m_clients=std::vector<QTcpSocket*>();
-    m_server->setMaxPendingConnections(6);
+    m_server->setMaxPendingConnections(4);
     if(!m_server->listen(QHostAddress::Any,12345)){
         qDebug()<<"serever could not start";
     }else{
@@ -48,7 +48,7 @@ int PlayerServer::findSocketIndex(QTcpSocket *client)
 void PlayerServer::onNewConection()
 {
     QTcpSocket*client=m_server->nextPendingConnection();
-    if(m_gameOngoing || m_gameToCome){
+    if(m_gameOngoing || m_gameToCome || m_clients.size()>=4){
         client->disconnect();
         return;
     }
