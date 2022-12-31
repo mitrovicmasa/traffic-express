@@ -1,7 +1,7 @@
 # Dokumentacija
 
 ## Opis igre:
-Aplikacija Traffic Express je igra rađena po uzoru na društvenu igru Colt Express. Broj igrača je od 3 do 5. 
+Aplikacija Traffic Express je igra rađena po uzoru na društvenu igru Colt Express. Broj igrača je od 3 do 4. 
 
 U beogradskoj gužvi, u 5 popodne, voz stoji zaglavljen sa 47 putnika u njemu. Nekoliko minuta kasnije, čuje se pucnjava i trčanje po krovu. Došli su teško naoružani banditi, da poštenim građanima otmu novac.
 Svaki igrač je bandit i njegov cilj je da postane najbogatiji bandit u Beogradu!
@@ -25,7 +25,11 @@ Na kraju igre, pobednik je igrač koji je sakupio najviše blaga!
 
 ### Dijagram klasa:
 
-![DijagramKlasa](./class_diagram/class_diagram.png)
+![DijagramKlasa](./class_diagram/class_diagram.drawio.png)
+
+### Dijagram komponenti:
+
+![DijagramKlasa](./component_diagram/component_diagram.png)
 
 ### Dijagram slučajeva upotrebe:
 
