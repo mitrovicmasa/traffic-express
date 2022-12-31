@@ -120,9 +120,9 @@ void MainWindow::setImages()
 void MainWindow::onChangeReadyColor(bool condition)
 {
     if(m_client->getReadys()[m_client->getIndex()]){
-        ui->pbReady->setStyleSheet("background-color:green");
+        ui->pbReady->setStyleSheet("border-image : url(://button_pink.png); color: white; background: transparent;");
     }else{
-        ui->pbReady->setStyleSheet("background-color:red");
+        ui->pbReady->setStyleSheet("border-image : url(://button.png); color: white; background: transparent;");
     }
     ui->listWidget->clear();
     auto readys=m_client->getReadys();
@@ -140,14 +140,14 @@ void MainWindow::onChangeReadyColor(bool condition)
 void MainWindow::onChangeStartColor()
 {
     if(m_client->allReady() && m_client->getHost()){
-        ui->pbStart->setStyleSheet("background-color:green");
+        ui->pbStart->setStyleSheet("border-image : url(://button_pink.png); color: white; background: transparent;");
         ui->pbStart->setDisabled(false);
     }else if(m_client->getHost()){
-        ui->pbStart->setStyleSheet("background-color:yellow");
+        ui->pbStart->setStyleSheet("border-image : url(://button_dark.png); color: white; background: transparent;");
         ui->pbStart->setDisabled(true);
     }else{
 
-        ui->pbStart->setStyleSheet("background-color:red");
+        ui->pbStart->setStyleSheet("border-image : url(://button_dark.png); color: white; background: transparent;");
         ui->pbStart->setDisabled(true);
     }
     ui->listWidget->clear();
@@ -289,13 +289,13 @@ void MainWindow::onConnect()
     connect(m_client,&PlayerClient::changeStartColor,this,&MainWindow::onChangeStartColor);
     m_client->startClient();
     if(m_client->getHost()){
-        ui->pbStart->setStyleSheet("background-color:yellow");
+        ui->pbStart->setStyleSheet("border-image : url(://button_dark.png); color: white; background: transparent;");
         ui->pbStart->setDisabled(false);
     }else{
-        ui->pbStart->setStyleSheet("background-color:red");
+        ui->pbStart->setStyleSheet("border-image : url(://button.png); color: white; background: transparent;");
         ui->pbStart->setDisabled(true);
     }
-     ui->pbReady->setStyleSheet("background-color:red");
+     ui->pbReady->setStyleSheet("border-image : url(://button.png); color: white; background: transparent;");
 
 //    sc->setSceneRect(ui->gvWaitingRoom->rect());
 //    ui->gvWaitingRoom->setScene(sc);
@@ -311,7 +311,7 @@ void MainWindow::onConnect()
 void MainWindow::onReady()
 {
     //TODO: obavestiti server da je plejer spreman
-    ui->pbReady->setStyleSheet("background-color:green");
+    ui->pbReady->setStyleSheet("border-image : url(://button_pink.png); color: white; background: transparent;");
     emit readyClicked();
 
 

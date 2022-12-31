@@ -101,15 +101,15 @@ void PlayerStats::paint(QPainter *painter, const QStyleOptionGraphicsItem *optio
     QString bandit = QString::fromStdString(toString(m_player->id()));
 
     if (m_player->id() == BanditType::PICKPOCKET)
-        painter->setPen(Qt::green);
+        painter->setPen(QColor(40,200,60));
     else if (m_player->id() == BanditType::STUDENT)
-        painter->setPen(QColor(51,153,255));
+        painter->setPen(QColor(70,180,240));
     else if (m_player->id() == BanditType::SEDUCTRESS)
             painter->setPen(QColor(255,255,102));
     else if (m_player->id() == BanditType::RETIREE)
-            painter->setPen(Qt::red);
+            painter->setPen(QColor(240,70,80));
     else if (m_player->id() == BanditType::HOMELESS_MAN)
-            painter->setPen(Qt::gray);
+            painter->setPen(QColor(245,178,23));
     else if (m_player->id() == BanditType::BUSINESS_WOMAN)
             painter->setPen(QColor(204,0,204));
 
