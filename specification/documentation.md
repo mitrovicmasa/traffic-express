@@ -205,3 +205,5 @@ Na kraju igre, pobednik je igrač koji je sakupio najviše blaga!
 
 ![PrikazivanjePravilaIgre](./use_cases/prikazivanje_pravila_igre/prikazivanje_pravila_igre.png)
 
+### Dijagram komponenti
+![DijagramKomponenti](./component_diagram/component_diagram.png)
