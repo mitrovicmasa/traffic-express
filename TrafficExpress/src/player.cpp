@@ -7,7 +7,7 @@
 // Constructors
 Player::Player()
 {
-setFlags(GraphicsItemFlag::ItemIsSelectable);
+    setFlags(GraphicsItemFlag::ItemIsSelectable);
 }
 
 Player::Player(BanditType id)
@@ -48,7 +48,6 @@ Player::Player(bool isItMyMove, BanditType id, Hand *h, Deck *d, Deck *bcd, int 
       m_bulletDeck(new Deck(bcd->getCards())),m_positionInTrain(pos),m_roof(roof),m_treasure(TreasureChest(tc))
 {
 
-//Todo bulletCardDeck
     connect(m_hand,&Hand::clickedCardInHand,this,&Player::onClickedCardInHand);
     connect(m_deck,&Deck::clickedCardInDeck,this,&Player::onClickedCardInDeck);
 
@@ -187,13 +186,11 @@ void Player::fromVariant(const QVariant &variant)
     m_id = static_cast<BanditType>(map.value("id").toInt());
     m_positionInTrain = map.value("positionInTrain").toInt();
 
+    m_hand=new Hand();
+    m_hand->fromVariant(map.value("hand"));
 
-
-        m_hand=new Hand();
-        m_hand->fromVariant(map.value("hand"));
-
-        m_deck=new Deck();
-        m_deck->fromVariant(map.value("deck"));
+    m_deck=new Deck();
+    m_deck->fromVariant(map.value("deck"));
 
     QVariantList content = map.value("treasure").toList();
     for (auto &treasure : content) {
@@ -289,7 +286,6 @@ void Player::mousePressEvent(QGraphicsSceneMouseEvent *event)
 
 void Player::onClickedCardInHand(Card *c, Hand *h)
 {
-    //std::cout<<"signal recieved in player from card!"<<std::endl;
     emit clickedCardInHandInPlayer(c,h,this);
 }
 

@@ -145,7 +145,7 @@ bool Game::actionPending() const
 void Game::setWagons(Train* newWagons)
 {
     m_wagons = newWagons;
-    //connect(m_wagons,&Train::clickedTreasureInWagonInTrain,this,&Game::onClickedTreasureInWagonInTrainInTran);
+    //connect(m_wagons,&Train::clickedTreasureInWagonInTrain,this,&Game::onClickedTreasureInWagonInTrain);
 }
 
 void Game::setRounds( std::vector<RoundCard*> &newRounds)

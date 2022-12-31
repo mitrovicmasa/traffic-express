@@ -7,11 +7,12 @@
 #include <dialoguebox.h>
 
 
-
 class PlayerPerspective:public QGraphicsScene
 {
     Q_OBJECT
+
 public:
+
     PlayerPerspective(Game*game,int playerIndex,QObject*parent=nullptr);
     PlayerPerspective();
     void addGameToScene();
@@ -25,15 +26,15 @@ public:
 
 public slots:
 
-    //reacting to internal signals
-    void onClickedTreasureInWagonInTrainInTran(Treasure*t,Wagon*w,Train*train);
+    // Reacting to internal signals
+    void onClickedTreasureInWagonInTrain(Treasure*t,Wagon*w,Train*train);
     void onClickedCardInHandInPlayer(Card*c,Hand*h,Player*p);//*
     void onClickedCardInDeckInPlayer(Card*c,Deck*d,Player*p);
     void onClickedTreasureInPlayerStatsInTable(Treasure*,PlayerStats*,Table*);
     void onClickedPlayerInWagonInTrain(Player*,Wagon*,Train*);
     void onClickedWagonInTrain(Wagon*w,Train*train);//*
 
-    //reacting to external signals
+    // Reacting to external signals
     void onPlayerChoseWagon(int playerIndex,int wagonIndex);
     void onPlayerPlayedCard(int playerIndex,int CardIndex);
     void onPlayerDrawCards(int playerIndex);

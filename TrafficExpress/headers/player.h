@@ -27,11 +27,6 @@ public:
     // Constructors
     Player();
     Player(BanditType id);
-    //this is not safe
-//    Player(const Player&);
-
-    //this is a safe copy constructor
-
     Player(bool isItMyMove,BanditType id,Hand*h,Deck*d,Deck* bcd,int pos,bool roof,TreasureChest tc);
 
     // Destructor
@@ -45,7 +40,6 @@ public:
     Hand *hand();
     Deck *deck();
     Deck *bullet_deck();
-    //const std::vector<BulletCard*> &bulletDeck() const;
     int positionInTrain() const;
     bool roof() const;
     TreasureChest& treasure();
@@ -62,16 +56,18 @@ public:
     void returnCardsToDeck();
     void shuffleDeck(int);
     void drawCards(unsigned n);
-
-
     std::string toString() const;
-    int width()const;
-    int height()const;
+
 
     // GUI
     QRectF boundingRect() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
     void mousePressEvent(QGraphicsSceneMouseEvent *event);
+    int width()const;
+    int height()const;
+
+    QVariant toVariant() const;
+    void fromVariant(const QVariant &variant);
 
 signals:
     void clicked();
@@ -94,7 +90,6 @@ private:
     TreasureChest m_treasure;
 
 public:
-    QVariant toVariant() const;
-    void fromVariant(const QVariant &variant);
+
 };
 #endif // PLAYER_H

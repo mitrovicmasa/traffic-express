@@ -119,6 +119,9 @@ public:
     int playerClicked() const;
     void setPlayerClicked(int newPlayerClicked);
 
+    QVariant toVariant() const;
+    void fromVariant(const QVariant &variant);
+
 private:
     int m_indexOfPlayerToMove;
     int m_indexOfRound;
@@ -139,10 +142,7 @@ private:
     int m_playerClicked;
     unsigned m_seed;
 
-    // Serializable interface
-public:
-    QVariant toVariant() const;
-    void fromVariant(const QVariant &variant);
+
 };
 
 void generateAllTreasure(const int &count, const int &value, TreasureType type, std::vector<Treasure> &treasure);
