@@ -26,34 +26,7 @@ include_directories(headers/)
 include_directories(src/collections)
 include_directories(headers/collections/)
 
-#[[
-set(PROJECT_SOURCES
-        main.cpp
-        mainwindow.cpp
-        mainwindow.h
-        mainwindow.ui
-        src/treasure.cpp
-        headers/treasure.h
-        src/wagon.cpp
-        headers/wagon.h
-        src/roundcard.cpp
-        headers/roundcard.h
-        src/game.cpp
-        headers/game.h
-        src/player.cpp
-        headers/player.h
-        src/card.cpp
-        headers/card.h
-        src/banditcard.cpp
-        headers/banditcard.h
-        src/neutralbullet.cpp
-        headers/neutralbullet.h
-        src/actioncard.cpp
-        headers/actioncard.h
-        src/bulletcard.cpp
-        headers/bulletcard.h
-)
-]]
+
 set(PROJECT_SOURCES
         main.cpp
         mainwindow.cpp
@@ -89,6 +62,8 @@ set(PROJECT_SOURCES
         src/roundcarddeck.cpp
         src/serializable.cpp
         src/client/playerclient.cpp
+        #../tests/catch.cpp
+        #../tests/traffic_express_tests.cpp
         )
 
 set(PROJECT_HEADERS
