@@ -32,8 +32,13 @@ public:
     int height() const;
     int width() const;
 
+    bool firstDoubleCardPlayed() const;
+
+    void setFirstDoubleCardPlayed(bool newFirstDoubleCardPlayed);
+
 private:
     MiniRoundType m_type;
+    bool m_firstDoubleCardPlayed;
 };
 
 #endif // MINIROUND_H

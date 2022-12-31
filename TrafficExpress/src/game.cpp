@@ -341,8 +341,15 @@ void Game::initialize()
         selectedMoneybagsIndexes.clear();
     }
 
+    for(Wagon *w: selectedWagons->getWagons()) {
+        w->setIsLocomotive(false);
+        w->repositionTreasure();
+    }
+
     // Place Marshal and suitcase in Locomotive
     selectedWagons->push_back(new Wagon(TreasureChest({new Treasure(1000, TreasureType::SUITCASE)}),TreasureChest()));
+    selectedWagons->back()->setIsLocomotive(true);
+    selectedWagons->back()->addSheriffDown(new Sheriff());
     m_sheriffPosition = selectedWagons->size() - 1;
 
     // Set wagons for current game
@@ -729,7 +736,6 @@ void Game::updateRounds()
 
         // Now it's phase 2.
         this->setPhase(Phase::PHASE_2);
-
         this->checkNextActionCard();
 
 

@@ -28,12 +28,13 @@ Train::Train(std::vector<Wagon *>wagons)
 {
     int i=0;
     for(Wagon *w: wagons){
+        this->push_back(w);
         if(i==wagons.size()-1) {
             w->setIsLocomotive(true);
         }
         i++;
-        this->push_back(w);
     }
+
 }
 
 //Get methods

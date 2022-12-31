@@ -109,6 +109,8 @@ void PlayerStats::paint(QPainter *painter, const QStyleOptionGraphicsItem *optio
     else if (m_player->id() == BanditType::RETIREE)
             painter->setPen(Qt::red);
     else if (m_player->id() == BanditType::HOMELESS_MAN)
+            painter->setPen(Qt::gray);
+    else if (m_player->id() == BanditType::BUSINESS_WOMAN)
             painter->setPen(QColor(204,0,204));
 
     painter->drawText(boundingRect(), "    "+ bandit + " - Number of bullets: " + QString::number(num));

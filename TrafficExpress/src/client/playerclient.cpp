@@ -275,13 +275,13 @@ void PlayerClient::onClickedStart()
     game->allPlayersDrawCards(6);
          //std::cout<<game->rounds()->size()<<std::endl;
     Game*copy=new Game(*game);
-    m_pp=new PlayerPerspective(copy,0);
+    m_pp=new PlayerPerspective(game,0);
 
 
 
 
     emit gameLoaded();
-    auto tmp=copy->toVariant();
+    auto tmp=game->toVariant();
 
     QJsonDocument doc=QJsonDocument::fromVariant(tmp);
 

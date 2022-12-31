@@ -39,13 +39,25 @@ Wagon::Wagon(TreasureChest &upt, TreasureChest &downt, PlayerGroup &upp, PlayerG
 
 Wagon::Wagon()
 {
-
+    setFlags(GraphicsItemFlag::ItemIsSelectable);
 }
 
 Wagon::Wagon(TreasureChest contentDown, TreasureChest contentUp)
-    :QGraphicsObject(),m_contentUp(contentUp),m_contentDown(contentDown)
+    :QGraphicsObject()
 {
     setFlags(GraphicsItemFlag::ItemIsSelectable);
+
+    auto tc = TreasureChest(contentDown);
+    for(Treasure* t: tc) {
+        this->addContentDown(t);
+    }
+
+    auto tc1=TreasureChest(contentUp);
+    for(Treasure* t: tc1) {
+        this->addContentUp(t);
+    }
+
+    this->setIsLocomotive(false);
 }
 
 
@@ -392,6 +404,7 @@ void Wagon::repositionPlayers()
 
 void Wagon::onCickedTreasure(Treasure *t)
 {
+    qDebug() << "Blago";
     emit clickedTreasureInWagon(t,this);
 }
 

@@ -3,19 +3,19 @@
 #include <qpainter.h>
 
 MiniRound::MiniRound()
-    :QGraphicsObject(),m_type(MiniRoundType::FACE_UP)
+    :QGraphicsObject(),m_type(MiniRoundType::FACE_UP), m_firstDoubleCardPlayed(false)
 {
 setFlags(GraphicsItemFlag::ItemIsSelectable);
 }
 
 MiniRound::MiniRound(MiniRoundType t)
-    :QGraphicsObject(),m_type(t)
+    :QGraphicsObject(),m_type(t), m_firstDoubleCardPlayed(false)
 {
 setFlags(GraphicsItemFlag::ItemIsSelectable);
 }
 
 MiniRound::MiniRound(const MiniRound &other)
-    :QGraphicsObject(),m_type(other.m_type)
+    :QGraphicsObject(),m_type(other.m_type), m_firstDoubleCardPlayed(other.m_firstDoubleCardPlayed)
 {
     setFlags(GraphicsItemFlag::ItemIsSelectable);
 }
@@ -73,4 +73,14 @@ int MiniRound::height() const
 int MiniRound::width() const
 {
     return 60;
+}
+
+bool MiniRound::firstDoubleCardPlayed() const
+{
+    return m_firstDoubleCardPlayed;
+}
+
+void MiniRound::setFirstDoubleCardPlayed(bool newFirstDoubleCardPlayed)
+{
+    m_firstDoubleCardPlayed = newFirstDoubleCardPlayed;
 }

@@ -304,16 +304,33 @@ void PlayerPerspective::onPlayerChoseWagon(int playerIndex, int wagonIndex)
 
 void PlayerPerspective::onPlayerPlayedCard(int playerIndex, int cardIndex)
 {
+
+
     // Taking Card from the hand and putting it in the group deck
     Hand* h=m_game->players()[playerIndex]->hand();
     Card*c=h->takeCard(cardIndex);
     Deck*d=m_game->getCardsPlayed();
+
+    RoundCard * rc = m_game->rounds()->getRoundCards()[m_game->indexOfRound()];
+    MiniRound * mr = rc->getMiniRounds()[m_game->indexOfMiniround()];
+    if(mr->getMiniRoundType() == MiniRoundType::HIDDEN) {
+        c->setFaceUp(false);
+    }
+
     d->push_back(c);
 
     // Putting message in dialogue box
     QString text = QString::fromStdString(((ActionCard*)c)->toString());
     m_game->dialogueBox()->setText(text);
 
+    if(mr->getMiniRoundType() == MiniRoundType::DOUBLE_CARDS) {
+        if(mr->firstDoubleCardPlayed()) {
+            mr->setFirstDoubleCardPlayed(false);
+        } else {
+            mr->setFirstDoubleCardPlayed(true);
+            return;
+        }
+    }
     // Checking the rounds and minirounds
     m_game->updateRounds();
 
