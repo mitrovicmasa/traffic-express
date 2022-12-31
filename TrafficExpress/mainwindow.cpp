@@ -76,6 +76,7 @@ void MainWindow::dialogInit()
     pbBackToMainMenu->setPalette(QPalette("://buttonPaleta.xml"));
     pbBackToMainMenu->setParent(dialog);
     pbBackToMainMenu->setText("Back to main menu");
+    pbBackToMainMenu->setDisabled(true);
     QFont font("Magnolia Sky");
     font.setBold(true);
     font.setPixelSize(14);
