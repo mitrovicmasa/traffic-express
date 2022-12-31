@@ -17,6 +17,8 @@ public:
     void startClient();
     void sendMessage(QString message);
 
+    std::vector<QString>getNames();
+    std::vector<bool>getReadys();
     bool getHost();
     int getIndex();
     QString getUsername();

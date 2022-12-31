@@ -118,11 +118,22 @@ void MainWindow::setImages()
 
 void MainWindow::onChangeReadyColor(bool condition)
 {
-    if(condition){
+    if(m_client->getReadys()[m_client->getIndex()]){
         ui->pbReady->setStyleSheet("background-color:green");
     }else{
         ui->pbReady->setStyleSheet("background-color:red");
     }
+    ui->listWidget->clear();
+    auto readys=m_client->getReadys();
+    auto names=m_client->getNames();
+
+    for(int i=0;i<names.size();i++){
+        ui->listWidget->addItem(names[i]);
+
+
+    }
+
+
 }
 
 void MainWindow::onChangeStartColor()
@@ -138,6 +149,20 @@ void MainWindow::onChangeStartColor()
         ui->pbStart->setStyleSheet("background-color:red");
         ui->pbStart->setDisabled(true);
     }
+    ui->listWidget->clear();
+    auto readys=m_client->getReadys();
+    auto names=m_client->getNames();
+
+    for(int i=0;i<names.size();i++){
+        ui->listWidget->addItem(names[i]);
+        if(readys[i])
+            ui->listWidget->item(i)->setBackground(Qt::green);
+        else
+            ui->listWidget->item(i)->setBackground(Qt::red);
+
+
+    }
+
 
 
 

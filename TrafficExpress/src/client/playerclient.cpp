@@ -33,9 +33,24 @@ void PlayerClient::sendMessage(QString message)
     //m_clientSocket->waitForBytesWritten(-1);
 }
 
+std::vector<QString> PlayerClient::getNames()
+{
+    return m_names;
+}
+
+std::vector<bool> PlayerClient::getReadys()
+{
+    return m_ready;
+}
+
 bool PlayerClient::getHost()
 {
     return m_isHost;
+}
+
+int PlayerClient::getIndex()
+{
+    return m_index;
 }
 
 QString PlayerClient::getUsername()
@@ -188,6 +203,7 @@ void PlayerClient::onReadyRead()
 
     }else if(message.startsWith("nomoreac:")){
         m_ready.push_back(false);
+        m_names.push_back(m_username);
         emit changeStartColor();
 
     }else if(message.startsWith("dc:")){
@@ -196,6 +212,7 @@ void PlayerClient::onReadyRead()
         m_names.erase(m_names.begin()+dcIndex);
         if(m_index>dcIndex)
             m_index--;
+        emit changeStartColor();
 
 
 
