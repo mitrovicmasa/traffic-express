@@ -29,8 +29,8 @@ enum class Phase {
 
 class Game:Serializable
 {
-public:
 
+public:
     // Constructors
     Game();
     Game(std::vector<Player*> &players);
@@ -57,12 +57,9 @@ public:
     bool actionPending() const;
 
     //Set methods
-    void setPlayers(const std::vector<Player*> &newPlayers);
     void setWagons(Train* newWagons);
     void setRounds(std::vector<RoundCard*> &newRounds);
-    //void setCardsPlayed(std::vector<ActionCard*> newCardsPlayed);
     void setNeutralBulletDeck(const std::vector<NeutralBullet*> &newNeutralBulletDeck);
-    void setUnusedTreasure(const std::vector<Treasure*> &newUnusedTreasure);
     void setMostBulletsShot(BanditType newMostBulletsShot);
     void setRichestPlayer(BanditType newRichestPlayer);
     void setSeriffPosition(unsigned newSheriffPosition);
@@ -77,14 +74,10 @@ public:
     void setSeed(const unsigned &newSeed);
 
     // Initialization methods
-
-    const std::vector<Card*> &drawCards(unsigned) const;
-    std::vector<Card*> drawCards(unsigned numberOfCards, const Player* &player) const;
     std::vector<RoundCard*> selectRoundCards(RoundCardType cardType, std::vector<RoundCard*> &allRoundCards) const;
     RoundCard* selectOneTrainStationCard(std::vector<RoundCard*> &allRoundCards);
     std::vector<NeutralBullet*> generateNeutralBullets(unsigned numberOfNeutralBullets) const;
     Train* selectWagons(std::vector<Wagon*> allPossibleWagons, unsigned numberOfPlayers) const;
-    void placeBanditInWagon(unsigned) const;
 
     void initialize();
 
@@ -96,14 +89,10 @@ public:
     unsigned findPlayerById(BanditType);
 
     void checkNextActionCard();
-    void updateNextAction();
-
     void updateRounds();
-
     void showEndGameStats();
 
     int findPlayersTreasureIndex(Treasure*, unsigned);
-
     std::vector<Player*> possiblePlayersToShot(int playerIndex);
     std::vector<Player*> possiblePlayersToPunch(int playerIndex);
     std::vector<Treasure*> possibleTreasure(int playerIndex);
@@ -119,6 +108,7 @@ public:
     int playerClicked() const;
     void setPlayerClicked(int newPlayerClicked);
 
+    // Serializable interface
     QVariant toVariant() const;
     void fromVariant(const QVariant &variant);
 
@@ -141,13 +131,9 @@ private:
     bool m_actionPending;
     int m_playerClicked;
     unsigned m_seed;
-
-
 };
 
-void generateAllTreasure(const int &count, const int &value, TreasureType type, std::vector<Treasure> &treasure);
 std::vector<unsigned> getMoneybags(std::vector<unsigned>& remainingMoneybags, unsigned numberOfMoneybags);
 std::vector<RoundCard*> generateRoundCards(std::vector<EventType> &events, std::vector<std::vector<MiniRoundType>> &miniRounds);
-std::vector<Treasure*> remainingTreasure(std::vector<unsigned> &remainingMoneybags, unsigned remainingDiamonds, unsigned remainingSuitcases);
 
 #endif // GAME_H

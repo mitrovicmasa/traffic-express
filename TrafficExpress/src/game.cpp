@@ -1,5 +1,4 @@
 #include "../headers/game.h"
-#include "qpushbutton.h"
 #include <QApplication>
 #include <QAbstractButton>
 #include <QObject>
@@ -20,7 +19,6 @@ Game::Game(const Game &other)
       m_wagons(new Train(other.m_wagons->getWagons())),
       m_sheriffPosition(other.m_sheriffPosition),
       m_rounds(new RoundCardDeck(other.m_rounds->getRoundCards())),
-      //m_cardsPlayed(std::vector<ActionCard*>()),
       m_neutralBulletDeck(std::vector<NeutralBullet*>()),
       m_unusedTreasure(other.m_unusedTreasure),
       m_mostBulletsShot(other.m_mostBulletsShot),
@@ -35,26 +33,9 @@ Game::Game(const Game &other)
       m_seed(other.m_seed)
 {
     srand(m_seed);
-    //Danger players in train and in game are different
-    //Only use when train has no players inside
-//    for(Player*p:other.m_players)
-//        m_players.push_back(new Player(*p));
-
-//    for(RoundCard*rc:other.m_rounds)
-//        m_rounds.push_back(new RoundCard(*rc));
-
-
-//    for(ActionCard*ac:other.m_cardsPlayed)
-//        m_cardsPlayed.push_back((ActionCard*)ac->Copy());
 
     for(NeutralBullet*nb:other.m_neutralBulletDeck)
         m_neutralBulletDeck.push_back((NeutralBullet*)nb->Copy());
-
-//    for(Treasure*t:other.m_unusedTreasure)
-//        m_unusedTreasure.push_back(new Treasure(*t));
-
-
-
 }
 
 Game::~Game()
@@ -80,17 +61,10 @@ RoundCardDeck* Game::rounds()
     return m_rounds;
 }
 
-
-
 std::vector<NeutralBullet*> Game::neutralBulletDeck() const
 {
     return m_neutralBulletDeck;
 }
-
-//const std::vector<Treasure> &Game::unusedTreasure() const
-//{
-//    return m_unusedTreasure;
-//}
 
 BanditType Game::mostBulletsShot() const
 {
@@ -116,6 +90,7 @@ Deck *Game::getCardsPlayed()
 {
     return m_cardsPlayed;
 }
+
 int Game::indexOfRound() const
 {
     return m_indexOfRound;
@@ -131,21 +106,29 @@ Phase Game::phase() const
     return m_phase;
 }
 
+ActionType Game::currentAction() const
+{
+    return m_currentAction;
+}
+
+DialogueBox *Game::dialogueBox() const
+{
+    return m_dialogueBox;
+}
+
+const unsigned &Game::seed() const
+{
+    return m_seed;
+}
+
 bool Game::actionPending() const
 {
     return m_actionPending;
 }
 
-//// Set methods
-//void Game::setPlayers(const std::vector<Player> &newPlayers)
-//{
-//    m_players = newPlayers;
-//}
-
 void Game::setWagons(Train* newWagons)
 {
     m_wagons = newWagons;
-    //connect(m_wagons,&Train::clickedTreasureInWagonInTrain,this,&Game::onClickedTreasureInWagonInTrain);
 }
 
 void Game::setRounds( std::vector<RoundCard*> &newRounds)
@@ -153,20 +136,10 @@ void Game::setRounds( std::vector<RoundCard*> &newRounds)
     m_rounds = new RoundCardDeck(newRounds);
 }
 
-//void Game::setCardsPlayed(std::vector<ActionCard*> newCardsPlayed)
-//{
-//    m_cardsPlayed = newCardsPlayed;
-//}
-
 void Game::setNeutralBulletDeck(const std::vector<NeutralBullet*> &newNeutralBulletDeck)
 {
     m_neutralBulletDeck = newNeutralBulletDeck;
 }
-
-//void Game::setUnusedTreasure(const std::vector<Treasure> &newUnusedTreasure)
-//{
-//    m_unusedTreasure = newUnusedTreasure;
-//}
 
 void Game::setMostBulletsShot(BanditType newMostBulletsShot)
 {
@@ -183,6 +156,11 @@ void Game::setSeriffPosition(unsigned newSheriffPosition)
     m_sheriffPosition = newSheriffPosition;
 }
 
+void Game::setCardsPlayed(Deck *newCardsPlayed)
+{
+    m_cardsPlayed = newCardsPlayed;
+}
+
 void Game::setIndexOfPlayerToMove(int nextPlayerIndex)
 {
     m_players[m_indexOfPlayerToMove]->setMyMove(false);
@@ -190,12 +168,49 @@ void Game::setIndexOfPlayerToMove(int nextPlayerIndex)
     m_players[m_indexOfPlayerToMove]->setMyMove(true);
 }
 
+void Game::setIndexOfRound(int newIndexOfRound)
+{
+    m_indexOfRound = newIndexOfRound;
+}
+
+void Game::setIndexOfMiniround(int newIndexOfMiniround)
+{
+    m_indexOfMiniround = newIndexOfMiniround;
+}
+
+void Game::setPhase(Phase newPhase)
+{
+    m_phase = newPhase;
+}
+
+void Game::setNextPlayerToMove()
+{
+    int nextPlayer=(m_indexOfPlayerToMove+1)%m_players.size();
+    setIndexOfPlayerToMove(nextPlayer);
+}
+
 void Game::setActionPending(bool newActionPending)
 {
     m_actionPending = newActionPending;
 }
 
-//// Initialization methods
+void Game::setSeed(const unsigned &newSeed)
+{
+    m_seed = newSeed;
+}
+
+void Game::setCurrentAction(ActionType newCurrentAction)
+{
+    m_currentAction = newCurrentAction;
+}
+
+void Game::setDialogueBox(DialogueBox *newDialogueBox)
+{
+    m_dialogueBox = newDialogueBox;
+}
+
+
+// Initialization methods
 
 Train* Game::selectWagons(std::vector<Wagon*> allPossibleWagons, unsigned numberOfPlayers) const
 {
@@ -205,17 +220,8 @@ Train* Game::selectWagons(std::vector<Wagon*> allPossibleWagons, unsigned number
     for(Wagon*w:allPossibleWagons){
         if(std::find(selectedWagons.begin(),selectedWagons.end(),w)==allPossibleWagons.end()){
             delete w;
-
         }
-
     }
-
-
-//    for(Wagon*w:unwantedTreasure){
-//        delete w;
-//    }
-
-
     return new Train(selectedWagons);
 }
 
@@ -227,14 +233,6 @@ std::vector<RoundCard*> Game::selectRoundCards(RoundCardType cardType, std::vect
                  [cardType](RoundCard *card) { return card->typeOfRoundCard() == cardType; });
 
     std::sample(cards.cbegin(), cards.cend(), std::back_inserter(result), 4, std::mt19937_64{std::random_device{}()});
-
-//    for(RoundCard*rc:allRoundCards){
-//        if(std::find(result.begin(),result.end(),rc)==result.end()){
-//            delete rc;
-
-//        }
-
-//    }
 
     return result;
 }
@@ -262,7 +260,6 @@ std::vector<unsigned> getMoneybags(std::vector<unsigned>& remainingMoneybags, un
         selectedMoneybags.push_back(remainingMoneybags[randomIndex]);
         remainingMoneybags.erase(remainingMoneybags.begin() + randomIndex);
     }
-
     return selectedMoneybags;
 }
 
@@ -282,27 +279,6 @@ std::vector<RoundCard*> generateRoundCards(std::vector<EventType> &events, std::
 
     return roundCards;
 }
-
-//std::vector<Treasure*> remainingTreasure(std::vector<unsigned> &remainingMoneybags, unsigned remainingDiamonds, unsigned remainingSuitcases)
-//{
-//    std::map<unsigned, unsigned> mappedMoneybagValues = {
-//        {0, 250},
-//        {1, 300},
-//        {2, 350},
-//        {3, 400},
-//        {4, 450},
-//        {5, 500}
-//    };
-
-//    std::vector<Treasure*> treasure = {};
-//    for (unsigned i = 0; i < remainingMoneybags.size(); ++i)
-//        treasure.push_back(new Treasure(mappedMoneybagValues[remainingMoneybags[i]], TreasureType::MONEYBAG));
-
-//    treasure.insert(treasure.end(), remainingDiamonds, new Treasure(500, TreasureType::DIAMOND));
-//    treasure.insert(treasure.end(), remainingSuitcases, new Treasure(1000, TreasureType::SUITCASE));
-
-//    return treasure;
-//}
 
 std::vector<NeutralBullet*> Game::generateNeutralBullets(unsigned numberOfNeutralBullets) const
 {
@@ -329,8 +305,6 @@ void Game::initialize()
     allPossibleTreasure.push_back( Treasure(400, TreasureType::MONEYBAG)); //3
     allPossibleTreasure.push_back( Treasure(450, TreasureType::MONEYBAG)); //4
     allPossibleTreasure.push_back( Treasure(500, TreasureType::MONEYBAG)); //5
-    //allPossibleTreasure.insert(allPossibleTreasure.end(), 6, new Treasure(500,TreasureType::DIAMOND));
-    //allPossibleTreasure.insert(allPossibleTreasure.end(), 2, new Treasure(1000,TreasureType::SUITCASE));
 
     // Wagons
     std::vector<Wagon*> allPossibleWagons = std::vector<Wagon*>();
@@ -368,8 +342,6 @@ void Game::initialize()
         int numberOfMoneybags = (*selectedWagons)[i]->numberOfTreasureInWagonDown(TreasureType::MONEYBAG);
         int numberOfDiamonds = (*selectedWagons)[i]->numberOfTreasureInWagonDown(TreasureType::DIAMOND);
 
-//        (*selectedWagons)[i]->clearContentDown();
-
         selectedMoneybagsIndexes = ::getMoneybags(remainingMoneybags,numberOfMoneybags);
 
         for (unsigned i = 0; i < numberOfMoneybags; ++i)
@@ -390,6 +362,7 @@ void Game::initialize()
 
     auto tc13=TreasureChest({new Treasure(1000, TreasureType::SUITCASE)});
     auto tc14=TreasureChest();
+
     // Place Marshal and suitcase in Locomotive
     selectedWagons->push_back(new Wagon(tc13,tc14));
     selectedWagons->back()->setIsLocomotive(true);
@@ -398,9 +371,6 @@ void Game::initialize()
 
     // Set wagons for current game
     setWagons(selectedWagons);
-
-    // Unused treasure init??
-    //setUnusedTreasure(::remainingTreasure(remainingMoneybags, remainingDiamonds, remainingSuitcases));
 
     // RoundCards
     std::vector<EventType> events = {
@@ -454,41 +424,14 @@ void Game::initialize()
     for(RoundCard*rc:allRoundCards){
         if(std::find(m_rounds->getRoundCards().begin(),m_rounds->getRoundCards().end(),rc)==m_rounds->getRoundCards().end()){
             delete rc;
-
         }
-
     }
-
-
-    // Neutral Bullets
     setNeutralBulletDeck(generateNeutralBullets(13));
 
     m_indexOfPlayerToMove=0;
 
     QString text = "WAGON SELECTION PHASE!";
     m_dialogueBox = new DialogueBox(text);
-}
-
-void Game::setIndexOfRound(int newIndexOfRound)
-{
-    m_indexOfRound = newIndexOfRound;
-}
-
-void Game::setIndexOfMiniround(int newIndexOfMiniround)
-{
-    m_indexOfMiniround = newIndexOfMiniround;
-}
-
-
-void Game::setPhase(Phase newPhase)
-{
-    m_phase = newPhase;
-}
-
-void Game::setNextPlayerToMove()
-{
-    int nextPlayer=(m_indexOfPlayerToMove+1)%m_players.size();
-    setIndexOfPlayerToMove(nextPlayer);
 }
 
 void Game::allPlayersDrawCards(int n)
@@ -498,10 +441,7 @@ void Game::allPlayersDrawCards(int n)
     }
 }
 
-
-
-//// Other methods
-
+// Other methods
 void Game::shuffleDecks() const
 {
     for(Player *player : m_players)
@@ -574,7 +514,6 @@ void Game::showEndGameStats()
     if(btn) {
         QApplication::quit();
     }
-    //QObject::connect(btn, &QAbstractButton::clicked,[](){QApplication::quit;});
 }
 
 std::vector<Player *> Game::possiblePlayersToShot(int playerIndex)
@@ -612,7 +551,6 @@ std::vector<Player *> Game::possiblePlayersToShot(int playerIndex)
             }
         }
     }
-
     return possibleTargets;
 }
 
@@ -649,7 +587,6 @@ std::vector<Treasure *> Game::possibleTreasure(int playerIndex)
             treasure.push_back(content);
         }
     }
-
     return treasure;
 }
 
@@ -668,16 +605,12 @@ void Game::checkNextActionCard()
             this->showEndGameStats();
 
         } else { // If this wasn't the last round, we are moving to the next round.
-
-
             this->setIndexOfMiniround(0);
             RoundCard* rc = m_rounds->getRoundCards()[m_indexOfRound];
             rc->setZValue(-1);
             qDebug() << m_indexOfRound;
             this->setIndexOfRound(m_indexOfRound + 1);
-            qDebug() << m_indexOfRound;
-
-            //this->rounds()->setRoundOnScene(m_indexOfRound);
+            qDebug() << m_indexOfRound;   
 
             QString msg = "Now it's PHASE 1";
             this->m_dialogueBox->setText(msg);
@@ -685,7 +618,7 @@ void Game::checkNextActionCard()
             for(Player* p : this->m_players)
             {
                 p->returnCardsToDeck();
-                p->shuffleDeck(this->m_seed); //THIS IS NOT WORKING !!!!!!!!!!!!!!!!!!!
+                p->shuffleDeck(this->m_seed);
                 p->drawCards(6);
             }
 
@@ -707,7 +640,6 @@ void Game::checkNextActionCard()
     BanditType nextBandit = ((ActionCard*)nextCardForAction)->bandit();
     ActionType nextAction = ((ActionCard*)nextCardForAction)->action();
 
-    // IF IT'S A FIRE CARD AND THERE IS NO ONE TO SHOOT, NEXT CARD.
     if(nextAction == ActionType::FIRE) {
         // All possible targets will be in this vector
         std::vector<Player*> possibleTargets = possiblePlayersToShot(findPlayerById(nextBandit));
@@ -721,8 +653,8 @@ void Game::checkNextActionCard()
             checkNextActionCard();
             return;
         } else {
-            qDebug() << findPlayerById(possibleTargets[0]->id());
-            qDebug() << possibleTargets[0];
+            //qDebug() << findPlayerById(possibleTargets[0]->id());
+            //qDebug() << possibleTargets[0];
         }
     }
 
@@ -739,7 +671,7 @@ void Game::checkNextActionCard()
             checkNextActionCard();
             return;
         } else {
-            qDebug() << findPlayerById(possibleTargets[0]->id());
+            //qDebug() << findPlayerById(possibleTargets[0]->id());
         }
     }
 
@@ -756,7 +688,7 @@ void Game::checkNextActionCard()
                 checkNextActionCard();
                 return;
             } else {
-                qDebug() << treasure[0];
+                //qDebug() << treasure[0];
             }
     }
 
@@ -765,11 +697,6 @@ void Game::checkNextActionCard()
 
     this->players()[this->m_indexOfPlayerToMove]->deck()->push_back(nextCardForAction);
     nextCardForAction->setFaceUp(false);
-}
-
-void Game::setCardsPlayed(Deck *newCardsPlayed)
-{
-    m_cardsPlayed = newCardsPlayed;
 }
 
 void Game::updateRounds()
@@ -799,6 +726,7 @@ void Game::updateRounds()
     }
 }
 
+// Actions
 bool Game::actionChangeWagon(int wagonIndex)
 {
     bool isPlayerOnTheRoof = m_players[m_indexOfPlayerToMove]->roof();
@@ -916,17 +844,12 @@ bool Game::actionFire(int playerIndex)
     unsigned positionInTrain2 = players()[playerIndex]->positionInTrain();
     bool roof2 = players()[playerIndex]->roof();
 
-    qDebug() << positionInTrain << roof;
-    qDebug() << positionInTrain2 << roof2;
-
     if(roof != roof2) {
-        qDebug() << "Cant shot this guy1";
         // You can't shoot yourself someone who is not on the same floor!
         return false;
     }
 
     if(positionInTrain == positionInTrain2) {
-        qDebug() << "Cant shot this guy2";
         // You can't shoot yourself someone who is in the same wagon!
         return false;
     }
@@ -935,8 +858,8 @@ bool Game::actionFire(int playerIndex)
 
     // Now we check if clicked player is a possible target
     for(Player* p: possibleTargets) {
-        qDebug() << "Moguci targeti je: ";
-        qDebug() << this->findPlayerById(p->id());
+       // qDebug() << "Moguci targeti: ";
+        //qDebug() << this->findPlayerById(p->id());
         if(findPlayerById(p->id()) == playerIndex) {
             // player(playerIndex) recieves a BULLET CARD from playerToMove
             qDebug() << "Someone's been shot!";
@@ -947,31 +870,8 @@ bool Game::actionFire(int playerIndex)
             return true;
         }
     }
-
-    qDebug() << "Cant shot this guy3";
     return false;
 }
-
-ActionType Game::currentAction() const
-{
-    return m_currentAction;
-}
-
-void Game::setCurrentAction(ActionType newCurrentAction)
-{
-    m_currentAction = newCurrentAction;
-}
-
-DialogueBox *Game::dialogueBox() const
-{
-    return m_dialogueBox;
-}
-
-void Game::setDialogueBox(DialogueBox *newDialogueBox)
-{
-    m_dialogueBox = newDialogueBox;
-}
-
 
 std::pair<Wagon*, Treasure*> Game::actionRobbery(int treasureIndex, int wagonIndex)
 {
@@ -1038,7 +938,6 @@ QVariant Game::toVariant() const
         map.insert("rcd",m_rounds->toVariant());
         map.insert("cPlayed",m_cardsPlayed->toVariant());
 
-        //std::vector<NeutralBullet*> m_neutralBulletDeck;
         QVariantList treasureList;
         for(Treasure*t:m_unusedTreasure){
             treasureList.append(t->toVariant());
@@ -1049,14 +948,9 @@ QVariant Game::toVariant() const
         map.insert("richestPlayer",(int)m_richestPlayer);
         map.insert("phase",(int)m_phase);
 
-
-        //DialogueBox* m_dialogueBox;
         map.insert("aPending",m_actionPending);
         map.insert("pClicked",m_playerClicked);
         map.insert("seed",(int)m_seed);
-
-
-
 
         return map;
 }
@@ -1085,7 +979,6 @@ void Game::fromVariant(const QVariant &variant)
           m_cardsPlayed=new Deck();
           m_cardsPlayed->fromVariant(map.value("cPlayed"));
 
-        //std::vector<NeutralBullet*> m_neutralBulletDeck;
         QVariantList treasureList=map.value("uTreasure").toList();
         for(auto&t:treasureList){
             Treasure*tr=new Treasure();
@@ -1098,14 +991,11 @@ void Game::fromVariant(const QVariant &variant)
         m_richestPlayer=static_cast<BanditType>(map.value("richestPlayer").toInt());
         m_phase=static_cast<Phase>(map.value("phase").toInt());
 
-
-        //DialogueBox* m_dialogueBox;
         m_actionPending=map.value("aPending").toBool();
         m_playerClicked=map.value("pClicked").toInt();
         m_seed=(unsigned)map.value("seed").toInt();
 
         srand(m_seed);
-
 
         setNeutralBulletDeck(generateNeutralBullets(13));
 
@@ -1113,17 +1003,6 @@ void Game::fromVariant(const QVariant &variant)
 
         QString text = "WAGON SELECTION PHASE!";
         m_dialogueBox = new DialogueBox(text);
-
-
 }
 
-const unsigned &Game::seed() const
-{
-    return m_seed;
-}
-
-void Game::setSeed(const unsigned &newSeed)
-{
-    m_seed = newSeed;
-}
 

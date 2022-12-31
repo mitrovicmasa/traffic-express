@@ -25,6 +25,11 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+    void connectButtons();
+    void dialogInit();
+    void setImages();
+    void keyPressEvent(QKeyEvent*);
+
 private slots:
     void onPlay();
     void onGameRules();
@@ -32,32 +37,18 @@ private slots:
     void onConnect();
     void onReady();
     void onStart();
-
     void onMovePlayed(int i);
-
-    void connectButtons();
-    void dialogInit();
-    void setImages();
-
     void onChangeReadyColor(bool);
     void onChangeStartColor();
     void onGameLoaded();
-
 
 signals:
     void readyClicked();
     void startClicked();
 
-
 private:
     PlayerClient* m_client;
-
-    void showMessageBox(QString content) const;
-    void keyPressEvent(QKeyEvent*);
-    Ui::MainWindow *ui;
-    QDialog*dialog;
-
-    //SinglePlayerStateMachine *sp;
-
+    Ui::MainWindow* ui;
+    QDialog* dialog;
 };
 #endif // MAINWINDOW_H
