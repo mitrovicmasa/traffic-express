@@ -612,7 +612,7 @@ void Game::checkNextActionCard()
             this->setIndexOfRound(m_indexOfRound + 1);
             qDebug() << m_indexOfRound;   
 
-            QString msg = "Now it's PHASE 1";
+            QString msg = "PHASE 1: PICK A CARD FROM YOUR HAND OR DRAW 3 FROM DECK.";
             this->m_dialogueBox->setText(msg);
 
             for(Player* p : this->m_players)
@@ -633,8 +633,7 @@ void Game::checkNextActionCard()
     Card* nextCardForAction = this->getCardsPlayed()->front();
     this->getCardsPlayed()->pop_front();
 
-    QString msg = "Next card for actions is ";
-    msg.append(QString::fromStdString(nextCardForAction->toString()));
+    QString msg = QString::fromStdString(nextCardForAction->toString());
     this->m_dialogueBox->setText(msg);
 
     BanditType nextBandit = ((ActionCard*)nextCardForAction)->bandit();

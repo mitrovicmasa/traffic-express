@@ -99,6 +99,7 @@ set(PROJECT_HEADERS
         headers/roundcarddeck.h
         headers/serializable.h
         headers/client/playerclient.h
+        #../tests/catch.hpp
 )
 
 set(

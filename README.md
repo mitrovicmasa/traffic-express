@@ -22,7 +22,7 @@ Ako se maršal nađe u istom vagonu kao i igrač, to je verovatno jer ga suparni
 Na kraju igre, pobednik je igrač koji je sakupio najviše blaga!
 
 ## :movie_camera: Demo snimak projekta 
-- link: [Traffic Express]()  <br><br>
+- link: [Traffic Express](https://www.youtube.com/watch?v=GON12_AFFcw&ab_channel=Ma%C5%A1aMitrovi%C4%87)  <br><br>
 
 ## Okruženje
 - [![qtCreator](https://img.shields.io/badge/IDE-Qt_Creator-olivia)](https://www.qt.io/download) <br><br>

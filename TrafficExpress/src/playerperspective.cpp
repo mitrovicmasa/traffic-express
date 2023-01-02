@@ -240,8 +240,8 @@ void PlayerPerspective::onPlayerPlayedCard(int playerIndex, int cardIndex)
 
     // Putting message in dialogue box
 
-    QString text = QString::fromStdString(((ActionCard*)c)->toString());
-    m_game->dialogueBox()->setText(text);
+//    QString text = QString::fromStdString(((ActionCard*)c)->toString());
+//    m_game->dialogueBox()->setText(text);
 
     if(mr->getMiniRoundType() == MiniRoundType::DOUBLE_CARDS) {
         if(mr->firstDoubleCardPlayed()) {
@@ -275,9 +275,9 @@ void PlayerPerspective::onPlayerDrawCards(int playerIndex)
         playerToMove->hand()->push_back(takenCard);
     }
     // Putting message in dialogue box
-    QString text = QString::fromStdString(::toString(playerToMove->id()));
-    text.append(" draw 3 cards from his deck. ");
-    m_game->dialogueBox()->setText(text);
+//    QString text = QString::fromStdString(::toString(playerToMove->id()));
+//    text.append(" draw 3 cards from his deck. ");
+//    m_game->dialogueBox()->setText(text);
 
     // Checking the rounds and minirounds
     m_game->updateRounds();
