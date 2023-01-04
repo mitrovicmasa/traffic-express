@@ -134,7 +134,8 @@ void PlayerPerspective::onClickedCardInDeckInPlayer(Card *c, Deck *d, Player *p)
 
 void PlayerPerspective::onClickedTreasureInPlayerStatsInTable(Treasure *t, PlayerStats *ps, Table *p)
 {
-    if (m_game->currentAction() == ActionType::PUNCH && m_player->isItMyMove() && m_game->phase() == Phase::PHASE_2 && m_game->actionPending()) {
+    if (m_game->currentAction() == ActionType::PUNCH && m_player->isItMyMove() && m_game->phase() == Phase::PHASE_2 &&
+        m_game->actionPending() && m_game->playerClicked() == m_game->findPlayerById(ps->getPlayer()->id())) {
 
         m_game->setActionPending(false);
         unsigned playerIndex = m_game->findPlayerById(ps->getPlayer()->id());
@@ -156,14 +157,13 @@ void PlayerPerspective::onClickedPlayerInWagonInTrain(Player *p, Wagon *w, Train
     }
 
     if (m_game->currentAction() == ActionType::PUNCH && m_player->isItMyMove() && m_game->phase() == Phase::PHASE_2 &&
-            p->positionInTrain() == m_player->positionInTrain() && p->roof() == m_player->roof()) {
+        p->positionInTrain() == m_player->positionInTrain() && p->id() != m_player->id() && p->roof() == m_player->roof()) {
 
         m_game->setActionPending(true);
         m_game->setPlayerClicked(m_game->findPlayerById(p->id()));
     }
 
     return;
-
 
 }
 
