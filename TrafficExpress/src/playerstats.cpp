@@ -1,7 +1,7 @@
 #include "../headers/playerstats.h"
 
 #include <QPainter>
-#include <string.h>
+#include <cstring>
 
 // Constructors
 PlayerStats::PlayerStats()

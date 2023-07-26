@@ -1,9 +1,7 @@
 #include "../../headers/collections/playergroup.h"
 
 PlayerGroup::PlayerGroup()
-{
-
-}
+= default;
 
 PlayerGroup::PlayerGroup(std::vector<Player *> &vp)
 {

@@ -336,11 +336,11 @@ int Wagon::getTreasureIndex(Treasure* t, bool roof) const
 std::string Wagon::toString()
 {
     std::string r = "myContentUp:\n";
-        for(auto begin = m_contentUp.begin(); begin != m_contentUp.end(); begin++)
-            r+=(*begin)->toString()+", ";
+        for(auto & begin : m_contentUp)
+            r+=begin->toString()+", ";
         r+="\nMyContentDown:\n";
-        for(auto begin=m_contentDown.begin();begin!=m_contentDown.end();begin++)
-            r+=(*begin)->toString()+", ";
+        for(auto & begin : m_contentDown)
+            r+=begin->toString()+", ";
         return r;
 
 }
@@ -437,7 +437,7 @@ void Wagon::fromVariant(const QVariant &variant)
     QVariantList list=map.value("contentDown").toList();
     for(auto &t:list){
 
-        Treasure*tr=new Treasure();
+        auto*tr=new Treasure();
         tr->fromVariant(t);
         addContentDown(tr);
     }

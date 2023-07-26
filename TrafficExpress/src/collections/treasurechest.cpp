@@ -1,9 +1,7 @@
 #include "../../headers/collections/treasurechest.h"
 
 TreasureChest::TreasureChest()
-{
-
-}
+= default;
 
 TreasureChest::TreasureChest(vector<Treasure *> vt)
 {

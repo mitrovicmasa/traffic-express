@@ -66,7 +66,7 @@ void PlayerServer::onReadyRead()
 {
     qDebug()<<"ReadyRead";
 
-    QTcpSocket*client=qobject_cast<QTcpSocket*>(QObject::sender());
+    auto*client=qobject_cast<QTcpSocket*>(QObject::sender());
     int playerIndex=findSocketIndex(client);
 
     QString message(client->readAll());
@@ -151,7 +151,7 @@ void PlayerServer::onReadyRead()
 
 void PlayerServer::onDisconnect()
 {
-    QTcpSocket*client=qobject_cast<QTcpSocket*>(QObject::sender());
+    auto*client=qobject_cast<QTcpSocket*>(QObject::sender());
     int playerIndex=findSocketIndex(client);
 
     m_gameOngoing=false;
@@ -162,8 +162,8 @@ void PlayerServer::onDisconnect()
     m_names.erase(m_names.begin()+playerIndex);
     m_ready.erase(m_ready.begin()+playerIndex);
     client->deleteLater();
-    for(int i=0;i<m_clients.size();i++)
-            this->sendMessage(m_clients[i],"dc:"+QString::number(playerIndex));
+    for(auto & m_client : m_clients)
+            this->sendMessage(m_client,"dc:"+QString::number(playerIndex));
 
     if(!m_clients.empty())
         this->sendMessage(m_clients[0],"host");

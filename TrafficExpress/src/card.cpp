@@ -8,9 +8,7 @@ Card::Card():QGraphicsObject()
 
 // Destructor
 Card::~Card()
-{
-
-}
+= default;
 
 // Get methods
 bool Card::faceUp() const

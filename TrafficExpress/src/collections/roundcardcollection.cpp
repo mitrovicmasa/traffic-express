@@ -1,9 +1,7 @@
 #include "../../headers/collections/roundcardcollection.h"
 
 RoundCardCollection::RoundCardCollection()
-{
-
-}
+= default;
 
 RoundCardCollection::RoundCardCollection(std::vector<RoundCard *> &rcv)
 {

@@ -1,9 +1,7 @@
 #include "../../headers/collections/playerstatscollection.h"
 
 PlayerStatsCollection::PlayerStatsCollection()
-{
-
-}
+= default;
 
 PlayerStatsCollection::PlayerStatsCollection(std::vector<PlayerStats *> &psv)
 {

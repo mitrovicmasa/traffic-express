@@ -8,9 +8,7 @@ BanditCard::BanditCard(BanditType bandit) : m_bandit(bandit)
 
 // Destructor
 BanditCard::~BanditCard()
-{
-
-}
+= default;
 
 // Get methods
 BanditType BanditCard::bandit() const

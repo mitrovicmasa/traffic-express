@@ -1,12 +1,12 @@
 #include "../headers/game.h"
-#include <QApplication>
 #include <QAbstractButton>
+#include <QApplication>
 #include <QObject>
+#include <random>
+
 //// Constructors
 Game::Game()
-{
-
-}
+= default;
 
 Game::Game( std::vector<Player*> &players)
     : m_players(players),m_indexOfPlayerToMove(0),m_indexOfRound(0), m_indexOfMiniround(0)
@@ -244,7 +244,7 @@ RoundCard* Game::selectOneTrainStationCard(std::vector<RoundCard*> &allRoundCard
                  std::back_inserter(trainStationCards),
                  [](RoundCard *card) { return card->typeOfRoundCard() == RoundCardType::TRAIN_STATION; });
 
-    srand(time(0));
+    srand(time(nullptr));
     return trainStationCards[rand() % trainStationCards.size()];
 }
 
@@ -255,7 +255,7 @@ std::vector<unsigned> getMoneybags(std::vector<unsigned>& remainingMoneybags, un
 
     for(unsigned i = 0; i < numberOfMoneybags; i++)
     {
-        srand(time(0));
+        srand(time(nullptr));
         int randomIndex = rand() % remainingMoneybags.size();
         selectedMoneybags.push_back(remainingMoneybags[randomIndex]);
         remainingMoneybags.erase(remainingMoneybags.begin() + randomIndex);
@@ -299,12 +299,12 @@ void Game::initialize()
 
     // Treasure
     std::vector<Treasure> allPossibleTreasure;
-    allPossibleTreasure.push_back( Treasure(250, TreasureType::MONEYBAG)); //0
-    allPossibleTreasure.push_back( Treasure(300, TreasureType::MONEYBAG)); //1
-    allPossibleTreasure.push_back( Treasure(350, TreasureType::MONEYBAG)); //2
-    allPossibleTreasure.push_back( Treasure(400, TreasureType::MONEYBAG)); //3
-    allPossibleTreasure.push_back( Treasure(450, TreasureType::MONEYBAG)); //4
-    allPossibleTreasure.push_back( Treasure(500, TreasureType::MONEYBAG)); //5
+    allPossibleTreasure.emplace_back(250, TreasureType::MONEYBAG); //0
+    allPossibleTreasure.emplace_back(300, TreasureType::MONEYBAG); //1
+    allPossibleTreasure.emplace_back(350, TreasureType::MONEYBAG); //2
+    allPossibleTreasure.emplace_back(400, TreasureType::MONEYBAG); //3
+    allPossibleTreasure.emplace_back(450, TreasureType::MONEYBAG); //4
+    allPossibleTreasure.emplace_back(500, TreasureType::MONEYBAG); //5
 
     // Wagons
     std::vector<Wagon*> allPossibleWagons = std::vector<Wagon*>();
@@ -416,8 +416,8 @@ void Game::initialize()
         roundCards = selectRoundCards(RoundCardType::FIVE_TO_SIX_PLAYERS, allRoundCards);
     }
 
-    srand(time(0));
-    std::random_shuffle(roundCards.begin(), roundCards.end());
+    srand(time(nullptr));
+    std::shuffle(roundCards.begin(), roundCards.end(), std::mt19937(std::random_device()()));
     roundCards.push_back(selectOneTrainStationCard(allRoundCards));
 
     setRounds(roundCards);
@@ -493,7 +493,7 @@ int Game::findPlayersTreasureIndex(Treasure *t, unsigned playerIndex)
 
 void Game::showEndGameStats()
 {
-    QMessageBox* msgBox = new QMessageBox();
+    auto* msgBox = new QMessageBox();
 
     std::vector<Player*> sortedPlayers = this->players();
     std::sort(sortedPlayers.begin(),sortedPlayers.end(), [](Player* a, Player* b) { return a->countAmountOfTreasure() > b->countAmountOfTreasure(); } );
@@ -965,7 +965,7 @@ void Game::fromVariant(const QVariant &variant)
 
         QVariantList playerList=map.value("pl").toList();
         for(auto&p:playerList){
-            Player*player=new Player();
+            auto*player=new Player();
             player->fromVariant(p);
             m_players.push_back(player);
         }
@@ -980,7 +980,7 @@ void Game::fromVariant(const QVariant &variant)
 
         QVariantList treasureList=map.value("uTreasure").toList();
         for(auto&t:treasureList){
-            Treasure*tr=new Treasure();
+            auto*tr=new Treasure();
             tr->fromVariant(t);
             m_unusedTreasure.push_back(tr);
         }

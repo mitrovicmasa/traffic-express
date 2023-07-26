@@ -1,9 +1,7 @@
 #include "../../headers/collections/wagonarray.h"
 
 WagonArray::WagonArray()
-{
-
-}
+= default;
 
 WagonArray::WagonArray(const WagonArray &other)
 {

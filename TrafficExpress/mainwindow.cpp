@@ -69,9 +69,9 @@ void MainWindow::dialogInit()
     dialog->setMinimumWidth(640);
     dialog->setMinimumHeight(480);
 
-    QVBoxLayout *vl=new QVBoxLayout();
+    auto *vl=new QVBoxLayout();
 
-    QPushButton *pbBackToMainMenu=new QPushButton();
+    auto *pbBackToMainMenu=new QPushButton();
     pbBackToMainMenu->setPalette(QPalette("://buttonPaleta.xml"));
     pbBackToMainMenu->setParent(dialog);
     pbBackToMainMenu->setText("Back to main menu");
@@ -83,7 +83,7 @@ void MainWindow::dialogInit()
     connect(pbBackToMainMenu,&QPushButton::clicked,this,&MainWindow::onBackToTheMenu);
     pbBackToMainMenu->setStyleSheet("border-image : url(://button.png); color: white; background: transparent;");
 
-    QPushButton *pbQuit=new QPushButton();
+    auto *pbQuit=new QPushButton();
     pbQuit->setPalette(QPalette("://buttonPaleta.xml"));
     pbQuit->setParent(dialog);
     pbQuit->setText("Quit");
@@ -124,8 +124,8 @@ void MainWindow::onChangeReadyColor(bool condition)
     auto readys=m_client->getReadys();
     auto names=m_client->getNames();
 
-    for(int i=0;i<names.size();i++){
-        ui->listWidget->addItem(names[i]);
+    for(auto & name : names){
+        ui->listWidget->addItem(name);
     }
 }
 

@@ -1,9 +1,7 @@
 #include "../../headers/collections/miniroundcollection.h"
 
 MiniRoundCollection::MiniRoundCollection()
-{
-
-}
+= default;
 
 MiniRoundCollection::MiniRoundCollection(std::vector<MiniRound *> &other)
 {

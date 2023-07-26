@@ -212,7 +212,7 @@ void RoundCard::fromVariant(const QVariant &variant)
     QVariantList list = map.value("miniRounds").toList();
 
     for (auto &e : list) {
-        MiniRound *miniRound = new MiniRound(static_cast<MiniRoundType>(e.toInt()));
+        auto *miniRound = new MiniRound(static_cast<MiniRoundType>(e.toInt()));
         this->push_back(miniRound);
     }
 }

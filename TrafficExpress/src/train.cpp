@@ -19,9 +19,7 @@ Train::Train(WagonArray &wa)
 }
 
 Train::Train()
-{
-
-}
+= default;
 
 Train::Train(std::vector<Wagon *>wagons)
     :QGraphicsObject()
@@ -46,8 +44,8 @@ WagonArray &Train::getWagons()
 int Train::getWagonIndex(Wagon *w)
 {
     int i=0;
-    for(auto it=m_wagons.begin();it!=m_wagons.end();it++){
-        if((*it)==w){
+    for(auto & m_wagon : m_wagons){
+        if(m_wagon==w){
             return i;
         }
         i++;
@@ -168,7 +166,7 @@ void Train::fromVariant(const QVariant &variant)
     QVariantList list = variant.toMap().value("wagons").toList();
 
     for (auto &wagon : list) {
-        Wagon *newWagon = new Wagon();
+        auto *newWagon = new Wagon();
         newWagon->fromVariant(wagon);
         newWagon->setIsLocomotive(false);
         push_back(newWagon);

@@ -147,7 +147,7 @@ void Hand::fromVariant(const QVariant &variant)
 {
     QVariantList list = variant.toMap().value("cards").toList();
     for (auto &card: list) {
-        ActionCard *newCard = new ActionCard();
+        auto *newCard = new ActionCard();
         newCard->fromVariant(card);
         this->push_back(newCard);
     }

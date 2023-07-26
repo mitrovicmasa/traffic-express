@@ -2,9 +2,7 @@
 
 // Constructors
 NeutralBullet::NeutralBullet()
-{
-
-}
+= default;
 
 NeutralBullet::NeutralBullet(BanditType id) : m_id(id)
 {
@@ -19,9 +17,7 @@ Card *NeutralBullet::Copy() const
 
 // Destructor
 NeutralBullet::~NeutralBullet()
-{
-
-}
+= default;
 
 // Get methods
 const BanditType &NeutralBullet::id() const

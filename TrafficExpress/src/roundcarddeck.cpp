@@ -2,9 +2,7 @@
 
 // Constructors
 RoundCardDeck::RoundCardDeck()
-{
-
-}
+= default;
 
 RoundCardDeck::RoundCardDeck(std::vector<RoundCard *>rcs)
 {
@@ -101,7 +99,7 @@ void RoundCardDeck::fromVariant(const QVariant &variant)
     QVariantMap map = variant.toMap();
     QVariantList list = map.value("rcdList").toList();
     for( auto it = list.rbegin(); it != list.rend(); it++){
-        RoundCard* rc = new RoundCard();
+        auto* rc = new RoundCard();
         rc->fromVariant(*it);
         this->push_front(rc);
     }

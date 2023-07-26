@@ -1,6 +1,6 @@
 #include "../headers/player.h"
 
-#include <time.h>
+#include <ctime>
 
 #include <QPainter>
 
@@ -194,7 +194,7 @@ void Player::fromVariant(const QVariant &variant)
 
     QVariantList content = map.value("treasure").toList();
     for (auto &treasure : content) {
-        Treasure *t = new Treasure();
+        auto *t = new Treasure();
         t->fromVariant(treasure);
         m_treasure.push_back(t);
     }

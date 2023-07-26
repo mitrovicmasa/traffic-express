@@ -3,9 +3,7 @@
 
 // Constructors
 Sheriff::Sheriff()
-{
-
-}
+= default;
 
 Sheriff::Sheriff(int positionInTrain)
 {

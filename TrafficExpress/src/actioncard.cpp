@@ -25,9 +25,7 @@ Card *ActionCard::Copy() const
 
 // Destructor
 ActionCard::~ActionCard()
-{
-
-}
+= default;
 
 // Get methods
 ActionType ActionCard::action() const

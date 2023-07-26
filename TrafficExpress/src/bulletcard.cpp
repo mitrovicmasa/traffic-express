@@ -14,9 +14,7 @@ Card *BulletCard::Copy() const
 
 // Destructor
 BulletCard::~BulletCard()
-{
-
-}
+= default;
 
 // Get methods
 const unsigned &BulletCard::numOfBullets() const
