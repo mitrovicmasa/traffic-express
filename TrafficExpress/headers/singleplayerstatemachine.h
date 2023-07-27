@@ -1,38 +1,29 @@
 #ifndef SINGLEPLAYERSTATEMACHINE_H
 #define SINGLEPLAYERSTATEMACHINE_H
 
-
 #include "playerperspectivecollection.h"
 
+class SinglePlayerStateMachine : public QObject {
+  Q_OBJECT
+ public:
+  SinglePlayerStateMachine();
+  SinglePlayerStateMachine(std::vector<PlayerPerspective*>&);
 
-class SinglePlayerStateMachine:public QObject
-{
-    Q_OBJECT
-public:
-    SinglePlayerStateMachine();
-    SinglePlayerStateMachine(std::vector<PlayerPerspective*>&);
+  PlayerPerspective* operator[](int);
+  int size();
+  void push_back(PlayerPerspective*);
+  PlayerPerspective* back();
 
+ public slots:
+  void onMovePlayed(PlayerPerspective*, int indexOfNextPerspective);
 
+ signals:
+  void movePlayed(int i);
 
-    PlayerPerspective*operator[](int);
-    int size();
-    void push_back(PlayerPerspective*);
-    PlayerPerspective* back();
+ private:
+  PlayerPerspectiveCollection m_perspectives;
 
-
-public slots:
-    void onMovePlayed(PlayerPerspective*, int indexOfNextPerspective);
-
-signals:
-    void movePlayed(int i);
-
-private:
-    PlayerPerspectiveCollection m_perspectives;
-
-    int currPerspectiveIndex;
-
-
-
+  int currPerspectiveIndex;
 };
 
-#endif // SINGLEPLAYERSTATEMACHINE_H
+#endif  // SINGLEPLAYERSTATEMACHINE_H

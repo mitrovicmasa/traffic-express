@@ -3,14 +3,11 @@
 
 #include <wagon.h>
 
+class WagonArray : public std::vector<Wagon*> {
+ public:
+  WagonArray();
 
-
-class WagonArray:public std::vector<Wagon*>
-{
-public:
-    WagonArray();
-
-    WagonArray(const WagonArray&other);
+  WagonArray(const WagonArray& other);
 };
 
-#endif // WAGONARRAY_H
+#endif  // WAGONARRAY_H

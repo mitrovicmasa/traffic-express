@@ -4,36 +4,35 @@
 #include <card.h>
 
 enum class BanditType {
-    PICKPOCKET,
-    SEDUCTRESS,
-    STUDENT,
-    RETIREE,
-    HOMELESS_MAN,
-    BUSINESS_WOMAN
+  PICKPOCKET,
+  SEDUCTRESS,
+  STUDENT,
+  RETIREE,
+  HOMELESS_MAN,
+  BUSINESS_WOMAN
 };
 
 std::string toString(BanditType bandit);
 
 class BanditCard : public Card {
+ public:
+  // Constructors
+  BanditCard(BanditType bandit);
 
-public:
-    // Constructors
-    BanditCard(BanditType bandit);
+  // Destructor
+  virtual ~BanditCard();
 
-    // Destructor
-    virtual ~BanditCard();
+  // Get methods
+  BanditType bandit() const;
 
-    // Get methods
-    BanditType bandit() const;
+  // Set methods
+  void setBandit(BanditType newBandit);
 
-    // Set methods
-    void setBandit(BanditType newBandit);
+  // Other methods
+  virtual std::string toString() const override;
 
-    // Other methods
-    virtual std::string toString() const override;
-
-private:
-    BanditType m_bandit;
+ private:
+  BanditType m_bandit;
 };
 
-#endif // BANDITCARD_H
+#endif  // BANDITCARD_H

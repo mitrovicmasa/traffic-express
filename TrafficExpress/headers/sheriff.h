@@ -3,29 +3,29 @@
 
 #include <QGraphicsObject>
 
-class Sheriff: public QGraphicsObject
-{
-    Q_OBJECT
+class Sheriff : public QGraphicsObject {
+  Q_OBJECT
 
-public:
-    // Constructors
-    Sheriff();
-    Sheriff(int);
+ public:
+  // Constructors
+  Sheriff();
+  Sheriff(int);
 
-    // Get methods
-    int positionInTrain() const;
+  // Get methods
+  int positionInTrain() const;
 
-    // Set methods
-    void setPositionInTrain(int newPositionInTrain);
+  // Set methods
+  void setPositionInTrain(int newPositionInTrain);
 
-    // GUI
-    int width()const;
-    int height()const;
-    QRectF boundingRect() const;
-    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
+  // GUI
+  int width() const;
+  int height() const;
+  QRectF boundingRect() const;
+  void paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
+             QWidget *widget);
 
-private:
-    int m_positionInTrain;
+ private:
+  int m_positionInTrain;
 };
 
-#endif // SHERIFF_H
+#endif  // SHERIFF_H

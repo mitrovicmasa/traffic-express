@@ -1,43 +1,44 @@
 #ifndef ROUNDCARDDECK_H
 #define ROUNDCARDDECK_H
 
-#include <QGraphicsObject>
-#include <QObject>
 #include <roundcardcollection.h>
 
-class RoundCardDeck : public QGraphicsObject, public Serializable
-{
-    Q_OBJECT
+#include <QGraphicsObject>
+#include <QObject>
 
-public:
-    // Constructors
-    RoundCardDeck();
-    RoundCardDeck(std::vector<RoundCard*>);
-    RoundCardDeck(const RoundCardCollection&);
+class RoundCardDeck : public QGraphicsObject, public Serializable {
+  Q_OBJECT
 
-    // Get methods
-    RoundCardCollection& getRoundCards();
+ public:
+  // Constructors
+  RoundCardDeck();
+  RoundCardDeck(std::vector<RoundCard *>);
+  RoundCardDeck(const RoundCardCollection &);
 
-    // Other methods
-    void push_front(RoundCard*);
-    void pop_front();
-    RoundCard*operator[](int);
-    RoundCard*back();
-    RoundCard*front();
-    int size();
+  // Get methods
+  RoundCardCollection &getRoundCards();
 
-    // GUI
-    QRectF boundingRect() const;
-    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
-    int width() const;
-    int height() const;
+  // Other methods
+  void push_front(RoundCard *);
+  void pop_front();
+  RoundCard *operator[](int);
+  RoundCard *back();
+  RoundCard *front();
+  int size();
 
-    // Serializable interface
-    QVariant toVariant() const;
-    void fromVariant(const QVariant &variant);
+  // GUI
+  QRectF boundingRect() const;
+  void paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
+             QWidget *widget);
+  int width() const;
+  int height() const;
 
-private:
-    RoundCardCollection m_rounds;
+  // Serializable interface
+  QVariant toVariant() const;
+  void fromVariant(const QVariant &variant);
+
+ private:
+  RoundCardCollection m_rounds;
 };
 
-#endif // ROUNDCARDDECK_H
+#endif  // ROUNDCARDDECK_H

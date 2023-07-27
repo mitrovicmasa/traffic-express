@@ -1,45 +1,47 @@
 #ifndef TABLE_H
 #define TABLE_H
-#include "treasure.h"
-#include "playerstats.h"
+#include <playerstatscollection.h>
+#include <signal.h>
+
 #include <QGraphicsObject>
 #include <string>
 #include <vector>
-#include <signal.h>
-#include <playerstatscollection.h>
 
-class Table: public QGraphicsObject
-{
-    Q_OBJECT
+#include "playerstats.h"
+#include "treasure.h"
 
-public:
-    // Constructors
-    Table();
+class Table : public QGraphicsObject {
+  Q_OBJECT
 
-    // Get methods
-    PlayerStatsCollection& getPlayerStats();
+ public:
+  // Constructors
+  Table();
 
-    // Other methods
-    void addTableToScene(QGraphicsScene *sc);
-    void push_back(PlayerStats* p);
-    int size();
-    PlayerStats*operator[](int);
+  // Get methods
+  PlayerStatsCollection &getPlayerStats();
 
-    // GUI
-    int height() const;
-    int width() const;
-    QRectF boundingRect() const;
-    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
+  // Other methods
+  void addTableToScene(QGraphicsScene *sc);
+  void push_back(PlayerStats *p);
+  int size();
+  PlayerStats *operator[](int);
 
-public slots:
-    void onClickedTreasureInPlayerStats(Treasure*,PlayerStats*);
+  // GUI
+  int height() const;
+  int width() const;
+  QRectF boundingRect() const;
+  void paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
+             QWidget *widget);
 
-signals:
-    void clickedTreasureInPlayerStatsInTable(Treasure*,PlayerStats*,Table*);
+ public slots:
+  void onClickedTreasureInPlayerStats(Treasure *, PlayerStats *);
 
-private:
-    std::vector<Treasure*> m_content;
-    PlayerStatsCollection m_playerStats;
+ signals:
+  void clickedTreasureInPlayerStatsInTable(Treasure *, PlayerStats *, Table *);
+
+ private:
+  std::vector<Treasure *> m_content;
+  PlayerStatsCollection m_playerStats;
 };
 
-#endif // TABLE_H
+#endif  // TABLE_H

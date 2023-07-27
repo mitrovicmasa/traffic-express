@@ -1,56 +1,57 @@
 #ifndef TRAIN_H
 #define TRAIN_H
 
-#include <vector>
-#include <wagon.h>
 #include <treasure.h>
+#include <wagon.h>
 #include <wagonarray.h>
 
-class Train:public QGraphicsObject, public Serializable
-{
-    Q_OBJECT
+#include <vector>
 
-public:
-    // Constructors
-    Train();
-    Train(std::vector<Wagon*>);
-    Train(WagonArray& wa);
+class Train : public QGraphicsObject, public Serializable {
+  Q_OBJECT
 
-    // Get methods
-    WagonArray&getWagons();
-    int getWagonIndex(Wagon*);
+ public:
+  // Constructors
+  Train();
+  Train(std::vector<Wagon*>);
+  Train(WagonArray& wa);
 
-    // Other methods
-    void push_back(Wagon* w);
-    void push_front(Wagon*);
-    Wagon* back();
-    Wagon* front();
-    void pop_back();
-    void pop_front();
-    int size();
-    bool empty();
-    Wagon* operator[](int i);
+  // Get methods
+  WagonArray& getWagons();
+  int getWagonIndex(Wagon*);
 
-    // GUI
-    QRectF boundingRect() const;
-    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
+  // Other methods
+  void push_back(Wagon* w);
+  void push_front(Wagon*);
+  Wagon* back();
+  Wagon* front();
+  void pop_back();
+  void pop_front();
+  int size();
+  bool empty();
+  Wagon* operator[](int i);
 
-    // Serializable interface
-    QVariant toVariant() const;
-    void fromVariant(const QVariant &variant);
+  // GUI
+  QRectF boundingRect() const;
+  void paint(QPainter* painter, const QStyleOptionGraphicsItem* option,
+             QWidget* widget);
 
-signals:
-    void clickedTreasureInWagonInTrain(Treasure*t,Wagon*w,Train*train);
-    void clickedPlayerInWagonInTrain(Player*,Wagon*,Train*);
-    void clickedWagonInTrain(Wagon*w,Train*train);
+  // Serializable interface
+  QVariant toVariant() const;
+  void fromVariant(const QVariant& variant);
 
-public slots:
-    void onClickedTreasureInWagon(Treasure*t,Wagon*w);
-    void onClickedPlayerInWagon(Player*,Wagon*);
-    void onClickedWagon(Wagon*);
+ signals:
+  void clickedTreasureInWagonInTrain(Treasure* t, Wagon* w, Train* train);
+  void clickedPlayerInWagonInTrain(Player*, Wagon*, Train*);
+  void clickedWagonInTrain(Wagon* w, Train* train);
 
-private:
-    WagonArray m_wagons;
+ public slots:
+  void onClickedTreasureInWagon(Treasure* t, Wagon* w);
+  void onClickedPlayerInWagon(Player*, Wagon*);
+  void onClickedWagon(Wagon*);
+
+ private:
+  WagonArray m_wagons;
 };
 
-#endif // TRAIN_H
+#endif  // TRAIN_H

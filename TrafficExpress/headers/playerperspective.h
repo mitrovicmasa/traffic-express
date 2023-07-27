@@ -1,72 +1,68 @@
 #ifndef PLAYERPERSPECTIVE_H
 #define PLAYERPERSPECTIVE_H
 
+#include <dialoguebox.h>
 #include <game.h>
 #include <qgraphicsscene.h>
 #include <table.h>
-#include <dialoguebox.h>
 
+class PlayerPerspective : public QGraphicsScene {
+  Q_OBJECT
 
-class PlayerPerspective:public QGraphicsScene
-{
-    Q_OBJECT
+ public:
+  PlayerPerspective(Game* game, int playerIndex, QObject* parent = nullptr);
+  PlayerPerspective();
+  void addGameToScene();
+  void removeGameFromScene();
 
-public:
+  void drawCards(int n);
+  void setNextPlayerToToMove();
 
-    PlayerPerspective(Game*game,int playerIndex,QObject*parent=nullptr);
-    PlayerPerspective();
-    void addGameToScene();
-    void removeGameFromScene();
+  int getPlayerToMoveIndex() const;
+  int getPlayerSize();
 
-    void drawCards(int n);
-    void setNextPlayerToToMove();
+ public slots:
 
-    int getPlayerToMoveIndex()const;
-    int getPlayerSize();
+  // Reacting to internal signals
+  void onClickedTreasureInWagonInTrain(Treasure* t, Wagon* w, Train* train);
+  void onClickedCardInHandInPlayer(Card* c, Hand* h, Player* p);  //*
+  void onClickedCardInDeckInPlayer(Card* c, Deck* d, Player* p);
+  void onClickedTreasureInPlayerStatsInTable(Treasure*, PlayerStats*, Table*);
+  void onClickedPlayerInWagonInTrain(Player*, Wagon*, Train*);
+  void onClickedWagonInTrain(Wagon* w, Train* train);  //*
 
-public slots:
+  // Reacting to external signals
+  void onPlayerChoseWagon(int playerIndex, int wagonIndex);
+  void onPlayerPlayedCard(int playerIndex, int CardIndex);
+  void onPlayerDrawCards(int playerIndex);
 
-    // Reacting to internal signals
-    void onClickedTreasureInWagonInTrain(Treasure*t,Wagon*w,Train*train);
-    void onClickedCardInHandInPlayer(Card*c,Hand*h,Player*p);//*
-    void onClickedCardInDeckInPlayer(Card*c,Deck*d,Player*p);
-    void onClickedTreasureInPlayerStatsInTable(Treasure*,PlayerStats*,Table*);
-    void onClickedPlayerInWagonInTrain(Player*,Wagon*,Train*);
-    void onClickedWagonInTrain(Wagon*w,Train*train);//*
+  void onActionSheriffSignal(int wagonIndex);
+  void onActionFireSignal(int playerIndex);
+  void onActionChangeFloorSignal(int wagonIndex);
+  void onActionChangeWagonSignal(int wagonIndex);
+  void onActionRobberySignal(int treasureIndex, int wagonIndex);
+  void onActionPunchSignal(int treasureIndex, int playerIndex, int wagonIndex);
 
-    // Reacting to external signals
-    void onPlayerChoseWagon(int playerIndex,int wagonIndex);
-    void onPlayerPlayedCard(int playerIndex,int CardIndex);
-    void onPlayerDrawCards(int playerIndex);
+ signals:
 
-    void onActionSheriffSignal (int wagonIndex);
-    void onActionFireSignal(int playerIndex);
-    void onActionChangeFloorSignal(int wagonIndex);
-    void onActionChangeWagonSignal(int wagonIndex);
-    void onActionRobberySignal(int treasureIndex, int wagonIndex);
-    void onActionPunchSignal(int treasureIndex, int playerIndex, int wagonIndex);
+  void playerChoseWagon(int playerIndex, int wagonIndex);
+  void playerPlayedCard(int playerIndex, int CardIndex);
+  void movePlayed(PlayerPerspective*, int indexOfNextPerspective);
+  void playerDrawCards(int playerIndex);
 
-signals:
+  void actionSheriffSignal(int wagonIndex);
+  void actionFireSignal(int playerIndex);
+  void actionChangeFloorSignal(int wagonIndex);
+  void actionChangeWagonSignal(int wagonIndex);
+  void actionRobberySignal(int treasureIndex, int wagonIndex);
+  void actionPunchSignal(int treasureIndex, int playerIndex, int wagonIndex);
 
-    void playerChoseWagon(int playerIndex,int wagonIndex);
-    void playerPlayedCard(int playerIndex,int CardIndex);
-    void movePlayed(PlayerPerspective*, int indexOfNextPerspective);
-    void playerDrawCards(int playerIndex);
+ private:
+  void setMyMove(bool);
 
-
-    void actionSheriffSignal (int wagonIndex);
-    void actionFireSignal(int playerIndex);
-    void actionChangeFloorSignal(int wagonIndex);
-    void actionChangeWagonSignal(int wagonIndex);
-    void actionRobberySignal(int treasureIndex, int wagonIndex);
-    void actionPunchSignal(int treasureIndex, int playerIndex, int wagonIndex);
-
-private:
-    void setMyMove(bool);
-
-    Player*m_player;
-    Game*m_game;
-    Table*m_table;
+  Player* m_player;
+  Game* m_game;
+  Table* m_table;
 };
 
-#endif // PLAYERPERSPECTIVE_H
+#endif  // PLAYERPERSPECTIVE_H

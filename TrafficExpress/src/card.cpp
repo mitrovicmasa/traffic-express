@@ -1,53 +1,32 @@
 #include "../headers/card.h"
 
 // Constructors
-Card::Card():QGraphicsObject()
-{
-    setFlags(GraphicsItemFlag::ItemIsSelectable);
+Card::Card() : QGraphicsObject() {
+  setFlags(GraphicsItemFlag::ItemIsSelectable);
 }
 
 // Destructor
-Card::~Card()
-= default;
+Card::~Card() = default;
 
 // Get methods
-bool Card::faceUp() const
-{
-    return m_faceUp;
-}
+bool Card::faceUp() const { return m_faceUp; }
 
 // Set methods
-void Card::setFaceUp(bool newFaceUp)
-{
-    m_faceUp = newFaceUp;
-}
+void Card::setFaceUp(bool newFaceUp) { m_faceUp = newFaceUp; }
 
 // Other methods
-std::string Card::toString() const
-{
-    return "";
-}
+std::string Card::toString() const { return ""; }
 
 // GUI
-int Card::height() const
-{
-    return 80;
-}
+int Card::height() const { return 80; }
 
-int Card::width() const
-{
-    return 80;
-}
+int Card::width() const { return 80; }
 
-QRectF Card::boundingRect() const
-{
-    return QRectF(0,0,width(),height());
-}
+QRectF Card::boundingRect() const { return QRectF(0, 0, width(), height()); }
 
-void Card::mousePressEvent(QGraphicsSceneMouseEvent *event)
-{
-    QGraphicsObject::mousePressEvent(event);
+void Card::mousePressEvent(QGraphicsSceneMouseEvent *event) {
+  QGraphicsObject::mousePressEvent(event);
 
-    emit clicked();
-    emit clickedCard(this);
+  emit clicked();
+  emit clickedCard(this);
 }

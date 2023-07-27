@@ -3,15 +3,12 @@
 
 #include <roundcard.h>
 
+class RoundCardCollection : public std::vector<RoundCard*> {
+ public:
+  RoundCardCollection();
 
-
-class RoundCardCollection:public std::vector<RoundCard*>
-{
-public:
-    RoundCardCollection();
-
-    RoundCardCollection(std::vector<RoundCard*>&);
-    RoundCardCollection(const RoundCardCollection&);
+  RoundCardCollection(std::vector<RoundCard*>&);
+  RoundCardCollection(const RoundCardCollection&);
 };
 
-#endif // ROUNDCARDCOLLECTION_H
+#endif  // ROUNDCARDCOLLECTION_H

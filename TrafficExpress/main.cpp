@@ -1,17 +1,17 @@
-#include "mainwindow.h"
 #include <QApplication>
-#include <iostream>
-#include <random>
+#include <algorithm>
 #include <cstdlib>
 #include <ctime>
-#include <vector>
+#include <iostream>
 #include <numeric>
-#include <algorithm>
+#include <random>
+#include <vector>
 
-int main(int argc, char *argv[])
-{
-    QApplication a(argc, argv);
-    MainWindow w;
-    w.show();
-    return a.exec();
+#include "mainwindow.h"
+
+int main(int argc, char *argv[]) {
+  QApplication a(argc, argv);
+  MainWindow w;
+  w.show();
+  return a.exec();
 }

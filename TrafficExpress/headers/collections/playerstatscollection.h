@@ -3,15 +3,12 @@
 
 #include <playerstats.h>
 
+class PlayerStatsCollection : public std::vector<PlayerStats*> {
+ public:
+  PlayerStatsCollection();
+  PlayerStatsCollection(std::vector<PlayerStats*>&);
 
-
-class PlayerStatsCollection:public std::vector<PlayerStats*>
-{
-public:
-    PlayerStatsCollection();
-    PlayerStatsCollection(std::vector<PlayerStats*>&);
-
-     PlayerStatsCollection(const PlayerStatsCollection&);
+  PlayerStatsCollection(const PlayerStatsCollection&);
 };
 
-#endif // PLAYERSTATSCOLLECTION_H
+#endif  // PLAYERSTATSCOLLECTION_H

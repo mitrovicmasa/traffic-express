@@ -3,12 +3,9 @@
 
 #include <playerperspective.h>
 
-
-
-class PlayerPerspectiveCollection:public std::vector<PlayerPerspective*>
-{
-public:
-    PlayerPerspectiveCollection();
+class PlayerPerspectiveCollection : public std::vector<PlayerPerspective*> {
+ public:
+  PlayerPerspectiveCollection();
 };
 
-#endif // PLAYERPERSPECTIVECOLLECTION_H
+#endif  // PLAYERPERSPECTIVECOLLECTION_H

@@ -1,54 +1,55 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include <QKeyEvent>
-#include <QMainWindow>
-#include<QDialog>
-#include<QPushButton>
-#include <QGraphicsScene>
+#include <client/playerclient.h>
 #include <game.h>
-#include <table.h>
 #include <playerperspective.h>
 #include <singleplayerstatemachine.h>
+#include <table.h>
 
-#include <client/playerclient.h>
+#include <QDialog>
+#include <QGraphicsScene>
+#include <QKeyEvent>
+#include <QMainWindow>
+#include <QPushButton>
 
 QT_BEGIN_NAMESPACE
-namespace Ui { class MainWindow; }
+namespace Ui {
+class MainWindow;
+}
 QT_END_NAMESPACE
 
-class MainWindow : public QMainWindow
-{
-    Q_OBJECT
+class MainWindow : public QMainWindow {
+  Q_OBJECT
 
-public:
-    MainWindow(QWidget *parent = nullptr);
-    ~MainWindow();
+ public:
+  MainWindow(QWidget* parent = nullptr);
+  ~MainWindow();
 
-    void connectButtons();
-    void dialogInit();
-    void setImages();
-    void keyPressEvent(QKeyEvent*);
+  void connectButtons();
+  void dialogInit();
+  void setImages();
+  void keyPressEvent(QKeyEvent*);
 
-private slots:
-    void onPlay();
-    void onGameRules();
-    void onBackToTheMenu();
-    void onConnect();
-    void onReady();
-    void onStart();
-    void onMovePlayed(int i);
-    void onChangeReadyColor(bool);
-    void onChangeStartColor();
-    void onGameLoaded();
+ private slots:
+  void onPlay();
+  void onGameRules();
+  void onBackToTheMenu();
+  void onConnect();
+  void onReady();
+  void onStart();
+  void onMovePlayed(int i);
+  void onChangeReadyColor(bool);
+  void onChangeStartColor();
+  void onGameLoaded();
 
-signals:
-    void readyClicked();
-    void startClicked();
+ signals:
+  void readyClicked();
+  void startClicked();
 
-private:
-    PlayerClient* m_client;
-    Ui::MainWindow* ui;
-    QDialog* dialog;
+ private:
+  PlayerClient* m_client;
+  Ui::MainWindow* ui;
+  QDialog* dialog;
 };
-#endif // MAINWINDOW_H
+#endif  // MAINWINDOW_H

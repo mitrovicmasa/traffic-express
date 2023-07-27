@@ -4,32 +4,30 @@
 #include <banditcard.h>
 
 class BulletCard : public BanditCard {
+ public:
+  // Constructors
+  BulletCard(BanditType bandit, unsigned numOfBullets);
+  Card *Copy() const override;
 
-public:
+  // Destructor
+  ~BulletCard();
 
-    // Constructors
-    BulletCard(BanditType bandit, unsigned numOfBullets);
-    Card *Copy() const override;
+  // Get methods
+  const unsigned &numOfBullets() const;
 
-    // Destructor
-    ~BulletCard();
+  // Set methods
+  void setNumOfBullets(const unsigned &newNumOfBullets);
 
-    // Get methods
-    const unsigned &numOfBullets() const;
+  // Other methods
+  std::string toString() const override;
+  CardType Type() const override;
 
-    // Set methods
-    void setNumOfBullets(const unsigned &newNumOfBullets);
+  // GUI
+  void paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
+             QWidget *widget) override;
 
-    // Other methods
-    std::string toString() const override;
-    CardType Type() const override;
-
-    // GUI
-    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
-
-private:
-
-    unsigned m_numOfBullets;
+ private:
+  unsigned m_numOfBullets;
 };
 
-#endif // BULLETCARD_H
+#endif  // BULLETCARD_H
